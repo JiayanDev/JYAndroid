@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">JYAndroid</string>
+    
+    <string-array name="tab_title">
+        <item>伴美</item>
+        <item>话题</item>
+        <item>活动</item>
+        <item>我</item>
+    </string-array>
 </resources>
