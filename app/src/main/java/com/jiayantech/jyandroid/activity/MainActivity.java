@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.customwidget.BaseActivity;
 import com.jiayantech.jyandroid.fragment.ActivityFragment;
+import com.jiayantech.jyandroid.fragment.ActivityFragment0;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
@@ -17,7 +18,7 @@ import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 /**
  * Created by liangzili on 15/6/24.
  */
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     private int mCurrentPosition = 0;
     private String[] mTitles;
@@ -30,7 +31,6 @@ public class MainActivity extends BaseActivity{
     private RadioButton[] mRadioButtons = new RadioButton[]{
             mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn
     };
-
 
 
     @Override
@@ -85,7 +85,8 @@ public class MainActivity extends BaseActivity{
     private void initFragments() {
         BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
         CommunityFragment communityFragment = CommunityFragment.newInstance(null);
-        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+        //ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+        ActivityFragment0 activityFragment = new ActivityFragment0();
         UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
 
         mFragments = new Fragment[]{
@@ -93,12 +94,12 @@ public class MainActivity extends BaseActivity{
         };
     }
 
-    private void initView(){
-        mViewPager = (ViewPager)findViewById(R.id.id_viewpager);
-        mRadioButtons[0] = (RadioButton)findViewById(R.id.radio_beauty_with);
-        mRadioButtons[1] = (RadioButton)findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton)findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton)findViewById(R.id.radio_userinfo);
+    private void initView() {
+        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
+        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
+        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
         mRadioButtons[0].setChecked(true);
     }
 

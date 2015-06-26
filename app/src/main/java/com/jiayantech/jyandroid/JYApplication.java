@@ -14,10 +14,17 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
  * Created by liangzili on 15/6/24.
  */
 public class JYApplication extends Application {
+    private static Context sContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sContext = this;
         initImageLoader(getApplicationContext());
+    }
+
+    public static Context getContext() {
+        return sContext;
     }
 
     private void initImageLoader(Context context) {
