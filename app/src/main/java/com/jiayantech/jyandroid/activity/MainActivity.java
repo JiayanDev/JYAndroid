@@ -13,13 +13,13 @@ import com.jiayantech.jyandroid.fragment.ActivityFragment;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by liangzili on 15/6/24.
  */
 public class MainActivity extends BaseActivity{
 
-    private int mCurrentPosition = 0;
     private String[] mTitles;
 
     private ViewPager mViewPager;
@@ -37,7 +37,12 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //开启友盟推送服务
+        PushAgent.getInstance(this).enable();
+
         mTitles = getResources().getStringArray(R.array.tab_title);
+
+        setSwipeBackEnable(false);
 
         initView();
         initFragments();
@@ -93,6 +98,27 @@ public class MainActivity extends BaseActivity{
         };
     }
 
+    private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener
+            = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch(checkedId){
+                case R.id.radio_beauty_with:
+                    mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.radio_community:
+                    mViewPager.setCurrentItem(1);
+                    break;
+                case R.id.radio_activity:
+                    mViewPager.setCurrentItem(2);
+                    break;
+                case R.id.radio_userinfo:
+                    mViewPager.setCurrentItem(3);
+                    break;
+            }
+        }
+    };
+
     private void initView(){
         mViewPager = (ViewPager)findViewById(R.id.id_viewpager);
         mRadioButtons[0] = (RadioButton)findViewById(R.id.radio_beauty_with);
@@ -100,6 +126,8 @@ public class MainActivity extends BaseActivity{
         mRadioButtons[2] = (RadioButton)findViewById(R.id.radio_activity);
         mRadioButtons[3] = (RadioButton)findViewById(R.id.radio_userinfo);
         mRadioButtons[0].setChecked(true);
+        mRadioGroup = (RadioGroup)findViewById(R.id.radiogroup_tab);
+        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
 
