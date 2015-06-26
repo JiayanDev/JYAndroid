@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.customwidget;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,14 +7,45 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
+import com.umeng.message.PushAgent;
+
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.Utils;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper;
 
 /**
  * Created by liangzili on 15/6/24.
  */
-public class BaseActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity implements SwipeBackActivityBase{
+    private SwipeBackActivityHelper mHelper;
+
+    public BaseActivity(){}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //开启友盟统计
+        PushAgent.getInstance(this).onAppStart();
+
+        mHelper = new SwipeBackActivityHelper(this);
+        mHelper.onActivityCreate();
+
+        getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
+        setSwipeBackEnable(true);
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mHelper.onPostCreate();
+    }
+
+
+    public View findViewById(int id) {
+        View v = super.findViewById(id);
+        return v == null && this.mHelper != null?this.mHelper.findViewById(id):v;
     }
 
     /**
@@ -33,4 +63,19 @@ public class BaseActivity extends AppCompatActivity{
         super.setContentView(activityView);
     }
 
+    @Override
+    public SwipeBackLayout getSwipeBackLayout() {
+        return mHelper.getSwipeBackLayout();
+    }
+
+    @Override
+    public void setSwipeBackEnable(boolean b) {
+        mHelper.getSwipeBackLayout().setEnableGesture(b);
+    }
+
+    @Override
+    public void scrollToFinishActivity() {
+        Utils.convertActivityToTranslucent(this);
+        this.getSwipeBackLayout().scrollToFinishActivity();
+    }
 }
