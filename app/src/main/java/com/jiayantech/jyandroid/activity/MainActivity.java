@@ -13,6 +13,7 @@ import com.jiayantech.jyandroid.fragment.ActivityFragment;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -36,6 +37,9 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //开启友盟推送服务
+        PushAgent.getInstance(this).enable();
+
         mTitles = getResources().getStringArray(R.array.tab_title);
 
         setSwipeBackEnable(false);

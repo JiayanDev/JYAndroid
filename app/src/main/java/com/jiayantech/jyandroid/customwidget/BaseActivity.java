@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
+import com.umeng.message.PushAgent;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
@@ -24,6 +25,9 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //开启友盟统计
+        PushAgent.getInstance(this).onAppStart();
+
         mHelper = new SwipeBackActivityHelper(this);
         mHelper.onActivityCreate();
 
