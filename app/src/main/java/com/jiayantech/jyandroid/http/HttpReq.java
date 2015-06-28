@@ -41,27 +41,27 @@ public class HttpReq<T> extends Request<T> {
      * @param params
      * @param l
      */
-    public static void get(String action, Map<String, String> params, ResponseListener<?> l) {
-        request(Request.Method.GET, action, params, l, sErrorListener);
-    }
-
-    /**
-     * @param action
-     * @param params
-     * @param l
-     */
     public static void post(String action, Map<String, String> params, ResponseListener<?> l) {
-        request(Request.Method.POST, action, params, l, sErrorListener);
+        request(Request.Method.POST, action, params, null, l);
+    }
+
+    /**
+     * @param action
+     * @param params
+     * @param classType
+     * @param l
+     */
+    public static void post(String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
+        request(Request.Method.POST, action, params, classType, l);
     }
 
     /**
      * @param action
      * @param params
      * @param l
-     * @param el
      */
-    public static void post(String action, Map<String, String> params, ResponseListener<?> l, Response.ErrorListener el) {
-        request(Request.Method.POST, action, params, l, el);
+    public static void get(String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
+        request(Request.Method.GET, action, params, classType, l);
     }
 
     ///////////////////////////////////////private static class and method
@@ -70,25 +70,31 @@ public class HttpReq<T> extends Request<T> {
      */
     private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(JYApplication.getContext());
 
-    private static final Response.ErrorListener sErrorListener = new ErrorListener();
-
     /**
      * @param method
      * @param action
      * @param params
+     * @param classType
      * @param l
      */
-    private static void request(int method, String action, Map<String, String> params, Response.Listener<?> l, Response.ErrorListener el) {
+    public static void request(int method, String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
-        HttpReq request = new HttpReq<>(method, builderAction.toString(), params, l, el);
+        HttpReq request = new HttpReq<>(method, builderAction.toString(), params, classType, l, new ErrorListener(l));
         request.setShouldCache(false);
         sVolleyQueue.add(request);
     }
 
     private static class ErrorListener implements Response.ErrorListener {
+        ResponseListener mResponseListener;
+
+        ErrorListener(ResponseListener<?> l) {
+            mResponseListener = l;
+        }
+
         @Override
         public void onErrorResponse(VolleyError error) {
+            mResponseListener.onErrorResponse(error);
             if (error instanceof NetworkError) {
             } else if (error instanceof ServerError) {
             } else if (error instanceof AuthFailureError) {
@@ -124,14 +130,17 @@ public class HttpReq<T> extends Request<T> {
      */
     private final Response.Listener<T> mListener;
 
-    public final Type mClassType;
+    private Type mClassType;
     private final Gson mGson = new Gson();
 
-    private HttpReq(int method, String url, Map<String, String> params, Response.Listener<T> listener, Response.ErrorListener errorListener) {
+    private HttpReq(int method, String url, Map<String, String> params, Type classType, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         mParams = params;
-        //mClassType = getClassType();
-        mClassType = getClassType(listener);
+        if (classType == null) {
+            mClassType = getClassType(listener);
+        } else {
+            mClassType = classType;
+        }
         mListener = listener;
     }
 
@@ -181,20 +190,9 @@ public class HttpReq<T> extends Request<T> {
         return null;
     }
 
-//    /**
-//     * @return class type
-//     */
-//    private Type getClassType() {
-//        Type t = getClass().getGenericSuperclass();
-//        if (t instanceof ParameterizedType) {
-//            Type[] p = ((ParameterizedType) t).getActualTypeArguments();
-//            return p[0];
-//        }
-//        return null;
-//    }
-
     public static abstract class ResponseListener<T> implements Response.Listener<T> {
-        //public abstract void onErrorResponse(VolleyError error);
+        public void onErrorResponse(VolleyError error) {
+        }
     }
 }
 
