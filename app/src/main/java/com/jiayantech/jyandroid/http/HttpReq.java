@@ -1,7 +1,6 @@
 package com.jiayantech.jyandroid.http;
 
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,7 +43,6 @@ public class HttpReq<T> extends Request<T> {
      */
     public static void post(String action, Map<String, String> params, ResponseListener<?> l) {
         request(Request.Method.POST, action, params, null, l);
-        Log.i("test", "test");
     }
 
     /**
