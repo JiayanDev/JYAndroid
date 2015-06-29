@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.customwidget.BaseActivity;
 
 /**
  * Created by liangzili on 15/6/24.

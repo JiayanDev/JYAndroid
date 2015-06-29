@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget;
+package com.jiayantech.library.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

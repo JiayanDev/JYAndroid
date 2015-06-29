@@ -3,7 +3,7 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Fragment;
 import android.os.Bundle;
 
-import com.jiayantech.jyandroid.customwidget.SingleFragmentActivity;
+import com.jiayantech.library.base.SingleFragmentActivity;
 import com.jiayantech.jyandroid.fragment.TopicFragment;
 
 /**

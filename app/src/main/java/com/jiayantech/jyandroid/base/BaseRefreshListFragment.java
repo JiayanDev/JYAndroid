@@ -4,7 +4,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.customwidget.BaseFragment;
 import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 

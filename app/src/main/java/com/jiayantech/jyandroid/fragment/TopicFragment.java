@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.customwidget.BaseFragment;
 
 /**
  * Created by liangzili on 15/6/25.
