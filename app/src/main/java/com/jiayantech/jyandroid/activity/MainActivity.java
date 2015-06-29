@@ -1,8 +1,8 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -49,8 +49,13 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     private void initViewPager() {
-        mFragmentPagerAdapter = new FragmentPagerAdapter(getFragmentManager()) {
+        mFragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
                 return mFragments[i];
