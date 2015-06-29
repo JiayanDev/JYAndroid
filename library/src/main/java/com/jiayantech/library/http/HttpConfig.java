@@ -3,7 +3,7 @@ package com.jiayantech.library.http;
 import android.content.res.Resources;
 
 import com.jiayantech.library.base.BaseApplication;
-import com.jiayantech.library.properties.Property;
+import com.jiayantech.library.comm.Property;
 
 /**
  * Created by 健兴 on 2015/6/26.
