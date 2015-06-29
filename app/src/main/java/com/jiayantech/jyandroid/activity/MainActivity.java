@@ -8,13 +8,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
-<<<<<<< HEAD
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.jyandroid.fragment.ActivityFragment0;
-=======
-import com.jiayantech.jyandroid.customwidget.BaseActivity;
 import com.jiayantech.jyandroid.fragment.ActivityFragment;
->>>>>>> upstream/master
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
