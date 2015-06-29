@@ -25,4 +25,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.7'
     compile 'in.srain.cube:ultra-ptr:1.0.9@aar'
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
 }

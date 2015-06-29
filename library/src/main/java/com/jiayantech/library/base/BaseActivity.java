@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.R;
 import com.umeng.message.PushAgent;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
