@@ -12,16 +12,17 @@ import android.widget.Button;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.TopicActivity;
+import com.jiayantech.library.base.BaseFragment;
 
 /**
  * Created by liangzili on 15/6/25.
  */
-public class BeautyWithFragment extends BaseFragment{
+public class BeautyWithFragment extends BaseFragment {
 
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
 
-    public static BeautyWithFragment newInstance(Bundle args){
+    public static BeautyWithFragment newInstance(Bundle args) {
         BeautyWithFragment fragment = new BeautyWithFragment();
         fragment.setArguments(args);
         return fragment;
@@ -31,7 +32,7 @@ public class BeautyWithFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_beauty_with, container, false);
-        Button jump = (Button)view.findViewById(R.id.jump);
+        Button jump = (Button) view.findViewById(R.id.jump);
         initFragments();
 
 
@@ -46,11 +47,11 @@ public class BeautyWithFragment extends BaseFragment{
     }
 
     private void initFragments() {
-        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+        ActivityFragment activityFragment = new ActivityFragment();
         UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
 
         mFragments = new Fragment[]{
-            activityFragment, userInfoFragment
+                activityFragment, userInfoFragment
         };
     }
 }

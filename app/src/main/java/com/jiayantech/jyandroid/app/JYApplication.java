@@ -1,6 +1,5 @@
-package com.jiayantech.jyandroid;
+package com.jiayantech.jyandroid.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 

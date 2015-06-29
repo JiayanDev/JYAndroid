@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.base.BaseFragment;
 
 /**
  * Created by liangzili on 15/6/25.
