@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(mFragments.length - 1);
         mViewPager.setCurrentItem(0);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -104,16 +104,16 @@ public class MainActivity extends BaseActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
                 case R.id.radio_beauty_with:
-                    mViewPager.setCurrentItem(0);
+                    mViewPager.setCurrentItem(0, false);
                     break;
                 case R.id.radio_community:
-                    mViewPager.setCurrentItem(1);
+                    mViewPager.setCurrentItem(1, false);
                     break;
                 case R.id.radio_activity:
-                    mViewPager.setCurrentItem(2);
+                    mViewPager.setCurrentItem(2, false);
                     break;
                 case R.id.radio_userinfo:
-                    mViewPager.setCurrentItem(3);
+                    mViewPager.setCurrentItem(3, false);
                     break;
             }
         }
