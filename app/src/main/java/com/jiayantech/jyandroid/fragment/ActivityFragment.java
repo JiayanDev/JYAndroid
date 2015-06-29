@@ -1,55 +1,37 @@
 package com.jiayantech.jyandroid.fragment;
 
-import android.os.Bundle;
-import android.os.Handler;
+import android.widget.Toast;
 
 import com.jiayantech.jyandroid.adapter.ActivityAdapter;
-import com.jiayantech.jyandroid.base.BaseRefreshListFragment;
+import com.jiayantech.jyandroid.biz.ActivityBiz;
+import com.jiayantech.jyandroid.model.User;
+import com.jiayantech.library.base.RefreshListFragment;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.library.http.ResponseListener;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by liangzili on 15/6/25.
+ * Created by 健兴 on 2015/6/26.
+ *
+ * @Description:
+ * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
+ * rights reserved.
  */
-public class ActivityFragment extends BaseRefreshListFragment {
-    private ActivityAdapter mAdapter;
-
-    public static ActivityFragment newInstance(Bundle args) {
-        ActivityFragment fragment = new ActivityFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class ActivityFragment extends RefreshListFragment<User, AppResponse<List<User>>> {
 
     @Override
     public void onInitView() {
         super.onInitView();
-//        List<String> list = new ArrayList<>();
-//        mAdapter = new ActivityAdapter(list);
-//        ultimateRecyclerView.setAdapter(mAdapter);
-    }
+        setParams(new ActivityAdapter(null), ActivityBiz.ACTION_ACTIVITY_LIST);
 
-    @Override
-    protected void onRefresh() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                List<String> list = new ArrayList<>(Arrays.asList(new String[]{"1", "2", "3"}));
-//                mAdapter.addNew(list);
-                ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
+        HttpReq.post(ActivityBiz.ACTION_ACTIVITY_LIST, null, new ResponseListener<AppResponse<List<User>>>() {
+            @Override
+            public void onResponse(AppResponse<List<User>> response) {
+                List<User> list = response.data;
+                Toast.makeText(getActivity(), list.get(0).firstName, Toast.LENGTH_LONG).show();
             }
-        }, 1000);
-    }
-
-    @Override
-    protected void onLoadMore() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                List<String> list = new ArrayList<>(Arrays.asList(new String[]{"1", "2", "3"}));
-               // mAdapter.addNew(list);
-            }
-        }, 1000);
+        });
     }
 }

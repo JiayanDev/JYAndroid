@@ -1,4 +1,4 @@
-package com.jiayantech.library.properties;
+package com.jiayantech.library.comm;
 
 import com.jiayantech.library.base.BaseApplication;
 
