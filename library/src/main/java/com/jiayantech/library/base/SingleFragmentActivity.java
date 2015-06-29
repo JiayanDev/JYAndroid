@@ -1,15 +1,15 @@
-package com.jiayantech.jyandroid.customwidget;
+package com.jiayantech.library.base;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.R;
 
 /**
  * Created by liangzili on 15/6/24.
  */
-public abstract class SingleFragmentActivity extends BaseActivity{
+public abstract class SingleFragmentActivity extends BaseActivity {
     protected abstract Fragment createFragment();
 
     @Override

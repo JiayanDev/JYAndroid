@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget;
+package com.jiayantech.library.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.R;
 import com.umeng.message.PushAgent;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
