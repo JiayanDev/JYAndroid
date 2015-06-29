@@ -1,15 +1,12 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
 
-import com.jiayantech.jyandroid.base.BaseModelAdapter;
-import com.jiayantech.jyandroid.base.BaseSimpleModelAdapter;
 import com.jiayantech.jyandroid.model.User;
+import com.jiayantech.library.base.BaseSimpleModelAdapter;
 
 
 /**
