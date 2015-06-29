@@ -2,18 +2,9 @@ package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ActivityAdapter;
-import com.jiayantech.jyandroid.base.BaseModelAdapter;
-import com.jiayantech.jyandroid.base.BaseRefreshListFrament;
-import com.jiayantech.jyandroid.customwidget.BaseFragment;
+import com.jiayantech.jyandroid.base.BaseRefreshListFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +13,7 @@ import java.util.List;
 /**
  * Created by liangzili on 15/6/25.
  */
-public class ActivityFragment extends BaseRefreshListFrament {
+public class ActivityFragment extends BaseRefreshListFragment {
     private ActivityAdapter mAdapter;
 
     public static ActivityFragment newInstance(Bundle args) {

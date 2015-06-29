@@ -1,8 +1,6 @@
-package com.jiayantech.jyandroid.base;
+package com.jiayantech.library.base;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
