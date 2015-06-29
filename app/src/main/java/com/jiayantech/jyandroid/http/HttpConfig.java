@@ -12,6 +12,6 @@ public class HttpConfig {
     /**
      * base server url
      */
-    public static final String BASE_URL = "http://10.0.1.24/test/";
+    public static final String BASE_URL = "http://192.168.1.208/test/";
 
 }

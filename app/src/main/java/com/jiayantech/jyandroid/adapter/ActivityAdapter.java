@@ -8,6 +8,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import com.jiayantech.jyandroid.base.BaseModelAdapter;
+import com.jiayantech.jyandroid.base.BaseSimpleModelAdapter;
 import com.jiayantech.jyandroid.model.User;
 
 
@@ -19,32 +20,27 @@ import com.jiayantech.jyandroid.model.User;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ActivityAdapter extends BaseModelAdapter<User> {
-
+public class ActivityAdapter extends BaseSimpleModelAdapter<User> {
     public ActivityAdapter(List<User> list) {
         super(list);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder rHolder, int position) {
-        ViewHolder holder = (ViewHolder) rHolder;
-        holder.mTextView.setText(mlist.get(position).firstName);
-    }
-
-    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(),
-                android.R.layout.simple_list_item_1, null);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(parent, android.R.layout.simple_list_item_1);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<User> {
         public TextView mTextView;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
+        public ViewHolder(ViewGroup parent, int layoutId) {
+            super(parent, layoutId);
             mTextView = (TextView) itemView;
+        }
+
+        @Override
+        public void onBind(User user, int position) {
+            mTextView.setText(user.firstName);
         }
     }
 }

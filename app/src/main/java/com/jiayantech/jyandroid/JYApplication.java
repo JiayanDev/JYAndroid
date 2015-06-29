@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.jiayantech.library.base.BaseApplication;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,7 +18,7 @@ import com.umeng.message.entity.UMessage;
 /**
  * Created by liangzili on 15/6/24.
  */
-public class JYApplication extends Application {
+public class JYApplication extends BaseApplication {
     private static Context sContext;
 
     @Override
