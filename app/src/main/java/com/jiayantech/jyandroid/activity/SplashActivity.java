@@ -9,7 +9,7 @@ import com.jiayantech.jyandroid.R;
 /**
  * Created by liangzili on 15/6/24.
  */
-public class SplashActivity extends Activity{
+public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,11 +18,11 @@ public class SplashActivity extends Activity{
         Thread timerThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     Thread.sleep(000);
-                }catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
