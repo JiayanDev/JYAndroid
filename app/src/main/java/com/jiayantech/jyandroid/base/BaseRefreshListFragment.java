@@ -21,7 +21,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public abstract class BaseRefreshListFrament extends BaseFragment {
+public abstract class BaseRefreshListFragment extends BaseFragment {
     protected CustomUltimateRecyclerview ultimateRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private StoreHouseHeader storeHouseHeader;

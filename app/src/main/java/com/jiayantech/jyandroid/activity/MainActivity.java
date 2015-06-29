@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.customwidget.BaseActivity;
 import com.jiayantech.jyandroid.fragment.ActivityFragment;
+import com.jiayantech.jyandroid.fragment.ActivityFragment0;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
@@ -90,7 +91,8 @@ public class MainActivity extends BaseActivity{
     private void initFragments() {
         BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
         CommunityFragment communityFragment = CommunityFragment.newInstance(null);
-        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+//        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+        ActivityFragment0 activityFragment = new ActivityFragment0();
         UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
 
         mFragments = new Fragment[]{

@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.model;
+package com.jiayantech.jyandroid.http;
 
 /**
  * Created by 健兴 on 2015/6/26.

@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.http;
+package com.jiayantech.library.http;
 
 import android.net.Uri;
 import android.widget.Toast;
@@ -18,13 +18,14 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.jiayantech.jyandroid.JYApplication;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.jiayantech.library.base.BaseApplication;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -68,7 +69,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Initialise Volley Request Queue.
      */
-    private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(JYApplication.getContext());
+    private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
 
     /**
      * @param method
@@ -102,7 +103,7 @@ public class HttpReq<T> extends Request<T> {
             } else if (error instanceof NoConnectionError) {
             } else if (error instanceof TimeoutError) {
             }
-            Toast.makeText(JYApplication.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BaseApplication.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
