@@ -18,6 +18,28 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        Thread timerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        timerThread.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
 //        UserBiz.quickLogin("0", new UserBiz.LoginResponseListener() {
 //            @Override
 //            public void onResponse(AppResponse<Login> response) {

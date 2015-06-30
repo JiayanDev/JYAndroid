@@ -79,6 +79,7 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
     private StoreHouseHeader storeHouseHeader;
 
 
+
     @Override
     protected View onInflateView(LayoutInflater inflater, ViewGroup container) {
         ultimateRecyclerView = new CustomUltimateRecyclerview(container.getContext());
