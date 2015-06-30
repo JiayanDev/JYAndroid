@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.view.View;
 import android.widget.Toast;
 
 import com.jiayantech.jyandroid.adapter.ActivityAdapter;

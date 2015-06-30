@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {

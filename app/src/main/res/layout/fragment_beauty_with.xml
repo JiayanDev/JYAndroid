@@ -3,15 +3,11 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:text="This is the BeautyWithFragment"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/jump"
+    <fragment
+        android:id="@+id/banner"
+        android:name="com.jiayantech.jyandroid.customwidget.banner.BannerFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="jump"
         />
 
 </LinearLayout>
