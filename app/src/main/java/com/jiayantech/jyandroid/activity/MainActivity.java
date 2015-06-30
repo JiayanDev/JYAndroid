@@ -1,9 +1,13 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -47,11 +51,28 @@ public class MainActivity extends BaseActivity {
         initFragments();
         initViewPager();
 
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.post_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_diary:
+                return true;
+            case R.id.action_topic:
+                startActivity(new Intent(this, PublishPostActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViewPager() {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="btn_black_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginLeft">35dip</item>
+        <item name="android:layout_marginRight">35dip</item>
+        <item name="android:layout_marginTop">20dip</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/btn_black_selector</item>
+    </style>
+
+    <style name="txt_driving_life_item_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/font_blue</item>
+        <item name="android:drawablePadding">10dip</item>
+    </style>
+
+    <style name="txt_trip_track_title_white_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">2dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="txt_trip_track_content_blue_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">2dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/font_blue</item>
+    </style>
+
+</resources>
