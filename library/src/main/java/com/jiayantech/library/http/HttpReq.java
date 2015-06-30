@@ -22,10 +22,13 @@ import com.google.gson.JsonSyntaxException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
+import com.jiayantech.library.comm.TokenManager;
+import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -36,6 +39,7 @@ import com.jiayantech.library.base.BaseApplication;
  * rights reserved.
  */
 public class HttpReq<T> extends Request<T> {
+    private static final String TAG = HttpReq.class.getSimpleName();
 
     /**
      * @param action
@@ -61,8 +65,24 @@ public class HttpReq<T> extends Request<T> {
      * @param params
      * @param l
      */
+    public static void get(String action, Map<String, String> params, ResponseListener<?> l) {
+        request(Request.Method.GET, action, params, null, l);
+    }
+
+    /**
+     * @param action
+     * @param params
+     * @param classType
+     * @param l
+     */
     public static void get(String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
         request(Request.Method.GET, action, params, classType, l);
+    }
+
+    public static Map<String, String> getInitParams(String key, String value) {
+        Map<String, String> params = new HashMap<>();
+        params.put(key, value);
+        return params;
     }
 
     ///////////////////////////////////////private static class and method
@@ -125,7 +145,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * request header
      */
-    private Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> mHeaders = new HashMap<>();
     /**
      * success listener
      */
@@ -137,8 +157,12 @@ public class HttpReq<T> extends Request<T> {
     private HttpReq(int method, String url, Map<String, String> params, Type classType, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         mParams = params;
+        mHeaders.put(TokenManager.KEY_TOKEN, TokenManager.getToken());
         mClassType = classType == null ? getClassType(listener, 0) : classType;
         mListener = listener;
+
+        LogUtil.i(TAG, "token: " + TokenManager.getToken());
+        LogUtil.i(TAG, url + (params == null ? "" : params.toString()));
     }
 
     protected Map<String, String> getParams() throws AuthFailureError {
@@ -149,6 +173,7 @@ public class HttpReq<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            LogUtil.i(TAG, jsonString);
             T parsedGSON = mGson.fromJson(jsonString, mClassType);
             return Response.success(parsedGSON,
                     HttpHeaderParser.parseCacheHeaders(response));
@@ -172,7 +197,40 @@ public class HttpReq<T> extends Request<T> {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        return headers;
+        return mHeaders;
+    }
+
+    @Override
+    public byte[] getBody() throws AuthFailureError {
+        Map<String, String> params = getParams();
+        if (params != null && params.size() > 0) {
+            return encodeParameters(params, getParamsEncoding());
+        }
+        return null;
+    }
+
+    /**
+     * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
+     */
+    private byte[] encodeParameters(Map<String, String> params, String paramsEncoding) {
+        StringBuilder encodedParams = new StringBuilder();
+        try {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                encodedParams.append(URLEncoder.encode(entry.getKey(), paramsEncoding));
+                encodedParams.append('=');
+                encodedParams.append(URLEncoder.encode(entry.getValue(), paramsEncoding));
+                encodedParams.append('&');
+            }
+            String encoded;
+            if (encodedParams.length() > 0) {
+                encoded = encodedParams.substring(0, encodedParams.length() - 1);
+            } else {
+                encoded = encodedParams.toString();
+            }
+            return encoded.getBytes(paramsEncoding);
+        } catch (UnsupportedEncodingException uee) {
+            throw new RuntimeException("Encoding not supported: " + paramsEncoding, uee);
+        }
     }
 
     /**

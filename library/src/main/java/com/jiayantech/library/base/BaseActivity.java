@@ -40,6 +40,14 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     }
 
+    protected void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    protected void setDisplayHomeAsUpEnabled() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
