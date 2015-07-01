@@ -26,12 +26,12 @@ public class ActivityFragment extends RefreshListFragment<User, AppResponse<List
     public void onInitView() {
         super.onInitView();
         setParams(new ActivityAdapter(null), ActivityBiz.ACTION_ACTIVITY_LIST);
-        HttpReq.post(ActivityBiz.ACTION_ACTIVITY_LIST, null, new ResponseListener<AppResponse<List<User>>>() {
-            @Override
-            public void onResponse(AppResponse<List<User>> response) {
-                List<User> list = response.data;
-                Toast.makeText(getActivity(), list.get(0).firstName, Toast.LENGTH_LONG).show();
-            }
-        });
+//        HttpReq.post(ActivityBiz.ACTION_ACTIVITY_LIST, null, new ResponseListener<AppResponse<List<User>>>() {
+//            @Override
+//            public void onResponse(AppResponse<List<User>> response) {
+//                List<User> list = response.data;
+//                Toast.makeText(getActivity(), list.get(0).firstName, Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 }

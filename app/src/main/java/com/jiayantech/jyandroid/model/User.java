@@ -7,7 +7,7 @@ package com.jiayantech.jyandroid.model;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class User {
+public class User extends BaseModel {
     public String firstName;
     public String lastName;
 }

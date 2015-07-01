@@ -1,86 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/id_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="65dp"
-        android:baselineAligned="false"
-        >
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
 
-        <ImageView
+        <View
             android:id="@+id/navigate_top_line"
             android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@android:color/black"
-            />
+            android:layout_height="1px"
+            android:background="@android:color/black" />
 
         <RadioGroup
             android:id="@+id/radiogroup_tab"
             android:layout_width="match_parent"
-            android:layout_height="60dip"
+            android:layout_height="@dimen/tab_height"
             android:layout_below="@+id/navigate_top_line"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            android:background="@color/font_gray"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="2dip"
+            android:paddingTop="5dip">
 
             <RadioButton
                 android:id="@+id/radio_beauty_with"
                 style="@style/main_tab"
                 android:layout_gravity="center_vertical"
-                android:drawablePadding="-5dp"
-                android:drawableTop="@android:drawable/btn_dropdown"
-                android:text="主页"
-                />
+                android:checked="true"
+                android:drawableTop="@drawable/img_radio_selector"
+                android:text="@string/beauty_with" />
 
             <RadioButton
                 android:id="@+id/radio_community"
                 style="@style/main_tab"
                 android:layout_gravity="center_vertical"
-                android:drawablePadding="-5dp"
-                android:drawableTop="@android:drawable/btn_dropdown"
-                />
+                android:drawableTop="@drawable/img_radio_selector"
+                android:text="@string/community" />
 
             <RadioButton
                 android:id="@+id/radio_activity"
                 style="@style/main_tab"
-                android:drawableTop="@android:drawable/btn_dropdown"
                 android:layout_gravity="center_vertical"
-                android:drawablePadding="-5dp"
-                />
+                android:drawableTop="@drawable/img_radio_selector"
+                android:text="@string/activity" />
 
             <RadioButton
                 android:id="@+id/radio_userinfo"
                 style="@style/main_tab"
-                android:drawableTop="@android:drawable/btn_dropdown"
                 android:layout_gravity="center_vertical"
-                android:drawablePadding="-5dp"/>
+                android:drawableTop="@drawable/img_radio_selector"
+                android:text="@string/userinfo" />
         </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dip"
+            android:layout_height="@dimen/tab_height"
             android:layout_below="@+id/navigate_top_line"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1.0"
                 android:gravity="center_horizontal|top"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/navigate_msg_count"
@@ -88,24 +81,21 @@
                 android:layout_height="20dp"
                 android:layout_weight="1.0"
                 android:gravity="right|top"
-                android:paddingLeft="18dp"
-                />
+                android:paddingLeft="18dp" />
 
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1.0"
                 android:gravity="center_horizontal|top"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1.0"
                 android:gravity="center_horizontal|top"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
         </LinearLayout>
     </RelativeLayout>
 
