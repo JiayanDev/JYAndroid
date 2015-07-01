@@ -31,17 +31,17 @@ public class BeautyWithFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        String path = "/storage/emulated/0/DCIM/Camera/IMG_20150321_224952.jpg";
-//        Bitmap bitmap = BitmapFactory.decodeFile(path);
-//
-//        HttpReq.uploadImage(bitmap, "hello.jpg", new ResponseListener() {
-//            @Override
-//            public void onResponse(Object o) {
-//                Log.d("Beautiful", "haha, upload success");
-//                ToastUtil.showMessage(getActivity(), "终于成功啦");
-//            }
-//        });
-        
+        String path = "/storage/emulated/0/DCIM/Camera/IMG_20150321_224952.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+
+        HttpReq.uploadImage(bitmap, "hello.jpg", new ResponseListener() {
+            @Override
+            public void onResponse(Object o) {
+                Log.d("Beautiful", "haha, upload success");
+                ToastUtil.showMessage(getActivity(), "终于成功啦");
+            }
+        });
+
     }
 
     @Nullable

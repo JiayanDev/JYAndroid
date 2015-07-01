@@ -8,10 +8,11 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,8 +47,13 @@ public class PostUploadRequest extends Request<String> {
                     HttpHeaderParser.parseCharset(networkResponse.headers));
 
             LogUtil.i("PostUploadRequest", mString);
+            JSONObject json = new JSONObject(mString);
+            String result = ((JSONObject)json.get("data")).getString("url");
             return Response.success(mString, HttpHeaderParser.parseCacheHeaders(networkResponse));
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return Response.error(new ParseError());
+        } catch (JSONException e) {
             e.printStackTrace();
             return Response.error(new ParseError());
         }
