@@ -36,7 +36,7 @@ public class UserBiz {
      *
      * @param l
      */
-    private static void register(LoginResponseListener l) {
+    private static void register(ResponseListener<?> l) {
         HttpReq.post(ACTION_RIGISTER, null, l);
     }
 
@@ -45,11 +45,11 @@ public class UserBiz {
      *
      * @param l
      */
-    public static void quickLogin(String configVersion, LoginResponseListener l) {
+    public static void quickLogin(String configVersion, ResponseListener<?> l) {
         if (TokenManager.checkEmptyToken()) {
             register(new LoginResponseListener(configVersion, l));
         } else {
-            HttpReq.post(ACTION_QUICK_LOGIN, HttpReq.getInitParams("configVersion", configVersion), l);
+            HttpReq.post(ACTION_QUICK_LOGIN + "?daddy=8", HttpReq.getInitParams("configVersion", configVersion), l);
         }
     }
 
@@ -60,7 +60,7 @@ public class UserBiz {
      * @param psw
      * @param l
      */
-    public static void login(String configVersion, String name, String psw, LoginResponseListener l) {
+    public static void login(String configVersion, String name, String psw, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
         params.put("configVersion", configVersion);
         params.put("name", name);
@@ -91,14 +91,11 @@ public class UserBiz {
     /**
      *
      */
-    public static class LoginResponseListener extends ResponseListener<AppResponse<Login>> {
+    private static class LoginResponseListener extends ResponseListener<AppResponse<Login>> {
         private String mConfigVersion;
-        private LoginResponseListener mResponseListener;
+        private ResponseListener mResponseListener;
 
-        public LoginResponseListener() {
-        }
-
-        public LoginResponseListener(String configVersion, LoginResponseListener l) {
+        public LoginResponseListener(String configVersion, ResponseListener l) {
             mConfigVersion = configVersion;
             mResponseListener = l;
         }
@@ -109,6 +106,8 @@ public class UserBiz {
             TokenManager.putToken(login.token);
             if (response.code == CODE_EXPIRE && mResponseListener != null && mConfigVersion != null) {
                 quickLogin(mConfigVersion, mResponseListener);
+            } else {
+                mResponseListener.onResponse(response);
             }
         }
     }

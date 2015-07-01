@@ -99,6 +99,7 @@ public class HttpReq<T> extends Request<T> {
      * @param l
      */
     public static void request(int method, String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
+        //method = Request.Method.GET;
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
         HttpReq request = new HttpReq<>(method, builderAction.toString(), params, classType, l, new ErrorListener(l));
@@ -136,8 +137,11 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Content type for request.
      */
+    //private static final String PROTOCOL_CONTENT_TYPE =
+    //        String.format("application/json; charset=%s", PROTOCOL_CHARSET);
     private static final String PROTOCOL_CONTENT_TYPE =
-            String.format("application/json; charset=%s", PROTOCOL_CHARSET);
+            "application/x-www-form-urlencoded";
+
     /**
      * request params
      */
@@ -155,7 +159,8 @@ public class HttpReq<T> extends Request<T> {
     private final Gson mGson = new Gson();
 
     private HttpReq(int method, String url, Map<String, String> params, Type classType, Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
+        super(method, (method == Request.Method.GET && params != null) ?
+                url + "?" + encodeParameters(params, PROTOCOL_CHARSET) : url, errorListener);
         mParams = params;
         mHeaders.put(TokenManager.KEY_TOKEN, TokenManager.getToken());
         mClassType = classType == null ? getClassType(listener, 0) : classType;
@@ -204,7 +209,7 @@ public class HttpReq<T> extends Request<T> {
     public byte[] getBody() throws AuthFailureError {
         Map<String, String> params = getParams();
         if (params != null && params.size() > 0) {
-            return encodeParameters(params, getParamsEncoding());
+            return encodeParameters(params, getParamsEncoding()).getBytes();
         }
         return null;
     }
@@ -212,7 +217,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
      */
-    private byte[] encodeParameters(Map<String, String> params, String paramsEncoding) {
+    private static String encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -227,7 +232,7 @@ public class HttpReq<T> extends Request<T> {
             } else {
                 encoded = encodedParams.toString();
             }
-            return encoded.getBytes(paramsEncoding);
+            return encoded;
         } catch (UnsupportedEncodingException uee) {
             throw new RuntimeException("Encoding not supported: " + paramsEncoding, uee);
         }
@@ -245,4 +250,3 @@ public class HttpReq<T> extends Request<T> {
         return null;
     }
 }
-

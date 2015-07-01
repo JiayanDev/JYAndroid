@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.model;
 
+import java.util.Map;
+
 /**
  * Created by janseon on 2015/6/30.
  *
@@ -9,4 +11,10 @@ package com.jiayantech.jyandroid.model;
  */
 public class Login {
     public String token;
+    public ProjectCategory projectCategory;
+
+    public static class ProjectCategory {
+        public int version;
+        public Map<String, String> data;
+    }
 }
