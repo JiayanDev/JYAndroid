@@ -3,6 +3,9 @@ package com.jiayantech.jyandroid.biz;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by janseon on 2015/6/30.
  *
@@ -20,7 +23,10 @@ public class DiaryBiz {
     private static final String ACTION_MY_DIARY = MODEL + "/my_diary";
 
     public static void create(String categoryId, String operationTime, String hospitalId, String doctorId, String price, String satisfyLevel, String tags, String previousPhotoes, String currentPhotoes, ResponseListener<?> l) {
-        //HttpReq.getInitParams("configVersion", configVersion);
+        Map<String, String> params = new HashMap<>();
+        params.put("categoryId", categoryId);
+        params.put("operationTime", operationTime);
+        params.put("hospitalId", hospitalId);
         HttpReq.post(ACTION_CREATE, null, l);
     }
 

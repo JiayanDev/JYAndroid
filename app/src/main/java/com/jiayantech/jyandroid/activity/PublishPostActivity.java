@@ -1,21 +1,26 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.model.BaseModel;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by janseon on 2015/6/30.
@@ -38,20 +43,17 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     static final int REQUEST_CODE_CROP_IMG = 3;
 
-    //private ImageView img_write;
     private View layout_photo;
     private ImageView img_photo;
-    //private TextView txt_time;
-    //private TextView txt_addr;
     private EditText edit_content;
-    private Button btn_delete;
+    private TextView txt_category;
 
     private Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trip_track);
+        setContentView(R.layout.activity_publish_post);
         findViews();
         setViewsContent();
         setViewsListener();
@@ -61,40 +63,16 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     protected void findViews() {
         layout_photo = findViewById(R.id.layout_photo);
         img_photo = (ImageView) findViewById(R.id.img_photo);
-        //img_write = (ImageView) findViewById(R.id.img_write);
-        //txt_time = (TextView) findViewById(R.id.txt_time);
-        //txt_addr = (TextView) findViewById(R.id.txt_addr);
         edit_content = (EditText) findViewById(R.id.edit_content);
-        btn_delete = (Button) findViewById(R.id.btn_delete);
+        txt_category = (TextView) findViewById(R.id.txt_category);
     }
 
     protected void setViewsContent() {
-        setPost("", null);
-    }
-
-    private void setPost(String tripId, String json) {
-        if (TextUtils.isEmpty(json)) {
-            setTitle("add_trip_detail");
-            post = new Post();
-            btn_delete.setVisibility(View.GONE);
-        } else {
-            setTitle("edit_trip_detail");
-            if (0 > 0) {
-                img_photo.setVisibility(View.VISIBLE);
-                BitmapBiz.display(img_photo, "");
-            } else {
-                img_photo.setVisibility(View.GONE);
-            }
-            //txt_time.setText("tripNoteDetail.TSectionTm");
-            //txt_addr.setText("tripNoteDetail.CAddr");
-            edit_content.setText("tripNoteDetail.CContent");
-        }
-        //tripNoteDetail.setCTripId(tripId);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.post_actions, menu);
+        getMenuInflater().inflate(R.menu.publish_action, menu);
         return true;
     }
 
@@ -104,37 +82,31 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.action_diary:
+            case R.id.action_publish:
 //                String time = txt_time.getText().toString();
 //                if (TextUtils.isEmpty(time)) {
 //                    ToastUtil.showMessage("time null");
 //                    return true;
 //                }
 
-                ProgressDialog dialog = new ProgressDialog(this);
-                dialog.show();
-//                DialogUtil.showRequestProgressDialog(_this());
-//                AsyncBiz.updateTripNoteDtl(tripNoteDetail, new AsyncCallBack(TripNoteDetail.class) {
-//                    @Override
-//                    public void onSuccessResponse(Response t) {
-//                        DialogUtil.dismissDialog();
-//                        ToastUtil.showMessage(t.successMsg);
-//                        if (TextUtils.isEmpty(tripNoteDetail.CPk)) {
-//                            TripNoteDetail responseTripNoteDetail = (TripNoteDetail) t.obj;
-//                            tripNoteDetail.setCPk(responseTripNoteDetail.CPk);
-//                            tripNoteDetail.updateCImgPk(responseTripNoteDetail.CImg);
-//                            title_view.setTitleText(R.string.edit_trip_detail);
-//                            btn_delete.setVisibility(View.VISIBLE);
-//                            BroadcastFilters.sendBroadcast(BroadcastFilters.ACTION_ADD_TRIP_DETAIL, tripNoteDetail);
-//                        } else {
-//                            BroadcastFilters.sendBroadcast(BroadcastFilters.ACTION_UPDATE_TRIP_DETAIL, tripNoteDetail);
-//                        }
-//                        finish();
-//                    }
-//                });
-                return true;
-            case R.id.action_topic:
+                showProgressDialog();
+                String categoryId = "11";
+                String content = "11";
+                String photoUrls = "[]";
+                TopicBiz.create(categoryId, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
+                    @Override
+                    public void onResponse(AppResponse<BaseModel> response) {
+                        BaseModel model = response.data;
+                        dismissProgressDialog();
+                        ToastUtil.showMessage("id=" + model.id);
+                    }
 
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        dismissProgressDialog();
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -143,8 +115,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     protected void setViewsListener() {
         setDisplayHomeAsUpEnabled();
         layout_photo.setOnClickListener(this);
-        //img_write.setOnClickListener(this);
-        btn_delete.setOnClickListener(this);
+        txt_category.setOnClickListener(this);
     }
 
     @Override
@@ -153,24 +124,20 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             case R.id.layout_photo:
                 showUploadDialog(this, false);
                 break;
-            //case R.id.img_write:
-            // IntentUtil.gotoActivity(this, MapActivity.class);
-            //IntentUtil.gotoActivity(this, MapTracksActivity.class);
-            //    break;
-            case R.id.btn_delete:
-//                DialogUtil.showRequestProgressDialog(this);
-//                AsyncBiz.deleteTripNoteDtl(tripNoteDetail.CPk, new AsyncCallBack(AnnualFeeInfo.class) {
-//                    @Override
-//                    public void onSuccessResponse(Response t) {
-//                        DialogUtil.dismissDialog();
-//                        ToastUtil.showMessage(t.successMsg);
-//                        tripNoteDetail = new TripNoteDetail();
-//                        title_view.setTitleText(R.string.add_trip_detail);
-//                        btn_delete.setVisibility(View.GONE);
-//                        BroadcastFilters.sendBroadcast(BroadcastFilters.ACTION_DEL_TRIP_DETAIL, tripNoteDetail);
-//                        finish();
-//                    }
-//                });
+            case R.id.txt_category:
+                new AlertDialog.Builder(this)
+                        .setTitle("选择分类")
+                        .setItems(R.array.tab_title, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
                 break;
         }
     }

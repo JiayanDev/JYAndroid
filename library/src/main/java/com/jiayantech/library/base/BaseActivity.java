@@ -1,5 +1,6 @@
 package com.jiayantech.library.base;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -89,5 +90,23 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     public void scrollToFinishActivity() {
         Utils.convertActivityToTranslucent(this);
         this.getSwipeBackLayout().scrollToFinishActivity();
+    }
+
+
+    /////////////////////////
+    ProgressDialog mProgressDialog;
+
+    protected void showProgressDialog() {
+        dismissProgressDialog();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.show();
+    }
+
+    protected void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
+        }
+
     }
 }

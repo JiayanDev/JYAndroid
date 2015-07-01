@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
+import com.jiayantech.library.R;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
@@ -39,6 +40,8 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
         mAction = action;
         mType = HttpReq.getClassType(this, 1);
         ultimateRecyclerView.setAdapter(mAdapter);
+        mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
+                .inflate(R.layout.custom_bottom_progressbar, null));
         onRefresh();
     }
 
@@ -79,10 +82,10 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
     private StoreHouseHeader storeHouseHeader;
 
 
-
     @Override
     protected View onInflateView(LayoutInflater inflater, ViewGroup container) {
-        ultimateRecyclerView = new CustomUltimateRecyclerview(container.getContext());
+        ultimateRecyclerView = (CustomUltimateRecyclerview) inflater.inflate(R.layout.ultimate_recycler_view, container, false);
+        //ultimateRecyclerView = new CustomUltimateRecyclerview(container.getContext());
         return ultimateRecyclerView;
     }
 
@@ -92,15 +95,15 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
         linearLayoutManager = new LinearLayoutManager(getActivity());
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.enableLoadmore();
-        //ultimateRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false));
-        ultimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {
-            @Override
-            public void onParallaxScroll(float percentage, float offset, View parallax) {
-                //Drawable c = toolbar.getBackground();
-                //c.setAlpha(Math.round(127 + percentage * 128));
-                //toolbar.setBackgroundDrawable(c);
-            }
-        });
+//        ultimateRecyclerView.setParallaxHeader(getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false));
+//        ultimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {
+//            @Override
+//            public void onParallaxScroll(float percentage, float offset, View parallax) {
+//                //Drawable c = toolbar.getBackground();
+//                //c.setAlpha(Math.round(127 + percentage * 128));
+//                //toolbar.setBackgroundDrawable(c);
+//            }
+//        });
 
         ultimateRecyclerView.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override

@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 
 /**
@@ -23,9 +24,10 @@ public class ActivityAdapter extends BaseSimpleModelAdapter<User> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(parent, android.R.layout.simple_list_item_1);
+    public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
+        return new ViewHolder(viewGroup, android.R.layout.simple_list_item_1);
     }
+
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<User> {
         public TextView mTextView;

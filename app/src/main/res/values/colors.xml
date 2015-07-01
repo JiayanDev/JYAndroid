@@ -3,6 +3,7 @@
     <color name="bg_black">#ff35393c</color>
     <color name="bg_item_black">#ff2b2b2b</color>
     <color name="bg_btn_black">#ff111818</color>
+    <color name="bg_gray">#ffdddddd</color>
 
     <!-- 字体 -->
     <color name="font_white_gray">#ff939aa0</color>
