@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.jiayantech.library.http.BitmapBiz;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,10 @@ class BannerPagerAdapter extends PagerAdapter{
         mContext = context;
         mImageList = list;
         mImageViewList = new ArrayList<>();
+        for(int i = 0; i < mImageList.size(); i++){
+            ImageView imageView = new ImageView(context);
+            mImageViewList.add(imageView);
+        }
     }
 
     @Override
@@ -45,12 +49,9 @@ class BannerPagerAdapter extends PagerAdapter{
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        if(mImageViewList.size() <= position + 1){
-            ImageView imageView = new ImageView(mContext);
-            mImageViewList.add(position, imageView);
-        }
-        ImageLoader.getInstance().displayImage(mImageList.get(position).imageUrl,
-                mImageViewList.get(position));
+//        ImageLoader.getInstance().displayImage(mImageList.get(position).imageUrl,
+//                mImageViewList.get(position));
+        BitmapBiz.display(mImageViewList.get(position), mImageList.get(position).imageUrl);
         container.addView(mImageViewList.get(position));
         return mImageViewList.get(position);
     }

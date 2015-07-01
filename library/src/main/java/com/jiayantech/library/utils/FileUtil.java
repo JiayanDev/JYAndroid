@@ -59,4 +59,15 @@ public class FileUtil {
         final String cacheDir = "/Android/data/" + context.getPackageName() + "/cache/";
         return new File(Environment.getExternalStorageDirectory().getPath() + cacheDir);
     }
+
+    /**
+     * 根据路径获取文件名
+     * @param path
+     * @return
+     */
+    public static String getFileName(String path){
+        File file = new File(path);
+        String result = file.getName();
+        return result;
+    }
 }

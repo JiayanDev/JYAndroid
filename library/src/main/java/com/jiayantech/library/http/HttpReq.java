@@ -1,5 +1,6 @@
 package com.jiayantech.library.http;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.TokenManager;
+import com.jiayantech.library.http.imageupload.FormImage;
+import com.jiayantech.library.http.imageupload.PostUploadRequest;
 import com.jiayantech.library.utils.LogUtil;
 
 /**
@@ -104,6 +107,34 @@ public class HttpReq<T> extends Request<T> {
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
         HttpReq request = new HttpReq<>(method, builderAction.toString(), params, classType, l, new ErrorListener(l));
         request.setShouldCache(false);
+        sVolleyQueue.add(request);
+    }
+
+    /**
+     *
+     * @param bitmap
+     * @param fileName
+     * @param listener
+     */
+    public static void uploadImage(Bitmap bitmap, String fileName, ResponseListener listener){
+        FormImage formImage = new FormImage(bitmap, fileName);
+        uploadImage(formImage, listener);
+    }
+
+    /**
+     *
+     * @param filePath
+     * @param listener
+     */
+    public static void uploadImage(String filePath, ResponseListener listener){
+        FormImage formImage = new FormImage(filePath);
+        uploadImage(formImage, listener);
+    }
+
+    private static void uploadImage(FormImage formImage, ResponseListener listener){
+        Request request = new PostUploadRequest(Request.Method.POST,
+                "http://10.0.1.23:8000/api/uploadImage/", formImage,
+                new ErrorListener(listener), listener);
         sVolleyQueue.add(request);
     }
 
