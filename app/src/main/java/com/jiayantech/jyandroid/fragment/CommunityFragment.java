@@ -45,7 +45,6 @@ public class CommunityFragment extends RefreshListFragment<PostHeader, AppRespon
     public void onInitView() {
         super.onInitView();
         setParams(new PostAdapter(null), ActivityBiz.ACTION_ACTIVITY_LIST);
-
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false);
         ultimateRecyclerView.setParallaxHeader(headerView);
     }
