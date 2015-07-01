@@ -7,8 +7,7 @@ package com.jiayantech.jyandroid.model;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class DiaryHeader {
-    public long id;
+public class DiaryHeader extends BaseModel{
     public String hospitalId;
     public String doctorId;
     public String projectId;
@@ -17,5 +16,4 @@ public class DiaryHeader {
     public long price;
     public String previousPhoto;
     public String currentPhoto;
-    public long createTime;
 }

@@ -8,6 +8,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.model.PostHeader;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
 
@@ -23,9 +24,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<PostHeader> {
         super(list);
     }
 
-
     @Override
-    public BaseSimpleModelAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup parent) {
         return new ViewHolder(parent, R.layout.item_post);
     }
 

@@ -7,5 +7,8 @@ package com.jiayantech.jyandroid.model;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Event extends BaseModel{
+public class BaseModel {
+    public long id;
+    public long createTime;
+
 }
