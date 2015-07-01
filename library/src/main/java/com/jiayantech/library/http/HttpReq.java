@@ -29,8 +29,8 @@ import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.TokenManager;
-import com.jiayantech.library.comm.imageupload.FormImage;
-import com.jiayantech.library.comm.imageupload.PostUploadRequest;
+import com.jiayantech.library.http.imageupload.FormImage;
+import com.jiayantech.library.http.imageupload.PostUploadRequest;
 import com.jiayantech.library.utils.LogUtil;
 
 /**
@@ -131,7 +131,8 @@ public class HttpReq<T> extends Request<T> {
     }
 
     private static void uploadImage(FormImage formImage, ResponseListener listener){
-        Request request = new PostUploadRequest(Request.Method.POST, null, formImage,
+        Request request = new PostUploadRequest(Request.Method.POST,
+                "http://10.0.1.23:8000/api/uploadImage/", formImage,
                 new ErrorListener(listener), listener);
         sVolleyQueue.add(request);
     }

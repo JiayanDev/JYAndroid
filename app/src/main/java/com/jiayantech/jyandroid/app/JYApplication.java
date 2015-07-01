@@ -1,15 +1,9 @@
 package com.jiayantech.jyandroid.app;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.jiayantech.library.base.BaseApplication;
-import com.jiayantech.library.comm.imageupload.ImageUploader;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
@@ -24,33 +18,33 @@ public class JYApplication extends BaseApplication {
         super.onCreate();
         initContext(getApplicationContext());
         initUniversalImageLoader(getApplicationContext());
-        initImageUploader();
+        //initImageUploader();
     }
 
     private void initImageUploader() {
-        ImageUploader.getInstance().init();
+        //ImageUploader.getInstance().init();
     }
 
     private void initUniversalImageLoader(Context applicationContext) {
-        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .resetViewBeforeLoading(true).cacheOnDisk(true)
-                .cacheInMemory(true).build();
-        ImageLoaderConfiguration imageLoaderConfig
-                = new ImageLoaderConfiguration.Builder(applicationContext)
-                .writeDebugLogs()
-                .memoryCacheExtraOptions(480, 800)
-                .defaultDisplayImageOptions(displayImageOptions)
-                .threadPoolSize(5)
-                .memoryCacheSize(10 * 1024 * 1024)
-                .diskCacheSize(50 * 1024 * 1024)
-                .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-                .build();
-
-        ImageLoader.getInstance().init(imageLoaderConfig);
+//        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+//                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+//                .bitmapConfig(Bitmap.Config.RGB_565)
+//                .cacheInMemory(true)
+//                .cacheOnDisk(true)
+//                .resetViewBeforeLoading(true).cacheOnDisk(true)
+//                .cacheInMemory(true).build();
+//        ImageLoaderConfiguration imageLoaderConfig
+//                = new ImageLoaderConfiguration.Builder(applicationContext)
+//                .writeDebugLogs()
+//                .memoryCacheExtraOptions(480, 800)
+//                .defaultDisplayImageOptions(displayImageOptions)
+//                .threadPoolSize(5)
+//                .memoryCacheSize(10 * 1024 * 1024)
+//                .diskCacheSize(50 * 1024 * 1024)
+//                .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+//                .build();
+//
+//        ImageLoader.getInstance().init(imageLoaderConfig);
     }
 
 

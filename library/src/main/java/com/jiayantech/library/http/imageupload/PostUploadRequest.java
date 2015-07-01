@@ -1,4 +1,4 @@
-package com.jiayantech.library.comm.imageupload;
+package com.jiayantech.library.http.imageupload;
 
 
 import com.android.volley.AuthFailureError;
@@ -8,7 +8,10 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,7 +34,7 @@ public class PostUploadRequest extends Request<String> {
         mListener = listener;
         setShouldCache(false);
         mFormImage = formImage;
-        setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+        setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     }
@@ -41,6 +44,8 @@ public class PostUploadRequest extends Request<String> {
         try {
             String mString = new String(networkResponse.data,
                     HttpHeaderParser.parseCharset(networkResponse.headers));
+
+            LogUtil.i("PostUploadRequest", mString);
             return Response.success(mString, HttpHeaderParser.parseCacheHeaders(networkResponse));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -67,6 +72,9 @@ public class PostUploadRequest extends Request<String> {
         sb.append("Content-Disposition: form-data;");
         sb.append(" name=\"");
         sb.append(mFormImage.getName());
+        sb.append("\"");
+        sb.append("; filename=\"");
+        sb.append(mFormImage.getFileName());
         sb.append("\"");
         sb.append("\r\n");
 
