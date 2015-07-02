@@ -20,4 +20,6 @@
     <string name="community">社区</string>
     <string name="activity">活动</string>
     <string name="userinfo">我</string>
+    <string name="next">next</string>
+    <string name="finish">finish</string>
 </resources>

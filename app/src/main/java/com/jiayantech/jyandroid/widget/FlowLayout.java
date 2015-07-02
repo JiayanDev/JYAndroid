@@ -49,13 +49,13 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
         addView(button, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     }
 
-//    public void addView(String item, int index) {
-//        Button button = new Button(getContext());
-//        button.setId(index);
-//        button.setText(item);
-//        button.setOnClickListener(this);
-//        addView(button, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-//    }
+    public void addView(String item) {
+        Button button = new Button(getContext());
+        button.setId(getChildCount());
+        button.setText(item);
+        button.setOnClickListener(this);
+        addView(button, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    }
 
     @Override
     protected LayoutParams generateLayoutParams(LayoutParams p) {

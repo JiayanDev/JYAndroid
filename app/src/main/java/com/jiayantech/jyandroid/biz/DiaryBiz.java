@@ -22,11 +22,17 @@ public class DiaryBiz {
     public static final String ACTION_MY_HEADER = MODEL + "/my_headers";
     private static final String ACTION_MY_DIARY = MODEL + "/my_diarys";
 
-    public static void create(String categoryId, String operationTime, String hospitalId, String doctorId, String price, String satisfyLevel, String tags, String previousPhotoes, String currentPhotoes, ResponseListener<?> l) {
+    public static void create(String categoryId, long operationTime, String hospitalId, String doctorId, String price, float satisfyLevel, String tags, String previousPhotoes, String currentPhotoes, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
         params.put("categoryId", categoryId);
-        params.put("operationTime", operationTime);
+        params.put("operationTime", operationTime + "");
         params.put("hospitalId", hospitalId);
+        params.put("doctorId", doctorId);
+        params.put("price", price);
+        params.put("satisfyLevel", satisfyLevel + "");
+        params.put("tags", tags);
+        params.put("previousPhotoes", previousPhotoes);
+        params.put("currentPhotoes", currentPhotoes);
         HttpReq.post(ACTION_CREATE, null, l);
     }
 
