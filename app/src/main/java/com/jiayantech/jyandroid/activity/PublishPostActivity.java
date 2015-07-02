@@ -81,7 +81,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                break;
+                return true;
             case R.id.action_publish:
 //                String time = txt_time.getText().toString();
 //                if (TextUtils.isEmpty(time)) {

@@ -36,6 +36,10 @@ public class DataShared {
         return Spkeywords.getString(key, "");
     }
 
+    public String get(String key, String defValue) {
+        return Spkeywords.getString(key, defValue);
+    }
+
     /**
      * 保存数据
      */

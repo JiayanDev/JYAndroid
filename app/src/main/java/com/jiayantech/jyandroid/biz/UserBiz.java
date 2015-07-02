@@ -1,7 +1,8 @@
 package com.jiayantech.jyandroid.biz;
 
+import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Login;
-import com.jiayantech.library.comm.TokenManager;
+import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
@@ -22,6 +23,7 @@ public class UserBiz {
      * token过期
      */
     private static final int CODE_EXPIRE = -40;
+    private static final String KEY_CONFIG_VERSION = "configVersion";
 
     private static final String MODEL = "user";
 
@@ -36,7 +38,7 @@ public class UserBiz {
      *
      * @param l
      */
-    private static void register(ResponseListener<?> l) {
+    private static void register(LoginResponseListener l) {
         HttpReq.post(ACTION_RIGISTER, null, l);
     }
 
@@ -45,11 +47,12 @@ public class UserBiz {
      *
      * @param l
      */
-    public static void quickLogin(String configVersion, ResponseListener<?> l) {
-        if (TokenManager.checkEmptyToken()) {
-            register(new LoginResponseListener(configVersion, l));
+    public static void quickLogin(LoginResponseListener l) {
+        if (ConfigManager.checkEmptyToken()) {
+            register(l);
         } else {
-            HttpReq.post(ACTION_QUICK_LOGIN + "?daddy=8", HttpReq.getInitParams("configVersion", configVersion), l);
+            String configVersion = ConfigManager.getConfig(KEY_CONFIG_VERSION, "0");
+            HttpReq.post(ACTION_QUICK_LOGIN, HttpReq.getInitParams(KEY_CONFIG_VERSION, configVersion), l);
         }
     }
 
@@ -60,7 +63,7 @@ public class UserBiz {
      * @param psw
      * @param l
      */
-    public static void login(String configVersion, String name, String psw, ResponseListener<?> l) {
+    public static void login(String configVersion, String name, String psw, LoginResponseListener l) {
         Map<String, String> params = new HashMap<>();
         params.put("configVersion", configVersion);
         params.put("name", name);
@@ -76,7 +79,7 @@ public class UserBiz {
      * @param l
      */
     public static void bindAccount(String name, String psw, ResponseListener<?> l) {
-        if (!TokenManager.checkTokenWithTips()) return;
+        if (!ConfigManager.checkTokenWithTips()) return;
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("psw", psw);
@@ -84,31 +87,41 @@ public class UserBiz {
     }
 
     public static void logout(ResponseListener<?> l) {
-        if (!TokenManager.checkTokenWithTips()) return;
+        if (!ConfigManager.checkTokenWithTips()) return;
         HttpReq.post(ACTION_LOGOUT, null, l);
     }
 
     /**
      *
      */
-    private static class LoginResponseListener extends ResponseListener<AppResponse<Login>> {
-        private String mConfigVersion;
-        private ResponseListener mResponseListener;
+    public final static class LoginResponseListener extends ResponseListener<AppResponse<Login>> {
+        private Runnable mRunnable;
 
-        public LoginResponseListener(String configVersion, ResponseListener l) {
-            mConfigVersion = configVersion;
-            mResponseListener = l;
+        public LoginResponseListener() {
+        }
+
+        public LoginResponseListener setRunnable(Runnable r) {
+            mRunnable = r;
+            return this;
         }
 
         @Override
         public void onResponse(AppResponse<Login> response) {
             Login login = response.data;
-            TokenManager.putToken(login.token);
-            if (response.code == CODE_EXPIRE && mResponseListener != null && mConfigVersion != null) {
-                quickLogin(mConfigVersion, mResponseListener);
-            } else {
-                mResponseListener.onResponse(response);
+            ConfigManager.putToken(login.token);
+            if (login.projectCategory != null) {
+                UserManger.saveLogin(login);
+                if (mRunnable != null) {
+                    mRunnable.run();
+                }
+                return;
             }
+            quickLogin(this);
+//            if (response.code == CODE_EXPIRE && mResponseListener != null && mConfigVersion != null) {
+//                quickLogin(mConfigVersion, mResponseListener);
+//            } else {
+//                mResponseListener.onResponse(response);
+//            }
         }
     }
 }
