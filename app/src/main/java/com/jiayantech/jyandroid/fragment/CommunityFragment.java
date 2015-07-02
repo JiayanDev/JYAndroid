@@ -6,6 +6,7 @@ import android.view.View;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.DiaryHeaderAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
+import com.jiayantech.jyandroid.adapter.TopicAdapter;
 import com.jiayantech.jyandroid.biz.ActivityBiz;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.model.DiaryHeader;
@@ -34,8 +35,7 @@ public class CommunityFragment extends RefreshListFragment<Topic, AppResponse<Li
     public void onInitView() {
         super.onInitView();
         //setParams(new PostAdapter(null), ActivityBiz.ACTION_TOPIC_LIST);
-        //setParams(new DiaryHeaderAdapter(getActivity(), list), ActivityBiz.ACTION_ACTIVITY_LIST);
-        //setParams(new PostAdapter(null), TopicBiz.AC);
+        setParams(new TopicAdapter(null), TopicBiz.ACTION_TOPIC_LIST);
         View headerView = getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false);
         ultimateRecyclerView.setParallaxHeader(headerView);
     }

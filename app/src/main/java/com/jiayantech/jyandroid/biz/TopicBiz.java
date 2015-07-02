@@ -20,7 +20,7 @@ public class TopicBiz {
 
     private static final String ACTION_CREATE = MODEL + "/create";
     private static final String ACTION_MY_TOPIC = MODEL + "/my_topic";
-    private static final String ACTION_TOPIC_LIST = MODEL + "/getTopicList";
+    public static final String ACTION_TOPIC_LIST = MODEL + "/getTopicList";
 
     public static void create(String categoryId, String content, String photoUrls, ResponseListener<AppResponse<BaseModel>> l) {
         Map<String, String> params = new HashMap<>();
