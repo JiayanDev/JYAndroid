@@ -19,13 +19,15 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        UserBiz.quickLogin("0", new ResponseListener<AppResponse<Login>>() {
-            @Override
-            public void onResponse(AppResponse<Login> response) {
-                TokenManager.putToken(response.data.token);
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+//        UserBiz.quickLogin("0", new ResponseListener<AppResponse<Login>>() {
+//            @Override
+//            public void onResponse(AppResponse<Login> response) {
+//                TokenManager.putToken(response.data.token);
+//                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//                finish();
+//            }
+//        });
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
