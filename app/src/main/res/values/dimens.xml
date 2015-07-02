@@ -2,4 +2,6 @@
 <resources>
     <dimen name="banner_height">150dp</dimen>
     <dimen name="tab_height">55dip</dimen>
+
+    <dimen name="diary_header_cover_size">50dp</dimen>
 </resources>

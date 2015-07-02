@@ -31,6 +31,7 @@ import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.imageupload.FormImage;
 import com.jiayantech.library.http.imageupload.PostUploadRequest;
+import com.jiayantech.library.http.imageupload.PostUploadRequest2;
 import com.jiayantech.library.utils.LogUtil;
 
 import org.json.JSONException;
@@ -137,6 +138,7 @@ public class HttpReq<T> extends Request<T> {
         FormImage formImage = new FormImage(filePath);
         uploadImage(formImage, listener);
     }
+
 
     private static void uploadImage(FormImage formImage, ResponseListener listener) {
         Request request = new PostUploadRequest(Request.Method.POST,

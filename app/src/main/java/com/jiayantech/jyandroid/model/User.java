@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.model;
 
+import com.jiayantech.library.base.BaseModel;
+
 /**
  * Created by 健兴 on 2015/6/26.
  *

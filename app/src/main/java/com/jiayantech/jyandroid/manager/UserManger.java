@@ -39,4 +39,8 @@ public class UserManger {
         }
         sProjectCategoryTopLevels = new ArrayList(sProjectCategoryLevels.keySet());
     }
+
+    public List<String> getProjectCategoryTopLevels(){
+        return sProjectCategoryTopLevels;
+    }
 }

@@ -1,6 +1,6 @@
 package com.jiayantech.jyandroid.biz;
 
-import com.jiayantech.jyandroid.model.BaseModel;
+import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
@@ -20,6 +20,7 @@ public class TopicBiz {
 
     private static final String ACTION_CREATE = MODEL + "/create";
     private static final String ACTION_MY_TOPIC = MODEL + "/my_topic";
+    private static final String ACTION_TOPIC_LIST = MODEL + "/getTopicList";
 
     public static void create(String categoryId, String content, String photoUrls, ResponseListener<AppResponse<BaseModel>> l) {
         Map<String, String> params = new HashMap<>();
@@ -33,5 +34,13 @@ public class TopicBiz {
 
     public static void myTopic(String headerId, String sinceId, String maxId, ResponseListener<?> l) {
         HttpReq.post(ACTION_MY_TOPIC, null, l);
+    }
+
+    public static void getTopicList(String sinceId, String maxId, ResponseListener<?> l){
+        Map<String, String> params = new HashMap<>();
+        params.put("daddy", "8");
+        params.put("sinceId", sinceId);
+        params.put("maxId", maxId);
+        HttpReq.post(ACTION_TOPIC_LIST, params, l);
     }
 }

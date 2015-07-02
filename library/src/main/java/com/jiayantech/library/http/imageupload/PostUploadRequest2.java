@@ -1,13 +1,12 @@
 package com.jiayantech.library.http.imageupload;
 
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 
@@ -21,17 +20,17 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by liangzili on 15/6/30.
  */
-public class PostUploadRequest extends Request<String> {
-    private ResponseListener mListener;
+public class PostUploadRequest2 extends JsonObjectRequest {
+    private Response.Listener<JSONObject> mListener;
     private String BOUNDARY = "-------JIAYAN-----------2015-06-30";
     private String MULTIPART_FORM_DATA = "multipart/form-data";
 
     private FormImage mFormImage;
 
 
-    public PostUploadRequest(int method, String url, FormImage formImage,
-                             Response.ErrorListener errListener, ResponseListener listener) {
-        super(method, url, errListener);
+    public PostUploadRequest2(int method, String url, FormImage formImage,
+                             Response.ErrorListener errListener, Response.Listener<JSONObject> listener) {
+        super(Method.POST, url, listener, errListener);
         mListener = listener;
         setShouldCache(false);
         mFormImage = formImage;
@@ -41,15 +40,14 @@ public class PostUploadRequest extends Request<String> {
     }
 
     @Override
-    protected Response<String> parseNetworkResponse(NetworkResponse networkResponse) {
+    protected Response<JSONObject> parseNetworkResponse(NetworkResponse networkResponse) {
         try {
             String mString = new String(networkResponse.data,
                     HttpHeaderParser.parseCharset(networkResponse.headers));
 
             LogUtil.i("PostUploadRequest", mString);
             JSONObject json = new JSONObject(mString);
-            String result = ((JSONObject)json.get("data")).getString("url");
-            return Response.success(mString, HttpHeaderParser.parseCacheHeaders(networkResponse));
+            return Response.success(json, HttpHeaderParser.parseCacheHeaders(networkResponse));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return Response.error(new ParseError());
@@ -60,12 +58,12 @@ public class PostUploadRequest extends Request<String> {
     }
 
     @Override
-    protected void deliverResponse(String s) {
-        mListener.onResponse(s);
+    protected void deliverResponse(JSONObject jsonObject) {
+        mListener.onResponse(jsonObject);
     }
 
     @Override
-    public byte[] getBody() throws AuthFailureError {
+    public byte[] getBody()  {
         if(mFormImage == null){
             return super.getBody();
         }
