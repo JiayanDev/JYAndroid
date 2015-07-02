@@ -1,10 +1,12 @@
 package com.jiayantech.library.base;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,6 +49,15 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     protected void setDisplayHomeAsUpEnabled() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -107,6 +118,10 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
             mProgressDialog.dismiss();
             mProgressDialog = null;
         }
+    }
 
+    ///
+    protected void startActivity(Class<?> cls) {
+        startActivity(new Intent(this, cls));
     }
 }

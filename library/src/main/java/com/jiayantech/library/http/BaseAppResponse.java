@@ -8,8 +8,7 @@ package com.jiayantech.library.http;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class AppResponse<T> extends BaseAppResponse {
-    public T data;
-    public Object extend;
-
+public class BaseAppResponse {
+    public int code;
+    public String msg;
 }

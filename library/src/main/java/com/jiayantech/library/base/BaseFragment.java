@@ -1,5 +1,6 @@
 package com.jiayantech.library.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,4 +47,7 @@ public abstract class BaseFragment extends Fragment {
         return mRoot.findViewById(id);
     }
 
+    protected void startActivity(Class<?> cls) {
+        startActivity(new Intent(getActivity(), cls));
+    }
 }

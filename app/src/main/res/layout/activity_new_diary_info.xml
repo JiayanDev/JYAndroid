@@ -1,0 +1,108 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/layout_selected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+
+        <TextView
+            android:id="@+id/txt_project"
+            style="@style/text_item_style"
+            android:drawableLeft="@drawable/ic_book_black_24dp"
+            android:drawableRight="@drawable/img_right_arrow_selector"
+            android:text="项目" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+
+        <TextView
+            android:id="@+id/txt_time"
+            style="@style/text_item_style"
+            android:drawableLeft="@drawable/ic_book_black_24dp"
+            android:drawableRight="@drawable/img_right_arrow_selector"
+            android:hint="input the time"
+            android:text="时间" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+
+        <TextView
+            android:id="@+id/txt_doctor"
+            style="@style/text_item_style"
+            android:drawableLeft="@drawable/ic_book_black_24dp"
+            android:drawableRight="@drawable/img_right_arrow_selector"
+            android:hint="input the time"
+            android:text="医生" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+
+        <TextView
+            android:id="@+id/txt_price"
+            style="@style/text_item_style"
+            android:drawableLeft="@drawable/ic_book_black_24dp"
+            android:drawableRight="@drawable/img_right_arrow_selector"
+            android:hint="input the price"
+            android:text="价格" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dip">
+
+            <ImageView
+                android:id="@+id/img_level_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_book_black_24dp" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@id/img_level_left"
+                android:numStars="5"
+                android:rating="1.5" />
+
+            <TextView
+                android:id="@+id/txt_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="满意" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/font_gray" />
+    </LinearLayout>
+</ScrollView>

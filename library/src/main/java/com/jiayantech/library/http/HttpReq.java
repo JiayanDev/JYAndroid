@@ -28,10 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
-import com.jiayantech.library.comm.TokenManager;
+import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.imageupload.FormImage;
 import com.jiayantech.library.http.imageupload.PostUploadRequest;
 import com.jiayantech.library.utils.LogUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -103,6 +106,12 @@ public class HttpReq<T> extends Request<T> {
      */
     public static void request(int method, String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
         //method = Request.Method.GET;
+        if (params == null) {
+            params = getInitParams("daddy", "8");
+        } else {
+            params.put("daddy", "8");
+        }
+
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
         HttpReq request = new HttpReq<>(method, builderAction.toString(), params, classType, l, new ErrorListener(l));
@@ -111,27 +120,25 @@ public class HttpReq<T> extends Request<T> {
     }
 
     /**
-     *
      * @param bitmap
      * @param fileName
      * @param listener
      */
-    public static void uploadImage(Bitmap bitmap, String fileName, ResponseListener listener){
+    public static void uploadImage(Bitmap bitmap, String fileName, ResponseListener listener) {
         FormImage formImage = new FormImage(bitmap, fileName);
         uploadImage(formImage, listener);
     }
 
     /**
-     *
      * @param filePath
      * @param listener
      */
-    public static void uploadImage(String filePath, ResponseListener listener){
+    public static void uploadImage(String filePath, ResponseListener listener) {
         FormImage formImage = new FormImage(filePath);
         uploadImage(formImage, listener);
     }
 
-    private static void uploadImage(FormImage formImage, ResponseListener listener){
+    private static void uploadImage(FormImage formImage, ResponseListener listener) {
         Request request = new PostUploadRequest(Request.Method.POST,
                 "http://10.0.1.23:8000/api/uploadImage/", formImage,
                 new ErrorListener(listener), listener);
@@ -148,7 +155,8 @@ public class HttpReq<T> extends Request<T> {
         @Override
         public void onErrorResponse(VolleyError error) {
             mResponseListener.onErrorResponse(error);
-            if (error instanceof NetworkError) {
+            if (error instanceof MsgError) {
+            } else if (error instanceof NetworkError) {
             } else if (error instanceof ServerError) {
             } else if (error instanceof AuthFailureError) {
             } else if (error instanceof ParseError) {
@@ -159,6 +167,11 @@ public class HttpReq<T> extends Request<T> {
         }
     }
 
+    public static class MsgError extends VolleyError {
+        public MsgError(String exceptionMessage) {
+            super(exceptionMessage);
+        }
+    }
 
     ///////////////////////////////////////class impl
     /**
@@ -193,11 +206,11 @@ public class HttpReq<T> extends Request<T> {
         super(method, (method == Request.Method.GET && params != null) ?
                 url + "?" + encodeParameters(params, PROTOCOL_CHARSET) : url, errorListener);
         mParams = params;
-        mHeaders.put(TokenManager.KEY_TOKEN, TokenManager.getToken());
+        mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
         mClassType = classType == null ? getClassType(listener, 0) : classType;
         mListener = listener;
 
-        LogUtil.i(TAG, "token: " + TokenManager.getToken());
+        LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
         LogUtil.i(TAG, url + (params == null ? "" : params.toString()));
     }
 
@@ -210,13 +223,21 @@ public class HttpReq<T> extends Request<T> {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             LogUtil.i(TAG, jsonString);
-            T parsedGSON = mGson.fromJson(jsonString, mClassType);
-            return Response.success(parsedGSON,
-                    HttpHeaderParser.parseCacheHeaders(response));
+            BaseAppResponse appResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
+            if (appResponse.code == 0) {
+                T parsedGSON = mGson.fromJson(jsonString, mClassType);
+                return Response.success(parsedGSON,
+                        HttpHeaderParser.parseCacheHeaders(response));
+            } else {
+                return Response.error(new MsgError(appResponse.code + ": " + appResponse.msg));
+            }
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             return Response.error(new ParseError(e));
-        } catch (JsonSyntaxException je) {
-            return Response.error(new ParseError(je));
+
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+            return Response.error(new ParseError(e));
         }
     }
 

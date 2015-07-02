@@ -19,8 +19,8 @@ public class DiaryBiz {
     private static final String ACTION_CREATE = MODEL + "/create";
     private static final String ACTION_VERIFY = MODEL + "/verify";
     private static final String ACTION_POST = MODEL + "/post";
-    private static final String ACTION_MY_HEADER = MODEL + "/my_header";
-    private static final String ACTION_MY_DIARY = MODEL + "/my_diary";
+    public static final String ACTION_MY_HEADER = MODEL + "/my_headers";
+    private static final String ACTION_MY_DIARY = MODEL + "/my_diarys";
 
     public static void create(String categoryId, String operationTime, String hospitalId, String doctorId, String price, String satisfyLevel, String tags, String previousPhotoes, String currentPhotoes, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
