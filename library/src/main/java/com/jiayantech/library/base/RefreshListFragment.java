@@ -80,6 +80,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     }
 
     protected void onLoadMore() {
+        if(0 == mAdapter.getList().size()){
+            return;
+        }
         String sinceId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1));
         HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
             @Override
