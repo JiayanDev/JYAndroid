@@ -14,5 +14,8 @@ public class Post extends BaseModel {
     public String photoes;
     public long commentCount;
     public long likeCount;
+    public String userId;
+    public String diaryId;
+    public String type;
 
 }

@@ -41,5 +41,6 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
         }
 
         public abstract void onBind(T item, int position);
+
     }
 }

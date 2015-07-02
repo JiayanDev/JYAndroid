@@ -11,6 +11,7 @@ import com.jiayantech.library.R;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
@@ -46,6 +47,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
                 .inflate(R.layout.custom_bottom_progressbar, null));
         onRefresh();
+        //refreshingString();
     }
 
     protected void setHeader(View header) {
@@ -61,8 +63,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     protected void onRefresh() {
         Map<String, String> params = null;
         if(0 != mAdapter.getList().size()) {
-            String maxId = String.valueOf(mAdapter.getList().get(0).id);
-            params.put("maxId", maxId);
+            String sinceId = String.valueOf(mAdapter.getList().get(0).id);
+            params = new ArrayMap<>();
+            params.put("sinceId", sinceId);
         }
         HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override
@@ -79,12 +82,19 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         });
     }
 
+    /**
+     * 读取历史数据，传入HTTP请求的参数为maxId，向服务器申请id小于maxId的n条数据，取到后
+     * 添加到list的尾部
+     */
     protected void onLoadMore() {
         if(0 == mAdapter.getList().size()){
             return;
         }
-        String sinceId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1));
-        HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
+        Map<String, String> params = new ArrayMap<>();
+        String maxId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1).id);
+        params.put("maxId", maxId);
+
+        HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
