@@ -19,8 +19,8 @@ public class SplashActivity extends Activity {
         UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
             @Override
             public void run() {
-//                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
+                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                //startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
                 SplashActivity.this.finish();
             }
         }));
