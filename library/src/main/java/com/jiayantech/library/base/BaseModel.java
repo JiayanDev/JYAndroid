@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.model;
+package com.jiayantech.library.base;
 
 /**
  * Created by janseon on 2015/6/30.

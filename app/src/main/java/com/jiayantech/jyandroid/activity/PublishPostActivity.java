@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.TopicBiz;
-import com.jiayantech.jyandroid.model.BaseModel;
+import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.AppResponse;

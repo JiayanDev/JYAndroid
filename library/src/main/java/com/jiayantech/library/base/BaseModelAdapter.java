@@ -103,4 +103,7 @@ public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
         else return null;
     }
 
+    public List<T> getList(){
+        return mList;
+    }
 }

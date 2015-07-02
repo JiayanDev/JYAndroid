@@ -15,11 +15,12 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
             @Override
             public void run() {
-//                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
+                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                //startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
                 SplashActivity.this.finish();
             }
         }));

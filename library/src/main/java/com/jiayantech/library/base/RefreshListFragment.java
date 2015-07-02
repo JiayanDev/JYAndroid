@@ -1,5 +1,6 @@
 package com.jiayantech.library.base;
 
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -29,7 +32,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> extends BaseFragment {
+public class RefreshListFragment<T extends BaseModel, ResponseT extends AppResponse<List<T>>> extends BaseFragment {
 
     private BaseSimpleModelAdapter<T> mAdapter;
     private String mAction;
@@ -56,7 +59,12 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
     }
 
     protected void onRefresh() {
-        HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
+        Map<String, String> params = null;
+        if(0 != mAdapter.getList().size()) {
+            String maxId = String.valueOf(mAdapter.getList().get(0).id);
+            params.put("maxId", maxId);
+        }
+        HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
@@ -72,6 +80,7 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
     }
 
     protected void onLoadMore() {
+        String sinceId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1));
         HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
