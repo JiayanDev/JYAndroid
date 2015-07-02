@@ -22,10 +22,9 @@ public class TopicBiz {
     private static final String ACTION_MY_TOPIC = MODEL + "/my_topic";
     public static final String ACTION_TOPIC_LIST = MODEL + "/getTopicList";
 
-    public static void create(String categoryId, String content, String photoUrls, ResponseListener<AppResponse<BaseModel>> l) {
+    public static void create(String categoryIds, String content, String photoUrls, ResponseListener<AppResponse<BaseModel>> l) {
         Map<String, String> params = new HashMap<>();
-        params.put("daddy", "8");
-        params.put("categoryId", categoryId);
+        params.put("categoryIds", categoryIds);
         params.put("content", content);
         params.put("photoUrls", photoUrls);
         HttpReq.post(ACTION_CREATE, params, l);
@@ -36,11 +35,7 @@ public class TopicBiz {
         HttpReq.post(ACTION_MY_TOPIC, null, l);
     }
 
-    public static void getTopicList(String sinceId, String maxId, ResponseListener<?> l){
-        Map<String, String> params = new HashMap<>();
-        params.put("daddy", "8");
-        params.put("sinceId", sinceId);
-        params.put("maxId", maxId);
-        HttpReq.post(ACTION_TOPIC_LIST, params, l);
+    public static void getTopicList(String sinceId, String maxId, ResponseListener<?> l) {
+        HttpReq.post(ACTION_TOPIC_LIST, null, l);
     }
 }

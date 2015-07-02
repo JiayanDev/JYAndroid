@@ -50,11 +50,6 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
-
-
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

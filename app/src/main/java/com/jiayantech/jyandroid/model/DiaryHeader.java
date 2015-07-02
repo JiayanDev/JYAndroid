@@ -10,12 +10,22 @@ import com.jiayantech.library.base.BaseModel;
  * rights reserved.
  */
 public class DiaryHeader extends BaseModel {
+    public long userId;
+    public String verifyStatus;
     public String hospitalId;
     public String doctorId;
+    public String categoryIds;
     public String projectId;
     public String projectName;
     public long operationTime;
     public long price;
+    public float satisfyLevel;
+    public String tags;
+    public long lastModifyTime;
     public String previousPhoto;
     public String currentPhoto;
+
+
+
+
 }

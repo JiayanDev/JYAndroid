@@ -27,7 +27,7 @@ import java.util.Random;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectProjectActivity extends BaseActivity {
+public class SelectProjectActivity extends BaseActivity implements ProjectCategoryAdapter.OnItemClickListener, FlowLayout.OnItemClickListener {
     private FlowLayout layout_selected;
     private RecyclerView list_parents;
     private LinearLayout list_children;
@@ -61,42 +61,8 @@ public class SelectProjectActivity extends BaseActivity {
 
     protected void setViewsListener() {
         setDisplayHomeAsUpEnabled();
-        mAdapter.setOnItemClickListener(new ProjectCategoryAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, String id) {
-                list_children.removeAllViews();
-                final List<String> list = UserManger.sProjectCategoryLevels.get(id);
-                for (final String itemId : list) {
-                    String name = UserManger.sProjectCategoryData.get(itemId);
-
-                    View view = getLayoutInflater().inflate(R.layout.item_select_project, list_children, false);
-                    TextView txt_category = (TextView) view.findViewById(R.id.txt_category);
-                    FlowLayout layout_project = (FlowLayout) view.findViewById(R.id.layout_project);
-
-                    txt_category.setText(name);
-
-                    layout_project.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View v, int index) {
-                            String item = list.get(index);
-                            layout_selected.addView(item);
-                            mSelectedIds.add(itemId);
-                        }
-                    });
-
-                    addRandomFlowViews(name, layout_project);
-
-                    list_children.addView(view);
-                }
-            }
-        });
-        layout_selected.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int index) {
-                mSelectedList.remove(index);
-                layout_selected.setViews(mSelectedList);
-            }
-        });
+        mAdapter.setOnItemClickListener(this);
+        layout_selected.setOnItemClickListener(this);
     }
 
     @Override
@@ -113,13 +79,47 @@ public class SelectProjectActivity extends BaseActivity {
                 return true;
             case R.id.action_next:
                 Intent intent = new Intent(this, NewDiaryInfoActivity.class);
-                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_CATEGORY_NAME, mSelectedList);
-                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_CATEGORY_ID, mSelectedIds);
+                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryName, mSelectedList);
+                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryIds, mSelectedIds);
                 startActivity(intent);
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(View v, int index) {
+        mSelectedList.remove(index);
+        layout_selected.setViews(mSelectedList);
+    }
+
+    @Override
+    public void onItemClick(int position, String id) {
+        list_children.removeAllViews();
+        final List<String> list = UserManger.sProjectCategoryLevels.get(id);
+        for (final String itemId : list) {
+            final String name = UserManger.sProjectCategoryData.get(itemId);
+
+            View view = getLayoutInflater().inflate(R.layout.item_select_project, list_children, false);
+            TextView txt_category = (TextView) view.findViewById(R.id.txt_category);
+            FlowLayout layout_project = (FlowLayout) view.findViewById(R.id.layout_project);
+
+            txt_category.setText(name);
+
+            layout_project.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int index) {
+                    //String item = list.get(index);
+                    layout_selected.addView(name);
+                    mSelectedList.add(name);
+                    mSelectedIds.add(itemId);
+                }
+            });
+            addRandomFlowViews(name, layout_project);
+
+            list_children.addView(view);
+        }
     }
 
     private static void addRandomFlowViews(String name, FlowLayout flowLayout) {

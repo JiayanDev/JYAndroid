@@ -3,17 +3,14 @@ package com.jiayantech.jyandroid.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,6 +21,7 @@ import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -38,8 +36,11 @@ import java.util.Calendar;
  */
 public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String KEY_CATEGORY_ID = "categoryId";
-    public static final String KEY_CATEGORY_NAME = "categoryName";
+    public static final String KEY_categoryIds = "categoryIds";
+    public static final String KEY_categoryName = "categoryName";
+    public static final String KEY_operationTime = "operationTime";
+    public static final String KEY_price = "price";
+    public static final String KEY_satisfyLevel = "satisfyLevel";
 
     private TextView txt_project;
     private TextView txt_time;
@@ -70,8 +71,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     protected void setViewsContent() {
         Intent intent = getIntent();
-        categoryId = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_CATEGORY_ID);
-        categoryName = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_CATEGORY_NAME);
+        categoryId = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryIds);
+        categoryName = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryName);
         txt_project.setText(categoryName.toString());
     }
 
@@ -91,7 +92,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.publish_action, menu);
+        getMenuInflater().inflate(R.menu.next_action, menu);
         return true;
     }
 
@@ -101,7 +102,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_publish:
+            case R.id.action_next:
                 if (operationTime == 0) {
                     ToastUtil.showMessage("select the time");
                     return true;
@@ -113,19 +114,12 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 }
                 float satisfyLevel = rating_bar.getRating();
 
-                showProgressDialog();
-                DiaryBiz.create(categoryId.toString(), operationTime, null, null, price, satisfyLevel, null, null, null, new ResponseListener<BaseModel>() {
-                    @Override
-                    public void onResponse(BaseModel response) {
-                        dismissProgressDialog();
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        super.onErrorResponse(error);
-                        dismissProgressDialog();
-                    }
-                });
+                Intent intent = new Intent(this, PublishDiaryActivity.class);
+                intent.putStringArrayListExtra(KEY_categoryIds, categoryId);
+                intent.putExtra(KEY_operationTime, operationTime);
+                intent.putExtra(KEY_price, price);
+                intent.putExtra(KEY_satisfyLevel, satisfyLevel);
+                startActivity(intent);
                 finish();
                 return true;
         }
@@ -156,6 +150,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
             public void onTimeSet(TimePicker view, int hour, int minute) {
                 mCalendar.set(Calendar.HOUR_OF_DAY, hour);
                 mCalendar.set(Calendar.MINUTE, minute);
+                txt_time.setText(TimeUtil.getTimeText(mCalendar.getTime()));
+                operationTime = mCalendar.getTimeInMillis() / 1000;
             }
         }, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
         dialog.setCanceledOnTouchOutside(true);

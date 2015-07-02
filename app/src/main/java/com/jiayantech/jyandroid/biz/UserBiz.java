@@ -108,7 +108,6 @@ public class UserBiz {
         @Override
         public void onResponse(AppResponse<Login> response) {
             Login login = response.data;
-            ConfigManager.putToken(login.token);
             if (login.projectCategory != null) {
                 UserManger.saveLogin(login);
                 if (mRunnable != null) {
@@ -116,6 +115,7 @@ public class UserBiz {
                 }
                 return;
             }
+            ConfigManager.putToken(login.token);
             quickLogin(this);
 //            if (response.code == CODE_EXPIRE && mResponseListener != null && mConfigVersion != null) {
 //                quickLogin(mConfigVersion, mResponseListener);

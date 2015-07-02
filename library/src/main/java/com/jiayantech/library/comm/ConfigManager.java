@@ -18,23 +18,27 @@ public class ConfigManager {
     public static final String KEY_TOKEN = "token";
 
     public static void putConfig(String key, String value) {
-        new DataShared(BaseApplication.getContext(), FILE_NAME).put(key, value);
+        getDataShared().put(key, value);
     }
 
     public static String getConfig(String key) {
-        return new DataShared(BaseApplication.getContext(), FILE_NAME).get(key);
+        return getDataShared().get(key);
     }
 
     public static String getConfig(String key, String defValue) {
-        return new DataShared(BaseApplication.getContext(), FILE_NAME).get(key, defValue);
+        return getDataShared().get(key, defValue);
     }
 
     public static void putToken(String token) {
-        new DataShared(BaseApplication.getContext(), FILE_NAME).put(KEY_TOKEN, token);
+        getDataShared().put(KEY_TOKEN, token);
     }
 
     public static String getToken() {
-        return new DataShared(BaseApplication.getContext(), FILE_NAME).get(KEY_TOKEN);
+        return getDataShared().get(KEY_TOKEN);
+    }
+
+    private static DataShared getDataShared() {
+        return new DataShared(BaseApplication.getContext(), FILE_NAME);
     }
 
     public static boolean checkTokenWithTips() {

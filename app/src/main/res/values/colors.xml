@@ -5,6 +5,10 @@
     <color name="bg_btn_black">#ff111818</color>
     <color name="bg_gray">#ffdddddd</color>
 
+    <color name="bg_loading_1">#6600baff</color>
+    <color name="bg_loading_0">#2200baff</color>
+
+    <color name="light_gray">#fff3</color>
     <!-- 字体 -->
     <color name="font_white_gray">#ff939aa0</color>
     <color name="font_gray">#ff92999f</color>
