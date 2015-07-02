@@ -59,7 +59,8 @@
             android:drawableLeft="@drawable/ic_book_black_24dp"
             android:drawableRight="@drawable/img_right_arrow_selector"
             android:hint="input the price"
-            android:text="价格" />
+            android:inputType="number"
+            android:text="" />
 
         <View
             android:layout_width="match_parent"

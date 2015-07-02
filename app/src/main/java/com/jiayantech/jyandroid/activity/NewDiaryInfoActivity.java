@@ -18,9 +18,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -111,8 +113,19 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 }
                 float satisfyLevel = rating_bar.getRating();
 
-//                DiaryBiz.create(categoryId.toString(), operationTime, null, null, price, satisfyLevel, null, null, null, new ResponseListener<Base>() {
-//                });
+                showProgressDialog();
+                DiaryBiz.create(categoryId.toString(), operationTime, null, null, price, satisfyLevel, null, null, null, new ResponseListener<BaseModel>() {
+                    @Override
+                    public void onResponse(BaseModel response) {
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        dismissProgressDialog();
+                    }
+                });
                 finish();
                 return true;
         }

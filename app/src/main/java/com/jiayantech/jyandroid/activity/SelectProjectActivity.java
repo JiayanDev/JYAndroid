@@ -10,17 +10,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ProjectCategoryAdapter;
-import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.BaseModel;
 import com.jiayantech.jyandroid.widget.FlowLayout;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
