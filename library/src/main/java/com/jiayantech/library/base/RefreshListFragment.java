@@ -45,8 +45,18 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
         onRefresh();
     }
 
+    protected void setHeader(View header) {
+        ultimateRecyclerView.setParallaxHeader(header);
+    }
+
+    protected View setHeader(int layoutId) {
+        View header = getActivity().getLayoutInflater().inflate(layoutId, ultimateRecyclerView.mRecyclerView, false);
+        setHeader(header);
+        return header;
+    }
+
     protected void onRefresh() {
-        HttpReq.post(mAction, null, mType, new ResponseListener<ResponseT>() {
+        HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
@@ -62,7 +72,7 @@ public class RefreshListFragment<T, ResponseT extends AppResponse<List<T>>> exte
     }
 
     protected void onLoadMore() {
-        HttpReq.post(mAction, null, mType, new ResponseListener<ResponseT>() {
+        HttpReq.get(mAction, null, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;

@@ -22,6 +22,16 @@
         <activity
             android:name=".activity.TopicActivity"
             android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.MyDiaryActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SelectProjectActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.NewDiaryInfoActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.PublishPostActivity"
             android:screenOrientation="portrait"></activity>
