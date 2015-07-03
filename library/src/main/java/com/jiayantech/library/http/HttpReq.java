@@ -279,6 +279,7 @@ public class HttpReq<T> extends Request<T> {
                 encodedParams.append('=');
                 encodedParams.append(URLEncoder.encode(entry.getValue(), paramsEncoding));
                 encodedParams.append('&');
+
             }
             String encoded;
             if (encodedParams.length() > 0) {

@@ -1,11 +1,15 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
+import com.jiayantech.jyandroid.adapter.TopicCategoryAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.model.Topic;
 import com.jiayantech.library.base.RefreshListFragment;
@@ -28,10 +32,17 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     @Override
     public void onInitView() {
         super.onInitView();
-        //setParams(new PostAdapter(null), ActivityBiz.ACTION_TOPIC_LIST);
         setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);
-        View headerView = getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false);
-        ultimateRecyclerView.setParallaxHeader(headerView);
+        View headerView = setHeader(R.layout.layout_topic_category);
+
+        initHeaderView(headerView);
     }
 
+    private void initHeaderView(View headerView){
+        RecyclerView recyclerView = (RecyclerView)headerView.findViewById(R.id.list_category);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setAdapter(new TopicCategoryAdapter());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 }

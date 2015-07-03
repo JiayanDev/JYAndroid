@@ -10,6 +10,9 @@ import com.jiayantech.library.base.BaseModel;
  * rights reserved.
  */
 public class Post extends BaseModel {
+    public static final String POST_TYPE_DIARY = "diary";
+    public static final String POST_TYPE_TOPIC = "topic";
+
     public String content;
     public String photoes;
     public long commentCount;
