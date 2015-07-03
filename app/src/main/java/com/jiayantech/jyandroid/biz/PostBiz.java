@@ -1,7 +1,13 @@
 package com.jiayantech.jyandroid.biz;
 
+import android.support.v4.util.ArrayMap;
+
+import com.jiayantech.library.base.BaseModel;
+import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+
+import java.util.Map;
 
 /**
  * Created by janseon on 2015/6/30.
@@ -19,15 +25,24 @@ public class PostBiz {
 
 
     public static void like(String id, String type, ResponseListener<?> l) {
-        HttpReq.post(ACTION_CREATE, null, l);
+        Map<String, String> params = new ArrayMap<>();
+        params.put("id", id);
+        HttpReq.post(ACTION_CREATE, params, l);
     }
 
 
-    public static void comment(String id, String type, String content, ResponseListener<?> l) {
-        HttpReq.post(ACTION_MY_TOPIC, null, l);
+        public static void comment(String subjectId, String subject, String content,
+                                   ResponseListener<?> l) {
+        Map<String, String> params = new ArrayMap<>();
+        params.put("subjectId", subjectId);
+        params.put("subject", subject);
+        params.put("content", content);
+        HttpReq.post(ACTION_MY_TOPIC, params, l);
     }
 
     public static void verify(String id, String status, ResponseListener<?> l) {
         HttpReq.post(ACTION_MY_TOPIC, null, l);
     }
+
+
 }
