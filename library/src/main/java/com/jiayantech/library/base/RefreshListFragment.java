@@ -60,9 +60,15 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         return header;
     }
 
+    private boolean mIsLoading = false;
+
     protected void onRefresh() {
+        if (mIsLoading) {
+            return;
+        }
+        mIsLoading = true;
         Map<String, String> params = null;
-        if(0 != mAdapter.getList().size()) {
+        if (0 != mAdapter.getList().size()) {
             String sinceId = String.valueOf(mAdapter.getList().get(0).id);
             params = new ArrayMap<>();
             params.put("sinceId", sinceId);
@@ -73,11 +79,13 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 List<T> list = response.data;
                 mAdapter.addNew(list);
                 ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
+                mIsLoading = false;
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
+                mIsLoading = false;
             }
         });
     }
@@ -87,9 +95,13 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
      * 添加到list的尾部
      */
     protected void onLoadMore() {
-        if(0 == mAdapter.getList().size()){
+        if (mIsLoading) {
             return;
         }
+        if (0 == mAdapter.getList().size()) {
+            return;
+        }
+        mIsLoading = true;
         Map<String, String> params = new ArrayMap<>();
         String maxId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1).id);
         params.put("maxId", maxId);
@@ -99,10 +111,12 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
                 mAdapter.addMore(list);
+                mIsLoading = false;
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                mIsLoading = false;
             }
         });
     }

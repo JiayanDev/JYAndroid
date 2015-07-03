@@ -15,12 +15,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseModel;
-import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.helper.ActivityResultHelper;
+import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -50,6 +48,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     private ArrayList<String> categoryId;
     private ArrayList<String> categoryName;
+    private long operationTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +78,23 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     protected void setViewsListener() {
         setDisplayHomeAsUpEnabled();
         txt_time.setOnClickListener(this);
+        txt_doctor.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_time:
-                showDateDialog();
+                new DateTimeHelper(this).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
+                    @Override
+                    public void onSetDateTime(Calendar calendar) {
+                        txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis()));
+                        operationTime = calendar.getTimeInMillis() / 1000;
+                    }
+                });
+                break;
+            case R.id.txt_doctor:
+                SearchActivity.launchActivity(this);
                 break;
         }
     }
@@ -126,36 +135,13 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    private Calendar mCalendar = Calendar.getInstance();
-    private long operationTime = 0;
 
-    public Dialog showDateDialog() {
-        Dialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                mCalendar.set(Calendar.YEAR, year);
-                mCalendar.set(Calendar.MONTH, monthOfYear);
-                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                showTimeDialog();
-            }
-        }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        return dialog;
-    }
+    //////////////////////
+    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
 
-    public Dialog showTimeDialog() {
-        Dialog dialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hour, int minute) {
-                mCalendar.set(Calendar.HOUR_OF_DAY, hour);
-                mCalendar.set(Calendar.MINUTE, minute);
-                txt_time.setText(TimeUtil.getTimeText(mCalendar.getTime()));
-                operationTime = mCalendar.getTimeInMillis() / 1000;
-            }
-        }, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-        return dialog;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

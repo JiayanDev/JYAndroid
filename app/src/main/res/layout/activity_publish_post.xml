@@ -39,27 +39,12 @@
                 android:textSize="12sp" />
         </RelativeLayout>
 
-        <GridLayout
+        <GridView
+            android:id="@+id/grid_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
-            android:columnCount="4"
-            android:orientation="horizontal">
-
-            <com.jiayantech.jyandroid.widget.ScaleFrameLayout
-                android:id="@+id/layout_photo"
-                style="?android:attr/buttonStyle"
-                android:layout_gravity="fill"
-                android:background="@color/bg_gray">
-
-                <ImageView
-                    android:id="@+id/img_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_photo_add" />
-            </com.jiayantech.jyandroid.widget.ScaleFrameLayout>
-        </GridLayout>
+            android:numColumns="4" />
 
         <View
             android:layout_width="match_parent"

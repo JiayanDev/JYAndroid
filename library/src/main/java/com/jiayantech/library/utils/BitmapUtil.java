@@ -1,7 +1,4 @@
-package com.jiayantech.jyandroid.utils;
-
-import java.io.File;
-import java.io.FileOutputStream;
+package com.jiayantech.library.utils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +9,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.jiayantech.library.comm.MD5;
-import com.jiayantech.library.utils.FileUtil;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * @author 健兴

@@ -113,11 +113,11 @@ public class HttpReq<T> extends Request<T> {
      */
     public static void request(int method, String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
         //method = Request.Method.GET;
-        if (params == null) {
-            params = getInitParams("daddy", "8");
-        } else {
-            params.put("daddy", "8");
-        }
+//        if (params == null) {
+//            params = getInitParams("daddy", "8");
+//        } else {
+//            params.put("daddy", "8");
+//        }
 
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
@@ -281,6 +281,9 @@ public class HttpReq<T> extends Request<T> {
         StringBuilder encodedParams = new StringBuilder();
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (entry.getValue() == null) {
+                    continue;
+                }
                 encodedParams.append(URLEncoder.encode(entry.getKey(), paramsEncoding));
                 encodedParams.append('=');
                 encodedParams.append(URLEncoder.encode(entry.getValue(), paramsEncoding));

@@ -21,12 +21,10 @@ import java.util.Map;
  */
 public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
     private final Map<String, String> mData;
-    private int mSelectedPos;
 
     public ProjectCategoryAdapter(Map<String, String> data, List<String> level) {
         super(level);
         mData = data;
-        mSelectedPos = 0;
     }
 
     @Override
@@ -34,30 +32,24 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
         return new ViewHolder(viewGroup, R.layout.item_project_category, this);
     }
 
-    private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener l) {
-        mOnItemClickListener = l;
-        mOnItemClickListener.onItemClick(mSelectedPos, mList.get(mSelectedPos));
+    @Override
+    public void setOnItemClickListener(OnItemClickListener<String> l) {
+        super.setOnItemClickListener(l);
+        l.onItemClick(this, mSelectedPos, mList.get(mSelectedPos));
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position, String id);
-    }
-
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<String> implements View.OnClickListener {
-        private final ProjectCategoryAdapter mAdapter;
-        private int mPosition;
-        private String mId;
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<String> {
         private View view_selected;
         private TextView txt_category;
+        private final Map<String, String> mData;
+        private String mId;
 
         public ViewHolder(ViewGroup parent, int layoutId, ProjectCategoryAdapter adapter) {
-            super(parent, layoutId);
+            super(parent, layoutId, adapter);
             mAdapter = adapter;
+            mData = adapter.mData;
             view_selected = itemView.findViewById(R.id.view_selected);
             txt_category = (TextView) itemView.findViewById(R.id.txt_category);
-            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -65,18 +57,7 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
             mId = id;
             mPosition = position;
             view_selected.setVisibility(mAdapter.mSelectedPos == position ? View.VISIBLE : View.INVISIBLE);
-            txt_category.setText(mAdapter.mData.get(id));
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mAdapter.mOnItemClickListener != null) {
-                mAdapter.mOnItemClickListener.onItemClick(mPosition, mId);
-            }
-            int oldSelectedPos = mAdapter.mSelectedPos;
-            mAdapter.mSelectedPos = mPosition;
-            mAdapter.notifyItemChanged(oldSelectedPos);
-            mAdapter.notifyItemChanged(mPosition);
+            txt_category.setText(mData.get(id));
         }
     }
 }

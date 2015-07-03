@@ -15,6 +15,7 @@ import com.jiayantech.jyandroid.adapter.ProjectCategoryAdapter;
 import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.widget.FlowLayout;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.base.BaseSimpleModelAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Random;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectProjectActivity extends BaseActivity implements ProjectCategoryAdapter.OnItemClickListener, FlowLayout.OnItemClickListener {
+public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<String>, FlowLayout.OnItemClickListener {
     private FlowLayout layout_selected;
     private RecyclerView list_parents;
     private LinearLayout list_children;
@@ -95,7 +96,7 @@ public class SelectProjectActivity extends BaseActivity implements ProjectCatego
     }
 
     @Override
-    public void onItemClick(int position, String id) {
+    public void onItemClick(BaseSimpleModelAdapter<String> adapter, int position, String id) {
         list_children.removeAllViews();
         final List<String> list = UserManger.sProjectCategoryLevels.get(id);
         for (final String itemId : list) {

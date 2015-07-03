@@ -22,11 +22,16 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url 'http://guardian.github.com/maven/repo-releases' }
+    }
 }
 
 dependencies {
     compile project(':library')
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
-    compile files('libs/afinal.jar')
+    compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT@aar'
 }

@@ -26,6 +26,7 @@ class BannerPagerAdapter extends PagerAdapter{
         mImageViewList = new ArrayList<>();
         for(int i = 0; i < mImageList.size(); i++){
             ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImageViewList.add(imageView);
         }
     }

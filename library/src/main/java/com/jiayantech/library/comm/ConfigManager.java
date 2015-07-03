@@ -15,7 +15,7 @@ import com.jiayantech.library.utils.ToastUtil;
 public class ConfigManager {
     private static final String FILE_NAME = "config";
 
-    public static final String KEY_TOKEN = "token";
+    public static final String KEY_TOKEN = "AUTHORIZATION";
 
     public static void putConfig(String key, String value) {
         getDataShared().put(key, value);

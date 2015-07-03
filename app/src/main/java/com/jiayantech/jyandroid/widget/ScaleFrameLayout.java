@@ -66,6 +66,9 @@ public class ScaleFrameLayout extends FrameLayout {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     private HashMap<String, String> getTextAttributeMap(AttributeSet attrs) {
+        if (attrs == null) {
+            return null;
+        }
         String str = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "text");
         if (str == null) {
             return null;
@@ -73,7 +76,7 @@ public class ScaleFrameLayout extends FrameLayout {
         String[] splits = str.split(",");
         HashMap<String, String> keyValueMap = null;
         if (splits != null && splits.length > 0) {
-            keyValueMap = new HashMap<String, String>();
+            keyValueMap = new HashMap<>();
             for (String split : splits) {
                 String[] keyValue = split.split(":");
                 keyValueMap.put(keyValue[0], keyValue[1]);

@@ -20,7 +20,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                //startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
+                //startActivity(new Intent(SplashActivity.this, SearchActivity.class));
                 SplashActivity.this.finish();
             }
         }));
