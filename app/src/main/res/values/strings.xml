@@ -23,9 +23,9 @@
 
     <string name="thumbs_up_count">赞 %s</string>
     <string name="comment_count">评论 %s</string>
+
+    <string name="comment_hint">请留下你的评论</string>
     <string name="next">next</string>
     <string name="finish">finish</string>
 
-    <string name="thumbs_up_count">赞 %s</string>
-    <string name="comment_count">评论 %s</string>
 </resources>

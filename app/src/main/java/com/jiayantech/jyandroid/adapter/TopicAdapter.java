@@ -26,10 +26,10 @@ import java.util.List;
 /**
  * Created by liangzili on 15/7/2.
  */
-public class PostAdapter extends BaseSimpleModelAdapter<Post>{
+public class TopicAdapter extends BaseSimpleModelAdapter<Post>{
     Context mContext;
 
-    public PostAdapter(List<Post> list, Context context){
+    public TopicAdapter(List<Post> list, Context context){
         super(list);
         mContext = context;
     }
