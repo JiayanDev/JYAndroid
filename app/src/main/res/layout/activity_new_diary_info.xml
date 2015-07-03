@@ -53,13 +53,14 @@
             android:layout_height="1px"
             android:background="@color/font_gray" />
 
-        <TextView
-            android:id="@+id/txt_price"
+        <EditText
+            android:id="@+id/edit_price"
             style="@style/text_item_style"
             android:drawableLeft="@drawable/ic_book_black_24dp"
             android:drawableRight="@drawable/img_right_arrow_selector"
             android:hint="input the price"
-            android:text="价格" />
+            android:inputType="number"
+            android:text="" />
 
         <View
             android:layout_width="match_parent"

@@ -50,11 +50,6 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
-
-
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -67,6 +62,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_diary:
+                startActivity(new Intent(this, MyDiaryActivity.class));
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));

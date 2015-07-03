@@ -49,7 +49,7 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
         public void onBind(DiaryHeader diaryHeader, int position) {
             mDiaryHeader = diaryHeader;
             img_diary.setImageResource(R.drawable.ic_account_box_black_48dp);
-            txt_title.setText(diaryHeader.projectName);
+            txt_title.setText(diaryHeader.projectName + diaryHeader.categoryIds);
             btn_operate.setText("update diary");
         }
 

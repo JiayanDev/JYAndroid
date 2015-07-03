@@ -92,6 +92,12 @@ public class HttpReq<T> extends Request<T> {
         return params;
     }
 
+    public static void putParams(Map<String, String> params, String key, Object value) {
+        if (value != null) {
+            params.put(key, value.toString());
+        }
+    }
+
     ///////////////////////////////////////private static class and method
     /**
      * Initialise Volley Request Queue.

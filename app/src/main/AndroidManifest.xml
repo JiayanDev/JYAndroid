@@ -33,6 +33,9 @@
             android:name=".activity.NewDiaryInfoActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.PublishDiaryActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.PublishPostActivity"
             android:screenOrientation="portrait"></activity>
 
