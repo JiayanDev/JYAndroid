@@ -13,12 +13,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.adapter.ActivityAdapter;
+import com.jiayantech.jyandroid.adapter.EventAdapter;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.library.helper.ActivityResultHelper;
 import com.quinny898.library.persistentsearch.SearchBox;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
     private SearchBox mSearchBox;
     private EditText search;
     private RecyclerView mRecyclerView;
-    private ActivityAdapter mAdapter;
+    private EventAdapter mAdapter;
 
     public static final int REQUEST_CODE_SELECT = 0x100;
 
@@ -123,7 +122,7 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
         @Override
         protected void onPostExecute(ArrayList<User> result) {
             if (result != null) {
-                mAdapter = new ActivityAdapter(result);
+                mAdapter = new EventAdapter(result);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<User>() {
                     @Override

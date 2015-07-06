@@ -9,7 +9,7 @@
         <!-- Customize your theme here. -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowIsTranslucent">true</item>
-
+        <item name="android:windowAnimationStyle">@style/activitySlideAnimation</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -46,4 +46,5 @@
         <item name="android:textColor">@color/font_gray</item>
         <item name="android:textSize">20sp</item>
     </style>
+
 </resources>

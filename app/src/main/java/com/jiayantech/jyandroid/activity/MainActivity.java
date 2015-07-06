@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioButton;
@@ -13,7 +12,7 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.jyandroid.fragment.ActivityFragment;
+import com.jiayantech.jyandroid.fragment.EventFragment;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
@@ -30,11 +29,7 @@ public class MainActivity extends BaseActivity {
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
-    private RadioButton mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn;
-    private RadioButton[] mRadioButtons = new RadioButton[]{
-            mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn
-    };
-
+    private RadioButton[] mRadioButtons = new RadioButton[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +45,16 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
+    }
+
+    private void initView() {
+        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
+        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
+        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
+        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
+        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
     @Override
@@ -112,11 +117,11 @@ public class MainActivity extends BaseActivity {
         BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
         CommunityFragment communityFragment = CommunityFragment.newInstance(null);
 //        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
-        ActivityFragment activityFragment = new ActivityFragment();
+        EventFragment eventFragment = new EventFragment();
         UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
 
         mFragments = new Fragment[]{
-                beautyWithFragment, communityFragment, activityFragment, userInfoFragment
+                beautyWithFragment, communityFragment, eventFragment, userInfoFragment
         };
     }
 
@@ -142,17 +147,6 @@ public class MainActivity extends BaseActivity {
             mViewPager.setCurrentItem(pageItemNum, false);
         }
     };
-
-    private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
-        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
-        mRadioButtons[0].setChecked(true);
-        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
-    }
 
 
 }

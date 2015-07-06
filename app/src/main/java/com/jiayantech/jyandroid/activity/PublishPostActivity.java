@@ -192,6 +192,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     private void showUploadDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
         final Dialog dialog = DialogUtils.showViewDialog(view, true);
+
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

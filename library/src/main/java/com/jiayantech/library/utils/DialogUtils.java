@@ -27,6 +27,7 @@ public class DialogUtils {
         if (isBottom) {
             localLayoutParams.gravity = Gravity.BOTTOM;
         }
+        window.setBackgroundDrawable(null);
         window.setAttributes(localLayoutParams);
         dialog.show();
         return dialog;

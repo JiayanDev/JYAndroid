@@ -1,15 +1,8 @@
 package com.jiayantech.jyandroid.fragment;
 
-import android.view.View;
-import android.widget.Toast;
-
-import com.jiayantech.jyandroid.adapter.ActivityAdapter;
-import com.jiayantech.jyandroid.biz.ActivityBiz;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.library.http.ResponseListener;
 
 import java.util.List;
 
@@ -20,7 +13,7 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ActivityFragment extends RefreshListFragment<User, AppResponse<List<User>>> {
+public class EventFragment extends RefreshListFragment<User, AppResponse<List<User>>> {
 
     @Override
     public void onInitView() {

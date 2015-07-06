@@ -18,8 +18,8 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ActivityAdapter extends BaseSimpleModelAdapter<User> {
-    public ActivityAdapter(List<User> list) {
+public class EventAdapter extends BaseSimpleModelAdapter<User> {
+    public EventAdapter(List<User> list) {
         super(list);
     }
 
@@ -32,7 +32,7 @@ public class ActivityAdapter extends BaseSimpleModelAdapter<User> {
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<User> {
         public TextView mTextView;
 
-        public ViewHolder(ViewGroup parent, int layoutId, ActivityAdapter aadapter) {
+        public ViewHolder(ViewGroup parent, int layoutId, EventAdapter aadapter) {
             super(parent, layoutId, aadapter);
             mTextView = (TextView) itemView;
         }
