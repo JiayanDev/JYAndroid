@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.utils.TimeUtil;
@@ -38,6 +39,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     public static final String KEY_categoryName = "categoryName";
     public static final String KEY_operationTime = "operationTime";
     public static final String KEY_price = "price";
+    public static final String KEY_doctorId = "doctorId";
+    public static final String KEY_doctorName = "doctorName";
     public static final String KEY_satisfyLevel = "satisfyLevel";
 
     private TextView txt_project;
@@ -95,6 +98,15 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.txt_doctor:
                 SearchActivity.launchActivity(this);
+                mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                    @Override
+                    public void onActivityResult(Intent data) {
+                        //String doctorId = data.getStringExtra(KEY_doctorId);
+                        String doctorName = data.getStringExtra(KEY_doctorName);
+                        txt_doctor.setText(doctorName);
+                        ToastUtil.showMessage("doctorName: " + doctorName);
+                    }
+                });
                 break;
         }
     }

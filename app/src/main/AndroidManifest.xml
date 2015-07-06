@@ -38,7 +38,11 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PublishPostActivity"
-            android:screenOrientation="portrait"/>
+
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <!--友盟推送服务相关-->

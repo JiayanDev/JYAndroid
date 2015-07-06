@@ -17,6 +17,8 @@ import com.jiayantech.jyandroid.adapter.ActivityAdapter;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.helper.ActivityResultHelper;
 import com.quinny898.library.persistentsearch.SearchBox;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
     private RecyclerView mRecyclerView;
     private ActivityAdapter mAdapter;
 
-    public static final int REQUEST_CODE_SELECT = 0x100, RESULT_SELECTED = 0x100;
+    public static final int REQUEST_CODE_SELECT = 0x100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,6 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
     public void onSearchClosed() {
         mSearchBox.hideCircularly(this);
         hideSoftKeyboard();
-        finish();
     }
 
     @Override
@@ -127,20 +128,21 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
                 mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<User>() {
                     @Override
                     public void onItemClick(BaseSimpleModelAdapter<User> adapter, int position, User user) {
-                        Intent intent = new Intent();
-                        intent.putExtra("company_code", mAdapter.getItem(position).firstName);
-                        setResult(RESULT_SELECTED, intent);
                         onSearchClosed();
+                        Intent intent = new Intent();
+                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorId, mAdapter.getItem(position).id);
+                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorName, mAdapter.getItem(position).firstName);
+                        ActivityResult.onFinishResult(SearchActivity.this, intent);
                     }
                 });
             }
         }
     }
 
-    public static void launchActivity(Activity mActivity) {
-        Intent intent = new Intent(mActivity, SearchActivity.class);
+    public static void launchActivity(Activity activity) {
+        Intent intent = new Intent(activity, SearchActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        mActivity.startActivityForResult(intent, REQUEST_CODE_SELECT);
+        activity.startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 }
 
