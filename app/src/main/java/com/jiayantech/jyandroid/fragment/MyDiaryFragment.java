@@ -38,8 +38,8 @@ public class MyDiaryFragment extends RefreshListFragment<DiaryHeader, AppRespons
         txt_title = (TextView) headerView.findViewById(R.id.txt_title);
         btn_operate = (Button) headerView.findViewById(R.id.btn_operate);
 
-        img_diary.setBackgroundResource(R.color.light_gray);
-        img_diary.setImageResource(R.drawable.ic_account_box_white_48dp);
+        //img_diary.setBackgroundResource(R.color.light_gray);
+        img_diary.setImageResource(R.drawable.ic_account_box_black_48dp);
         txt_title.setText("add diary\nLet start");
         btn_operate.setText("create diary");
         btn_operate.setOnClickListener(new View.OnClickListener() {

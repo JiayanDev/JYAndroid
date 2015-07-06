@@ -38,6 +38,9 @@
         <activity
             android:name=".activity.PublishPostActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"></activity>
 
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

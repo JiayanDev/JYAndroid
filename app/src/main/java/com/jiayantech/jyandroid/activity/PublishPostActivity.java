@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.comm.PicGetter;
@@ -49,6 +50,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
     private ImageAdapter mImageAdapter;
     private List<String> urlList = new ArrayList<>();
+    private List<String> idlList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,26 +115,34 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_category:
+                String[] items = new String[UserManger.sProjectCategoryTopLevels.size()];
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = UserManger.sProjectCategoryData.get(UserManger.sProjectCategoryTopLevels.get(i));
+                }
                 new AlertDialog.Builder(this)
                         .setTitle("选择分类")
-                        .setItems(R.array.tab_title, new DialogInterface.OnClickListener() {
+                        .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                String id = UserManger.sProjectCategoryTopLevels.get(which);
+                                idlList.add(id);
+                                txt_category.setText(getCategoryText());
                             }
                         })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
+                        .setNegativeButton("取消", null)
                         .show();
                 break;
         }
     }
 
+
     protected void onPost(String content) {
+        if (idlList.size() <= 0) {
+            ToastUtil.showMessage("categoryIds null");
+            return;
+        }
         showProgressDialog();
-        String categoryIds = null;
+        String categoryIds = idlList.toString();
         String photoUrls = null;
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override
@@ -169,6 +179,14 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             mImageAdapter.remove(position);
             mImageAdapter.resetGridViewHeight(grid_image);
         }
+    }
+
+    private String getCategoryText() {
+        String items = "";
+        for (String id : idlList) {
+            items += UserManger.sProjectCategoryData.get(id) + " ";
+        }
+        return items;
     }
 
     private void showUploadDialog() {
