@@ -18,6 +18,7 @@ import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -67,6 +68,8 @@ public class MainActivity extends BaseActivity {
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));
                 return true;
+            case R.id.action_share:
+                startActivity(new Intent(this, ShareActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -154,5 +157,9 @@ public class MainActivity extends BaseActivity {
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
+    private void initUmengPush(){
+        PushAgent.getInstance(this).enable();
+        String device_token = UmengRegistrar.getRegistrationId(this);
 
+    }
 }

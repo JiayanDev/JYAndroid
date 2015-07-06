@@ -71,7 +71,7 @@ public class TopicAdapter extends BaseSimpleModelAdapter<Post>{
             mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PostBiz.like(String.valueOf(item.id), item.type, new ResponseListener<AppResponse>(){
+                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE, new ResponseListener<AppResponse>(){
 
                         @Override
                         public void onResponse(AppResponse baseModelAppResponse) {
