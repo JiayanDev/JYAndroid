@@ -11,7 +11,7 @@ import com.umeng.analytics.social.UMSocialService;
  */
 public class ShareActivity extends BaseActivity{
 
-//    final UMSocialService mController =
+//    final UMSocialService mController = UMService
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
