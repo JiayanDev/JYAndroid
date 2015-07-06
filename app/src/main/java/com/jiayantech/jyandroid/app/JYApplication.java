@@ -29,6 +29,7 @@ public class JYApplication extends BaseApplication {
             @Override
             public void dealWithCustomAction(Context context, UMessage uMessage) {
                 ToastUtil.showMessage(context, "I am a callback");
+
             }
         };
         PushAgent.getInstance(this).setNotificationClickHandler(handler);

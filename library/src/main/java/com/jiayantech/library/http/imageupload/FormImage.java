@@ -43,7 +43,7 @@ public class FormImage {
         mFileName = FileUtil.getFileName(path);
         mMime = URLConnection.guessContentTypeFromName(path);
         mName = name;
-        mBitmap = BitmapFactory.decodeFile(mFilePath);
+        //mBitmap = BitmapFactory.decodeFile(mFilePath);
     }
 
     public String getFileName() {
@@ -60,6 +60,9 @@ public class FormImage {
 
     public byte[] getValue() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if(null == mBitmap){
+            mBitmap = BitmapFactory.decodeFile(mFilePath);
+        }
         mBitmap.compress(IMAGE_FORMAT, COMPRESS_FACTOR, baos);
         return baos.toByteArray();
     }

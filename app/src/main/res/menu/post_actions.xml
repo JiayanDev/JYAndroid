@@ -23,4 +23,9 @@
         android:id="@+id/action_topic"
         android:title="@string/post_topic"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/share"
+        app:showAsAction="never"/>
 </menu>

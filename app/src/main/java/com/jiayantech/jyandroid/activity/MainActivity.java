@@ -12,11 +12,12 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.jyandroid.fragment.EventFragment;
+import com.jiayantech.jyandroid.fragment.ActivityFragment;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -29,7 +30,10 @@ public class MainActivity extends BaseActivity {
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
-    private RadioButton[] mRadioButtons = new RadioButton[4];
+    private RadioButton mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn;
+    private RadioButton[] mRadioButtons = new RadioButton[]{
+            mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +49,6 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
-    }
-
-    private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
-        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
-        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
     @Override
@@ -148,5 +142,9 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    private void initUmengPush(){
+        PushAgent.getInstance(this).enable();
+        String device_token = UmengRegistrar.getRegistrationId(this);
 
+    }
 }

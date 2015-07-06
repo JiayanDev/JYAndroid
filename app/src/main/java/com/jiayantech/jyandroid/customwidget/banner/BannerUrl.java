@@ -8,5 +8,6 @@ public class BannerUrl {
             "http://codekk.com/images/weixin-codekk-160.jpg",
             "https://c4.staticflickr.com/8/7471/15386610694_ef7a87aca2.jpg",
             "https://c1.staticflickr.com/9/8641/15822862999_1ac30a297a.jpg",
+
     };
 }
