@@ -27,5 +27,6 @@
     <string name="comment_hint">请留下你的评论</string>
     <string name="next">next</string>
     <string name="finish">finish</string>
+    <string name="share">分享</string>
 
 </resources>

@@ -17,22 +17,32 @@ import java.util.Map;
  * rights reserved.
  */
 public class PostBiz {
+    public static final int MODE_LIKE = 0;
+    public static final int MODE_CANCEL_LIKE = 1;
+
     private static final String MODEL = "post";
 
     private static final String ACTION_CREATE = MODEL + "/like";
+    private static final String ACTION_LIKE = MODEL + "/like";
+    private static final String ACTION_CANCEL_LIKE = MODEL + "/cancel_like";
+
     private static final String ACTION_MY_TOPIC = MODEL + "/comment";
     private static final String ACTION_VERIFY = MODEL + "/verify";
 
 
-    public static void like(String id, String type, ResponseListener<?> l) {
+    public static void like(String id, int mode, ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();
         params.put("id", id);
-        HttpReq.post(ACTION_CREATE, params, l);
+        if(MODE_LIKE == mode) {
+            HttpReq.post(ACTION_LIKE, params, l);
+        }else if(MODE_CANCEL_LIKE == mode){
+            HttpReq.post(ACTION_CANCEL_LIKE, params, l);
+        }
     }
 
 
-        public static void comment(String subjectId, String subject, String content,
-                                   ResponseListener<?> l) {
+    public static void comment(String subjectId, String subject, String content,
+                               ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();
         params.put("subjectId", subjectId);
         params.put("subject", subject);

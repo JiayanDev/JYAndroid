@@ -67,6 +67,8 @@ public class PostUploadRequest2 extends JsonObjectRequest {
         if(mFormImage == null){
             return super.getBody();
         }
+        LogUtil.i("PostUploadRequest", Thread.currentThread().getName());
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         StringBuffer sb = new StringBuffer();
 

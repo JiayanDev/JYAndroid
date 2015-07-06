@@ -147,7 +147,7 @@ public class HttpReq<T> extends Request<T> {
 
 
     private static void uploadImage(FormImage formImage, ResponseListener listener) {
-        Request request = new PostUploadRequest(Request.Method.POST,
+        Request request = new PostUploadRequest2(Request.Method.POST,
                 "http://10.0.1.23:8000/api/uploadImage/", formImage,
                 new ErrorListener(listener), listener);
         sVolleyQueue.add(request);
