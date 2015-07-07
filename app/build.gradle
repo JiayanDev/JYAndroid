@@ -18,8 +18,22 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+    signingConfigs {
         release {
+            keyAlias 'jiayantechandroid.jks'
+            keyPassword 'jiayantech.com'
+            storeFile file('D:/jiayan/jiayanDev/app/jiayantechandroid.jks')
+            storePassword 'jiayantech.com'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

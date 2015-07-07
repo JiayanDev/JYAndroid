@@ -30,10 +30,7 @@ public class MainActivity extends BaseActivity {
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
-    private RadioButton mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn;
-    private RadioButton[] mRadioButtons = new RadioButton[]{
-            mBeautyWithBtn, mCommunityBtn, mActivityBtn, mUserInfoBtn
-    };
+    private RadioButton[] mRadioButtons = new RadioButton[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +46,16 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
+    }
+
+    private void initView() {
+        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
+        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
+        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
+        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
+        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
     @Override
@@ -71,16 +78,6 @@ public class MainActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
-        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
-        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 
     private void initViewPager() {
