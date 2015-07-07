@@ -49,8 +49,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 finishToStartActivity(LoginActivity.class);
             }
-<<<<<<< HEAD
-        }));
+        }, 1000);
 //        HttpReq.uploadImage("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-03-02-10-43-55.png",
 //                new ResponseListener<JSONObject>() {
 //                    @Override
@@ -61,8 +60,5 @@ public class SplashActivity extends BaseActivity {
 //                });
 //        startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
 //        finish();
-=======
-        }, 1000);
->>>>>>> upstream/master
     }
 }
