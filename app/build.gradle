@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'jiayantechandroid.jks'
+            keyPassword 'jiayantech.com'
+            storeFile file('/Users/liangzili/Downloads/jiayantechandroid.jks')
+            storePassword 'jiayantech.com'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
     defaultConfig {
@@ -14,7 +22,7 @@ android {
         release {
             keyAlias 'jiayantechandroid.jks'
             keyPassword 'jiayantech.com'
-            storeFile file('D:/jiayan/jiayanDev/app/jiayantechandroid.jks')
+            storeFile file('app/jiayantechandroid.jks')
             storePassword 'jiayantech.com'
         }
     }

@@ -50,5 +50,15 @@ public class SplashActivity extends BaseActivity {
                 finishToStartActivity(LoginActivity.class);
             }
         }, 1000);
+//        HttpReq.uploadImage("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-03-02-10-43-55.png",
+//                new ResponseListener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject jsonObject) {
+//                        ToastUtil.showMessage("Upload Complete");
+//                    }
+//
+//                });
+//        startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
+//        finish();
     }
 }
