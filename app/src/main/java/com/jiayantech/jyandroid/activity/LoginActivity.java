@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
+import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -22,6 +23,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    private Button btn_direct_login;
     private Button btn_sina_login;
     private Button btn_qq_login;
     private Button btn_wechat_login;
@@ -42,12 +44,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     protected void findViews() {
-        btn_sina_login = (Button) this.findViewById(R.id.btn_sina_login);
-        btn_qq_login = (Button) this.findViewById(R.id.btn_qq_login);
+        btn_direct_login = (Button) this.findViewById(R.id.btn_direct_login);
         btn_wechat_login = (Button) this.findViewById(R.id.btn_wechat_login);
-        btn_sina_logout = (Button) this.findViewById(R.id.btn_sina_logout);
-        btn_qq_logout = (Button) this.findViewById(R.id.btn_qq_logout);
+        btn_qq_login = (Button) this.findViewById(R.id.btn_qq_login);
+        btn_sina_login = (Button) this.findViewById(R.id.btn_sina_login);
+
         btn_wechat_logout = (Button) this.findViewById(R.id.btn_wechat_logout);
+        btn_qq_logout = (Button) this.findViewById(R.id.btn_qq_logout);
+        btn_sina_logout = (Button) this.findViewById(R.id.btn_sina_logout);
     }
 
     protected void setViewsContent() {
@@ -55,17 +59,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     protected void setViewsListener() {
-        btn_sina_login.setOnClickListener(this);
-        btn_qq_login.setOnClickListener(this);
+        btn_direct_login.setOnClickListener(this);
         btn_wechat_login.setOnClickListener(this);
-        btn_sina_logout.setOnClickListener(this);
-        btn_qq_logout.setOnClickListener(this);
+        btn_qq_login.setOnClickListener(this);
+        btn_sina_login.setOnClickListener(this);
+
         btn_wechat_logout.setOnClickListener(this);
+        btn_qq_logout.setOnClickListener(this);
+        btn_sina_logout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_direct_login:
+                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishToStartActivity(MainActivity.class);
+                    }
+                }));
+                break;
             case R.id.btn_sina_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.SINA, new SocialLoginBiz.GetUserInfoListener() {
                     @Override

@@ -5,25 +5,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_sina_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="btn_sina_login" />
-
-    <Button
-        android:id="@+id/btn_sina_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="btn_sina_logout" />
-
-    <Button
-        android:id="@+id/btn_qq_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="btn_qq_login" />
-
-    <Button
-        android:id="@+id/btn_qq_logout"
+        android:id="@+id/btn_direct_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="btn_qq_logout" />
@@ -35,10 +17,33 @@
         android:text="btn_wechat_login" />
 
     <Button
+        android:id="@+id/btn_qq_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_qq_login" />
+
+    <Button
+        android:id="@+id/btn_sina_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_sina_login" />
+
+    <Button
         android:id="@+id/btn_wechat_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="btn_wechat_logout" />
 
+    <Button
+        android:id="@+id/btn_qq_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_qq_logout" />
+
+    <Button
+        android:id="@+id/btn_sina_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_sina_logout" />
 
 </LinearLayout>

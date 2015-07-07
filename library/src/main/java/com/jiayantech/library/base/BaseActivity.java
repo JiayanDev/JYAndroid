@@ -51,6 +51,11 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    protected void hideActionBar() {
+        getSupportActionBar().hide();
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -121,7 +126,25 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     }
 
     ///
-    protected void startActivity(Class<?> cls) {
-        startActivity(new Intent(this, cls));
+    protected void finishToStartActivity(Class<?> cls) {
+        finishToStartActivity(new Intent(this, cls));
+    }
+
+    protected void finishToStartActivity(Intent intent) {
+        startActivity(intent);
+        super.finish();
+    }
+
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 }
