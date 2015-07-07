@@ -22,7 +22,6 @@ public class PostBiz {
 
     private static final String MODEL = "post";
 
-    private static final String ACTION_CREATE = MODEL + "/like";
     private static final String ACTION_LIKE = MODEL + "/like";
     private static final String ACTION_CANCEL_LIKE = MODEL + "/cancel_like";
 

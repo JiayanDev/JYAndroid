@@ -66,6 +66,9 @@ public class MainActivity extends BaseActivity {
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));
                 return true;
+            case R.id.action_share:
+                startActivity(new Intent(this, ShareActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
