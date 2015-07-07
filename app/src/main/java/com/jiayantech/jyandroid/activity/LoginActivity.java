@@ -80,8 +80,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }));
                 break;
-            case R.id.btn_sina_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.SINA, new SocialLoginBiz.GetUserInfoListener() {
+            case R.id.btn_wechat_login:
+                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
                     @Override
                     public void onGetUserInfo(Map<String, Object> info) {
                     }
@@ -94,21 +94,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 });
                 break;
-            case R.id.btn_wechat_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
+            case R.id.btn_sina_login:
+                mSocialLoginBiz.login(SHARE_MEDIA.SINA, new SocialLoginBiz.GetUserInfoListener() {
                     @Override
                     public void onGetUserInfo(Map<String, Object> info) {
                     }
                 });
                 break;
-            case R.id.btn_sina_logout:
-                mSocialLoginBiz.logout(SHARE_MEDIA.SINA);
+            case R.id.btn_wechat_logout:
+                mSocialLoginBiz.logout(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.btn_qq_logout:
                 mSocialLoginBiz.logout(SHARE_MEDIA.QQ);
                 break;
-            case R.id.btn_wechat_logout:
-                mSocialLoginBiz.logout(SHARE_MEDIA.WEIXIN);
+            case R.id.btn_sina_logout:
+                mSocialLoginBiz.logout(SHARE_MEDIA.SINA);
                 break;
         }
     }
