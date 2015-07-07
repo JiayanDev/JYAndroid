@@ -16,6 +16,7 @@ import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.widget.FlowLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.comm.ActivityResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,9 @@ import java.util.Random;
  * rights reserved.
  */
 public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<String>, FlowLayout.OnItemClickListener {
+    private static final String KEY_TO_PICK = "to_pick";
+    public static final String KEY_categoryIds = "categoryIds";
+    public static final String KEY_categoryNames = "categoryNames";
     private FlowLayout layout_selected;
     private RecyclerView list_parents;
     private LinearLayout list_children;
@@ -36,6 +40,8 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     private ArrayList<String> mSelectedList = new ArrayList<>();
     private ArrayList<String> mSelectedIds = new ArrayList<>();
     private ProjectCategoryAdapter mAdapter;
+
+    private boolean to_pick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     }
 
     protected void setViewsContent() {
+        to_pick = getIntent().getBooleanExtra(KEY_TO_PICK, false);
         layout_selected.setViews(mSelectedList);
         list_parents.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ProjectCategoryAdapter(UserManger.sProjectCategoryData, UserManger.sProjectCategoryTopLevels);
@@ -68,7 +75,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.next_action, menu);
+        getMenuInflater().inflate(to_pick ? R.menu.finish_action : R.menu.next_action, menu);
         return true;
     }
 
@@ -76,14 +83,19 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
             case R.id.action_next:
                 Intent intent = new Intent(this, NewDiaryInfoActivity.class);
-                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryName, mSelectedList);
-                intent.putStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryIds, mSelectedIds);
-                startActivity(intent);
-                finish();
+                intent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
+                intent.putStringArrayListExtra(KEY_categoryIds, mSelectedIds);
+                finishToStartActivity(intent);
+                return true;
+            case R.id.action_finish:
+                Intent finishIntent = new Intent(this, NewDiaryInfoActivity.class);
+                finishIntent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
+                finishIntent.putStringArrayListExtra(KEY_categoryIds, mSelectedIds);
+                ActivityResult.onFinishResult(this, finishIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

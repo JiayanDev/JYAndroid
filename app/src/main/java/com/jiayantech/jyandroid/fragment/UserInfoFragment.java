@@ -5,24 +5,43 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.library.base.BaseFragment;
 
 /**
  * Created by liangzili on 15/6/25.
+ *
+ * @Update by janseon on 15/7/7
  */
-public class UserInfoFragment extends BaseFragment {
-    public static UserInfoFragment newInstance(Bundle args){
+public class UserInfoFragment extends BaseFragment implements View.OnClickListener {
+    public static UserInfoFragment newInstance(Bundle args) {
         UserInfoFragment fragment = new UserInfoFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Nullable
+    private TextView txt_events;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_userinfo, container, false);
-        return view;
+    protected int getInflaterResId() {
+        return R.layout.fragment_user_info;
+    }
+
+    @Override
+    protected void onInitView() {
+        txt_events = (TextView) findViewById(R.id.txt_events);
+        txt_events.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_events:
+                startActivity(MyEventsActivity.class);
+                break;
+        }
     }
 }

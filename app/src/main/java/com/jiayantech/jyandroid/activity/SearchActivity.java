@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.EventAdapter;
+import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -105,32 +106,32 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
         imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
     }
 
-    public class SearchTask extends AsyncTask<String, Void, ArrayList<User>> {
+    public class SearchTask extends AsyncTask<String, Void, ArrayList<Event>> {
         @Override
-        protected ArrayList<User> doInBackground(String... params) {
+        protected ArrayList<Event> doInBackground(String... params) {
             SystemClock.sleep(100);
-            ArrayList<User> list = new ArrayList<>();
+            ArrayList<Event> list = new ArrayList<>();
             int count = Math.abs(new Random().nextInt()) % 30;
             for (int i = 0; i < count; i++) {
-                User user = new User();
-                user.firstName = "firstName" + new Random().nextInt();
-                list.add(user);
+                Event event = new Event();
+                event.categoryName = "firstName" + new Random().nextInt();
+                list.add(event);
             }
             return list;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<User> result) {
+        protected void onPostExecute(ArrayList<Event> result) {
             if (result != null) {
                 mAdapter = new EventAdapter(result);
                 mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<User>() {
+                mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Event>() {
                     @Override
-                    public void onItemClick(BaseSimpleModelAdapter<User> adapter, int position, User user) {
+                    public void onItemClick(BaseSimpleModelAdapter<Event> adapter, int position, Event event) {
                         onSearchClosed();
                         Intent intent = new Intent();
-                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorId, mAdapter.getItem(position).id);
-                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorName, mAdapter.getItem(position).firstName);
+                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorId, event.id);
+                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorName, event.categoryName);
                         ActivityResult.onFinishResult(SearchActivity.this, intent);
                     }
                 });

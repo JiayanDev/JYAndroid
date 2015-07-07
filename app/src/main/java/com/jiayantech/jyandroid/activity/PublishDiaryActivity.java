@@ -26,7 +26,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
     protected void setViewsContent() {
         super.setViewsContent();
         Intent intent = getIntent();
-        categoryIds = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryIds);
+        categoryIds = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
         operationTime = intent.getLongExtra(NewDiaryInfoActivity.KEY_operationTime, 0);
         price = intent.getStringExtra(NewDiaryInfoActivity.KEY_price);
         satisfyLevel = intent.getFloatExtra(NewDiaryInfoActivity.KEY_satisfyLevel, 0);

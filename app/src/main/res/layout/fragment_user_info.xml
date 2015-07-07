@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="30dip">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="七月" />
+
+            <ImageView
+                android:layout_width="70dip"
+                android:layout_height="70dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_selected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dip"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_msg"
+                style="@style/text_item_style"
+                android:text="我的通知" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dip"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_mime"
+                style="@style/text_item_style"
+                android:text="我的伴美" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dip"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_events"
+                style="@style/text_item_style"
+                android:text="成为美丽天使" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dip"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_help"
+                style="@style/text_item_style"
+                android:text="帮助" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/font_gray" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

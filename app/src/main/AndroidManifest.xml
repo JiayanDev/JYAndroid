@@ -45,6 +45,12 @@
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.CreateEventActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyEventsActivity"
+            android:screenOrientation="portrait" />
 
         <!--友盟推送服务相关-->
         <receiver

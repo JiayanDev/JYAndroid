@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -34,15 +35,13 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         super.onInitView();
         setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);
         View headerView = setHeader(R.layout.layout_topic_category);
-
         initHeaderView(headerView);
     }
 
-    private void initHeaderView(View headerView){
-        RecyclerView recyclerView = (RecyclerView)headerView.findViewById(R.id.list_category);
+    private void initHeaderView(View headerView) {
+        RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setAdapter(new TopicCategoryAdapter());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
     }
 }

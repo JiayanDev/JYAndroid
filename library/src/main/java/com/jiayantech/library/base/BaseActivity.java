@@ -135,10 +135,13 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super.finish();
     }
 
+    protected void startActivity(Class<?> cls) {
+        startActivity(new Intent(this, cls));
+    }
 
     @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
 

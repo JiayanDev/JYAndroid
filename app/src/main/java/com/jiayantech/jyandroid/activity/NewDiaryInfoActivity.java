@@ -35,8 +35,6 @@ import java.util.Calendar;
  */
 public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String KEY_categoryIds = "categoryIds";
-    public static final String KEY_categoryName = "categoryName";
     public static final String KEY_operationTime = "operationTime";
     public static final String KEY_price = "price";
     public static final String KEY_doctorId = "doctorId";
@@ -73,8 +71,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     protected void setViewsContent() {
         Intent intent = getIntent();
-        categoryId = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryIds);
-        categoryName = intent.getStringArrayListExtra(NewDiaryInfoActivity.KEY_categoryName);
+        categoryId = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
+        categoryName = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
         txt_project.setText(categoryName.toString());
     }
 
@@ -136,7 +134,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 float satisfyLevel = rating_bar.getRating();
 
                 Intent intent = new Intent(this, PublishDiaryActivity.class);
-                intent.putStringArrayListExtra(KEY_categoryIds, categoryId);
+                intent.putStringArrayListExtra(SelectProjectActivity.KEY_categoryIds, categoryId);
                 intent.putExtra(KEY_operationTime, operationTime);
                 intent.putExtra(KEY_price, price);
                 intent.putExtra(KEY_satisfyLevel, satisfyLevel);

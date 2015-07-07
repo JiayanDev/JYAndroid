@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
@@ -18,28 +20,27 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class EventAdapter extends BaseSimpleModelAdapter<User> {
-    public EventAdapter(List<User> list) {
+public class EventAdapter extends BaseSimpleModelAdapter<Event> {
+    public EventAdapter(List<Event> list) {
         super(list);
     }
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, android.R.layout.simple_list_item_1, this);
+        return new ViewHolder(viewGroup, R.layout.item_card, this);
     }
 
-
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<User> {
-        public TextView mTextView;
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Event> {
+        public TextView txt_title;
 
         public ViewHolder(ViewGroup parent, int layoutId, EventAdapter aadapter) {
             super(parent, layoutId, aadapter);
-            mTextView = (TextView) itemView;
+            txt_title = (TextView) itemView.findViewById(R.id.txt_title);
         }
 
         @Override
-        public void onBind(User user, int position) {
-            mTextView.setText(user.firstName);
+        public void onBind(Event event, int position) {
+            txt_title.setText(event.categoryName);
         }
     }
 }

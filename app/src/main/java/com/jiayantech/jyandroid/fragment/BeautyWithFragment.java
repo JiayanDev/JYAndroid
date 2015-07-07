@@ -1,26 +1,20 @@
 package com.jiayantech.jyandroid.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.library.base.BaseFragment;
-import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.jyandroid.adapter.PostAdapter;
+import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.library.base.RefreshListFragment;
+import com.jiayantech.library.http.AppResponse;
+
+import java.util.List;
 
 /**
  * Created by liangzili on 15/6/25.
  */
-public class BeautyWithFragment extends BaseFragment {
+public class BeautyWithFragment extends RefreshListFragment<Post, AppResponse<List<Post>>> {
 
     public static BeautyWithFragment newInstance(Bundle args) {
         BeautyWithFragment fragment = new BeautyWithFragment();
@@ -29,17 +23,9 @@ public class BeautyWithFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void onInitView() {
+        super.onInitView();
+        setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);
+        setHeader(R.layout.fragment_beauty_with);
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_beauty_with, container, false);
-
-        return view;
-    }
-
 }

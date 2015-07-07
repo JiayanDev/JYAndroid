@@ -9,6 +9,6 @@ package com.jiayantech.library.base;
  */
 public class BaseModel {
     public long id;
-    public long createTime;
+    //public long createTime;
 
 }

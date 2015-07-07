@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.fragment.EventFragment;
+import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity {
         BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
         CommunityFragment communityFragment = CommunityFragment.newInstance(null);
 //        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
-        EventFragment eventFragment = new EventFragment();
+        EventsFragment eventFragment = new EventsFragment();
         UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
 
         mFragments = new Fragment[]{
