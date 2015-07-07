@@ -77,16 +77,6 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
-        mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
-        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
-    }
-
     private void initViewPager() {
         mFragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
