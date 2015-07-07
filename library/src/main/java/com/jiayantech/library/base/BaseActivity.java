@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -32,7 +33,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //开启友盟统计
+        //开启友盟推送
         PushAgent.getInstance(this).onAppStart();
 
         mHelper = new SwipeBackActivityHelper(this);
@@ -41,6 +42,20 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         setSwipeBackEnable(true);
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        //集成友盟统计
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //集成友盟统计
+        MobclickAgent.onPause(this);
     }
 
     protected void setTitle(String title) {

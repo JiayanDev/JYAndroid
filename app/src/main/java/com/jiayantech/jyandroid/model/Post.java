@@ -13,6 +13,7 @@ public class Post extends BaseModel {
     public static final String POST_TYPE_DIARY = "diary";
     public static final String POST_TYPE_TOPIC = "topic";
 
+    public String userName;
     public String content;
     public String photoes;
     public long commentCount;
@@ -20,5 +21,6 @@ public class Post extends BaseModel {
     public String userId;
     public String diaryId;
     public String type;
+    public boolean isLike;
 
 }
