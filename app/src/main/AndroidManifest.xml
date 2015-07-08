@@ -51,6 +51,11 @@
         <activity
             android:name=".activity.MyEventsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.PostDetailActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.PostActivity"
+                  android:screenOrientation="portrait"/>
 
         <!--友盟推送服务相关-->
         <receiver

@@ -1,8 +1,7 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.biz.PostBiz;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
@@ -38,19 +38,39 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post>{
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
         View view = LayoutInflater.from(viewGroup.getContext()).
                 inflate(R.layout.item_topic, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view, new ViewHolderOnClickListener());
         return holder;
     }
 
-    class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
+    class ViewHolderOnClickListener implements View.OnClickListener{
+        private int mPosition;
+        public int getPosition(){
+            return mPosition;
+        }
+
+        public void setPosition(int pos){
+            mPosition = pos;
+        }
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, PostDetailActivity.class);
+            intent.putExtra(WebViewFragment.EXTRA_ID, mList.get(mPosition).id);
+            intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_TOPIC);
+            mContext.startActivity(intent);
+        }
+    }
+
+
+    class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post>{
         public ImageView mAvatar;
         public TextView mUsername;
         public ImageView mPhoto;
         public TextView mContent;
         public TextView mThumbsUpCount;
         public TextView mCommentCount;
+        public ViewHolderOnClickListener mListener;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ViewHolderOnClickListener listener) {
             super(itemView);
             mAvatar = (ImageView)itemView.findViewById(R.id.avatar);
             mUsername = (TextView)itemView.findViewById(R.id.username);
@@ -58,6 +78,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post>{
             mContent = (TextView)itemView.findViewById(R.id.content);
             mThumbsUpCount = (TextView)itemView.findViewById(R.id.thumbs_up);
             mCommentCount = (TextView)itemView.findViewById(R.id.comment);
+            mListener = listener;
+            itemView.setOnClickListener(listener);
         }
 
         @Override
@@ -71,7 +93,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post>{
             mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE, new ResponseListener<AppResponse>(){
+                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE,
+                            new ResponseListener<AppResponse>(){
 
                         @Override
                         public void onResponse(AppResponse baseModelAppResponse) {
@@ -88,8 +111,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post>{
                     fragment.show(((BaseActivity)mContext).getSupportFragmentManager(), "comment");
                 }
             });
+            mListener.setPosition(position);
         }
-
 
     }
 }
