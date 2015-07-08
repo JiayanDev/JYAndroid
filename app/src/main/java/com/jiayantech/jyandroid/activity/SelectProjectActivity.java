@@ -30,18 +30,21 @@ import java.util.Random;
  * rights reserved.
  */
 public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<String>, FlowLayout.OnItemClickListener {
-    private static final String KEY_TO_PICK = "to_pick";
+    public static final String KEY_TO_PICK = "to_pick";
     public static final String KEY_categoryIds = "categoryIds";
     public static final String KEY_categoryNames = "categoryNames";
+    public static final int REQUEST_CODE_SELECT = 0x100;
+
     private FlowLayout layout_selected;
     private RecyclerView list_parents;
     private LinearLayout list_children;
 
-    private ArrayList<String> mSelectedList = new ArrayList<>();
-    private ArrayList<String> mSelectedIds = new ArrayList<>();
+    private boolean to_pick;
     private ProjectCategoryAdapter mAdapter;
 
-    private boolean to_pick;
+    private ArrayList<String> mSelectedList = new ArrayList<>();
+    private ArrayList<String> mSelectedIds = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,6 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
         setViewsContent();
         setViewsListener();
     }
-
 
     protected void findViews() {
         layout_selected = (FlowLayout) findViewById(R.id.layout_selected);

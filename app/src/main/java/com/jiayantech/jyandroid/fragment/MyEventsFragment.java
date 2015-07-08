@@ -1,5 +1,8 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.view.View;
+
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.EventAdapter;
 import com.jiayantech.jyandroid.biz.EventBiz;
 import com.jiayantech.jyandroid.model.Event;
@@ -19,6 +22,7 @@ public class MyEventsFragment extends RefreshListFragment<Event, AppResponse<Lis
     @Override
     public void onInitView() {
         super.onInitView();
+        ultimateRecyclerView.setRecylerViewBackgroundColor(getResources().getColor(R.color.bg_gray));
         setParams(new EventAdapter(null), EventBiz.ACTION_LIST);
     }
 }

@@ -108,7 +108,15 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
-                mAdapter.addMore(list);
+                if (list.size() > 0) {
+                    mAdapter.addMore(list);
+                } else {
+//                    mAdapter.setCustomLoadMoreView(null);
+//                    mAdapter.notifyDataSetChanged();
+                    if (mAdapter.getCustomLoadMoreView() != null) {
+                        mAdapter.getCustomLoadMoreView().setVisibility(View.GONE);
+                    }
+                }
                 mIsLoading = false;
             }
 

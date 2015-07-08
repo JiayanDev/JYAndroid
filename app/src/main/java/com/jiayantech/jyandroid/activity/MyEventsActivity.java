@@ -23,6 +23,8 @@ public class MyEventsActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("我的活动");
+        setDisplayHomeAsUpEnabled();
         addBottomButton();
     }
 
@@ -33,6 +35,7 @@ public class MyEventsActivity extends SingleFragmentActivity {
 
     private void addBottomButton() {
         LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_parent);
+        layout_parent.setBackgroundDrawable(null);
         Button btn = new Button(this);
         btn.setText("继续成为美丽天使");
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
