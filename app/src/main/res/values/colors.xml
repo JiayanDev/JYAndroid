@@ -13,4 +13,6 @@
     <color name="font_white_gray">#ff939aa0</color>
     <color name="font_gray">#ff92999f</color>
     <color name="font_blue">#ff00baff</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
 </resources>

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.jiayantech.library.base.SingleFragmentActivity;
-import com.jiayantech.jyandroid.fragment.TopicFragment;
+import com.jiayantech.jyandroid.fragment.PostListFragment;
 
 /**
  * Created by liangzili on 15/6/25.
@@ -12,7 +12,7 @@ import com.jiayantech.jyandroid.fragment.TopicFragment;
 public class TopicActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
-        return new TopicFragment();
+        return new PostListFragment();
     }
 
     @Override

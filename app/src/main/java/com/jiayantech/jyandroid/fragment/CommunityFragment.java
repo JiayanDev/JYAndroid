@@ -41,7 +41,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     private void initHeaderView(View headerView) {
         RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new TopicCategoryAdapter());
+        recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
     }
 }

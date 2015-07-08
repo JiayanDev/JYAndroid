@@ -8,6 +8,11 @@
         <item>我</item>
     </string-array>
 
+    <string-array name="tab_post">
+        <item>话题</item>
+        <item>日志</item>
+    </string-array>
+
     <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
     cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
     bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
@@ -28,6 +33,7 @@
     <string name="next">next</string>
     <string name="finish">finish</string>
     <string name="share">分享</string>
+    <string name="post_share_text" formatted="false">Hello, 我看到有趣的内容想推荐给你，%s , %s</string>
 
     <string name="direct_login">直接登录</string>
     <string name="wechat_login">微信登录</string>

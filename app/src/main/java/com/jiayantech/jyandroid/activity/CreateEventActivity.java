@@ -65,6 +65,4 @@ public class CreateEventActivity extends SingleFragmentActivity {
             }
         };
     }
-
-
 }

@@ -14,4 +14,5 @@ public class BaseWebChromeClient extends WebChromeClient{
         super.onProgressChanged(view, newProgress);
         EventBus.getDefault().post(new WebViewLoadingProgressEvent(newProgress));
     }
+
 }
