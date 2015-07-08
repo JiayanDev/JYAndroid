@@ -29,6 +29,8 @@ public class CreateEventActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("创建活动");
+        setDisplayHomeAsUpEnabled();
         LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_parent);
         View header = getLayoutInflater().inflate(R.layout.layout_create_event_header, layout_parent, false);
         layout_parent.addView(header, 0);
@@ -38,7 +40,7 @@ public class CreateEventActivity extends SingleFragmentActivity {
         txt_success = (TextView) header.findViewById(R.id.txt_success);
         txt_project.setSelected(true);
 
-        int paddingRight = getResources().getDisplayMetrics().widthPixels * 2 / 3;
+        int paddingRight = getResources().getDisplayMetrics().widthPixels * 3 / 4;
         img_progress.setPadding(0, 0, paddingRight, 0);
     }
 
@@ -46,13 +48,16 @@ public class CreateEventActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new CreateEventProjectFragment() {
             @Override
-            protected void onNext(String nickname, String phone, String hospital, String doctor, String project, long time) {
-                img_progress.setPadding(0, 0, img_progress.getWidth() / 2, 0);
+            protected void onNext(String nickname, String phone, String hospital, String doctor, String project, double time) {
+                int paddingRight = img_progress.getWidth() * 2 / 5;
+                img_progress.setPadding(0, 0, paddingRight, 0);
+                img_progress.invalidate();
                 txt_summary.setSelected(true);
                 replace(new CreateEventSummaryFragment() {
                     @Override
                     public void onSuccess() {
                         img_progress.setPadding(0, 0, 0, 0);
+                        img_progress.invalidate();
                         txt_success.setSelected(true);
                         replace(new CreateEventSuccessFragment());
                     }

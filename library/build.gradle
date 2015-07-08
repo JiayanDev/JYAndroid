@@ -40,5 +40,5 @@ dependencies {
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'de.greenrobot:eventbus:2.4.0'
-
+    compile 'com.github.chrisbanes.photoview:library:1.2.3'
 }

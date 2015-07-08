@@ -37,8 +37,6 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     public static final String KEY_operationTime = "operationTime";
     public static final String KEY_price = "price";
-    public static final String KEY_doctorId = "doctorId";
-    public static final String KEY_doctorName = "doctorName";
     public static final String KEY_satisfyLevel = "satisfyLevel";
 
     private TextView txt_project;
@@ -99,8 +97,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
-                        //String doctorId = data.getStringExtra(KEY_doctorId);
-                        String doctorName = data.getStringExtra(KEY_doctorName);
+                        //String doctorId = data.getStringExtra(SearchActivity.KEY_ID);
+                        String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_doctor.setText(doctorName);
                         ToastUtil.showMessage("doctorName: " + doctorName);
                     }

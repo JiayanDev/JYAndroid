@@ -103,7 +103,15 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         ((ViewGroup) activityView).addView(view);
         Toolbar toolbar = (Toolbar) activityView.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        super.setContentView(activityView);
+    }
 
+    @Override
+    public void setContentView(View view) {
+        View activityView = getLayoutInflater().inflate(R.layout.activity_base, null);
+        ((ViewGroup) activityView).addView(view);
+        Toolbar toolbar = (Toolbar) activityView.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         super.setContentView(activityView);
     }
 

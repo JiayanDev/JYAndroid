@@ -27,20 +27,22 @@ public class EventAdapter extends BaseSimpleModelAdapter<Event> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, R.layout.item_card, this);
+        return new ViewHolder(viewGroup, R.layout.item_card);
     }
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Event> {
         public TextView txt_title;
+        public TextView txt_content;
 
-        public ViewHolder(ViewGroup parent, int layoutId, EventAdapter aadapter) {
-            super(parent, layoutId, aadapter);
+        public ViewHolder(ViewGroup parent, int layoutId) {
+            super(parent, layoutId);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
+            txt_content = (TextView) itemView.findViewById(R.id.txt_content);
         }
 
         @Override
         public void onBind(Event event, int position) {
-            txt_title.setText(event.categoryName);
+            txt_title.setText(event.desc);
         }
     }
 }

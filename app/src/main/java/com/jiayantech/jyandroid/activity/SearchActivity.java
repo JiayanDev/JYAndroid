@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -32,12 +33,15 @@ import java.util.Random;
  * rights reserved.
  */
 public class SearchActivity extends BaseActivity implements SearchBox.SearchListener {
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final int REQUEST_CODE_SELECT = 0x100;
+
     private SearchBox mSearchBox;
     private EditText search;
     private RecyclerView mRecyclerView;
     private EventAdapter mAdapter;
 
-    public static final int REQUEST_CODE_SELECT = 0x100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
             public void run() {
                 openSearchBox();
             }
-        }, 500);
+        }, 600);
     }
 
 
@@ -88,6 +92,11 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
 
     @Override
     public void onSearchClosed() {
+        close();
+        onBackPressed();
+    }
+
+    public void close() {
         mSearchBox.hideCircularly(this);
         hideSoftKeyboard();
     }
@@ -128,15 +137,21 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
                 mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Event>() {
                     @Override
                     public void onItemClick(BaseSimpleModelAdapter<Event> adapter, int position, Event event) {
-                        onSearchClosed();
+                        close();
                         Intent intent = new Intent();
-                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorId, event.id);
-                        intent.putExtra(NewDiaryInfoActivity.KEY_doctorName, event.categoryName);
+                        intent.putExtra(KEY_ID, event.id);
+                        intent.putExtra(KEY_NAME, event.categoryName);
                         ActivityResult.onFinishResult(SearchActivity.this, intent);
                     }
                 });
             }
         }
+    }
+
+    public static void launchActivity(Fragment fragment) {
+        Intent intent = new Intent(fragment.getActivity(), SearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
     public static void launchActivity(Activity activity) {

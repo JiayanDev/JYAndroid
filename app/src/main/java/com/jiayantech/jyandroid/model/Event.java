@@ -12,19 +12,19 @@ import com.jiayantech.library.base.BaseModel;
 public class Event extends BaseModel {
     public long userId;
     public String desc;
-    //public long applyBeginTime;
-    //public long beginTime;
+    public double applyBeginTime;
+    //public double beginTime;
     public String categoryId;
     public String categoryName;
     public String province;
     public String city;
-    public long hospitalId;
+    //public long hospitalId;
     public String hospitalName;
     public String doctorName;
-    public long doctorId;
-    //public String[] photo;
+    //public long doctorId;
+    //public String[] photos;
     public long applymentCount;
     public long commentCount;
     public long likeCount;
-    public long hasLike;  //0表示当前用户没有对此点赞
+    public int hasLike;  //0表示当前用户没有对此点赞
 }

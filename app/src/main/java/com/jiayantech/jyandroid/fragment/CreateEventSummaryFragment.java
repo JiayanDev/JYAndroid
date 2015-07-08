@@ -21,7 +21,7 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
     private EditText edit_content;
     private Button btn_next;
     private String nickname, phone, hospital, doctor, project;
-    private long time;
+    private double time;
 
 
     @Override
@@ -42,12 +42,12 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
             case R.id.btn_next:
                 String title = null;
                 String desc = null;
-                long applyBeginTime = 0;
-                long applyEndTime = 0;
+                double applyBeginTime = 0;
+                double applyEndTime = 0;
 
-                long beginTime = time;
+                double beginTime = time;
 
-                long endTime = 0;
+                double endTime = 0;
 
                 String categoryIds = project;
                 String hospitalId = hospital;
@@ -73,7 +73,7 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
     public abstract void onSuccess();
 
     public CreateEventSummaryFragment setInfo(String nickname, String phone, String hospital,
-                                              String doctor, String project, long time) {
+                                              String doctor, String project, double time) {
         this.nickname = nickname;
         this.phone = phone;
         this.hospital = hospital;

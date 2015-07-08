@@ -26,13 +26,6 @@ import java.util.Calendar;
  * rights reserved.
  */
 public abstract class CreateEventProjectFragment extends BaseFragment implements View.OnClickListener {
-    public static final int REQUEST_CODE_SELECT = 1;
-
-    public static final String KEY_doctorId = "doctorId";
-    public static final String KEY_doctorName = "doctorName";
-    public static final String KEY_hospitalId = "hospitalId";
-    public static final String KEY_hospitalName = "hospitalName";
-
     private EditText edit_nickname;
     private EditText edit_phone;
     private TextView txt_hospital;
@@ -41,7 +34,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
     private TextView txt_time;
     private TextView btn_next;
 
-    private long time;
+    private double time;
     private String doctorId;
     private String hospitalId;
     private ArrayList<String> categoryIds;
@@ -75,8 +68,8 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 search(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
-                        hospitalId = data.getStringExtra(KEY_hospitalId);
-                        String hospitalName = data.getStringExtra(KEY_hospitalName);
+                        hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
+                        String hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_hospital.setText(hospitalName);
                         ToastUtil.showMessage("hospitalName: " + hospitalName);
                     }
@@ -86,21 +79,23 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 search(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
-                        doctorId = data.getStringExtra(KEY_doctorId);
-                        String doctorName = data.getStringExtra(KEY_doctorName);
+                        doctorId = data.getStringExtra(SearchActivity.KEY_ID);
+                        String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_doctor.setText(doctorName);
                         ToastUtil.showMessage("doctorName: " + doctorName);
                     }
                 });
                 break;
             case R.id.txt_project:
-                startActivityForResult(new Intent(getActivity(), SelectProjectActivity.class), REQUEST_CODE_SELECT);
-                mActivityResultHelper.addActivityResult(new ActivityResult(REQUEST_CODE_SELECT) {
+                Intent intent = new Intent(getActivity(), SelectProjectActivity.class);
+                intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
+                startActivityForResult(intent, SelectProjectActivity.REQUEST_CODE_SELECT);
+                mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
                         categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
                         ArrayList<String> categoryNames = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
-                        txt_doctor.setText(categoryNames.toString());
+                        txt_project.setText(categoryNames.toString());
                         ToastUtil.showMessage("categoryNames: " + categoryNames);
                     }
                 });
@@ -110,13 +105,17 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                     @Override
                     public void onSetDateTime(Calendar calendar) {
                         txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis()));
-                        time = calendar.getTimeInMillis() / 1000;
+                        time = calendar.getTimeInMillis() / 1000d;
                     }
                 });
                 break;
             case R.id.btn_next:
                 String nickname = edit_nickname.getText().toString();
                 String phone = edit_phone.getText().toString();
+
+                hospitalId = "1";
+                doctorId = "1";
+
                 if (hospitalId == null) {
                     ToastUtil.showMessage("hospitalId==null");
                     return;
@@ -139,7 +138,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
     }
 
     private void search(ActivityResult activityResult) {
-        SearchActivity.launchActivity(getActivity());
+        SearchActivity.launchActivity(this);
         mActivityResultHelper.addActivityResult(activityResult);
     }
 
@@ -152,5 +151,5 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, long time);
+    protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, double time);
 }

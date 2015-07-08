@@ -13,6 +13,7 @@ import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.manager.UserManger;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by liangzili on 15/7/3.
@@ -20,6 +21,7 @@ import java.util.List;
 public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdapter.ViewHolder>{
     private List<String> mCategoryList;
     private Context mContext;
+    private final Map<String, String> mProjectCategoryData = UserManger.sProjectCategoryData;
     public TopicCategoryAdapter(Context context){
         mContext = context;
         mCategoryList = UserManger.sProjectCategoryTopLevels;
@@ -55,8 +57,8 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.name.setText(mCategoryList.get(position));
 
+        holder.name.setText(mProjectCategoryData.get(mCategoryList.get(position)));
     }
 
     @Override
@@ -66,9 +68,10 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
+
         public ViewHolder(View itemView, ViewHolderOnClickListener listener) {
             super(itemView);
-            name = (TextView)itemView.findViewById(R.id.category_name);
+            name = (TextView) itemView.findViewById(R.id.category_name);
             itemView.setOnClickListener(listener);
         }
     }

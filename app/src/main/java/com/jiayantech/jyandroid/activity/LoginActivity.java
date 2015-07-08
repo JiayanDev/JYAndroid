@@ -55,6 +55,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     protected void setViewsContent() {
+        setTitle("登录");
+        setSwipeBackEnable(false);
         mSocialLoginBiz = new SocialLoginBiz(this);
     }
 
@@ -79,6 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         finishToStartActivity(MainActivity.class);
                     }
                 }));
+                //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
