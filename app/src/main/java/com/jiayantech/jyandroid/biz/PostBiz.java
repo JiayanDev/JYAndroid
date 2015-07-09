@@ -2,8 +2,6 @@ package com.jiayantech.jyandroid.biz;
 
 import android.support.v4.util.ArrayMap;
 
-import com.jiayantech.library.base.BaseModel;
-import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 

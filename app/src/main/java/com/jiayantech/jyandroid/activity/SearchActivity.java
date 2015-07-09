@@ -132,7 +132,7 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
         @Override
         protected void onPostExecute(ArrayList<Event> result) {
             if (result != null) {
-                mAdapter = new EventAdapter(result);
+                mAdapter = new EventAdapter(SearchActivity.this, result);
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Event>() {
                     @Override

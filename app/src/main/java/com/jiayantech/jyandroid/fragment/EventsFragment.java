@@ -19,6 +19,6 @@ public class EventsFragment extends RefreshListFragment<Event, AppResponse<List<
     @Override
     public void onInitView() {
         super.onInitView();
-        setParams(new EventAdapter(null), EventBiz.ACTION_LIST);
+        setParams(new EventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
     }
 }

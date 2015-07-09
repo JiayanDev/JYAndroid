@@ -18,10 +18,10 @@ import com.jiayantech.library.utils.UIUtil;
 /**
  * Created by liangzili on 15/7/7.
  */
-public class DetailWebViewFragment extends WebViewFragment{
+public class PostDetailFragment extends WebViewFragment{
 
-    public static DetailWebViewFragment newInstance(long id, String type){
-        DetailWebViewFragment fragment = new DetailWebViewFragment();
+    public static PostDetailFragment newInstance(long id, String type){
+        PostDetailFragment fragment = new PostDetailFragment();
         Bundle args = new Bundle();
         args.putLong(WebViewFragment.EXTRA_ID, id);
         args.putString(WebViewFragment.EXTRA_TYPE, type);

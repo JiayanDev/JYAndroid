@@ -23,6 +23,6 @@ public class MyEventsFragment extends RefreshListFragment<Event, AppResponse<Lis
     public void onInitView() {
         super.onInitView();
         ultimateRecyclerView.setRecylerViewBackgroundColor(getResources().getColor(R.color.bg_gray));
-        setParams(new EventAdapter(null), EventBiz.ACTION_LIST);
+        setParams(new EventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
     }
 }
