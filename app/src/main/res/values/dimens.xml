@@ -4,4 +4,10 @@
     <dimen name="tab_height">55dip</dimen>
 
     <dimen name="diary_header_cover_size">50dp</dimen>
+
+    <dimen name="normal_margin">10dip</dimen>
+
+    <dimen name="title_text_size">28sp</dimen>
+    <dimen name="normal_text_size">14dip</dimen>
+    <dimen name="small_text_size">10dip</dimen>
 </resources>
