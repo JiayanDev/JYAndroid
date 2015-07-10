@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -8,7 +7,6 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,24 +37,19 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
     }
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<String> {
-        private View view_selected;
         private TextView txt_category;
         private final Map<String, String> mData;
-        private String mId;
 
         public ViewHolder(ViewGroup parent, int layoutId, ProjectCategoryAdapter adapter) {
             super(parent, layoutId, adapter);
             mAdapter = adapter;
             mData = adapter.mData;
-            view_selected = itemView.findViewById(R.id.view_selected);
             txt_category = (TextView) itemView.findViewById(R.id.txt_category);
         }
 
         @Override
         public void onBind(String id, int position) {
-            mId = id;
-            mPosition = position;
-            view_selected.setVisibility(mAdapter.mSelectedPos == position ? View.VISIBLE : View.INVISIBLE);
+            txt_category.setSelected(mAdapter.mSelectedPos == position);
             txt_category.setText(mData.get(id));
         }
     }

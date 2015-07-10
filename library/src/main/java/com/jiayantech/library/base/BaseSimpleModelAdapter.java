@@ -52,7 +52,8 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
             itemView.setOnClickListener(mItemClickListener);
         }
 
-        public abstract void onBind(T item, int position);
+        public void onBind(T item, int position) {
+        }
 
         protected BaseSimpleModelAdapter<T> mAdapter;
         protected int mPosition;

@@ -47,7 +47,11 @@ public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
         notifyDataSetChanged();
     }
 
-    public void insert(T item, int position) {
+    public void add(T item) {
+        insert(mList, item, mList.size());
+    }
+
+    public void add(T item, int position) {
         insert(mList, item, position);
     }
 
@@ -103,7 +107,7 @@ public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
         else return null;
     }
 
-    public List<T> getList(){
+    public List<T> getList() {
         return mList;
     }
 }

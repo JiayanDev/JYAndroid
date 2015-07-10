@@ -7,9 +7,13 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.library.base.BaseListAdapter;
+import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -21,72 +25,70 @@ import java.util.ArrayList;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ImageAdapter extends BaseListAdapter<Bitmap> {
+public class ImageAdapter extends BaseSimpleModelAdapter<Bitmap> {
 
     public static final int MAX_SIZE = 15;
 
     private int itemHeight;
 
-    public ImageAdapter(Context context, ArrayList<Bitmap> list) {
-        super(context, list);
+    public ImageAdapter(ArrayList<Bitmap> list) {
+        super(list);
+        mList.add(null);
     }
 
-    public int getSize() {
-        return mList.size();
+    public void addImage(Bitmap bitmap) {
+        add(bitmap, mList.size() - 1);
+        notifyDataSetChanged();
     }
 
     @Override
-    public int getCount() {
-        int count = getSize();
-        return count < MAX_SIZE ? count + 1 : count;
+    public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
+        return new ViewHolder(viewGroup, R.layout.item_image, this);
     }
 
     public void setItemHeight(int itemHeight) {
         this.itemHeight = itemHeight;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.item_image, null);
-            holder.img_photo = (ImageView) convertView.findViewById(R.id.img_photo);
-            convertView.setLayoutParams(new GridView.LayoutParams(itemHeight, itemHeight));
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        if (position == getCount() - 1) {
-            if (getSize() < getCount()) {
-                holder.img_photo.setBackgroundResource(R.color.bg_gray);
-                holder.img_photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                holder.img_photo.setImageResource(R.drawable.icon_photo_add);
-                return convertView;
-            }
-        }
-        Bitmap bitmap = getItem(position);
-        holder.img_photo.setBackgroundDrawable(null);
-        holder.img_photo.setScaleType(ImageView.ScaleType.CENTER);
-        holder.img_photo.setImageBitmap(bitmap);
-        return convertView;
-    }
-
-    public void resetGridViewHeight(GridView gridView) {
-        int columns = 4;
+    public void resetViewHeight(View view, int spanCount) {
+        int columns = spanCount;
         int rows;
-        if (getCount() % columns > 0) {
-            rows = getCount() / columns + 1;
+        if (getItemCount() % columns > 0) {
+            rows = getItemCount() / columns + 1;
         } else {
-            rows = getCount() / columns;
+            rows = getItemCount() / columns;
         }
-        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        ViewGroup.LayoutParams params = view.getLayoutParams();
         params.height = itemHeight * rows;//最后加上分割线总高度
-        gridView.setLayoutParams(params);
+        view.setLayoutParams(params);
     }
 
-    private class ViewHolder {
+
+    private static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Bitmap> {
         private ImageView img_photo;
+
+        public ViewHolder(ViewGroup parent, int layoutId, ImageAdapter adapter) {
+            super(parent, layoutId, adapter);
+            img_photo = (ImageView) itemView.findViewById(R.id.img_photo);
+            itemView.setLayoutParams(new GridView.LayoutParams(adapter.itemHeight, adapter.itemHeight));
+        }
+
+        private int getCount() {
+            return mAdapter.getItemCount();
+        }
+
+        @Override
+        public void onBind(Bitmap bitmap, int position) {
+            if (position == getCount() - 1) {
+                img_photo.setBackgroundResource(R.color.bg_gray);
+                img_photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                img_photo.setImageResource(R.drawable.icon_photo_add);
+                return;
+            }
+            img_photo.setBackgroundDrawable(null);
+            img_photo.setScaleType(ImageView.ScaleType.CENTER);
+            img_photo.setImageBitmap(bitmap);
+        }
     }
 }
 

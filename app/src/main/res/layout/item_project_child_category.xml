@@ -9,6 +9,6 @@
         style="@style/text_item_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_project_category_gray_selector" />
+        android:background="@drawable/bg_project_child_category_gray_selector" />
 
 </FrameLayout>

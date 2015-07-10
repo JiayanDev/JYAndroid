@@ -39,6 +39,7 @@
     <string name="wechat_login">微信登录</string>
     <string name="qq_login">QQ登录</string>
     <string name="sina_login">新浪登录</string>
+    <string name="category">分类</string>
 
 
 </resources>

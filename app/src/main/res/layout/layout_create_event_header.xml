@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="项目信息"
-            android:textColor="@color/txt_color_gray_blue_selector" />
+            android:textColor="@color/txt_color_gray_theme_selector" />
 
         <TextView
             android:id="@+id/txt_summary"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="个人简介"
-            android:textColor="@color/txt_color_gray_blue_selector" />
+            android:textColor="@color/txt_color_gray_theme_selector" />
 
         <TextView
             android:id="@+id/txt_success"
@@ -44,6 +44,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="申请成功"
-            android:textColor="@color/txt_color_gray_blue_selector" />
+            android:textColor="@color/txt_color_gray_theme_selector" />
     </LinearLayout>
 </LinearLayout>
