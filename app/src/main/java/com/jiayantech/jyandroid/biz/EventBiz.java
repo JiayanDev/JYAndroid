@@ -73,7 +73,8 @@ public class EventBiz {
         HttpReq.putParams(params, "name", name);
         HttpReq.putParams(params, "gender", gender);
         HttpReq.putParams(params, "desc", desc);
-        HttpReq.post(ACTION_APPLY, null, l);
+        //HttpReq.post(ACTION_APPLY, null, l);
+        HttpReq.get(ACTION_APPLY, params, l);
     }
 
     /**
@@ -86,5 +87,6 @@ public class EventBiz {
         HttpReq.putParams(params, "satisfyLevel", satisfyLevel);
         HttpReq.putParams(params, "content", content);
         HttpReq.post(ACTION_COMMENT, null, l);
+
     }
 }

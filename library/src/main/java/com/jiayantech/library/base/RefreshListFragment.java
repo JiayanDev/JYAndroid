@@ -36,10 +36,16 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     private BaseSimpleModelAdapter<T> mAdapter;
     private String mAction;
     private Type mType;
+    private Map<String, String> mParams;
 
-    protected void setParams(BaseSimpleModelAdapter<T> adapter, String action) {
+    protected void setParams(BaseSimpleModelAdapter<T> adapter, String action){
+        setParams(adapter, action, null);
+    }
+
+    protected void setParams(BaseSimpleModelAdapter<T> adapter, String action, Map<String, String> params) {
         mAdapter = adapter;
         mAction = action;
+        mParams = params;
         mType = HttpReq.getClassType(this, 1);
         ultimateRecyclerView.setAdapter(mAdapter);
         mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
@@ -70,6 +76,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             String sinceId = String.valueOf(mAdapter.getList().get(0).id);
             params = new ArrayMap<>();
             params.put("sinceId", sinceId);
+            if(mParams != null) {
+                params.putAll(mParams);
+            }
         }
         HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override

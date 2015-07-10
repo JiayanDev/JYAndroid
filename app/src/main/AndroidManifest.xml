@@ -66,6 +66,12 @@
             android:name=".activity.PhotosActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.EventDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ApplyEventActivity"
+                  android:screenOrientation="portrait"/>
+
         <!--友盟推送服务相关-->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

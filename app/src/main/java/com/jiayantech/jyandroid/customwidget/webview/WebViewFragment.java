@@ -25,6 +25,10 @@ import com.umeng.socialize.controller.UMSocialService;
 public abstract class WebViewFragment extends BaseFragment{
     public static final String TAG = WebViewFragment.class.getSimpleName();
 
+    public static final String BASE_URL = "http://app.jiayantech.com/app/html/";
+    public static final String ACTION_DIARY = "diary.html";
+    public static final String ACTION_DIARY_HEADER = "diaryHeader.html";
+
     public static final String TYPE_EVENT = "event";
     public static final String TYPE_TOPIC = "topic";
     public static final String TYPE_DIARY = "diary";
@@ -40,12 +44,30 @@ public abstract class WebViewFragment extends BaseFragment{
     protected WebView mWebView;
     protected String mType;
     protected long mId;
+    protected String mUrl = "http://www.baidu.com";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mType = getArguments().getString(EXTRA_TYPE);
         mId = getArguments().getLong(EXTRA_ID);
+
+        setUrl();
+    }
+
+    private void setUrl(){
+        if(mType.equals(TYPE_DIARY)){
+            mUrl = BASE_URL + ACTION_DIARY;
+        }else if(mType.equals(TYPE_DIARY_HEADER)){
+            mUrl = BASE_URL + ACTION_DIARY_HEADER;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(mUrl);
+        sb.append("?");
+        sb.append("id=");
+        sb.append(mId);
+        mUrl = sb.toString();
     }
 
     @Nullable
@@ -72,7 +94,8 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mWebView.loadUrl("http://www.baidu.com");
+        //mWebView.loadUrl("http://www.baidu.com");
+        mWebView.loadUrl(mUrl);
     }
 
     @Override

@@ -1,11 +1,16 @@
 package com.jiayantech.jyandroid.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.EventDetailActivity;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -21,21 +26,39 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
  * rights reserved.
  */
 public class EventAdapter extends BaseSimpleModelAdapter<Event> {
-    public EventAdapter(List<Event> list) {
+    private Context mContext;
+    public EventAdapter(Context context, List<Event> list) {
         super(list);
+        mContext = context;
+        setOnItemClickListener(new OnItemClickListener<Event>() {
+            @Override
+            public void onItemClick(BaseSimpleModelAdapter<Event> adapter,
+                                    int position, Event item) {
+                Intent intent = new Intent(mContext, EventDetailActivity.class);
+                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.id);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, R.layout.item_card);
+        return new ViewHolder(viewGroup, R.layout.item_card, this);
     }
+
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Event> {
         public TextView txt_title;
         public TextView txt_content;
 
         public ViewHolder(ViewGroup parent, int layoutId) {
-            super(parent, layoutId);
+            this(parent, layoutId, null);
+
+        }
+
+        public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Event> adapter) {
+            super(parent, layoutId, adapter);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
             txt_content = (TextView) itemView.findViewById(R.id.txt_content);
         }

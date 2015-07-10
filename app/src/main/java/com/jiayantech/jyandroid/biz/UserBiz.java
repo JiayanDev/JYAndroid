@@ -1,5 +1,8 @@
 package com.jiayantech.jyandroid.biz;
 
+import android.content.Context;
+import android.support.v4.util.ArrayMap;
+
 import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.comm.ConfigManager;
@@ -52,7 +55,11 @@ public class UserBiz {
             register(l);
         } else {
             String configVersion = ConfigManager.getConfig(KEY_CONFIG_VERSION, "0");
-            HttpReq.post(ACTION_QUICK_LOGIN, HttpReq.getInitParams(KEY_CONFIG_VERSION, configVersion), l);
+            Map<String, String> params = new ArrayMap<>();
+            params.put(KEY_CONFIG_VERSION, configVersion);
+            params.put("deviceToken", UmengPushBiz.getDeviceToken());
+            //HttpReq.post(ACTION_QUICK_LOGIN, HttpReq.getInitParams(KEY_CONFIG_VERSION, configVersion), l);
+            HttpReq.post(ACTION_QUICK_LOGIN, params, l);
         }
     }
 
@@ -68,6 +75,7 @@ public class UserBiz {
         params.put("configVersion", configVersion);
         params.put("name", name);
         params.put("psw", psw);
+        params.put("deviceToken", UmengPushBiz.getDeviceToken());
         HttpReq.post(ACTION_LOGIN, params, l);
     }
 

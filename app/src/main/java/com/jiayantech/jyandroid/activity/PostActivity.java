@@ -19,10 +19,15 @@ public class PostActivity extends BaseActivity{
     private ViewPager mViewPager;
     private PagerSlidingTabStrip mSlidingTabStrip;
     private BaseFragment[] mFragments;
+    private int mCategoryId;
+    //private String mType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        mCategoryId = Integer.valueOf(getIntent().
+                getStringExtra(PostListFragment.EXTRA_CATEGORY));
+        //mType = getIntent().getStringExtra(PostListFragment.EXTRA_TYPE);
         init();
     }
 
@@ -31,7 +36,8 @@ public class PostActivity extends BaseActivity{
         mViewPager = (ViewPager)findViewById(R.id.tab_content);
         mSlidingTabStrip = (PagerSlidingTabStrip)findViewById(R.id.tab_title);
         mFragments = new BaseFragment[]{
-                PostListFragment.newInstance(null, false), PostListFragment.newInstance(null, false)
+                PostListFragment.newInstance("topic", mCategoryId, false),
+                PostListFragment.newInstance("diary", mCategoryId, false)
         };
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

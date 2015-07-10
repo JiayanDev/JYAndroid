@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
 
+import com.jiayantech.jyandroid.app.JYApplication;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -9,6 +10,7 @@ import com.umeng.message.UmengRegistrar;
  * Created by liangzili on 15/7/6.
  */
 public class UmengPushBiz {
+    private static Context appContext;
     /**
      * enable or disable umeng push notification service
      * @param enable
@@ -23,12 +25,14 @@ public class UmengPushBiz {
 
     /**
      * 上传umeng推送的device_token
-     * @param context
+     *
      */
-    public static void uploadDeviceToken(Context context){
-        String device_token = UmengRegistrar.getRegistrationId(context);
-        if(!device_token.equals("")){
-            //上传设备token到服务器
-        }
+    public static String getDeviceToken(){
+        String device_token = UmengRegistrar.getRegistrationId(appContext);
+        return device_token;
+    }
+
+    public static void init(Context applicationContext) {
+        appContext = applicationContext;
     }
 }

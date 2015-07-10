@@ -40,6 +40,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViews();
         setViewsContent();
         setViewsListener();
+
+        //finishToStartActivity(MainActivity.class);
     }
 
 

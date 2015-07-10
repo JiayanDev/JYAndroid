@@ -2,7 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.support.v4.app.Fragment;
 
-import com.jiayantech.jyandroid.customwidget.webview.DetailWebViewFragment;
+import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
 
@@ -15,6 +15,6 @@ public class PostDetailActivity extends SingleFragmentActivity{
     protected Fragment createFragment() {
         long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
         String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
-        return DetailWebViewFragment.newInstance(id, type);
+        return PostDetailFragment.newInstance(id, type);
     }
 }

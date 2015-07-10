@@ -5,6 +5,9 @@
 
     <dimen name="diary_header_cover_size">50dp</dimen>
 
+    <!--详情页底部layout的高度-->
+    <dimen name="bottom_layout_height">50dp</dimen>
+
     <dimen name="normal_margin">10dip</dimen>
     <dimen name="normal_padding">10dip</dimen>
 
