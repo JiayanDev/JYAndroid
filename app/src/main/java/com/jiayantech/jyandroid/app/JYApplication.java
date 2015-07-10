@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.app;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.jiayantech.jyandroid.biz.UmengPushBiz;
 import com.jiayantech.jyandroid.biz.UmengShareBiz;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.utils.ToastUtil;
@@ -21,6 +22,7 @@ public class JYApplication extends BaseApplication {
         super.onCreate();
         initContext(getApplicationContext());
         UmengShareBiz.initShareModule(getApplicationContext());
+        UmengPushBiz.init(getApplicationContext());
     }
 
 

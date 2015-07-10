@@ -1,16 +1,20 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.ApplyEventActivity;
+import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
 
 /**
  * Created by liangzili on 15/7/9.
  */
 public class EventDetailFragment extends WebViewFragment{
+
     private Button mApplyButton;
 
     public static EventDetailFragment newInstance(long id, String type){
@@ -29,7 +33,9 @@ public class EventDetailFragment extends WebViewFragment{
         mApplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
+                intent.putExtra(ApplyEventFragment.EVENT_ID, mId);
+                startActivity(intent);
             }
         });
         return view;

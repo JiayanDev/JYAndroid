@@ -16,11 +16,13 @@ import java.util.Map;
  * rights reserved.
  */
 public class TopicBiz {
-    private static final String MODEL = "topic";
+    private static final String TOPIC_MODEL = "topic";
 
-    private static final String ACTION_CREATE = MODEL + "/create";
-    private static final String ACTION_MY_TOPIC = MODEL + "/my_topic";
-    public static final String ACTION_TOPIC_LIST = MODEL + "/getTopicList";
+    private static final String ACTION_CREATE = TOPIC_MODEL + "/create";
+    private static final String ACTION_MY_TOPIC = TOPIC_MODEL + "/my_topic";
+    public static final String ACTION_TOPIC_LIST = TOPIC_MODEL + "/getTopicList";
+
+    public static final String ACTION_LIST = "post/list";
 
     public static void create(String categoryIds, String content, String photoUrls, ResponseListener<AppResponse<BaseModel>> l) {
         Map<String, String> params = new HashMap<>();

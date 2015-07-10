@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostActivity;
+import com.jiayantech.jyandroid.fragment.PostListFragment;
 import com.jiayantech.jyandroid.manager.UserManger;
 
 import java.util.List;
@@ -51,6 +52,7 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 //            intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_TOPIC);
 //            mContext.startActivity(intent);
             Intent intent = new Intent(mContext, PostActivity.class);
+            intent.putExtra(PostListFragment.EXTRA_CATEGORY, mCategoryList.get(mPosition));
             mContext.startActivity(intent);
         }
     }
@@ -59,6 +61,7 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.name.setText(mProjectCategoryData.get(mCategoryList.get(position)));
+        holder.listener.setPosition(position);
     }
 
     @Override
@@ -68,10 +71,12 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
+        public ViewHolderOnClickListener listener;
 
         public ViewHolder(View itemView, ViewHolderOnClickListener listener) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.category_name);
+            this.listener = listener;
             itemView.setOnClickListener(listener);
         }
     }
