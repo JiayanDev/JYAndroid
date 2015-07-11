@@ -102,7 +102,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Initialise Volley Request Queue.
      */
-    private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
+    public static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
 
     /**
      * @param method
@@ -126,32 +126,7 @@ public class HttpReq<T> extends Request<T> {
         sVolleyQueue.add(request);
     }
 
-    /**
-     * @param bitmap
-     * @param fileName
-     * @param listener
-     */
-    public static void uploadImage(Bitmap bitmap, String fileName, ResponseListener listener) {
-        FormImage formImage = new FormImage(bitmap, fileName);
-        uploadImage(formImage, listener);
-    }
 
-    /**
-     * @param filePath
-     * @param listener
-     */
-    public static void uploadImage(String filePath, ResponseListener listener) {
-        FormImage formImage = new FormImage(filePath);
-        uploadImage(formImage, listener);
-    }
-
-
-    private static void uploadImage(FormImage formImage, ResponseListener listener) {
-        Request request = new PostUploadRequest2(Request.Method.POST,
-                "http://10.0.1.23:8000/api/uploadImage/", formImage,
-                new ErrorListener(listener), listener);
-        sVolleyQueue.add(request);
-    }
 
     private static class ErrorListener implements Response.ErrorListener {
         ResponseListener mResponseListener;

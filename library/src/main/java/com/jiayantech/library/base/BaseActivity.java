@@ -2,6 +2,7 @@ package com.jiayantech.library.base;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -98,12 +99,8 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
      */
     @Override
     public void setContentView(int layoutResID) {
-        View activityView = getLayoutInflater().inflate(R.layout.activity_base, null);
-        View view = getLayoutInflater().inflate(layoutResID, (ViewGroup) activityView, false);
-        ((ViewGroup) activityView).addView(view);
-        Toolbar toolbar = (Toolbar) activityView.findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        super.setContentView(activityView);
+        View view = getLayoutInflater().inflate(layoutResID, null);
+        setContentView(view);
     }
 
     @Override
@@ -111,9 +108,16 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         View activityView = getLayoutInflater().inflate(R.layout.activity_base, null);
         ((ViewGroup) activityView).addView(view);
         Toolbar toolbar = (Toolbar) activityView.findViewById(R.id.toolbar);
+
+        //set toolbar style
+        toolbar.setBackgroundColor(Color.WHITE);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.theme_color));
+
         setSupportActionBar(toolbar);
         super.setContentView(activityView);
     }
+
+
 
     @Override
     public SwipeBackLayout getSwipeBackLayout() {

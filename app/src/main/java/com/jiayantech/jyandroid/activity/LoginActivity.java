@@ -9,8 +9,11 @@ import java.util.Map;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
@@ -77,12 +80,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_direct_login:
-                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishToStartActivity(MainActivity.class);
-                    }
-                }));
+//                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        finishToStartActivity(MainActivity.class);
+//                    }
+//                }));
+                UploadImageBiz.uploadImage("diary", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
+                        new ResponseListener() {
+                            @Override
+                            public void onResponse(Object o) {
+                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
+                            }
+                        });
                 //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:

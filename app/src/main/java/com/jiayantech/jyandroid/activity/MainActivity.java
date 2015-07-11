@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,13 +12,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
+
+import java.util.Map;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -46,6 +54,18 @@ public class MainActivity extends BaseActivity {
         initView();
         initFragments();
         initViewPager();
+
+//        Map<String, String> params = new ArrayMap<>();
+//        params.put("myname", "liangzili");
+//        params.put("handsome", "yes");
+        //test
+//        UploadImageBiz.uploadImage("diary", "/storage/emulated/0/DCIM/Camera/IMG_20150321_225326.jpg",
+//                new ResponseListener() {
+//            @Override
+//            public void onResponse(Object o) {
+//                ToastUtil.showMessage(MainActivity.this, "上传完啦");
+//            }
+//        });
     }
 
     private void initView() {
