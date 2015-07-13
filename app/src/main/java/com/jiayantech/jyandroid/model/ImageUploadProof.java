@@ -12,6 +12,6 @@ public class ImageUploadProof {
     public String signature;
 
     public boolean isExpired(){
-        return expiration >= System.currentTimeMillis();
+        return expiration <= System.currentTimeMillis();
     }
 }
