@@ -1,6 +1,5 @@
 package com.jiayantech.library.http;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -29,13 +28,7 @@ import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ConfigManager;
-import com.jiayantech.library.http.imageupload.FormImage;
-import com.jiayantech.library.http.imageupload.PostUploadRequest;
-import com.jiayantech.library.http.imageupload.PostUploadRequest2;
 import com.jiayantech.library.utils.LogUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -102,7 +95,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Initialise Volley Request Queue.
      */
-    private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
+    public static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
 
     /**
      * @param method
@@ -126,32 +119,7 @@ public class HttpReq<T> extends Request<T> {
         sVolleyQueue.add(request);
     }
 
-    /**
-     * @param bitmap
-     * @param fileName
-     * @param listener
-     */
-    public static void uploadImage(Bitmap bitmap, String fileName, ResponseListener listener) {
-        FormImage formImage = new FormImage(bitmap, fileName);
-        uploadImage(formImage, listener);
-    }
 
-    /**
-     * @param filePath
-     * @param listener
-     */
-    public static void uploadImage(String filePath, ResponseListener listener) {
-        FormImage formImage = new FormImage(filePath);
-        uploadImage(formImage, listener);
-    }
-
-
-    private static void uploadImage(FormImage formImage, ResponseListener listener) {
-        Request request = new PostUploadRequest2(Request.Method.POST,
-                "http://10.0.1.23:8000/api/uploadImage/", formImage,
-                new ErrorListener(listener), listener);
-        sVolleyQueue.add(request);
-    }
 
     private static class ErrorListener implements Response.ErrorListener {
         ResponseListener mResponseListener;

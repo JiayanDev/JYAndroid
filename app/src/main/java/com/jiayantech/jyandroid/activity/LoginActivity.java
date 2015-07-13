@@ -9,12 +9,11 @@ import java.util.Map;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
-import com.jiayantech.jyandroid.commons.Constants;
 import com.jiayantech.library.base.BaseActivity;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
@@ -87,6 +86,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         finishToStartActivity(MainActivity.class);
                     }
                 }));
+//                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
+//                        new ResponseListener() {
+//                            @Override
+//                            public void onResponse(Object o) {
+//                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
+//                            }
+//                        });
                 //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:

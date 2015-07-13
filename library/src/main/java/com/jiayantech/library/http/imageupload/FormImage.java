@@ -10,12 +10,13 @@ import java.net.URLConnection;
 
 /**
  * Created by liangzili on 15/6/30.
+ * 图片表单类
  */
 public class FormImage {
-    private static final String FORM_NAME = "image";
+    private static final String FORM_NAME = "file";
 
-    public static final int COMPRESS_FACTOR = 80;
-    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.JPEG;
+    public static final int COMPRESS_FACTOR = 100;
+    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.PNG;
 
     private String mFileName;
     private String mName;
@@ -43,7 +44,6 @@ public class FormImage {
         mFileName = FileUtil.getFileName(path);
         mMime = URLConnection.guessContentTypeFromName(path);
         mName = name;
-        //mBitmap = BitmapFactory.decodeFile(mFilePath);
     }
 
     public String getFileName() {
@@ -60,38 +60,10 @@ public class FormImage {
 
     public byte[] getValue() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if(null == mBitmap){
+        if (null == mBitmap) {
             mBitmap = BitmapFactory.decodeFile(mFilePath);
         }
         mBitmap.compress(IMAGE_FORMAT, COMPRESS_FACTOR, baos);
         return baos.toByteArray();
     }
-//        else{
-//            byte[] byteContent = null;
-//            FileInputStream fis = null;
-//            File file;
-//            try {
-//                file = new File(mFilePath);
-//                fis = new FileInputStream(file);
-//                if(file.length() > Integer.MAX_VALUE){
-//                    return null;
-//                }
-//                byteContent = new byte[(int)file.length()];
-//                fis.read(byteContent);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }catch (IOException e){
-//                e.printStackTrace();
-//            }finally {
-//                try {
-//                    if(fis != null) {
-//                        fis.close();
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                return byteContent;
-//            }
-//        }
-
 }
