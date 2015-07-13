@@ -10,7 +10,11 @@ import java.util.Map;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.commons.Constants;
 import com.jiayantech.library.base.BaseActivity;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
@@ -86,11 +90,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
-                    @Override
-                    public void onGetUserInfo(Map<String, Object> info) {
-                    }
-                });
+//                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
+//                    @Override
+//                    public void onGetUserInfo(Map<String, Object> info) {
+//                    }
+//                });
+
                 break;
             case R.id.btn_qq_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {

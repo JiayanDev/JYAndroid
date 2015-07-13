@@ -3,7 +3,7 @@ package com.jiayantech.jyandroid.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.jiayantech.jyandroid.fragment.MyDiaryFragment;
+import com.jiayantech.jyandroid.fragment.MyDiariesFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
 
 /**
@@ -13,10 +13,10 @@ import com.jiayantech.library.base.SingleFragmentActivity;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class MyDiaryActivity extends SingleFragmentActivity {
+public class MyDiariesActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
-        return new MyDiaryFragment();
+        return new MyDiariesFragment();
     }
 
     @Override

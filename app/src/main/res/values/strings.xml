@@ -40,6 +40,10 @@
     <string name="qq_login">QQ登录</string>
     <string name="sina_login">新浪登录</string>
     <string name="category">分类</string>
+    <string name="my_diary_share">分享我的的美丽天使日记</string>
+    <string name="my_diary_mime">我的日记</string>
+    <string name="create_diary">创建日记本</string>
+    <string name="update_diary">更新日记本</string>
 
 
 </resources>

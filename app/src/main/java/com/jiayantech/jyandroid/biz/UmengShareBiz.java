@@ -36,11 +36,11 @@ public class UmengShareBiz {
     private static void initWechatShare(Context context){
 
         //添加分享微信
-        UMWXHandler wxHandler = new UMWXHandler(context, WECHAT_APP_ID, WECHAT_APP_SECRET);
+        UMWXHandler wxHandler = new UMWXHandler(context, WECHAT_APP_ID);
         wxHandler.addToSocialSDK();
 
         //添加分享到微信朋友圈
-        UMWXHandler wxCircleHandler = new UMWXHandler(context, WECHAT_APP_ID, WECHAT_APP_SECRET);
+        UMWXHandler wxCircleHandler = new UMWXHandler(context, WECHAT_APP_ID);
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
     }

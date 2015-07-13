@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 
 import com.jiayantech.jyandroid.R;
@@ -27,7 +28,7 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. Al
  */
 public class SelectProjectActivity extends BaseActivity implements FlowLayout.OnItemClickListener {
-    public static final String KEY_TO_PICK = "to_pick";
+    public static final String KEY_TO_PICK = "toPick";
     public static final String KEY_categoryIds = "categoryIds";
     public static final String KEY_categoryNames = "categoryNames";
     public static final int REQUEST_CODE_SELECT = 0x100;

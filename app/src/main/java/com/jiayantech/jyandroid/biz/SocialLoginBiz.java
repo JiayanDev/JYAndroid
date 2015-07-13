@@ -1,12 +1,17 @@
 package com.jiayantech.jyandroid.biz;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.jiayantech.jyandroid.commons.Constants;
+import com.jiayantech.jyandroid.wxapi.WXEntryActivity;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -30,13 +35,47 @@ import java.util.Map;
  * rights reserved.
  */
 public class SocialLoginBiz {
+    //////////////////原生sdk 登录
 
+    public static void weixinLogin(Context context, final GetCodeListener getCodeListener) {
+        WXEntryActivity.sGetCodeListener = getCodeListener;
+        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "jiayantech";
+        api.sendReq(req);
+    }
+
+    public static void qqLogin(Context context, final GetCodeListener getCodeListener) {
+        WXEntryActivity.sGetCodeListener = getCodeListener;
+        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "jiayantech";
+        api.sendReq(req);
+    }
+
+    public static void sinaLogin(Context context, final GetCodeListener getCodeListener) {
+        WXEntryActivity.sGetCodeListener = getCodeListener;
+        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "jiayantech";
+        api.sendReq(req);
+    }
+
+    public interface GetCodeListener {
+        void onGetCode(String code);
+    }
+
+    //////////////////友盟
 
     /**
      * 授权。如果授权成功，则获取用户信息
      *
      * @param platform
      */
+
     public void login(final SHARE_MEDIA platform, final GetUserInfoListener getUserInfoListener) {
         mController.doOauthVerify(mActivity, platform,
                 new SocializeListeners.UMAuthListener() {

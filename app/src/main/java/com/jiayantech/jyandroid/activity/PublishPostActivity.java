@@ -15,23 +15,33 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.library.http.RequestMap;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.http.UploadReq;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.ToastUtil;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,6 +190,21 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         urlList.add(path);
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
+//        HttpReq.uploadImage(path, new ResponseListener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//            }
+//        });
+        RequestMap requestMap = new RequestMap();
+        requestMap.put("image", new File(path));
+        requestMap.put("policy","eyJidWNrZXQiOiAiamlheWFuaW1nIiwgImV4cGlyYXRpb24iOiAxNDM2NTE3NjI1MDM5LCAic2F2ZS1rZXkiOiAidGVzdC9hdmF0YXIvOC9hdmF0YXIucG5nIn0=");
+        requestMap.put("signature", "aaefb280754ca70b34684d3d368e506c");
+        UploadReq.request(requestMap, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse networkResponse) {
+                Toast.makeText(BaseApplication.getContext(), networkResponse.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
