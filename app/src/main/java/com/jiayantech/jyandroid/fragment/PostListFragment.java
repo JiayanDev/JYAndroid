@@ -82,7 +82,7 @@ public class PostListFragment extends RefreshListFragment<Post, AppResponse<List
         }
     }
 
-    private void initHeaderView(View headerView) {
+    public void initHeaderView(View headerView) {
         RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));

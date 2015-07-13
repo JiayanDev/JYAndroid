@@ -23,4 +23,7 @@ public class Post extends BaseModel {
     public String type;
     public boolean isLike;
 
+    public String headerId;
+    public String[] categoryIds;
+
 }

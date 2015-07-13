@@ -1,7 +1,9 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
@@ -16,5 +18,11 @@ public class PostDetailActivity extends SingleFragmentActivity{
         long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
         String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
         return PostDetailFragment.newInstance(id, type);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
     }
 }

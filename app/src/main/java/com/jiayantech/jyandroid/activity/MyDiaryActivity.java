@@ -22,6 +22,5 @@ public class MyDiaryActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDisplayHomeAsUpEnabled();
     }
 }

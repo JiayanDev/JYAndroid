@@ -1,19 +1,14 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseActivity;
@@ -75,7 +70,6 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     protected void setViewsListener() {
-        setDisplayHomeAsUpEnabled();
         txt_time.setOnClickListener(this);
         txt_doctor.setOnClickListener(this);
     }

@@ -52,7 +52,6 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
     }
 
     protected void setViewsListener() {
-        setDisplayHomeAsUpEnabled();
         mAdapter.setOnItemClickListener(this);
     }
 

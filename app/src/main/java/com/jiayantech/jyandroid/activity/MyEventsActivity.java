@@ -24,7 +24,6 @@ public class MyEventsActivity extends SingleFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("我的活动");
-        setDisplayHomeAsUpEnabled();
         addBottomButton();
     }
 

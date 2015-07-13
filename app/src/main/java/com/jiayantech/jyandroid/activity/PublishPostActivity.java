@@ -75,7 +75,6 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void setViewsListener() {
-        setDisplayHomeAsUpEnabled();
         mImageAdapter.setOnItemClickListener(this);
         txt_category.setOnClickListener(this);
         recycler_view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

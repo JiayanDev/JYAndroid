@@ -45,6 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setViewsContent();
         setViewsListener();
 
+        setDisplayHomeAsUpEnabled(false);
         //finishToStartActivity(MainActivity.class);
     }
 

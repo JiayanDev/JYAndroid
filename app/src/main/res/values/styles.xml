@@ -10,6 +10,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@style/activitySlideAnimation</item>
+        <!--<item name="android:homeAsUpIndicator">@drawable/up_indicator</item>-->
 
     </style>
 
