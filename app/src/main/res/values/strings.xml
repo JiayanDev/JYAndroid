@@ -42,8 +42,19 @@
     <string name="category">分类</string>
     <string name="my_diary_share">分享我的的美丽天使日记</string>
     <string name="my_diary_mime">我的日记</string>
-    <string name="create_diary">创建日记本</string>
+    <string name="create_new_diary">创建新日记</string>
+    <string name="create_diary_book">创建日记本</string>
     <string name="update_diary">更新日记本</string>
 
+
+    <!-- title -->
+    <string name="title_publish_topic">话题内容</string>
+    <string name="title_select_category">选择分类</string>
+    <string name="title_my_diaries">选择日记本</string>
+    <string name="title_publish_diary">发表日记</string>
+    <string name="title_select_project">选择项目</string>
+    <string name="title_surgery_info">手术信息</string>
+    <string name="title_hospital_info">医院信息</string>
+    <string name="title_doctor_info">医生信息</string>
 
 </resources>

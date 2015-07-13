@@ -12,10 +12,10 @@ import com.jiayantech.library.http.ResponseListener;
  */
 public class CommBiz {
     private static final String HOSPITAL_MODEL = "hospital";
-    private static final String ACTION_HOSPITAL_OPTION = HOSPITAL_MODEL + "/option";
+    public static final String ACTION_HOSPITAL_OPTION = HOSPITAL_MODEL + "/option";
 
     private static final String DOCTOR_MODEL = "doctor";
-    private static final String ACTION_DOCTOR_OPTION = DOCTOR_MODEL + "/option";
+    public static final String ACTION_DOCTOR_OPTION = DOCTOR_MODEL + "/option";
 
     public static void option(String action, String blurName, ResponseListener<?> l) {
         HttpReq.post(action, HttpReq.getInitParams("blurName", blurName), l);

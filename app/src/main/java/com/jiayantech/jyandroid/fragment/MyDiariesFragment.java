@@ -1,7 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,9 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.SelectProjectActivity;
@@ -32,9 +28,6 @@ import java.util.List;
  * rights reserved.
  */
 public class MyDiariesFragment extends RefreshListFragment<DiaryHeader, AppResponse<List<DiaryHeader>>> {
-    private ImageView img_diary;
-    private TextView txt_title;
-    private TextView btn_operate;
 
     @Override
     public void onInitView() {
@@ -42,21 +35,13 @@ public class MyDiariesFragment extends RefreshListFragment<DiaryHeader, AppRespo
 //        ultimateRecyclerView.mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
 //                linearLayoutManager.getOrientation()));
         setParams(new MyDiaryAdapter(null), DiaryBiz.ACTION_MY_HEADER);
-//        View headerView = setHeader(R.layout.item_my_diary);
-//        img_diary = (ImageView) headerView.findViewById(R.id.img_diary);
-//        txt_title = (TextView) headerView.findViewById(R.id.txt_title);
-//        btn_operate = (TextView) headerView.findViewById(R.id.txt_operate);
-//
-//        //img_diary.setBackgroundResource(R.color.light_gray);
-//        img_diary.setImageResource(R.drawable.ic_account_box_black_48dp);
-//        txt_title.setText("add diary\nLet start");
-//        btn_operate.setText("create diary");
-//        btn_operate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(SelectProjectActivity.class);
-//            }
-//        });
+        View headerView = setHeader(R.layout.item_my_diary_header);
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SelectProjectActivity.class);
+            }
+        });
     }
 
 

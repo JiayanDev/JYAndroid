@@ -48,7 +48,7 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
             viewHolder.view_divider.setVisibility(View.VISIBLE);
             viewHolder.txt_title.setText(R.string.my_diary_share);
 
-            viewHolder.txt_operate.setText(R.string.create_diary);
+            viewHolder.txt_operate.setText(R.string.create_diary_book);
             setTextDrawble(viewHolder.txt_operate, R.mipmap.icon_create_diary);
         } else if (position == diaryFirstPosition) {
             viewHolder.txt_title.setVisibility(View.VISIBLE);
