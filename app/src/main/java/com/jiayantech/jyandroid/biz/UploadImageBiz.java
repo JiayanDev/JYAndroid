@@ -13,7 +13,8 @@ import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.http.imageupload.FormImage;
-import com.jiayantech.library.http.imageupload.PostUploadRequest;
+import com.jiayantech.library.http.imageupload.ImageUploadRequest;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import java.util.Map;
  * Created by liangzili on 15/7/10.
  */
 public class UploadImageBiz {
+    private static final String TAG = "UploadImageBiz";
+
     public static final String TYPE_AVATAR = "avatar";
     public static final String TYPE_DIARY = "diary";
     public static final String TYPE_TOPIC = "topic";
@@ -35,9 +38,11 @@ public class UploadImageBiz {
     private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(JYApplication.getContext());
 
     /**
-     * @param bitmap
-     * @param fileName
-     * @param listener
+     * @param type 要上传的图片类型
+     * @param bitmap 要上传的图片的bitmap
+     * @param fileName 要上传的图片文件名
+     * @param listener 回调
+     *
      */
     public static void uploadImage(String type, Bitmap bitmap, String fileName,
                                    ResponseListener listener) {
@@ -45,9 +50,10 @@ public class UploadImageBiz {
         uploadImage(type, formImage, listener);
     }
 
-    /**
-     * @param filePath
-     * @param listener
+    /**@param type 要上传的图片类型
+     * @param filePath 要上传文件的路径
+     * @param listener  要上传的图片文件名
+     *
      */
     public static void uploadImage(String type, String filePath, ResponseListener listener) {
         FormImage formImage = new FormImage(filePath);
@@ -72,7 +78,7 @@ public class UploadImageBiz {
     private static void startUpload(FormImage formImage, ResponseListener listener,
                                     Map<String, String> params) {
 
-        Request request = new PostUploadRequest(Request.Method.POST,
+        Request request = new ImageUploadRequest(Request.Method.POST,
                 HttpConfig.IMAGE_UPLOAD_URL, formImage, params, null, listener);
         sVolleyQueue.add(request);
     }
@@ -94,6 +100,7 @@ public class UploadImageBiz {
                 proof = PROOF_EVENT;
         }
         if (null == proof || proof.isExpired()) {
+            LogUtil.i(TAG, type + " signature expired or not exist, send request");
             Map<String, String> params = new ArrayMap<>();
             params.put("mod", type);
             HttpReq.get(ACTION_GET_PROOF, params,
@@ -117,6 +124,8 @@ public class UploadImageBiz {
                         }
                     });
         } else {
+            LogUtil.i(TAG, type + " signature is valid, return local proof " + proof.policy + " "
+                + proof.signature);
             listener.onGetUploadProof(proof);
         }
     }

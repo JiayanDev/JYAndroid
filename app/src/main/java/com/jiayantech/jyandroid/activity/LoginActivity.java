@@ -11,6 +11,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.model.ImageUploadCallback;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
@@ -87,9 +88,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }));
 //                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
-//                        new ResponseListener() {
+//                        new ResponseListener<ImageUploadCallback>() {
 //                            @Override
-//                            public void onResponse(Object o) {
+//                            public void onResponse(ImageUploadCallback callback) {
 //                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
 //                            }
 //                        });
