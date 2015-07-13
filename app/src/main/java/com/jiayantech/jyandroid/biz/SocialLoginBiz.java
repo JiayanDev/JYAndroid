@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.jiayantech.jyandroid.commons.Constants;
 import com.jiayantech.jyandroid.wxapi.WXEntryActivity;
+import com.jiayantech.library.base.BaseApplication;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -37,27 +38,27 @@ import java.util.Map;
 public class SocialLoginBiz {
     //////////////////原生sdk 登录
 
-    public static void weixinLogin(Context context, final GetCodeListener getCodeListener) {
-        WXEntryActivity.sGetCodeListener = getCodeListener;
-        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+    public static void wechatLogin(final GetCodeListener getCodeListener) {
+        WXEntryActivity.setGetCodeListener(getCodeListener);
+        IWXAPI api = WXAPIFactory.createWXAPI(BaseApplication.getContext(), Constants.WECHAT_appId);
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "jiayantech";
         api.sendReq(req);
     }
 
-    public static void qqLogin(Context context, final GetCodeListener getCodeListener) {
-        WXEntryActivity.sGetCodeListener = getCodeListener;
-        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+    public static void qqLogin(final GetCodeListener getCodeListener) {
+        WXEntryActivity.setGetCodeListener(getCodeListener);
+        IWXAPI api = WXAPIFactory.createWXAPI(BaseApplication.getContext(), Constants.WECHAT_appId);
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "jiayantech";
         api.sendReq(req);
     }
 
-    public static void sinaLogin(Context context, final GetCodeListener getCodeListener) {
-        WXEntryActivity.sGetCodeListener = getCodeListener;
-        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WECHAT_appId);
+    public static void sinaLogin(final GetCodeListener getCodeListener) {
+        WXEntryActivity.setGetCodeListener(getCodeListener);
+        IWXAPI api = WXAPIFactory.createWXAPI(BaseApplication.getContext(), Constants.WECHAT_appId);
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "jiayantech";

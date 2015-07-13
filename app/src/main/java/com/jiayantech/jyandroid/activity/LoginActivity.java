@@ -95,7 +95,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                    public void onGetUserInfo(Map<String, Object> info) {
 //                    }
 //                });
-
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishToStartActivity(MainActivity.class);
+                    }
+                }));
                 break;
             case R.id.btn_qq_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {

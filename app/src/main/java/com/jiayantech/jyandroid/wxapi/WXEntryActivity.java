@@ -14,8 +14,14 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import java.lang.ref.WeakReference;
+
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
-    public static SocialLoginBiz.GetCodeListener sGetCodeListener;
+    private static WeakReference<SocialLoginBiz.GetCodeListener> sGetCodeListenerReference;
+
+    public static void setGetCodeListener(SocialLoginBiz.GetCodeListener l) {
+        sGetCodeListenerReference = new WeakReference<>(l);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +47,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 //      或者
                 String code = ((SendAuth.Resp) resp).code;
                 //上面的code就是接入指南里要拿到的code
-                if (sGetCodeListener != null) {
-                    sGetCodeListener.onGetCode(code);
+                if (sGetCodeListenerReference != null && sGetCodeListenerReference.get() != null) {
+                    SocialLoginBiz.GetCodeListener getCodeListener = sGetCodeListenerReference.get();
+                    getCodeListener.onGetCode(code);
                 } else {
                     ToastUtil.showMessage("code:" + code);
                 }
@@ -50,11 +57,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             default:
                 break;
         }
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sGetCodeListener = null;
+        if (sGetCodeListenerReference != null) {
+            sGetCodeListenerReference.clear();
+            sGetCodeListenerReference = null;
+        }
     }
 }

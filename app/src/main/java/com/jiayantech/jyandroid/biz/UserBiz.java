@@ -70,11 +70,30 @@ public class UserBiz {
      * @param psw
      * @param l
      */
-    public static void login(String configVersion, String name, String psw, LoginResponseListener l) {
+    public static void login(String name, String psw, LoginResponseListener l) {
+        String configVersion = ConfigManager.getConfig(KEY_CONFIG_VERSION, "0");
         Map<String, String> params = new HashMap<>();
         params.put("configVersion", configVersion);
         params.put("name", name);
         params.put("psw", psw);
+        params.put("deviceToken", UmengPushBiz.getDeviceToken());
+        HttpReq.post(ACTION_LOGIN, params, l);
+    }
+
+    public static void wechatLogin(final LoginResponseListener l) {
+        SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
+            @Override
+            public void onGetCode(String code) {
+                socailLogin("wxCode", code, l);
+            }
+        });
+    }
+
+    public static void socailLogin(String platformCodeKey, String code, LoginResponseListener l) {
+        String configVersion = ConfigManager.getConfig(KEY_CONFIG_VERSION, "0");
+        Map<String, String> params = new HashMap<>();
+        params.put("configVersion", configVersion);
+        params.put(platformCodeKey, code);
         params.put("deviceToken", UmengPushBiz.getDeviceToken());
         HttpReq.post(ACTION_LOGIN, params, l);
     }
