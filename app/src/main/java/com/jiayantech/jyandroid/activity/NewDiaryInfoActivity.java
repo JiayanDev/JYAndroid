@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
@@ -63,6 +64,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     protected void setViewsContent() {
+        setTitle(R.string.title_surgery_info);
         Intent intent = getIntent();
         categoryId = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
         categoryName = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
@@ -87,7 +89,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 });
                 break;
             case R.id.txt_doctor:
-                SearchActivity.launchActivity(this);
+                SearchActivity.start(this, getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION);
                 mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {

@@ -98,11 +98,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
+//                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
+//                    @Override
+//                    public void onGetUserInfo(Map<String, Object> info) {
+//                    }
+//                });
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
                     @Override
-                    public void onGetUserInfo(Map<String, Object> info) {
+                    public void run() {
+                        finishToStartActivity(MainActivity.class);
                     }
-                });
+                }));
                 break;
             case R.id.btn_qq_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {
@@ -136,3 +142,4 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mSocialLoginBiz.onActivityResult(requestCode, resultCode, data);
     }
 }
+

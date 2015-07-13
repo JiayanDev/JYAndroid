@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="20dip">
+
+    <ImageView
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:background="@drawable/bg_orange_pink"
+        android:padding="20dip"
+        android:src="@mipmap/icon_create_diary" />
+
+    <TextView
+        style="@style/text_item_hint_style"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:text="@string/create_new_diary" />
+
+
+</LinearLayout>
+

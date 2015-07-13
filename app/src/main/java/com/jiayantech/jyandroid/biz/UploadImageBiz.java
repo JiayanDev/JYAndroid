@@ -16,6 +16,8 @@ import com.jiayantech.library.http.imageupload.FormImage;
 import com.jiayantech.library.http.imageupload.ImageUploadRequest;
 import com.jiayantech.library.utils.LogUtil;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 /**
@@ -38,11 +40,10 @@ public class UploadImageBiz {
     private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(JYApplication.getContext());
 
     /**
-     * @param type 要上传的图片类型
-     * @param bitmap 要上传的图片的bitmap
+     * @param type     要上传的图片类型
+     * @param bitmap   要上传的图片的bitmap
      * @param fileName 要上传的图片文件名
      * @param listener 回调
-     *
      */
     public static void uploadImage(String type, Bitmap bitmap, String fileName,
                                    ResponseListener listener) {
@@ -50,10 +51,10 @@ public class UploadImageBiz {
         uploadImage(type, formImage, listener);
     }
 
-    /**@param type 要上传的图片类型
+    /**
+     * @param type     要上传的图片类型
      * @param filePath 要上传文件的路径
-     * @param listener  要上传的图片文件名
-     *
+     * @param listener 要上传的图片文件名
      */
     public static void uploadImage(String type, String filePath, ResponseListener listener) {
         FormImage formImage = new FormImage(filePath);
@@ -84,7 +85,7 @@ public class UploadImageBiz {
     }
 
     private static void requestImageUploadProof(final String type,
-                                            final OnGetUploadProofListener listener) {
+                                                final OnGetUploadProofListener listener) {
         ImageUploadProof proof = null;
         switch (type) {
             case TYPE_AVATAR:
@@ -107,7 +108,7 @@ public class UploadImageBiz {
                     new ResponseListener<AppResponse<ImageUploadProof>>() {
                         @Override
                         public void onResponse(AppResponse<ImageUploadProof> imageUploadProofAppResponse) {
-                            switch (type){
+                            switch (type) {
                                 case TYPE_AVATAR:
                                     PROOF_AVATAR = imageUploadProofAppResponse.data;
                                     break;
@@ -125,7 +126,7 @@ public class UploadImageBiz {
                     });
         } else {
             LogUtil.i(TAG, type + " signature is valid, return local proof " + proof.policy + " "
-                + proof.signature);
+                    + proof.signature);
             listener.onGetUploadProof(proof);
         }
     }

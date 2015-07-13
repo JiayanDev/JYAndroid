@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_diary:
-                startActivity(new Intent(this, MyDiaryActivity.class));
+                startActivity(new Intent(this, MyDiariesActivity.class));
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));

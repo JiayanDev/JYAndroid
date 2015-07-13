@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -70,7 +71,7 @@ public class ImageAdapter extends BaseSimpleModelAdapter<Bitmap> {
         public ViewHolder(ViewGroup parent, int layoutId, ImageAdapter adapter) {
             super(parent, layoutId, adapter);
             img_photo = (ImageView) itemView.findViewById(R.id.img_photo);
-            itemView.setLayoutParams(new GridView.LayoutParams(adapter.itemHeight, adapter.itemHeight));
+            itemView.setLayoutParams(new RecyclerView.LayoutParams(adapter.itemHeight, adapter.itemHeight));
         }
 
         private int getCount() {
@@ -80,13 +81,9 @@ public class ImageAdapter extends BaseSimpleModelAdapter<Bitmap> {
         @Override
         public void onBind(Bitmap bitmap, int position) {
             if (position == getCount() - 1) {
-                img_photo.setBackgroundResource(R.color.bg_gray);
-                img_photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                img_photo.setImageResource(R.drawable.icon_photo_add);
+                img_photo.setImageResource(R.mipmap.icon_add_photo);
                 return;
             }
-            img_photo.setBackgroundDrawable(null);
-            img_photo.setScaleType(ImageView.ScaleType.CENTER);
             img_photo.setImageBitmap(bitmap);
         }
     }

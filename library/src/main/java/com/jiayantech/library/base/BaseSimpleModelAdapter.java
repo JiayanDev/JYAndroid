@@ -32,8 +32,12 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 position = customHeaderView != null ? position - 1 : position;
                 ViewHolder viewHolder = (ViewHolder) holder;
                 viewHolder.mPosition = position;
-                viewHolder.onBind(mList.get(position), position);
+                onBind(viewHolder, mList.get(position), position);
             }
+    }
+
+    protected void onBind(ViewHolder viewHolder, T item, int position) {
+        viewHolder.onBind(item, position);
     }
 
     public static abstract class ViewHolder<T> extends UltimateRecyclerviewViewHolder {

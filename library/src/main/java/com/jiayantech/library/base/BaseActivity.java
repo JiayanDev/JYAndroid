@@ -110,15 +110,20 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
      */
     @Override
     public void setContentView(int layoutResID) {
-        View view = getLayoutInflater().inflate(layoutResID, null);
-        setContentView(view);
+        ViewGroup layout_base = setContentView();
+        getLayoutInflater().inflate(layoutResID, layout_base);
     }
 
     @Override
     public void setContentView(View view) {
-        View activityView = getLayoutInflater().inflate(R.layout.activity_base, null);
-        ((ViewGroup) activityView).addView(view);
-        Toolbar toolbar = (Toolbar) activityView.findViewById(R.id.toolbar);
+        ViewGroup layout_base = setContentView();
+        layout_base.addView(view);
+    }
+
+    private ViewGroup setContentView() {
+        super.setContentView(R.layout.activity_base);
+        ViewGroup layout_base = (ViewGroup) findViewById(R.id.layout_base);
+        Toolbar toolbar = (Toolbar) layout_base.findViewById(R.id.toolbar);
 
         //set toolbar style
         toolbar.setBackgroundColor(Color.WHITE);
@@ -126,10 +131,13 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         setSupportActionBar(toolbar);
 
         setDisplayHomeAsUpEnabled(true);
-        super.setContentView(activityView);
+
+        return layout_base;
     }
 
-
+    protected void superSetContentView(View view) {
+        super.setContentView(view);
+    }
 
     @Override
     public SwipeBackLayout getSwipeBackLayout() {

@@ -24,11 +24,7 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.TopicActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyDiaryActivity"
+            android:name=".activity.MyDiariesActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelectProjectActivity"
@@ -162,7 +158,7 @@
 
         <!--友盟社会化分享相关-->
         <activity
-            android:name=".activity.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

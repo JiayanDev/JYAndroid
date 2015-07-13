@@ -20,10 +20,8 @@ public class HttpConfig {
     private static final int DEFAULT_ID = android.R.drawable.ic_dialog_alert;
 
     private static final String KEY_BASE_URL = "base.url";
-    private static final String KEY_IMAGE_TYPE = "image.type";
-    private static final String KEY_IMAGE_DEFAULT_ID = "image.default.id";
-    private static final String KEY_IMAGE_ERROR_ID = "image.error.id";
     private static final String KEY_IMAGE_UPLOAD_URL = "image.upload.url";
+    private static final String KEY_IMAGE_SHOW_URL = "image.show.url";
 
 
     /**
@@ -31,9 +29,7 @@ public class HttpConfig {
      */
     public static final String BASE_URL = Property.getProperty(KEY_BASE_URL);
     public static final String IMAGE_UPLOAD_URL = Property.getProperty(KEY_IMAGE_UPLOAD_URL);
-    //  private static final String IMAGE_TYPE = Property.getProperty(KEY_IMAGE_TYPE);
-    //  public static final int DEFAULT_IMAGE_ID = sResources.getIdentifier(Property.getProperty(KEY_IMAGE_DEFAULT_ID), IMAGE_TYPE, sPackageName);
-    //  public static final int ERROR_IMAGE_ID = sResources.getIdentifier(Property.getProperty(KEY_IMAGE_ERROR_ID), IMAGE_TYPE, sPackageName);
+    public static final String IMAGE_SHOW_URL = Property.getProperty(KEY_IMAGE_SHOW_URL);
     public static int DEFAULT_IMAGE_ID = DEFAULT_ID;
     public static int ERROR_IMAGE_ID = DEFAULT_ID;
 

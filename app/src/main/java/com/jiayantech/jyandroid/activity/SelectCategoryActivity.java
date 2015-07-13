@@ -46,6 +46,7 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
 
 
     protected void setViewsContent() {
+        setTitle(R.string.title_select_category);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mAdapter = new CategoryAdapter(UserManger.sProjectCategoryData, UserManger.sProjectCategoryTopLevels);
         mRecyclerView.setAdapter(mAdapter);

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,19 +21,25 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
+import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.model.ImageUploadCallback;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.ActivityResultHelper;
+import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,6 +51,8 @@ import java.util.List;
  */
 public class PublishPostActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener, BaseSimpleModelAdapter.OnItemClickListener<Bitmap> {
     private final int spanCount = 3;
+    protected String UPLOAD_TYPE = "topic";
+
     protected RecyclerView recycler_view;
     protected ImageView img_photo;
     protected EditText edit_content;
@@ -70,6 +79,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void setViewsContent() {
+        setTitle(R.string.title_publish_topic);
         mImageAdapter = new ImageAdapter(null);
         recycler_view.setLayoutManager(new GridLayoutManager(this, spanCount));
     }
@@ -117,58 +127,66 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_category:
-//                String[] items = new String[UserManger.sProjectCategoryTopLevels.size()];
-//                for (int i = 0; i < items.length; i++) {
-//                    items[i] = UserManger.sProjectCategoryData.get(UserManger.sProjectCategoryTopLevels.get(i));
-//                }
-//                new AlertDialog.Builder(this)
-//                        .setTitle("选择分类")
-//                        .setItems(items, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                String id = UserManger.sProjectCategoryTopLevels.get(which);
-//                                idlList.add(id);
-//                                txt_category.setText(getCategoryText());
-//                            }
-//                        })
-//                        .setNegativeButton("取消", null)
-//                        .show();
                 startActivityForResult(new Intent(this, SelectCategoryActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
                 mActivityResultHelper.addActivityResult(new ActivityResult() {
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
                         idlList = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryIds);
                         List<String> categoryNames = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryNames);
-                        txt_category.setText(categoryNames.toString());
+                        //txt_category.setText(categoryNames.toString());
+                        txt_category.setText(getCategoryText());
                     }
                 });
                 break;
         }
     }
 
-
     protected void onPost(String content) {
-        if (idlList.size() <= 0) {
+        if (idlList == null || idlList.size() <= 0) {
             ToastUtil.showMessage("categoryIds null");
             return;
         }
         showProgressDialog();
         String categoryIds = idlList.toString();
-        String photoUrls = null;
+        String photoUrls = toString(urlList);
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override
             public void onResponse(AppResponse<BaseModel> response) {
-                BaseModel model = response.data;
                 dismissProgressDialog();
-                ToastUtil.showMessage("id=" + model.id);
+                BroadcastHelper.send(Broadcasts.ACTION_PUBLISH_TOPIC);
+                finish();
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
                 dismissProgressDialog();
+                super.onErrorResponse(error);
             }
         });
+    }
+
+
+    protected String toString(List<String> urlList) {
+        if (urlList.isEmpty()) {
+            return "[]";
+        }
+
+        StringBuilder buffer = new StringBuilder(urlList.size() * 16);
+        buffer.append('[');
+        Iterator<?> it = urlList.iterator();
+        while (it.hasNext()) {
+            Object next = it.next();
+            if (next != this) {
+                buffer.append("\"").append(next).append("\"");
+            } else {
+                buffer.append("(this Collection)");
+            }
+            if (it.hasNext()) {
+                buffer.append(", ");
+            }
+        }
+        buffer.append(']');
+        return buffer.toString();
     }
 
     /**
@@ -176,9 +194,23 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void onPicGet(String path, Bitmap bitmap) {
-        urlList.add(path);
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
+        showProgressDialog();
+        UploadImageBiz.uploadImage(UPLOAD_TYPE, path,
+                new ResponseListener<ImageUploadCallback>() {
+                    @Override
+                    public void onResponse(ImageUploadCallback o) {
+                        dismissProgressDialog();
+                        urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dismissProgressDialog();
+                        super.onErrorResponse(error);
+                    }
+                });
     }
 
     @Override

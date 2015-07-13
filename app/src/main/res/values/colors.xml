@@ -25,7 +25,8 @@
     <color name="bg_gray_color">#DCDCDC</color>
     <color name="bg_light_gray_color">#F2F2F2</color>
     <color name="bg_light_black_color">#747474</color>
+    <color name="bg_orange_pink">#FF9191</color>
 
-    <color name="divider_gray_color">#E5E5E5</color>
+    <color name="divider_gray_color">@color/bg_gray_color</color>
 
 </resources>

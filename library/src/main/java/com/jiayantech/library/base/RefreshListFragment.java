@@ -139,7 +139,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     //////////////////////////
     protected CustomUltimateRecyclerview ultimateRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
+    protected LinearLayoutManager linearLayoutManager;
     private StoreHouseHeader storeHouseHeader;
 
 

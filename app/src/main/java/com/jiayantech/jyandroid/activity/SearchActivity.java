@@ -154,9 +154,14 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
         fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
-    public static void launchActivity(Activity activity) {
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_ACTION = "action";
+
+    public static void start(Activity activity, String title, String action) {
         Intent intent = new Intent(activity, SearchActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.putExtra(KEY_TITLE, title);
+        intent.putExtra(KEY_ACTION, action);
         activity.startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 }
