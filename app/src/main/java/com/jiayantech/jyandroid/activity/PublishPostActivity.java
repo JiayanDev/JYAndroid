@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
@@ -54,6 +55,8 @@ import java.util.List;
  */
 public class PublishPostActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener, BaseSimpleModelAdapter.OnItemClickListener<Bitmap> {
     private final int spanCount = 3;
+    protected String UPLOAD_TYPE = "topic";
+
     protected RecyclerView recycler_view;
     protected ImageView img_photo;
     protected EditText edit_content;
@@ -190,21 +193,25 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         urlList.add(path);
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-//        HttpReq.uploadImage(path, new ResponseListener<JSONObject>() {
+
+        UploadImageBiz.uploadImage(UPLOAD_TYPE, path,
+                new ResponseListener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject o) {
+                        ToastUtil.showMessage(_this(), "上传完啦:" + o);
+                    }
+                });
+
+//        RequestMap requestMap = new RequestMap();
+//        requestMap.put("image", new File(path));
+//        requestMap.put("policy","eyJidWNrZXQiOiAiamlheWFuaW1nIiwgImV4cGlyYXRpb24iOiAxNDM2NTE3NjI1MDM5LCAic2F2ZS1rZXkiOiAidGVzdC9hdmF0YXIvOC9hdmF0YXIucG5nIn0=");
+//        requestMap.put("signature", "aaefb280754ca70b34684d3d368e506c");
+//        UploadReq.request(requestMap, new Response.Listener<NetworkResponse>() {
 //            @Override
-//            public void onResponse(JSONObject jsonObject) {
+//            public void onResponse(NetworkResponse networkResponse) {
+//                Toast.makeText(BaseApplication.getContext(), networkResponse.toString(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        RequestMap requestMap = new RequestMap();
-        requestMap.put("image", new File(path));
-        requestMap.put("policy","eyJidWNrZXQiOiAiamlheWFuaW1nIiwgImV4cGlyYXRpb24iOiAxNDM2NTE3NjI1MDM5LCAic2F2ZS1rZXkiOiAidGVzdC9hdmF0YXIvOC9hdmF0YXIucG5nIn0=");
-        requestMap.put("signature", "aaefb280754ca70b34684d3d368e506c");
-        UploadReq.request(requestMap, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse networkResponse) {
-                Toast.makeText(BaseApplication.getContext(), networkResponse.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

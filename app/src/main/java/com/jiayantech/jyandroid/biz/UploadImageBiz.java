@@ -15,6 +15,8 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.http.imageupload.FormImage;
 import com.jiayantech.library.http.imageupload.PostUploadRequest;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 /**
@@ -40,7 +42,7 @@ public class UploadImageBiz {
      * @param listener
      */
     public static void uploadImage(String type, Bitmap bitmap, String fileName,
-                                   ResponseListener listener) {
+                                   ResponseListener<JSONObject> listener) {
         FormImage formImage = new FormImage(bitmap, fileName);
         uploadImage(type, formImage, listener);
     }
@@ -49,13 +51,13 @@ public class UploadImageBiz {
      * @param filePath
      * @param listener
      */
-    public static void uploadImage(String type, String filePath, ResponseListener listener) {
+    public static void uploadImage(String type, String filePath, ResponseListener<JSONObject> listener) {
         FormImage formImage = new FormImage(filePath);
         uploadImage(type, formImage, listener);
     }
 
 
-    private static void uploadImage(String type, final FormImage formImage, final ResponseListener listener) {
+    private static void uploadImage(String type, final FormImage formImage, final ResponseListener<JSONObject> listener) {
         OnGetUploadProofListener uploadProofListener = new OnGetUploadProofListener() {
             @Override
             public void onGetUploadProof(ImageUploadProof proof) {
@@ -69,7 +71,7 @@ public class UploadImageBiz {
         requestImageUploadProof(type, uploadProofListener);
     }
 
-    private static void startUpload(FormImage formImage, ResponseListener listener,
+    private static void startUpload(FormImage formImage, ResponseListener<JSONObject> listener,
                                     Map<String, String> params) {
 
         Request request = new PostUploadRequest(Request.Method.POST,
@@ -78,7 +80,7 @@ public class UploadImageBiz {
     }
 
     private static void requestImageUploadProof(final String type,
-                                            final OnGetUploadProofListener listener) {
+                                                final OnGetUploadProofListener listener) {
         ImageUploadProof proof = null;
         switch (type) {
             case TYPE_AVATAR:
@@ -100,7 +102,7 @@ public class UploadImageBiz {
                     new ResponseListener<AppResponse<ImageUploadProof>>() {
                         @Override
                         public void onResponse(AppResponse<ImageUploadProof> imageUploadProofAppResponse) {
-                            switch (type){
+                            switch (type) {
                                 case TYPE_AVATAR:
                                     PROOF_AVATAR = imageUploadProofAppResponse.data;
                                     break;
