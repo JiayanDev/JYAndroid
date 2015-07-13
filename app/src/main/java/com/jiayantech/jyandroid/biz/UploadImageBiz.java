@@ -8,13 +8,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.jiayantech.jyandroid.app.JYApplication;
 import com.jiayantech.jyandroid.model.ImageUploadProof;
-import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.http.imageupload.FormImage;
-import com.jiayantech.library.http.imageupload.PostUploadRequest2;
+import com.jiayantech.library.http.imageupload.PostUploadRequest;
 
 import java.util.Map;
 
@@ -67,30 +66,18 @@ public class UploadImageBiz {
             }
         };
 
-        getImageUploadProof(type, uploadProofListener);
-//        ImageUploadProof proof = getImageUploadProof(type);
-//        if (proof != null) {
-//            Map<String, String> params = new ArrayMap<>();
-//            params.put("policy", proof.policy);
-//            params.put("signature", proof.signature);
-//            Request request = new PostUploadRequest2(Request.Method.POST,
-//                    HttpConfig.IMAGE_UPLOAD_URL, formImage, params, null, listener);
-//            sVolleyQueue.add(request);
-//        } else {
-//
+        requestImageUploadProof(type, uploadProofListener);
     }
 
     private static void startUpload(FormImage formImage, ResponseListener listener,
                                     Map<String, String> params) {
 
-        Request request = new PostUploadRequest2(Request.Method.POST,
+        Request request = new PostUploadRequest(Request.Method.POST,
                 HttpConfig.IMAGE_UPLOAD_URL, formImage, params, null, listener);
-        //sVolleyQueue.add(request);
-        HttpReq.sVolleyQueue.add(request);
-
+        sVolleyQueue.add(request);
     }
 
-    private static void getImageUploadProof(String type,
+    private static void requestImageUploadProof(final String type,
                                             final OnGetUploadProofListener listener) {
         ImageUploadProof proof = null;
         switch (type) {
@@ -113,6 +100,19 @@ public class UploadImageBiz {
                     new ResponseListener<AppResponse<ImageUploadProof>>() {
                         @Override
                         public void onResponse(AppResponse<ImageUploadProof> imageUploadProofAppResponse) {
+                            switch (type){
+                                case TYPE_AVATAR:
+                                    PROOF_AVATAR = imageUploadProofAppResponse.data;
+                                    break;
+                                case TYPE_DIARY:
+                                    PROOF_DIARY = imageUploadProofAppResponse.data;
+                                    break;
+                                case TYPE_TOPIC:
+                                    PROOF_TOPIC = imageUploadProofAppResponse.data;
+                                    break;
+                                case TYPE_EVENT:
+                                    PROOF_EVENT = imageUploadProofAppResponse.data;
+                            }
                             listener.onGetUploadProof(imageUploadProofAppResponse.data);
                         }
                     });
@@ -120,13 +120,6 @@ public class UploadImageBiz {
             listener.onGetUploadProof(proof);
         }
     }
-
-//    private static void requestImageUploadProof(
-//            String type, ResponseListener<AppResponse<ImageUploadProof>> listener){
-//        Map<String, String> params = new ArrayMap<>();
-//        params.put("mod", type);
-//        HttpReq.get(ACTION_GET_PROOF, params, listener);
-//    }
 
     interface OnGetUploadProofListener {
         void onGetUploadProof(ImageUploadProof proof);

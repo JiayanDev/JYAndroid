@@ -1,6 +1,5 @@
 package com.jiayantech.library.http;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -29,13 +28,7 @@ import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ConfigManager;
-import com.jiayantech.library.http.imageupload.FormImage;
-import com.jiayantech.library.http.imageupload.PostUploadRequest;
-import com.jiayantech.library.http.imageupload.PostUploadRequest2;
 import com.jiayantech.library.utils.LogUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by 健兴 on 2015/6/26.

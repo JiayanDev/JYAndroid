@@ -55,17 +55,6 @@ public class MainActivity extends BaseActivity {
         initFragments();
         initViewPager();
 
-//        Map<String, String> params = new ArrayMap<>();
-//        params.put("myname", "liangzili");
-//        params.put("handsome", "yes");
-        //test
-//        UploadImageBiz.uploadImage("diary", "/storage/emulated/0/DCIM/Camera/IMG_20150321_225326.jpg",
-//                new ResponseListener() {
-//            @Override
-//            public void onResponse(Object o) {
-//                ToastUtil.showMessage(MainActivity.this, "上传完啦");
-//            }
-//        });
     }
 
     private void initView() {
@@ -172,9 +161,9 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    private void initUmengPush() {
-        PushAgent.getInstance(this).enable();
-        String device_token = UmengRegistrar.getRegistrationId(this);
-
-    }
+//    private void initUmengPush() {
+//        PushAgent.getInstance(this).enable();
+//        String device_token = UmengRegistrar.getRegistrationId(this);
+//
+//    }
 }

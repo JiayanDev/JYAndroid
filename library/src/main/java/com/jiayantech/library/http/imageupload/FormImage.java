@@ -10,12 +10,13 @@ import java.net.URLConnection;
 
 /**
  * Created by liangzili on 15/6/30.
+ * 图片表单类
  */
 public class FormImage {
     private static final String FORM_NAME = "file";
 
-    public static final int COMPRESS_FACTOR = 80;
-    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.JPEG;
+    public static final int COMPRESS_FACTOR = 100;
+    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.PNG;
 
     private String mFileName;
     private String mName;
@@ -43,7 +44,6 @@ public class FormImage {
         mFileName = FileUtil.getFileName(path);
         mMime = URLConnection.guessContentTypeFromName(path);
         mName = name;
-        //mBitmap = BitmapFactory.decodeFile(mFilePath);
     }
 
     public String getFileName() {
@@ -64,8 +64,6 @@ public class FormImage {
             mBitmap = BitmapFactory.decodeFile(mFilePath);
         }
         mBitmap.compress(IMAGE_FORMAT, COMPRESS_FACTOR, baos);
-//        byte[] a = new byte[5];
-//        return a;
         return baos.toByteArray();
     }
 }
