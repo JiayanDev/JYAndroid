@@ -81,19 +81,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_direct_login:
-//                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        finishToStartActivity(MainActivity.class);
-//                    }
-//                }));
-                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
-                        new ResponseListener<ImageUploadCallback>() {
-                            @Override
-                            public void onResponse(ImageUploadCallback callback) {
-                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
-                            }
-                        });
+                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishToStartActivity(MainActivity.class);
+                    }
+                }));
+//                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
+//                        new ResponseListener<ImageUploadCallback>() {
+//                            @Override
+//                            public void onResponse(ImageUploadCallback callback) {
+//                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
+//                            }
+//                        });
                 //startActivity(PhotosActivity.class);
                 break;
             case R.id.btn_wechat_login:
