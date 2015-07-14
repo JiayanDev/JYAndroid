@@ -42,7 +42,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         setSwipeBackEnable(true);
-       // setDisplayHomeAsUpEnabled(true);
+        // setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -69,11 +69,15 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         getSupportActionBar().setTitle(title);
     }
 
+    protected void setDisplayHomeAsUpEnabled() {
+        setDisplayHomeAsUpEnabled(true);
+    }
+
     protected void setDisplayHomeAsUpEnabled(boolean flag) {
-        if(flag) {
+        if (flag) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }else {
+        } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
     }

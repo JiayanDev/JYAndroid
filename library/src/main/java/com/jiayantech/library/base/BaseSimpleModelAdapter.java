@@ -73,8 +73,9 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 }
                 int oldSelectedPos = mAdapter.mSelectedPos;
                 mAdapter.mSelectedPos = mPosition;
-                mAdapter.notifyItemChanged(oldSelectedPos);
-                mAdapter.notifyItemChanged(mPosition);
+                int positionOffset = mAdapter.customHeaderView == null ? 0 : 1;
+                mAdapter.notifyItemChanged(oldSelectedPos + positionOffset);
+                mAdapter.notifyItemChanged(mPosition + positionOffset);
             }
         };
     }
