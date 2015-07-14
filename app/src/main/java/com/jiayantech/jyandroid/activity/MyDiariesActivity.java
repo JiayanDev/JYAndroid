@@ -23,7 +23,6 @@ public class MyDiariesActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDisplayHomeAsUpEnabled();
         setTitle(R.string.title_my_diaries);
     }
 }

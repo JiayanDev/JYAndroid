@@ -42,7 +42,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         setSwipeBackEnable(true);
-
+       // setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -50,6 +50,12 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super.onPostResume();
         //集成友盟统计
         MobclickAgent.onResume(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -63,8 +69,13 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         getSupportActionBar().setTitle(title);
     }
 
-    protected void setDisplayHomeAsUpEnabled() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    protected void setDisplayHomeAsUpEnabled(boolean flag) {
+        if(flag) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     protected void hideActionBar() {
@@ -118,10 +129,14 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super.setContentView(R.layout.activity_base);
         ViewGroup layout_base = (ViewGroup) findViewById(R.id.layout_base);
         Toolbar toolbar = (Toolbar) layout_base.findViewById(R.id.toolbar);
+
         //set toolbar style
         toolbar.setBackgroundColor(Color.WHITE);
         toolbar.setTitleTextColor(getResources().getColor(R.color.theme_color));
         setSupportActionBar(toolbar);
+
+        setDisplayHomeAsUpEnabled(true);
+
         return layout_base;
     }
 
