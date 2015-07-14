@@ -2,24 +2,15 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
-import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
-import com.jiayantech.jyandroid.fragment.CommentFragment;
-import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.model.Post;
-import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
-import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -37,7 +28,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
-                intent.putExtra(WebViewFragment.EXTRA_ID, mList.get(position).id);
+                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
                 intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_TOPIC);
                 mContext.startActivity(intent);
             }
@@ -46,11 +37,12 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, R.layout.item_topic, this);
+        return new ViewHolder(mContext, viewGroup, R.layout.item_topic, this);
     }
 
 
-    class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
+        public Context mContext;
         public ImageView mAvatar;
         public TextView mUsername;
         public ImageView mPhoto;
@@ -59,14 +51,15 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         public TextView mCommentCount;
         //public ViewHolderOnClickListener mListener;
 
-        public ViewHolder(ViewGroup parent, int layoutId) {
-            this(parent, layoutId, null);
+        public ViewHolder(Context context, ViewGroup parent, int layoutId) {
+            this(context, parent, layoutId, null);
             // mListener = listener;
             //itemView.setOnClickListener(listener);
         }
 
-        public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Post> adapter) {
+        public ViewHolder(Context context, ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Post> adapter) {
             super(parent, layoutId, adapter);
+            mContext = context;
             mAvatar = (ImageView) itemView.findViewById(R.id.avatar);
             mUsername = (TextView) itemView.findViewById(R.id.username);
             mPhoto = (ImageView) itemView.findViewById(R.id.photo);
@@ -76,7 +69,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         }
 
         @Override
-        public void onBind(final Post item, int position) {
+        public void onBind(Post item, int position) {
             mUsername.setText(String.valueOf(item.id));
             mContent.setText(item.content);
             mThumbsUpCount.setText(mContext.getResources().getString

@@ -156,6 +156,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         linearLayoutManager = new LinearLayoutManager(getActivity());
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.enableLoadmore();
+
 //        ultimateRecyclerView.setParallaxHeader(getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false));
 //        ultimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {
 //            @Override

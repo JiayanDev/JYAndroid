@@ -71,7 +71,6 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     }
 
     protected void setViewsListener() {
-        setDisplayHomeAsUpEnabled();
         mAdapter.setOnItemClickListener(this);
         layout_selected.setOnItemClickListener(this);
     }
