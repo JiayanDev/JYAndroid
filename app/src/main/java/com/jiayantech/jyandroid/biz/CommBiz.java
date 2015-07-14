@@ -18,6 +18,6 @@ public class CommBiz {
     public static final String ACTION_DOCTOR_OPTION = DOCTOR_MODEL + "/option";
 
     public static void option(String action, String blurName, ResponseListener<?> l) {
-        HttpReq.post(action, HttpReq.getInitParams("blurName", blurName), l);
+        HttpReq.get(action, HttpReq.getInitParams("blurName", blurName), l);
     }
 }

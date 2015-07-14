@@ -3,27 +3,27 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.adapter.EventAdapter;
-import com.jiayantech.jyandroid.model.Event;
-import com.jiayantech.jyandroid.model.User;
+import com.jiayantech.jyandroid.adapter.SearchAdapter;
+import com.jiayantech.jyandroid.biz.CommBiz;
+import com.jiayantech.jyandroid.model.Search;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
-import com.quinny898.library.persistentsearch.SearchBox;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.ResponseListener;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by janseon on 2015/7/3.
@@ -32,16 +32,17 @@ import java.util.Random;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SearchActivity extends BaseActivity implements SearchBox.SearchListener {
+public class SearchActivity extends BaseActivity implements TextWatcher {
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
     public static final int REQUEST_CODE_SELECT = 0x100;
 
-    private SearchBox mSearchBox;
-    private EditText search;
+    private EditText edit_search;
     private RecyclerView mRecyclerView;
-    private EventAdapter mAdapter;
+    private SearchAdapter mAdapter;
 
+    private String title;
+    private String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,111 +52,82 @@ public class SearchActivity extends BaseActivity implements SearchBox.SearchList
     }
 
     protected void initViews() {
-        getSupportActionBar().hide();
+        Intent intent = getIntent();
+        title = intent.getStringExtra(KEY_TITLE);
+        action = intent.getStringExtra(KEY_ACTION);
+        setTitle(title);
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        mSearchBox = (SearchBox) findViewById(R.id.searchBox);
-        search = (EditText) mSearchBox.findViewById(R.id.search);
+        edit_search = (EditText) findViewById(R.id.edit_search);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        search.setHint("search_hint_company");
-        mSearchBox.setLogoText("");
-        //mSearchBox.setShouldOpenKeyboard(false);
-        mSearchBox.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                openSearchBox();
-            }
-        }, 600);
-    }
+        edit_search.setHint(getString(R.string.hint_search_input, title));
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_action, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    public void openSearchBox() {
-        mSearchBox.revealFromMenuItem(R.id.action_search, this);
-        mSearchBox.setSearchListener(this);
-    }
-
-    @Override
-    public void onSearchOpened() {
-        new SearchTask().execute();
-    }
-
-    @Override
-    public void onSearchCleared() {
-    }
-
-    @Override
-    public void onSearchClosed() {
-        close();
-        onBackPressed();
-    }
-
-    public void close() {
-        mSearchBox.hideCircularly(this);
+        edit_search.addTextChangedListener(this);
         hideSoftKeyboard();
     }
 
     @Override
-    public void onSearchTermChanged() {
-        new SearchTask().execute(mSearchBox.getSearchText());
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.save_action, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public void onSearch(String result) {
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        mCurBlurName = s.toString();
+        edit_search.removeCallbacks(mSearchRunnable);
+        edit_search.postDelayed(mSearchRunnable, 200);
     }
+
+    private String mCurBlurName;
+    private Runnable mSearchRunnable = new Runnable() {
+        @Override
+        public void run() {
+            final String blurName = mCurBlurName;
+            CommBiz.option(action, blurName, new ResponseListener<AppResponse<ArrayList<Search>>>() {
+                @Override
+                public void onResponse(AppResponse<ArrayList<Search>> appResponse) {
+                    if (!blurName.equals(mCurBlurName)) {
+                        return;
+                    }
+                    mAdapter = new SearchAdapter(appResponse.data);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Search>() {
+                        @Override
+                        public void onItemClick(BaseSimpleModelAdapter<Search> adapter, int position, Search search) {
+                            Intent intent = new Intent();
+                            intent.putExtra(KEY_ID, search.id);
+                            intent.putExtra(KEY_NAME, search.name);
+                            ActivityResult.onFinishResult(SearchActivity.this, intent);
+                        }
+                    });
+                }
+            });
+        }
+    };
 
     private void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(edit_search.getWindowToken(), 0);
     }
 
-    public class SearchTask extends AsyncTask<String, Void, ArrayList<Event>> {
-        @Override
-        protected ArrayList<Event> doInBackground(String... params) {
-            SystemClock.sleep(100);
-            ArrayList<Event> list = new ArrayList<>();
-            int count = Math.abs(new Random().nextInt()) % 30;
-            for (int i = 0; i < count; i++) {
-                Event event = new Event();
-                event.categoryName = "firstName" + new Random().nextInt();
-                list.add(event);
-            }
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Event> result) {
-            if (result != null) {
-                mAdapter = new EventAdapter(SearchActivity.this, result);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Event>() {
-                    @Override
-                    public void onItemClick(BaseSimpleModelAdapter<Event> adapter, int position, Event event) {
-                        close();
-                        Intent intent = new Intent();
-                        intent.putExtra(KEY_ID, event.id);
-                        intent.putExtra(KEY_NAME, event.categoryName);
-                        ActivityResult.onFinishResult(SearchActivity.this, intent);
-                    }
-                });
-            }
-        }
-    }
-
-    public static void launchActivity(Fragment fragment) {
-        Intent intent = new Intent(fragment.getActivity(), SearchActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
-    }
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_ACTION = "action";
+
+    public static void start(Fragment fragment, String title, String action) {
+        Intent intent = new Intent(fragment.getActivity(), SearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.putExtra(KEY_TITLE, title);
+        intent.putExtra(KEY_ACTION, action);
+        fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
+    }
 
     public static void start(Activity activity, String title, String action) {
         Intent intent = new Intent(activity, SearchActivity.class);
