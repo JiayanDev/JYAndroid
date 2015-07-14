@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.SearchActivity;
 import com.jiayantech.jyandroid.activity.SelectProjectActivity;
+import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
@@ -65,7 +66,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_hospital:
-                search(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                search(getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
                         hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
@@ -76,7 +77,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 });
                 break;
             case R.id.txt_doctor:
-                search(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                search(getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
                         doctorId = data.getStringExtra(SearchActivity.KEY_ID);
@@ -137,8 +138,8 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
         }
     }
 
-    private void search(ActivityResult activityResult) {
-        SearchActivity.launchActivity(this);
+    private void search(String title, String action, ActivityResult activityResult) {
+        SearchActivity.start(this, title, action);
         mActivityResultHelper.addActivityResult(activityResult);
     }
 

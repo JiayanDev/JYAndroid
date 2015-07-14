@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.MyDiariesFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
 
@@ -22,5 +23,6 @@ public class MyDiariesActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_my_diaries);
     }
 }
