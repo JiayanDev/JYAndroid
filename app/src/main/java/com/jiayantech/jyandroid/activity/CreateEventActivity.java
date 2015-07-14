@@ -30,7 +30,6 @@ public class CreateEventActivity extends SingleFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("创建活动");
-        setDisplayHomeAsUpEnabled();
         LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_parent);
         View header = getLayoutInflater().inflate(R.layout.layout_create_event_header, layout_parent, false);
         layout_parent.addView(header, 0);

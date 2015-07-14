@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.ArrayMap;
@@ -55,6 +56,12 @@ public class MainActivity extends BaseActivity {
         initFragments();
         initViewPager();
 
+        setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
     }
 
     private void initView() {
