@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -22,6 +24,7 @@ import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -56,6 +59,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         title = intent.getStringExtra(KEY_TITLE);
         action = intent.getStringExtra(KEY_ACTION);
         setTitle(title);
+        setDisplayHomeAsUpEnabled();
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         edit_search = (EditText) findViewById(R.id.edit_search);
 
@@ -74,9 +78,28 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_save) {
+            String name = edit_search.getText().toString();
+            if (TextUtils.isEmpty(name)) {
+                ToastUtil.showMessage(getString(R.string.hint_search_input, title));
+                return true;
+            }
+            Intent intent = new Intent();
+            intent.putExtra(KEY_NAME, edit_search.getText().toString());
+            ActivityResult.onFinishResult(SearchActivity.this, intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
 
     @Override
     public void afterTextChanged(Editable s) {

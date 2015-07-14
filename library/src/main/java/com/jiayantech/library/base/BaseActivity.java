@@ -69,16 +69,21 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     protected void hideActionBar() {
         getSupportActionBar().hide();
+        findViewById(R.id.toolbar_divider).setVisibility(View.GONE);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            onHome();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onHome() {
+        onBackPressed();
     }
 
     @Override

@@ -10,15 +10,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/font_gray" />
+
 
         <TextView
             android:id="@+id/txt_project"
             style="@style/text_item_style"
-            android:drawableLeft="@drawable/ic_book_black_24dp"
             android:drawableRight="@drawable/img_right_arrow_selector"
             android:text="项目" />
 

@@ -46,6 +46,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     private EditText edit_price;
     private RatingBar rating_bar;
 
+    private String doctorId;
     private ArrayList<String> categoryId;
     private ArrayList<String> categoryName;
     private long operationTime = 0;
@@ -99,10 +100,9 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
-                        //String doctorId = data.getStringExtra(SearchActivity.KEY_ID);
+                        doctorId = data.getStringExtra(SearchActivity.KEY_ID);
                         String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_doctor.setText(doctorName);
-                        ToastUtil.showMessage("doctorName: " + doctorName);
                     }
                 });
                 break;
@@ -118,9 +118,6 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
             case R.id.action_next:
                 if (operationTime == 0) {
                     ToastUtil.showMessage("select the time");
