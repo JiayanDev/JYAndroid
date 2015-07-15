@@ -1,6 +1,8 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,8 +16,10 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.SelectProjectActivity;
 import com.jiayantech.jyandroid.adapter.MyDiaryAdapter;
 import com.jiayantech.jyandroid.biz.DiaryBiz;
+import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.model.DiaryHeader;
 import com.jiayantech.library.base.RefreshListFragment;
+import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
 
 import java.util.List;
@@ -42,8 +46,22 @@ public class MyDiariesFragment extends RefreshListFragment<DiaryHeader, AppRespo
                 startActivity(SelectProjectActivity.class);
             }
         });
+
+        mBroadcastHelper.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onRefresh();
+            }
+        }, Broadcasts.ACTION_PUBLISH_TOPIC, Broadcasts.ACTION_PUBLISH_DIARY, Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
     }
 
+    private BroadcastHelper mBroadcastHelper = new BroadcastHelper();
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBroadcastHelper.onDestroy();
+    }
 
     public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 

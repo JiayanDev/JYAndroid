@@ -14,7 +14,7 @@ public class DiaryHeader extends BaseModel {
     public String verifyStatus;
     public String hospitalId;
     public String doctorId;
-    public String categoryIds;
+    public String[] categoryIds;
     public String projectId;
     public String projectName;
     public double operationTime;
@@ -22,10 +22,6 @@ public class DiaryHeader extends BaseModel {
     public float satisfyLevel;
     public String tags;
     public double lastModifyTime;
-    public String previousPhoto;
+    public String[] previousPhotos;
     public String currentPhoto;
-
-
-
-
 }

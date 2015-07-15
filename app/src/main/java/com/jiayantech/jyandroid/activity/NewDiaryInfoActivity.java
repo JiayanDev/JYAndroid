@@ -31,6 +31,10 @@ import java.util.Calendar;
  */
 public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String KEY_doctorId = "doctorId";
+    public static final String KEY_doctorName = "doctorName";
+    public static final String KEY_hospitalId = "hospitalId";
+    public static final String KEY_hospitalName = "hospitalName";
     public static final String KEY_operationTime = "operationTime";
     public static final String KEY_price = "price";
     public static final String KEY_satisfyLevel = "satisfyLevel";
@@ -38,12 +42,16 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView txt_project;
     private TextView txt_time;
     private TextView txt_doctor;
+    private TextView txt_hospital;
     private EditText edit_price;
     private RatingBar rating_bar;
 
     private String doctorId;
+    private String doctorName;
+    private String hospitalId;
+    private String hospitalName;
     private ArrayList<String> categoryId;
-    private ArrayList<String> categoryName;
+    private ArrayList<String> categoryNames;
     private long operationTime = 0;
 
     @Override
@@ -60,26 +68,43 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
         txt_project = (TextView) findViewById(R.id.txt_project);
         txt_time = (TextView) findViewById(R.id.txt_time);
         txt_doctor = (TextView) findViewById(R.id.txt_doctor);
+        txt_hospital = (TextView) findViewById(R.id.txt_hospital);
         edit_price = (EditText) findViewById(R.id.edit_price);
         rating_bar = (RatingBar) findViewById(R.id.rating_bar);
     }
 
     protected void setViewsContent() {
         setTitle(R.string.title_surgery_info);
-        Intent intent = getIntent();
-        categoryId = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
-        categoryName = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
-        txt_project.setText(categoryName.toString());
+        setCategories(getIntent());
     }
 
     protected void setViewsListener() {
+        txt_project.setOnClickListener(this);
         txt_time.setOnClickListener(this);
         txt_doctor.setOnClickListener(this);
+        txt_hospital.setOnClickListener(this);
+    }
+
+    private void setCategories(Intent intent) {
+        categoryId = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
+        categoryNames = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
+        txt_project.setText(categoryNames.toString());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.txt_project:
+                Intent intent = new Intent(this, SelectProjectActivity.class);
+                intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
+                startActivityForResult(intent, SelectProjectActivity.REQUEST_CODE_SELECT);
+                mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
+                    @Override
+                    public void onActivityResult(Intent data) {
+                        setCategories(data);
+                    }
+                });
+                break;
             case R.id.txt_time:
                 new DateTimeHelper(this).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
@@ -95,8 +120,19 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onActivityResult(Intent data) {
                         doctorId = data.getStringExtra(SearchActivity.KEY_ID);
-                        String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
+                        doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_doctor.setText(doctorName);
+                    }
+                });
+                break;
+            case R.id.txt_hospital:
+                SearchActivity.start(this, getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION);
+                mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                    @Override
+                    public void onActivityResult(Intent data) {
+                        hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
+                        hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
+                        txt_hospital.setText(hospitalName);
                     }
                 });
                 break;
@@ -126,6 +162,11 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
                 Intent intent = new Intent(this, PublishDiaryActivity.class);
                 intent.putStringArrayListExtra(SelectProjectActivity.KEY_categoryIds, categoryId);
+                intent.putStringArrayListExtra(SelectProjectActivity.KEY_categoryNames, categoryNames);
+                intent.putExtra(KEY_doctorId, doctorId);
+                intent.putExtra(KEY_doctorName, doctorName);
+                intent.putExtra(KEY_hospitalId, hospitalId);
+                intent.putExtra(KEY_hospitalName, hospitalName);
                 intent.putExtra(KEY_operationTime, operationTime);
                 intent.putExtra(KEY_price, price);
                 intent.putExtra(KEY_satisfyLevel, satisfyLevel);

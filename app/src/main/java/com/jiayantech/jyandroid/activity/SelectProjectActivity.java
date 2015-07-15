@@ -19,6 +19,7 @@ import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -42,8 +43,8 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     private boolean toPick;
     private ProjectCategoryAdapter mAdapter;
 
-    private ArrayList<String> mSelectedList = new ArrayList<>();
     private ArrayList<String> mSelectedIds = new ArrayList<>();
+    private ArrayList<String> mSelectedList = new ArrayList<>();
 
 
     @Override
@@ -64,7 +65,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     protected void setViewsContent() {
         setTitle(R.string.title_my_diaries);
         toPick = getIntent().getBooleanExtra(KEY_TO_PICK, false);
-        layout_selected.setViews(mSelectedList);
+        layout_selected.setViews(idSelectedSet, mSelectedIds, mSelectedList);
         list_parents.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ProjectCategoryAdapter(UserManger.sProjectCategoryData, UserManger.sProjectCategoryTopLevels);
         list_parents.setAdapter(mAdapter);
@@ -84,9 +85,6 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
             case R.id.action_next:
                 Intent intent = new Intent(this, NewDiaryInfoActivity.class);
                 intent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
@@ -105,8 +103,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
 
     @Override
     public void onItemClick(View v, int index) {
-        mSelectedList.remove(index);
-        layout_selected.setViews(mSelectedList);
+        onFlowItemClick(v);
     }
 
     @Override
@@ -125,24 +122,47 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
             layout_project.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
                 @Override
                 public void onItemClick(View v, int index) {
-                    //String item = list.get(index);
-                    layout_selected.addView(name);
-                    mSelectedList.add(name);
-                    mSelectedIds.add(itemId);
+                    onFlowItemClick(v);
                 }
             });
-            addRandomFlowViews(name, layout_project);
+            addRandomFlowViews(itemId, name, layout_project);
 
             list_children.addView(view);
         }
     }
 
-    private static void addRandomFlowViews(String name, FlowLayout flowLayout) {
-        List<String> list = new ArrayList<>();
-        int count = Math.abs(new Random().nextInt()) % 10 + 1;
-        for (int k = 0; k < count; k++) {
-            list.add(name + k);
+    private HashSet<String> idSelectedSet = new HashSet<>();
+
+    private void onFlowItemClick(View v) {
+        String name = ((TextView) v).getText().toString();
+        String id = String.valueOf(v.getId());
+        int intId = Integer.valueOf(id);
+        v.setSelected(!v.isSelected());
+        if (v.isSelected()) {
+            mSelectedIds.add(id);
+            mSelectedList.add(name);
+            idSelectedSet.add(id);
+            layout_selected.addView(id, name, idSelectedSet.contains(id));
+        } else {
+            mSelectedIds.remove(id);
+            mSelectedList.remove(name);
+            idSelectedSet.remove(id);
+            layout_selected.removeView(layout_selected.findViewById(intId));
         }
-        flowLayout.setViews(list);
+        View view = list_children.findViewById(intId);
+        if (view != null) {
+            v.setSelected(v.isSelected());
+        }
+    }
+
+    private void addRandomFlowViews(String id, String name, FlowLayout flowLayout) {
+        List<String> idList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        int count = Math.abs(new Random().nextInt()) % 10 + 1;
+        for (int i = 0; i < count; i++) {
+            idList.add(id + i);
+            nameList.add(name + i);
+        }
+        flowLayout.setViews(idSelectedSet, idList, nameList);
     }
 }

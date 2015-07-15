@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.jiayantech.library.base.BaseApplication;
+
 /**
  * Created by liangzili on 15/7/8.
  */
@@ -13,5 +15,13 @@ public class UIUtil {
         InputMethodManager manager = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public static float dip2px(float dip) {
+        return BaseApplication.getContext().getResources().getDisplayMetrics().density * dip;
+    }
+
+    public static int dip2px(int dip) {
+        return (int) (BaseApplication.getContext().getResources().getDisplayMetrics().density * dip);
     }
 }

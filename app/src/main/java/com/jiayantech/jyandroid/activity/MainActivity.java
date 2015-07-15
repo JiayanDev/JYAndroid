@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);

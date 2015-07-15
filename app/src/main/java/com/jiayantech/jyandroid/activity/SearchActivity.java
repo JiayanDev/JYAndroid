@@ -125,7 +125,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
                         @Override
                         public void onItemClick(BaseSimpleModelAdapter<Search> adapter, int position, Search search) {
                             Intent intent = new Intent();
-                            intent.putExtra(KEY_ID, search.id);
+                            intent.putExtra(KEY_ID, search.id + "");
                             intent.putExtra(KEY_NAME, search.name);
                             ActivityResult.onFinishResult(SearchActivity.this, intent);
                         }
@@ -139,7 +139,6 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edit_search.getWindowToken(), 0);
     }
-
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_ACTION = "action";

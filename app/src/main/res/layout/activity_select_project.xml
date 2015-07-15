@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:maxHeight="120dip">
 
         <com.jiayantech.jyandroid.widget.FlowLayout
@@ -18,7 +18,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/font_gray" />
+        android:background="@color/divider_gray_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/font_gray" />
+            android:background="@color/divider_gray_color" />
 
         <ScrollView
             android:layout_width="0dip"

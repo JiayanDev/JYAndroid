@@ -74,7 +74,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
             public void onReceive(Context context, Intent intent) {
                 onRefresh();
             }
-        }, Broadcasts.ACTION_PUBLISH_TOPIC);
+        }, Broadcasts.ACTION_PUBLISH_TOPIC, Broadcasts.ACTION_PUBLISH_DIARY, Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
     }
 
     private BroadcastHelper mBroadcastHelper = new BroadcastHelper();
@@ -85,27 +85,28 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         mBroadcastHelper.onDestroy();
     }
 
-    class DividerItemDecoration extends RecyclerView.ItemDecoration{
+    class DividerItemDecoration extends RecyclerView.ItemDecoration {
         private ImageView dividerView;
-        public DividerItemDecoration(ImageView dividerView){
+
+        public DividerItemDecoration(ImageView dividerView) {
             this.dividerView = dividerView;
         }
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            if(null == dividerView){
+            if (null == dividerView) {
                 return;
             }
 
-            if(parent.getChildLayoutPosition(view) < 1){
+            if (parent.getChildLayoutPosition(view) < 1) {
                 return;
             }
 
             //给要绘制的item边界预留位置
             int layoutOrientation = getOrientation(parent);
-            if(layoutOrientation == LinearLayoutManager.VERTICAL){
+            if (layoutOrientation == LinearLayoutManager.VERTICAL) {
                 outRect.top = dividerView.getHeight();
-            }else if(layoutOrientation == LinearLayoutManager.HORIZONTAL){
+            } else if (layoutOrientation == LinearLayoutManager.HORIZONTAL) {
                 outRect.left = dividerView.getWidth();
             }
         }
@@ -113,23 +114,23 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         @Override
         public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
             super.onDrawOver(c, parent, state);
-            LinearLayoutManager layoutManager = (LinearLayoutManager)parent.getLayoutManager();
-            if(layoutManager == null){
+            LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+            if (layoutManager == null) {
                 return;
             }
 
             int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
             int orientation = layoutManager.getOrientation();
             int childCount = parent.getChildCount();
-            if(orientation == LinearLayoutManager.VERTICAL){
+            if (orientation == LinearLayoutManager.VERTICAL) {
                 int right = parent.getWidth();
-                for(int i=0; i<childCount; i++){
-                    if(i == 0 && firstVisiblePosition == 0){
+                for (int i = 0; i < childCount; i++) {
+                    if (i == 0 && firstVisiblePosition == 0) {
                         continue;
                     }
                     View childView = parent.getChildAt(i);
                     RecyclerView.LayoutParams params =
-                            (RecyclerView.LayoutParams)childView.getLayoutParams();
+                            (RecyclerView.LayoutParams) childView.getLayoutParams();
                     int left = parent.getPaddingLeft() + childView.getPaddingLeft();
                     int bottom = childView.getTop() - params.topMargin;
                     int top = bottom - dividerView.getHeight();
@@ -139,11 +140,11 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
 
         }
 
-        private int getOrientation(RecyclerView parent){
-            if(parent.getLayoutManager() instanceof LinearLayoutManager){
-                LinearLayoutManager layoutManager = (LinearLayoutManager)parent.getLayoutManager();
+        private int getOrientation(RecyclerView parent) {
+            if (parent.getLayoutManager() instanceof LinearLayoutManager) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
                 return layoutManager.getOrientation();
-            }else{
+            } else {
                 throw new IllegalStateException("DividerItemDecoration can only be used with a " +
                         "LinearLayoutManager");
             }

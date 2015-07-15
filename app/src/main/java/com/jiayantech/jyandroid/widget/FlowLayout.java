@@ -2,11 +2,16 @@ package com.jiayantech.jyandroid.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
+
+import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.utils.UIUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -34,27 +39,27 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
         super(context, attrs, defStyle);
     }
 
-    public void setViews(List<String> list) {
+    public void setViews(HashSet<String> idSelected, List<String> idList, List<String> nameList) {
         removeAllViews();
-        for (int i = 0; i < list.size(); i++) {
-            addView(list.get(i), i);
+        for (int i = 0; i < idList.size(); i++) {
+            String id = idList.get(i);
+            addView(idList.get(i), nameList.get(i), idSelected.contains(id));
         }
     }
 
-    public void addView(String item, int index) {
-        Button button = new Button(getContext());
-        button.setId(index);
-        button.setText(item);
-        button.setOnClickListener(this);
-        addView(button, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    }
+    public void addView(String id, String name, boolean selected) {
+        TextView button = new TextView(getContext());
+        button.setBackgroundResource(R.drawable.bg_project_child_category_gray_selector);
+        button.setSelected(selected);
 
-    public void addView(String item) {
-        Button button = new Button(getContext());
-        button.setId(getChildCount());
-        button.setText(item);
+        int space = UIUtil.dip2px(2);
+        button.setPadding(space, space, space, space);
+        button.setId(Integer.valueOf(id));
+        button.setText(name);
         button.setOnClickListener(this);
-        addView(button, new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        lp.setMargins(space, space, space, space);
+        addView(button, lp);
     }
 
     @Override

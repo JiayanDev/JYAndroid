@@ -36,6 +36,7 @@
     <string name="post_share_text" formatted="false">Hello, 我看到有趣的内容想推荐给你，%s , %s</string>
 
     <string name="save">保存</string>
+    <string name="project">项目</string>
 
     <string name="direct_login">直接登录</string>
     <string name="wechat_login">微信登录</string>
@@ -61,6 +62,15 @@
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>
+    <string name="time">时间</string>
+    <string name="doctor">医生</string>
+    <string name="hospital">医院</string>
+    <string name="satisfy_level">整体评价</string>
+    <string name="level_1">一般</string>
+    <string name="level_2">较好</string>
+    <string name="level_3">很好</string>
+    <string name="level_4">非常好</string>
+    <string name="level_5">超好</string>
 
 
 </resources>

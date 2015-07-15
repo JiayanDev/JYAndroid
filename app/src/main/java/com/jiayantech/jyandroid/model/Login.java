@@ -15,6 +15,7 @@ public class Login {
 
     public static class ProjectCategory {
         public int version;
+
         public Map<String, String> data;
     }
 }

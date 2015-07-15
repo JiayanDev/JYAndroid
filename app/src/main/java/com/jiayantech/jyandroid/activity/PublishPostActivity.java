@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -59,7 +58,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     protected TextView txt_category;
 
     private ImageAdapter mImageAdapter;
-    private List<String> urlList = new ArrayList<>();
+    protected List<String> urlList = new ArrayList<>();
     private List<String> idlList;
 
     @Override
@@ -132,7 +131,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
                         idlList = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryIds);
-                        List<String> categoryNames = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryNames);
+                        //List<String> categoryNames = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryNames);
                         //txt_category.setText(categoryNames.toString());
                         txt_category.setText(getCategoryText());
                     }
@@ -256,7 +255,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
     }
 
-    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
+    protected ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
