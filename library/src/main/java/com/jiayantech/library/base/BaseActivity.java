@@ -144,6 +144,11 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         return layout_base;
     }
 
+    protected void setBackgroundResource(int resid) {
+        ViewGroup layout_base = (ViewGroup) findViewById(R.id.layout_base);
+        layout_base.setBackgroundResource(resid);
+    }
+
     protected void superSetContentView(View view) {
         super.setContentView(view);
     }

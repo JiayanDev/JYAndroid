@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
         PushAgent.getInstance(this).enable();
 

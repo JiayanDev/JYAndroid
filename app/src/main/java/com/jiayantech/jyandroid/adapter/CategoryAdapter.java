@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.model.Login;
-import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.base.BaseGridAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.ArrayList;
@@ -20,12 +20,13 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class CategoryAdapter extends BaseSimpleModelAdapter<Login.Category> {
+public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
     private final List<Boolean> selectedList;
 
-    public CategoryAdapter(List<Login.Category> level) {
-        super(level);
-        selectedList = new ArrayList<>(level.size());
+
+    public CategoryAdapter(List<Login.Category> list) {
+        super(list);
+        selectedList = new ArrayList<>(list.size());
         for (int i = 0; i < mList.size(); i++) {
             selectedList.add(false);
         }
@@ -48,7 +49,7 @@ public class CategoryAdapter extends BaseSimpleModelAdapter<Login.Category> {
         ((ViewHolder) holder).onBind(mList.get(position), selectedList.get(position), position);
     }
 
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Login.Category> {
+    public static class ViewHolder extends BaseGridAdapter.ViewHolder<Login.Category> {
         private ImageView img_category;
         private TextView txt_category;
 
@@ -61,10 +62,14 @@ public class CategoryAdapter extends BaseSimpleModelAdapter<Login.Category> {
 
         public void onBind(Login.Category category, boolean selected, int position) {
             mPosition = position;
-            itemView.setBackgroundResource(position % 2 == 0 ? R.drawable.bg_category_white_selector :
-                    R.drawable.bg_category_gray_selector);
-            itemView.setSelected(selected);
-            img_category.setImageResource(R.drawable.icon_nose);
+//            itemView.setBackgroundResource(position % 2 == 0 ? R.drawable.bg_category_white_selector :
+//                    R.drawable.bg_category_gray_selector);
+            //itemView.setSelected(selected);
+            if (category.reaId == null) {
+                img_category.setImageDrawable(null);
+            } else {
+                img_category.setImageResource(category.reaId);
+            }
             txt_category.setText(category.name);
         }
     }

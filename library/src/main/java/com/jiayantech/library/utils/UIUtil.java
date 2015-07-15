@@ -3,6 +3,7 @@ package com.jiayantech.library.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -31,5 +32,9 @@ public class UIUtil {
 
     public static int dip2px(int dip) {
         return (int) (BaseApplication.getContext().getResources().getDisplayMetrics().density * dip);
+    }
+
+    public static float getDimension(int resId) {
+        return BaseApplication.getContext().getResources().getDimension(resId);
     }
 }

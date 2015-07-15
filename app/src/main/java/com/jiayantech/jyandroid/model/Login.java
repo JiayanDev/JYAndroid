@@ -3,6 +3,8 @@ package com.jiayantech.jyandroid.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +28,8 @@ public class Login {
     public static class Category implements Parcelable {
         public int id;
         public String name;
+        @Expose
+        public Integer reaId;
         public ArrayList<Category> sub;
 
         public Category(Parcel source) {
