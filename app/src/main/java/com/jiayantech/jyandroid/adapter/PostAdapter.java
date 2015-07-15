@@ -2,8 +2,10 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
@@ -11,6 +13,7 @@ import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.http.BitmapBiz;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -29,7 +32,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
                 intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_TOPIC);
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.type);
                 mContext.startActivity(intent);
             }
         });
@@ -41,20 +44,20 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
     }
 
 
+
+
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
         public Context mContext;
         public ImageView mAvatar;
         public TextView mUsername;
-        public ImageView mPhoto;
+        public LinearLayout mPhotoLayout;
         public TextView mContent;
         public TextView mThumbsUpCount;
         public TextView mCommentCount;
-        //public ViewHolderOnClickListener mListener;
+        public ImageView mType;
 
         public ViewHolder(Context context, ViewGroup parent, int layoutId) {
             this(context, parent, layoutId, null);
-            // mListener = listener;
-            //itemView.setOnClickListener(listener);
         }
 
         public ViewHolder(Context context, ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Post> adapter) {
@@ -62,20 +65,37 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mContext = context;
             mAvatar = (ImageView) itemView.findViewById(R.id.avatar);
             mUsername = (TextView) itemView.findViewById(R.id.username);
-            mPhoto = (ImageView) itemView.findViewById(R.id.photo);
+            mPhotoLayout = (LinearLayout)itemView.findViewById(R.id.layout_photos);
             mContent = (TextView) itemView.findViewById(R.id.content);
             mThumbsUpCount = (TextView) itemView.findViewById(R.id.thumbs_up);
             mCommentCount = (TextView) itemView.findViewById(R.id.comment);
+            mType = (ImageView)itemView.findViewById(R.id.ic_type);
         }
 
         @Override
         public void onBind(Post item, int position) {
-            mUsername.setText(String.valueOf(item.id));
+            mUsername.setText(String.valueOf(item.userName));
             mContent.setText(item.content);
             mThumbsUpCount.setText(mContext.getResources().getString
                     (R.string.thumbs_up_count, new Object[]{String.valueOf(item.likeCount)}));
             mCommentCount.setText(mContext.getResources().getString
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
+            if(item.photoes != null) {
+                for (int i = 0; i < item.photoes.length && i < 3; i++) {
+                    mPhotoLayout.removeAllViews();
+                    ImageView image = (ImageView) LayoutInflater.
+                            from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
+                    mPhotoLayout.addView(image);
+                    BitmapBiz.display(image, item.photoes[i]);
+                }
+            }
+
+            if(item.type.equals("diary")){
+                mType.setImageResource(R.drawable.ic_post_type_diary);
+            }else{
+                mType.setImageResource(R.drawable.ic_post_type_topic);
+            }
+
 //            mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -99,6 +119,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 //            });
             //mListener.setPosition(position);
         }
+
+
 
     }
 }

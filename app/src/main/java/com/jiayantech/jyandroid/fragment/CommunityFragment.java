@@ -3,29 +3,29 @@ package com.jiayantech.jyandroid.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.media.Image;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
 import com.jiayantech.jyandroid.adapter.TopicCategoryAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Post;
-import com.jiayantech.jyandroid.model.Topic;
+import com.jiayantech.jyandroid.widget.DividerItemDecoration;
+import com.jiayantech.jyandroid.widget.category.Category;
+import com.jiayantech.jyandroid.widget.category.CategoryAdapter;
+import com.jiayantech.jyandroid.widget.category.CategoryAdapter2;
+import com.jiayantech.jyandroid.widget.category.CategoryGridView2;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
-import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
+import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
@@ -44,17 +44,14 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     @Override
     public void onInitView() {
         super.onInitView();
-        setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);
-
+        Drawable divider = getResources().getDrawable(R.drawable.shape_divider);
+        ultimateRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
 //        ultimateRecyclerView.addItemDecoration(
-//                new com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration(getActivity(),
-//                        LinearLayoutManager.VERTICAL));
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setBackgroundColor(getResources().getColor(R.color.bg_light_black_color));
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                100);
-        imageView.setLayoutParams(params);
-        ultimateRecyclerView.addItemDecoration(new DividerItemDecoration(imageView));
+//                new HorizontalDividerItemDecoration.Builder(getActivity())
+//                        .color(getResources().getColor(R.color.bg_gray_color))
+//                        .build());
+
+        setParams(new PostAdapter(null, getActivity()), "post/list");
 
         View headerView = setHeader(R.layout.layout_topic_category);
         initHeaderView(headerView);
@@ -62,10 +59,23 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     }
 
     private void initHeaderView(View headerView) {
-        RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+//        RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
+//        recyclerView.setHasFixedSize(true);
+//       // recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));
+//        recyclerView.setAdapter(new CategoryAdapter(null));
+//        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+
+
+        final CategoryGridView2 gridView2 = (CategoryGridView2) headerView.findViewById(R.id.grid_category);
+        gridView2.setAdapter(new CategoryAdapter2());
+        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), PostActivity.class);
+                intent.putExtra(PostListFragment.EXTRA_CATEGORY, gridView2.getAdapter().getItemId(position));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private void registerReceivers() {
@@ -85,68 +95,4 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         mBroadcastHelper.onDestroy();
     }
 
-    class DividerItemDecoration extends RecyclerView.ItemDecoration{
-        private ImageView dividerView;
-        public DividerItemDecoration(ImageView dividerView){
-            this.dividerView = dividerView;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            if(null == dividerView){
-                return;
-            }
-
-            if(parent.getChildLayoutPosition(view) < 1){
-                return;
-            }
-
-            //给要绘制的item边界预留位置
-            int layoutOrientation = getOrientation(parent);
-            if(layoutOrientation == LinearLayoutManager.VERTICAL){
-                outRect.top = dividerView.getHeight();
-            }else if(layoutOrientation == LinearLayoutManager.HORIZONTAL){
-                outRect.left = dividerView.getWidth();
-            }
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            super.onDrawOver(c, parent, state);
-            LinearLayoutManager layoutManager = (LinearLayoutManager)parent.getLayoutManager();
-            if(layoutManager == null){
-                return;
-            }
-
-            int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-            int orientation = layoutManager.getOrientation();
-            int childCount = parent.getChildCount();
-            if(orientation == LinearLayoutManager.VERTICAL){
-                int right = parent.getWidth();
-                for(int i=0; i<childCount; i++){
-                    if(i == 0 && firstVisiblePosition == 0){
-                        continue;
-                    }
-                    View childView = parent.getChildAt(i);
-                    RecyclerView.LayoutParams params =
-                            (RecyclerView.LayoutParams)childView.getLayoutParams();
-                    int left = parent.getPaddingLeft() + childView.getPaddingLeft();
-                    int bottom = childView.getTop() - params.topMargin;
-                    int top = bottom - dividerView.getHeight();
-                    dividerView.draw(c);
-                }
-            }
-
-        }
-
-        private int getOrientation(RecyclerView parent){
-            if(parent.getLayoutManager() instanceof LinearLayoutManager){
-                LinearLayoutManager layoutManager = (LinearLayoutManager)parent.getLayoutManager();
-                return layoutManager.getOrientation();
-            }else{
-                throw new IllegalStateException("DividerItemDecoration can only be used with a " +
-                        "LinearLayoutManager");
-            }
-        }
-    }
 }

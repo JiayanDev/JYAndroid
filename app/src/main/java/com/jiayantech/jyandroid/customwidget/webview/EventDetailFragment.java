@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import com.jiayantech.jyandroid.R;
@@ -48,6 +49,11 @@ public class EventDetailFragment extends WebViewFragment{
 
     @Override
     protected JavascriptInterface onAddJavascriptInterface() {
+        return null;
+    }
+
+    @Override
+    protected WebViewClient onSetWebViewClient() {
         return null;
     }
 }

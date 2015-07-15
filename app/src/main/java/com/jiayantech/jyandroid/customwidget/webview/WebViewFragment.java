@@ -60,6 +60,8 @@ public abstract class WebViewFragment extends BaseFragment{
             mUrl = BASE_URL + ACTION_DIARY;
         }else if(mType.equals(TYPE_DIARY_HEADER)){
             mUrl = BASE_URL + ACTION_DIARY_HEADER;
+        }else if(mType.equals(TYPE_TOPIC)){
+            mUrl = BASE_URL + ACTION_DIARY;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -82,7 +84,7 @@ public abstract class WebViewFragment extends BaseFragment{
             mNativeLayout.addView(bottomView);
         }
 
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(onSetWebViewClient());
         mWebView.setWebChromeClient(onSetWebChromeClient());
         WebSettings settings = mWebView.getSettings();
         settings.setBuiltInZoomControls(false);
@@ -119,6 +121,8 @@ public abstract class WebViewFragment extends BaseFragment{
     protected abstract BaseWebChromeClient onSetWebChromeClient();
 
     protected abstract JavascriptInterface onAddJavascriptInterface();
+
+    protected abstract WebViewClient onSetWebViewClient();
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

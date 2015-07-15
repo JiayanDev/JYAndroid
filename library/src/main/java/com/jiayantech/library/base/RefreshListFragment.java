@@ -71,14 +71,15 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             return;
         }
         mIsLoading = true;
-        Map<String, String> params = null;
+        Map<String, String> params = new ArrayMap<>();
+        if(mParams != null) {
+            params.putAll(mParams);
+        }
         if (0 != mAdapter.getList().size()) {
             String sinceId = String.valueOf(mAdapter.getList().get(0).id);
-            params = new ArrayMap<>();
+            //params = new ArrayMap<>();
             params.put("sinceId", sinceId);
-            if(mParams != null) {
-                params.putAll(mParams);
-            }
+
         }
         HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override

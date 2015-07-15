@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
@@ -17,6 +18,7 @@ import com.jiayantech.jyandroid.adapter.TopicCategoryAdapter;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.jyandroid.widget.DividerItemDecoration;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
 
@@ -74,6 +76,9 @@ public class PostListFragment extends RefreshListFragment<Post, AppResponse<List
         if(mType != null){
             mAction = "post/list";
         }
+
+        Drawable divider = getResources().getDrawable(R.drawable.shape_divider);
+        ultimateRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
         setParams(new PostAdapter(null, getActivity()), mAction, params);
         boolean flag = getArguments().getBoolean(EXTRA_SHOW_HEADER);
         if(flag) {
@@ -83,7 +88,7 @@ public class PostListFragment extends RefreshListFragment<Post, AppResponse<List
     }
 
     public void initHeaderView(View headerView) {
-        RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.list_category);
+        RecyclerView recyclerView = (RecyclerView) headerView.findViewById(R.id.grid_category);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
