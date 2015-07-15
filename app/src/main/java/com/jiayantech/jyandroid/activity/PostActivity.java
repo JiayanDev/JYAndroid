@@ -25,8 +25,8 @@ public class PostActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        mCategoryId = Integer.valueOf(getIntent().
-                getStringExtra(PostListFragment.EXTRA_CATEGORY));
+        mCategoryId = (int)getIntent().
+                getLongExtra(PostListFragment.EXTRA_CATEGORY, -1);
         //mType = getIntent().getStringExtra(PostListFragment.EXTRA_TYPE);
         init();
     }

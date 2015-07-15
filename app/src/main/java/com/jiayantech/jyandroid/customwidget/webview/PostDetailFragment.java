@@ -1,8 +1,11 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -73,6 +76,17 @@ public class PostDetailFragment extends WebViewFragment{
         return new JavascriptInterface() {
             public void setVisibility(){
                 mBottomView.setVisibility(View.VISIBLE);
+            }
+        };
+    }
+
+    @Override
+    protected WebViewClient onSetWebViewClient() {
+        return new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //if(Uri.parse(url).getHost().equals())
+                return super.shouldOverrideUrlLoading(view, url);
             }
         };
     }
