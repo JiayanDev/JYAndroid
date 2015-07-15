@@ -1,8 +1,6 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -11,9 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.JsNativeParser;
+import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.PostBiz;
-import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.ReplyJsCall;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
@@ -23,7 +20,6 @@ import com.jiayantech.library.utils.UIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -42,12 +38,13 @@ public class PostDetailFragment extends WebViewFragment{
     }
 
     View mBottomView;
+    EditText mContent;
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
         mBottomView = inflater.inflate(R.layout.layout_detail_bottom, null);
         ImageButton sendButton = (ImageButton)mBottomView.findViewById(R.id.button_send);
-        final EditText mContent = (EditText)mBottomView.findViewById(R.id.edit_comment);
+        mContent = (EditText)mBottomView.findViewById(R.id.edit_comment);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,14 +91,25 @@ public class PostDetailFragment extends WebViewFragment{
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if(url.startsWith("jiayan://js_call_native?")){
-                    ReplyJsCall jsCall = (ReplyJsCall) JsNativeParser.parse(url);
-                    ToastUtil.showMessage(jsCall.toString());
-                    List<String> params = new ArrayList<>();
-                    params.add(jsCall.data.toString());
-                    params.add("0");
-                    params.add("ok");
+                    //ReplyJsCall jsCall = (ReplyJsCall) JsNativeBiz.parse(url);
+                    String action = JsNativeBiz.getJsAction(url);
+                    ToastUtil.showMessage(action);
+                    switch (action){
+                        case "testForCallNativePleaseGiveBackWhatIHadSend":
+                            ReplyJsCall jsCall = JsNativeBiz.parse(url, ReplyJsCall.class);
+                            List<String> params = new ArrayList<>();
 
-                    callJsMethod(jsCall.success, params);
+                            params.add(jsCall.data.toString());
+                            params.add("0");
+                            params.add("ok");
+                            //callJsMethod(jsCall.success, params);
+                            UIUtil.showSoftKeyBoard(getActivity(),mContent);
+                            break;
+                        case JsNativeBiz.ACTION_OPEN_COMMENT_PANEL:
+                            ReplyJsCall jsCall1 = JsNativeBiz.parse(url, ReplyJsCall.class);
+                            break;
+                    }
+
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
