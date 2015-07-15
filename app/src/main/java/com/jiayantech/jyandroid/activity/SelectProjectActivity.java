@@ -151,7 +151,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
         }
         View view = list_children.findViewById(intId);
         if (view != null) {
-            v.setSelected(v.isSelected());
+            view.setSelected(v.isSelected());
         }
     }
 
