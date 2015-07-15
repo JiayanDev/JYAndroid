@@ -40,11 +40,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(mContext, viewGroup, R.layout.item_topic, this);
+        return new ViewHolder(mContext, viewGroup, R.layout.item_post, this);
     }
-
-
-
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
         public Context mContext;
@@ -55,6 +52,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         public TextView mThumbsUpCount;
         public TextView mCommentCount;
         public ImageView mType;
+        public TextView txt_category;
 
         public ViewHolder(Context context, ViewGroup parent, int layoutId) {
             this(context, parent, layoutId, null);
@@ -65,11 +63,12 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mContext = context;
             mAvatar = (ImageView) itemView.findViewById(R.id.avatar);
             mUsername = (TextView) itemView.findViewById(R.id.username);
-            mPhotoLayout = (LinearLayout)itemView.findViewById(R.id.layout_photos);
+            mPhotoLayout = (LinearLayout) itemView.findViewById(R.id.layout_photos);
             mContent = (TextView) itemView.findViewById(R.id.content);
             mThumbsUpCount = (TextView) itemView.findViewById(R.id.thumbs_up);
             mCommentCount = (TextView) itemView.findViewById(R.id.comment);
-            mType = (ImageView)itemView.findViewById(R.id.ic_type);
+            mType = (ImageView) itemView.findViewById(R.id.ic_type);
+            txt_category = (TextView) itemView.findViewById(R.id.txt_category);
         }
 
         @Override
@@ -80,9 +79,9 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                     (R.string.thumbs_up_count, new Object[]{String.valueOf(item.likeCount)}));
             mCommentCount.setText(mContext.getResources().getString
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
-            if(item.photoes != null) {
+            mPhotoLayout.removeAllViews();
+            if (item.photoes != null) {
                 for (int i = 0; i < item.photoes.length && i < 3; i++) {
-                    mPhotoLayout.removeAllViews();
                     ImageView image = (ImageView) LayoutInflater.
                             from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
                     mPhotoLayout.addView(image);
@@ -90,11 +89,12 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                 }
             }
 
-            if(item.type.equals("diary")){
+            if (item.type.equals("diary")) {
                 mType.setImageResource(R.drawable.ic_post_type_diary);
-            }else{
+            } else {
                 mType.setImageResource(R.drawable.ic_post_type_topic);
             }
+            txt_category.setText(item.getCategoryNames());
 
 //            mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -119,7 +119,6 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 //            });
             //mListener.setPosition(position);
         }
-
 
 
     }

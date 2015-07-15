@@ -86,15 +86,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     protected void setViewsListener() {
         mImageAdapter.setOnItemClickListener(this);
         txt_category.setOnClickListener(this);
-        recycler_view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                recycler_view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                recycler_view.setAdapter(mImageAdapter);
-                mImageAdapter.setItemHeight(recycler_view.getWidth() / spanCount);
-                mImageAdapter.resetViewHeight(recycler_view, spanCount);
-            }
-        });
+        mImageAdapter.resetGridHeight(recycler_view, spanCount);
     }
 
     @Override

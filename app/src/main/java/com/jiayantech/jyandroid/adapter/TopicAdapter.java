@@ -1,8 +1,6 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
@@ -37,7 +34,7 @@ public class TopicAdapter extends BaseSimpleModelAdapter<Post>{
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
         View view = LayoutInflater.from(viewGroup.getContext()).
-                inflate(R.layout.item_topic, viewGroup, false);
+                inflate(R.layout.item_post, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }

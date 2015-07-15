@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.jyandroid.widget.PagerSlidingTabStrip;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
@@ -14,30 +15,31 @@ import com.jiayantech.library.base.BaseFragment;
 /**
  * Created by liangzili on 15/7/8.
  */
-public class PostActivity extends BaseActivity{
+public class PostActivity extends BaseActivity {
     private String[] mTabName;
     private ViewPager mViewPager;
     private PagerSlidingTabStrip mSlidingTabStrip;
     private BaseFragment[] mFragments;
-    private int mCategoryId;
+    private Login.Category category;
+
     //private String mType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        mCategoryId = (int)getIntent().
-                getLongExtra(PostListFragment.EXTRA_CATEGORY, -1);
+        category = getIntent().getParcelableExtra(PostListFragment.EXTRA_CATEGORY);
         //mType = getIntent().getStringExtra(PostListFragment.EXTRA_TYPE);
         init();
     }
 
-    public void init(){
+    public void init() {
+        setTitle(category.name);
         mTabName = getResources().getStringArray(R.array.tab_post);
-        mViewPager = (ViewPager)findViewById(R.id.tab_content);
-        mSlidingTabStrip = (PagerSlidingTabStrip)findViewById(R.id.tab_title);
+        mViewPager = (ViewPager) findViewById(R.id.tab_content);
+        mSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tab_title);
         mFragments = new BaseFragment[]{
-                PostListFragment.newInstance("topic", mCategoryId, false),
-                PostListFragment.newInstance("diary", mCategoryId, false)
+                PostListFragment.newInstance("topic", category.id, false),
+                PostListFragment.newInstance("diary", category.id, false)
         };
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

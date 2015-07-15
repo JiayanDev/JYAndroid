@@ -84,6 +84,12 @@
         <item name="android:background">@color/divider_gray_color</item>
     </style>
 
+    <style name="divider_big_gray_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/normal_margin</item>
+        <item name="android:background">@color/divider_gray_color</item>
+    </style>
+
     <style name="divider_offset_gray_style" parent="divider_gray_style">
         <item name="android:layout_marginLeft">@dimen/normal_margin</item>
     </style>
