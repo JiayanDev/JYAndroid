@@ -17,30 +17,60 @@ import java.util.Set;
  */
 public class UserManger {
     public static Login sLogin;
-    public static Map<String, String> sProjectCategoryData;
-    public static Map<String, List<String>> sProjectCategoryLevels = new HashMap<>();
-    public static List<String> sProjectCategoryTopLevels = new ArrayList<>();
+//    public static Map<String, String> sProjectCategoryData;
+//    public static Map<String, List<String>> sProjectCategoryLevels = new HashMap<>();
+//    public static List<String> sProjectCategoryTopLevels = new ArrayList<>();
 
     public static void saveLogin(Login login) {
         sLogin = login;
-        sProjectCategoryData = login.projectCategory.data;
-        Set<Map.Entry<String, String>> entrySet = login.projectCategory.data.entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            String key = entry.getKey();
-            if (key.length() > 2) {
-                String parent = key.substring(0, 2);
-                List<String> list = sProjectCategoryLevels.get(parent);
-                if (list == null) {
-                    list = new ArrayList<>();
-                    sProjectCategoryLevels.put(parent, list);
-                }
-                list.add(key);
-            }
+        if (login.projectCategory.data instanceof Map) {
+            //mapSave((Map<String, String>) login.projectCategory.data);
+        } else if (login.projectCategory.data instanceof ArrayList) {
+            //mapSave(new HashMap<String, String>());
+//            sProjectCategoryData = new HashMap<>();
+//            listSave((ArrayList<Map<String, String>>) login.projectCategory.data);
         }
-        sProjectCategoryTopLevels = new ArrayList(sProjectCategoryLevels.keySet());
     }
 
-    public static List<String> getProjectCategoryTopLevels(){
-        return sProjectCategoryTopLevels;
-    }
+//    public static void mapSave(Map<String, String> data) {
+//        sProjectCategoryData = data;
+//        Set<Map.Entry<String, String>> entrySet = data.entrySet();
+//        for (Map.Entry<String, String> entry : entrySet) {
+//            String key = entry.getKey();
+//            if (key.length() > 2) {
+//                String parent = key.substring(0, 2);
+//                List<String> list = sProjectCategoryLevels.get(parent);
+//                if (list == null) {
+//                    list = new ArrayList<>();
+//                    sProjectCategoryLevels.put(parent, list);
+//                }
+//                list.add(key);
+//            }
+//        }
+//        sProjectCategoryTopLevels = new ArrayList(sProjectCategoryLevels.keySet());
+//    }
+//
+//    public static void listSave(ArrayList<Map<String, String>> data) {
+//        sProjectCategoryTopLevels = new ArrayList<>(data.size());
+//        for (Map<String, String> map : data) {
+//            Set<Map.Entry<String, String>> entrySet = map.entrySet();
+//            for (Map.Entry<String, String> entry : entrySet) {
+//                String key = entry.getKey();
+//                if (key.length() > 2) {
+//                    String parent = key.substring(0, 2);
+//                    List<String> list = sProjectCategoryLevels.get(parent);
+//                    if (list == null) {
+//                        list = new ArrayList<>();
+//                        sProjectCategoryLevels.put(parent, list);
+//                    }
+//                    list.add(key);
+//                }
+//            }
+//        }
+//        sProjectCategoryTopLevels = new ArrayList(sProjectCategoryLevels.keySet());
+//    }
+//
+//    public static List<String> getProjectCategoryTopLevels() {
+//        return sProjectCategoryTopLevels;
+//    }
 }

@@ -33,9 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/normal_margin"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/normal_padding"
-        android:paddingRight="@dimen/normal_padding">
+        android:orientation="horizontal">
 
         <TextView
             style="@style/text_hint_style"

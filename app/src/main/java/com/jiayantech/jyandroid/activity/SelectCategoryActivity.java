@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
@@ -23,16 +24,14 @@ import java.util.ArrayList;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectCategoryActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<String> {
-    public static final String KEY_categoryIds = "categoryIds";
-    public static final String KEY_categoryNames = "categoryNames";
+public class SelectCategoryActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<Login.Category> {
+    public static final String KEY_categories = "categories";
 
     private RecyclerView mRecyclerView;
 
     private CategoryAdapter mAdapter;
 
-    private ArrayList<String> mSelectedList = new ArrayList<>();
-    private ArrayList<String> mSelectedIds = new ArrayList<>();
+    private ArrayList<Login.Category> mSelectedList = new ArrayList<>();
 
 
     @Override
@@ -48,7 +47,7 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
     protected void setViewsContent() {
         setTitle(R.string.title_select_category);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        mAdapter = new CategoryAdapter(UserManger.sProjectCategoryData, UserManger.sProjectCategoryTopLevels);
+        mAdapter = new CategoryAdapter(UserManger.sLogin.projectCategory.data);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -70,8 +69,7 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
                 return true;
             case R.id.action_finish:
                 Intent finishIntent = new Intent(this, NewDiaryInfoActivity.class);
-                finishIntent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
-                finishIntent.putStringArrayListExtra(KEY_categoryIds, mSelectedIds);
+                finishIntent.putParcelableArrayListExtra(KEY_categories, mSelectedList);
                 ActivityResult.onFinishResult(this, finishIntent);
                 return true;
         }
@@ -79,15 +77,12 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
     }
 
     @Override
-    public void onItemClick(BaseSimpleModelAdapter<String> adapter, int position, String id) {
-        final String name = UserManger.sProjectCategoryData.get(id);
+    public void onItemClick(BaseSimpleModelAdapter<Login.Category> adapter, int position, Login.Category category) {
         boolean selected = mAdapter.select(position);
         if (selected) {
-            mSelectedList.add(name);
-            mSelectedIds.add(id);
+            mSelectedList.add(category);
         } else {
-            mSelectedList.remove(name);
-            mSelectedIds.remove(id);
+            mSelectedList.remove(category);
         }
     }
 }

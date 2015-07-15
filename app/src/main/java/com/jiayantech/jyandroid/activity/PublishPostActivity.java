@@ -22,8 +22,8 @@ import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.ImageUploadCallback;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -59,7 +59,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
     private ImageAdapter mImageAdapter;
     protected List<String> urlList = new ArrayList<>();
-    private List<String> idlList;
+    private List<Login.Category> categorylList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,10 +130,8 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                 mActivityResultHelper.addActivityResult(new ActivityResult() {
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                        idlList = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryIds);
-                        //List<String> categoryNames = data.getStringArrayListExtra(SelectCategoryActivity.KEY_categoryNames);
-                        //txt_category.setText(categoryNames.toString());
-                        txt_category.setText(getCategoryText());
+                        categorylList = data.getParcelableArrayListExtra(SelectCategoryActivity.KEY_categories);
+                        txt_category.setText(Login.Category.toNamesString(categorylList));
                     }
                 });
                 break;
@@ -141,12 +139,12 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void onPost(String content) {
-        if (idlList == null || idlList.size() <= 0) {
+        if (categorylList == null || categorylList.size() <= 0) {
             ToastUtil.showMessage("categoryIds null");
             return;
         }
         showProgressDialog();
-        String categoryIds = idlList.toString();
+        String categoryIds = Login.Category.toIdsString(categorylList);
         String photoUrls = toString(urlList);
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override
@@ -221,14 +219,6 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             mImageAdapter.remove(position);
             mImageAdapter.resetViewHeight(recycler_view, spanCount);
         }
-    }
-
-    private String getCategoryText() {
-        String items = "";
-        for (String id : idlList) {
-            items += UserManger.sProjectCategoryData.get(id) + " ";
-        }
-        return items;
     }
 
     private void showUploadDialog() {

@@ -94,10 +94,10 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
                     @Override
                     public void onActivityResult(Intent data) {
-                        categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
-                        ArrayList<String> categoryNames = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
-                        txt_project.setText(categoryNames.toString());
-                        ToastUtil.showMessage("categoryNames: " + categoryNames);
+//                        categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
+//                        ArrayList<String> categoryNames = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
+//                        txt_project.setText(categoryNames.toString());
+//                        ToastUtil.showMessage("categoryNames: " + categoryNames);
                     }
                 });
                 break;
