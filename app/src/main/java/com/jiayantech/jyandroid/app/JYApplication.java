@@ -27,7 +27,6 @@ public class JYApplication extends BaseApplication {
 
 
 
-
     private void initContext(Context context) {
         //重写友盟自定义行为处理
         UmengNotificationClickHandler handler = new UmengNotificationClickHandler() {

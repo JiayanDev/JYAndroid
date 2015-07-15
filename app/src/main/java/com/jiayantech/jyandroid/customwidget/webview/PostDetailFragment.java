@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.customwidget.webview;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -10,12 +11,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.JsNativeParser;
 import com.jiayantech.jyandroid.biz.PostBiz;
+import com.jiayantech.jyandroid.model.web.BaseJsCall;
+import com.jiayantech.jyandroid.model.web.ReplyJsCall;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.utils.UIUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -85,7 +93,16 @@ public class PostDetailFragment extends WebViewFragment{
         return new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //if(Uri.parse(url).getHost().equals())
+                if(url.startsWith("jiayan://js_call_native?")){
+                    ReplyJsCall jsCall = (ReplyJsCall) JsNativeParser.parse(url);
+                    ToastUtil.showMessage(jsCall.toString());
+                    List<String> params = new ArrayList<>();
+                    params.add(jsCall.data.toString());
+                    params.add("0");
+                    params.add("ok");
+
+                    callJsMethod(jsCall.success, params);
+                }
                 return super.shouldOverrideUrlLoading(view, url);
             }
         };

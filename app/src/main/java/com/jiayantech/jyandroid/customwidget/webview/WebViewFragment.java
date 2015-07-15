@@ -19,6 +19,8 @@ import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 
+import java.util.List;
+
 /**
  * Created by liangzili on 15/7/7.
  */
@@ -108,6 +110,8 @@ public abstract class WebViewFragment extends BaseFragment{
 
         String content = getString(R.string.post_share_text, new Object[] {"我爱你", "http://www.baidu.com"});
         mController.setShareContent(content);
+
+        ToastUtil.showMessage(getActivity(), mUrl);
     }
 
     @Override
@@ -136,5 +140,23 @@ public abstract class WebViewFragment extends BaseFragment{
             mController.openShare(getActivity(), false);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void callJsMethod(String method, List<String> params){
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(method);
+        sb.append("(");
+        if(params != null) {
+            for (String param : params) {
+                sb.append("\"");
+                sb.append(param);
+                sb.append("\",");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        sb.append(")");
+
+        mWebView.loadUrl("javascript:" + sb.toString());
     }
 }
