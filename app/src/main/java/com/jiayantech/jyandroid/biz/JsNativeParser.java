@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class JsNativeParser {
     private static Gson sGson = new Gson();
 
-    public static BaseJsCall parse(String url){
+    public static <T> T parse(String url, Class<? extends BaseJsCall> classType){
         String urlDecode = Uri.decode(url);
         String jsonString = urlDecode.substring(urlDecode.indexOf("{"), urlDecode.lastIndexOf("}") + 1);
         jsonString = jsonString.replace("\"", "\'");
@@ -23,11 +23,24 @@ public class JsNativeParser {
             JSONObject jsonObject = new JSONObject(jsonString);
             switch(jsonObject.getString("action")){
                 case "testForCallNativePleaseGiveBackWhatIHadSend":
-                    ReplyJsCall jsCall  = sGson.fromJson(jsonObject.toString(), ReplyJsCall.class);
+                    T jsCall  = (T)sGson.fromJson(jsonObject.toString(), ReplyJsCall.class);
                     return jsCall;
                 default:
                     return null;
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getJsAction(String url){
+        String urlDecode = Uri.decode(url);
+        String jsonString = urlDecode.substring(urlDecode.indexOf("{"), urlDecode.lastIndexOf("}") + 1);
+        jsonString = jsonString.replace("\"", "\'");
+        try{
+            JSONObject jsonObject = new JSONObject(jsonString);
+            return jsonObject.getString("action");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
