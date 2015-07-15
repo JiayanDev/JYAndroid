@@ -27,13 +27,15 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < getItemCount() && (customHeaderView != null ? position <= mList.size() : position < mList.size()) && (customHeaderView != null ? position > 0 : true))
+        if (position < getItemCount() && (customHeaderView != null ? position <= mList.size() : position < mList.size()) && (customHeaderView != null ? position > 0 : true)) {
             if (holder instanceof ViewHolder) {
                 position = customHeaderView != null ? position - 1 : position;
                 ViewHolder viewHolder = (ViewHolder) holder;
                 viewHolder.mPosition = position;
                 onBind(viewHolder, mList.get(position), position);
             }
+        }
+
     }
 
     protected void onBind(ViewHolder viewHolder, T item, int position) {

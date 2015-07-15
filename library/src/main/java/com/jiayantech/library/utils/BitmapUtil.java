@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.jiayantech.library.comm.MD5;
+import com.jiayantech.library.http.BitmapBiz;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -169,4 +170,5 @@ public class BitmapUtil {
         String path = cursor.getString(column_index);
         return path;
     }
+
 }
