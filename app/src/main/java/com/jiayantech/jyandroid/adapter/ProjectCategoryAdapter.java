@@ -4,11 +4,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by janseon on 2015/7/2.
@@ -17,12 +17,10 @@ import java.util.Map;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
-    private final Map<String, String> mData;
+public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<Login.Category> {
 
-    public ProjectCategoryAdapter(Map<String, String> data, List<String> level) {
-        super(level);
-        mData = data;
+    public ProjectCategoryAdapter(List<Login.Category> list) {
+        super(list);
     }
 
     @Override
@@ -31,26 +29,24 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<String> {
     }
 
     @Override
-    public void setOnItemClickListener(OnItemClickListener<String> l) {
+    public void setOnItemClickListener(OnItemClickListener<Login.Category> l) {
         super.setOnItemClickListener(l);
         l.onItemClick(this, mSelectedPos, mList.get(mSelectedPos));
     }
 
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<String> {
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Login.Category> {
         private TextView txt_category;
-        private final Map<String, String> mData;
 
         public ViewHolder(ViewGroup parent, int layoutId, ProjectCategoryAdapter adapter) {
             super(parent, layoutId, adapter);
             mAdapter = adapter;
-            mData = adapter.mData;
             txt_category = (TextView) itemView.findViewById(R.id.txt_category);
         }
 
         @Override
-        public void onBind(String id, int position) {
+        public void onBind(Login.Category category, int position) {
             txt_category.setSelected(mAdapter.mSelectedPos == position);
-            txt_category.setText(mData.get(id));
+            txt_category.setText(category.name);
         }
     }
 }

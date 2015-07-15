@@ -1,7 +1,11 @@
 package com.jiayantech.jyandroid.biz;
 
+import android.text.TextUtils;
+
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +31,11 @@ public class DiaryBiz {
         HttpReq.putParams(params, "categoryIds", categoryIds);
         HttpReq.putParams(params, "operationTime", operationTime);
         HttpReq.putParams(params, "hospitalId", hospitalId);
-        HttpReq.putParams(params, "doctorId", doctorId);
-        HttpReq.putParams(params, "doctorName", doctorName);
+        if (TextUtils.isEmpty(doctorId)) {
+            HttpReq.putParams(params, "doctorName", doctorName);
+        } else {
+            HttpReq.putParams(params, "doctorId", doctorId);
+        }
         HttpReq.putParams(params, "price", price);
         HttpReq.putParams(params, "satisfyLevel", (int) satisfyLevel);
         //HttpReq.putParams(params, "tags", tags);

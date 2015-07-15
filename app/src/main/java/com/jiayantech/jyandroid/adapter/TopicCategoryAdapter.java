@@ -12,20 +12,20 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
 import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.model.Login;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liangzili on 15/7/3.
  */
-public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdapter.ViewHolder>{
-    private List<String> mCategoryList;
+public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdapter.ViewHolder> {
+    private List<Login.Category> mCategoryList;
     private Context mContext;
-    private final Map<String, String> mProjectCategoryData = UserManger.sProjectCategoryData;
-    public TopicCategoryAdapter(Context context){
+
+    public TopicCategoryAdapter(Context context) {
         mContext = context;
-        mCategoryList = UserManger.sProjectCategoryTopLevels;
+        mCategoryList = UserManger.sLogin.projectCategory.data;
     }
 
     @Override
@@ -36,15 +36,17 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
         return vh;
     }
 
-    class ViewHolderOnClickListener implements View.OnClickListener{
+    class ViewHolderOnClickListener implements View.OnClickListener {
         private int mPosition;
-        public int getPosition(){
+
+        public int getPosition() {
             return mPosition;
         }
 
-        public void setPosition(int pos){
+        public void setPosition(int pos) {
             mPosition = pos;
         }
+
         @Override
         public void onClick(View v) {
 //            Intent intent = new Intent(mContext, PostDetailActivity.class);
@@ -59,8 +61,8 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        holder.name.setText(mProjectCategoryData.get(mCategoryList.get(position)));
+        Login.Category category = mCategoryList.get(position);
+        holder.name.setText(category.name);
         holder.listener.setPosition(position);
     }
 

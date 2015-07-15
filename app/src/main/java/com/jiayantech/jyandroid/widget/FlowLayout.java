@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.HashMap;
@@ -39,23 +40,24 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
         super(context, attrs, defStyle);
     }
 
-    public void setViews(HashSet<String> idSelected, List<String> idList, List<String> nameList) {
+    public void setViews(HashSet<Integer> idSelected, List<Login.Category> list) {
         removeAllViews();
-        for (int i = 0; i < idList.size(); i++) {
-            String id = idList.get(i);
-            addView(idList.get(i), nameList.get(i), idSelected.contains(id));
+        for (int i = 0; i < list.size(); i++) {
+            Login.Category category = list.get(i);
+            addView(category, idSelected.contains(category.id));
         }
     }
 
-    public void addView(String id, String name, boolean selected) {
+    public void addView(Login.Category category, boolean selected) {
         TextView button = new TextView(getContext());
+        button.setTag(category);
         button.setBackgroundResource(R.drawable.bg_project_child_category_gray_selector);
         button.setSelected(selected);
 
         int space = UIUtil.dip2px(2);
         button.setPadding(space, space, space, space);
-        button.setId(Integer.valueOf(id));
-        button.setText(name);
+        button.setId(category.id);
+        button.setText(category.name);
         button.setOnClickListener(this);
         MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.setMargins(space, space, space, space);

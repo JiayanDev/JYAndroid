@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ProjectCategoryAdapter;
 import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.jyandroid.widget.FlowLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -21,7 +22,6 @@ import com.jiayantech.library.comm.ActivityResult;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by janseon on 2015/7/1.
@@ -30,10 +30,9 @@ import java.util.Random;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<String>, FlowLayout.OnItemClickListener {
+public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<Login.Category>, FlowLayout.OnItemClickListener {
     public static final String KEY_TO_PICK = "toPick";
-    public static final String KEY_categoryIds = "categoryIds";
-    public static final String KEY_categoryNames = "categoryNames";
+    public static final String KEY_categories = "categories";
     public static final int REQUEST_CODE_SELECT = 0x100;
 
     private FlowLayout layout_selected;
@@ -43,9 +42,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     private boolean toPick;
     private ProjectCategoryAdapter mAdapter;
 
-    private ArrayList<String> mSelectedIds = new ArrayList<>();
-    private ArrayList<String> mSelectedList = new ArrayList<>();
-
+    private ArrayList<Login.Category> mSelecteds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +62,9 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     protected void setViewsContent() {
         setTitle(R.string.title_my_diaries);
         toPick = getIntent().getBooleanExtra(KEY_TO_PICK, false);
-        layout_selected.setViews(idSelectedSet, mSelectedIds, mSelectedList);
+        layout_selected.setViews(idSelectedSet, mSelecteds);
         list_parents.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ProjectCategoryAdapter(UserManger.sProjectCategoryData, UserManger.sProjectCategoryTopLevels);
+        mAdapter = new ProjectCategoryAdapter(UserManger.sLogin.projectCategory.data);
         list_parents.setAdapter(mAdapter);
     }
 
@@ -87,14 +84,12 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
         switch (item.getItemId()) {
             case R.id.action_next:
                 Intent intent = new Intent(this, NewDiaryInfoActivity.class);
-                intent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
-                intent.putStringArrayListExtra(KEY_categoryIds, mSelectedIds);
+                intent.putParcelableArrayListExtra(KEY_categories, mSelecteds);
                 finishToStartActivity(intent);
                 return true;
             case R.id.action_finish:
                 Intent finishIntent = new Intent(this, NewDiaryInfoActivity.class);
-                finishIntent.putStringArrayListExtra(KEY_categoryNames, mSelectedList);
-                finishIntent.putStringArrayListExtra(KEY_categoryIds, mSelectedIds);
+                finishIntent.putParcelableArrayListExtra(KEY_categories, mSelecteds);
                 ActivityResult.onFinishResult(this, finishIntent);
                 return true;
         }
@@ -107,11 +102,11 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     }
 
     @Override
-    public void onItemClick(BaseSimpleModelAdapter<String> adapter, int position, String id) {
+    public void onItemClick(BaseSimpleModelAdapter<Login.Category> adapter, int position, Login.Category category) {
         list_children.removeAllViews();
-        final List<String> list = UserManger.sProjectCategoryLevels.get(id);
-        for (final String itemId : list) {
-            final String name = UserManger.sProjectCategoryData.get(itemId);
+        final List<Login.Category> list = category.sub;
+        for (final Login.Category itemCategory : list) {
+            final String name = itemCategory.name;
 
             View view = getLayoutInflater().inflate(R.layout.item_select_project, list_children, false);
             TextView txt_category = (TextView) view.findViewById(R.id.txt_category);
@@ -125,44 +120,30 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
                     onFlowItemClick(v);
                 }
             });
-            addRandomFlowViews(itemId, name, layout_project);
+            layout_project.setViews(idSelectedSet, list);
 
             list_children.addView(view);
         }
     }
 
-    private HashSet<String> idSelectedSet = new HashSet<>();
+    private HashSet<Integer> idSelectedSet = new HashSet<>();
 
     private void onFlowItemClick(View v) {
-        String name = ((TextView) v).getText().toString();
-        String id = String.valueOf(v.getId());
-        int intId = Integer.valueOf(id);
+        Login.Category category = (Login.Category) v.getTag();
+        int id = v.getId();
         v.setSelected(!v.isSelected());
         if (v.isSelected()) {
-            mSelectedIds.add(id);
-            mSelectedList.add(name);
+            mSelecteds.add(category);
             idSelectedSet.add(id);
-            layout_selected.addView(id, name, idSelectedSet.contains(id));
+            layout_selected.addView(category, idSelectedSet.contains(id));
         } else {
-            mSelectedIds.remove(id);
-            mSelectedList.remove(name);
+            mSelecteds.remove(category);
             idSelectedSet.remove(id);
-            layout_selected.removeView(layout_selected.findViewById(intId));
+            layout_selected.removeView(layout_selected.findViewById(id));
         }
-        View view = list_children.findViewById(intId);
+        View view = list_children.findViewById(id);
         if (view != null) {
             view.setSelected(v.isSelected());
         }
-    }
-
-    private void addRandomFlowViews(String id, String name, FlowLayout flowLayout) {
-        List<String> idList = new ArrayList<>();
-        List<String> nameList = new ArrayList<>();
-        int count = Math.abs(new Random().nextInt()) % 10 + 1;
-        for (int i = 0; i < count; i++) {
-            idList.add(id + i);
-            nameList.add(name + i);
-        }
-        flowLayout.setViews(idSelectedSet, idList, nameList);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
@@ -50,8 +51,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     private String doctorName;
     private String hospitalId;
     private String hospitalName;
-    private ArrayList<String> categoryId;
-    private ArrayList<String> categoryNames;
+    private ArrayList<Login.Category> categoryList;
     private long operationTime = 0;
 
     @Override
@@ -86,9 +86,8 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setCategories(Intent intent) {
-        categoryId = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
-        categoryNames = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
-        txt_project.setText(categoryNames.toString());
+        categoryList = intent.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
+        txt_project.setText(Login.Category.toNamesString(categoryList));
     }
 
     @Override
@@ -161,8 +160,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 float satisfyLevel = rating_bar.getRating();
 
                 Intent intent = new Intent(this, PublishDiaryActivity.class);
-                intent.putStringArrayListExtra(SelectProjectActivity.KEY_categoryIds, categoryId);
-                intent.putStringArrayListExtra(SelectProjectActivity.KEY_categoryNames, categoryNames);
+                intent.putParcelableArrayListExtra(SelectProjectActivity.KEY_categories, categoryList);
                 intent.putExtra(KEY_doctorId, doctorId);
                 intent.putExtra(KEY_doctorName, doctorName);
                 intent.putExtra(KEY_hospitalId, hospitalId);
@@ -170,8 +168,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 intent.putExtra(KEY_operationTime, operationTime);
                 intent.putExtra(KEY_price, price);
                 intent.putExtra(KEY_satisfyLevel, satisfyLevel);
-                startActivity(intent);
-                finish();
+                finishToStartActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

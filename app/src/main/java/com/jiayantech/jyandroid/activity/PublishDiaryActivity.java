@@ -9,11 +9,11 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
+import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.helper.DateTimeHelper;
-import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.TimeUtil;
 
@@ -36,8 +36,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
     private String doctorName;
     private String hospitalId;
     private String hospitalName;
-    private ArrayList<String> categoryIds;
-    private ArrayList<String> categoryNames;
+    private ArrayList<Login.Category> categoryList;
     private long operationTime;
     private String price;
     private float satisfyLevel;
@@ -76,9 +75,8 @@ public class PublishDiaryActivity extends PublishPostActivity {
     }
 
     private void setCategories(Intent intent) {
-        categoryIds = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
-        categoryNames = intent.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
-        txt_project.setText(categoryNames.toString());
+        categoryList = intent.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
+        txt_project.setText(Login.Category.toNamesString(categoryList));
     }
 
     private void setTime(Intent intent) {
@@ -117,7 +115,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
     protected void onPost(String content) {
         showProgressDialog();
         String photoUrls = toString(urlList);
-        DiaryBiz.create(categoryIds.toString(), operationTime, hospitalId, doctorId, doctorName, price, satisfyLevel, content, photoUrls, new ResponseListener<BaseModel>() {
+        DiaryBiz.create(Login.Category.toIdsString(categoryList), operationTime, hospitalId, doctorId, doctorName, price, satisfyLevel, content, photoUrls, new ResponseListener<BaseModel>() {
             @Override
             public void onResponse(BaseModel response) {
                 dismissProgressDialog();
