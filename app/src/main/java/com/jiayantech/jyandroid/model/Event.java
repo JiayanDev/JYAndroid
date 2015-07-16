@@ -11,6 +11,7 @@ import com.jiayantech.library.base.BaseModel;
  */
 public class Event extends BaseModel {
     public long userId;
+    public long userName;
     public String desc;
     public double applyBeginTime;
     //public double beginTime;

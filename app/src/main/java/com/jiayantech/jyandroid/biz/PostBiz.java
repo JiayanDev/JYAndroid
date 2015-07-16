@@ -38,10 +38,10 @@ public class PostBiz {
     }
 
 
-    public static void comment(String subjectId, String subject, String content,
+    public static void comment(long subjectId, String subject, String content,
                                ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();
-        params.put("subjectId", subjectId);
+        params.put("subjectId", String.valueOf(subjectId));
         params.put("subject", subject);
         params.put("content", content);
         HttpReq.post(ACTION_MY_TOPIC, params, l);

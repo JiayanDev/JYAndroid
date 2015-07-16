@@ -76,4 +76,7 @@
     <string name="publish_topic">发表话题</string>
 
 
+    <string name="hint_reply_to">回复: %s</string>
+
+
 </resources>

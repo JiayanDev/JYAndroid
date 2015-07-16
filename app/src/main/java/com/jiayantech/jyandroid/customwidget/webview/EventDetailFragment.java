@@ -18,10 +18,12 @@ public class EventDetailFragment extends WebViewFragment{
 
     private Button mApplyButton;
 
-    public static EventDetailFragment newInstance(long id, String type){
+    public static EventDetailFragment newInstance(long id, long userId, String userName, String type){
         EventDetailFragment fragment = new EventDetailFragment();
         Bundle args = new Bundle();
         args.putLong(WebViewFragment.EXTRA_ID, id);
+        args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
+        args.putString(WebViewFragment.EXTRA_USERNAME, userName);
         args.putString(WebViewFragment.EXTRA_TYPE, type);
         fragment.setArguments(args);
         return fragment;

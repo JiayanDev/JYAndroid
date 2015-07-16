@@ -37,6 +37,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
                 Intent intent = new Intent(mContext, PostDetailActivity.class);
                 intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
+                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
+                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
                 intent.putExtra(WebViewFragment.EXTRA_TYPE, item.type);
                 mContext.startActivity(intent);
             }
@@ -101,28 +103,6 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             }
             txt_category.setText(item.getCategoryNames());
 
-//            mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE,
-//                            new ResponseListener<AppResponse>() {
-//
-//                                @Override
-//                                public void onResponse(AppResponse baseModelAppResponse) {
-//                                    ToastUtil.showMessage(baseModelAppResponse.toString());
-//                                }
-//                            });
-//                }
-//            });
-
-//            mCommentCount.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    CommentFragment fragment = CommentFragment.newInstance(item.id, item.type);
-//                    fragment.show(((BaseActivity) mContext).getSupportFragmentManager(), "comment");
-//                }
-//            });
-            //mListener.setPosition(position);
         }
 
 
