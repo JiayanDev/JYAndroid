@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         finishToStartActivity(MainActivity.class);
                     }
                 }));
-                finishToStartActivity(MainActivity.class);
+                //finishToStartActivity(MainActivity.class);
 
 //                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
 //                        new ResponseListener<ImageUploadCallback>() {

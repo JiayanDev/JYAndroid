@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -29,30 +30,46 @@ public abstract class WebViewFragment extends BaseFragment{
 
     public static final String BASE_URL = "http://app.jiayantech.com/app/html/";
     public static final String ACTION_DIARY = "diary.html";
-    public static final String ACTION_DIARY_HEADER = "diaryHeader.html";
+    public static final String ACTION_DIARY_HEADER = "diaryheader.html";
 
+    /* webview显示内容的类型 */
     public static final String TYPE_EVENT = "event";
     public static final String TYPE_TOPIC = "topic";
     public static final String TYPE_DIARY = "diary";
     public static final String TYPE_DIARY_HEADER = "diary_header";
 
+    /* webview显示内容的具体信息
+     * EXTRA_ID 内容的ID
+     * EXTRA_TYPE 内容的类型
+     * EXTRA_USERNAME 内容作者的用户名
+     * EXTRA_USER_ID 内容作者的ID
+     * */
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_TYPE = "type";
+    public static final String EXTRA_USERNAME = "username";
+    public static final String EXTRA_USER_ID = "user_id";
 
     final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
     protected View mView;
     protected FrameLayout mNativeLayout;
     protected WebView mWebView;
+
+
     protected String mType;
     protected long mId;
+    protected String mUserName;
+    protected long mUserId;
+
     protected String mUrl = "http://www.baidu.com";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = getArguments().getString(EXTRA_TYPE);
         mId = getArguments().getLong(EXTRA_ID);
+        mUserId = getArguments().getLong(EXTRA_USER_ID);
+        mUserName = getArguments().getString(EXTRA_USERNAME);
+        mType = getArguments().getString(EXTRA_TYPE);
 
         setUrl();
     }
@@ -142,21 +159,7 @@ public abstract class WebViewFragment extends BaseFragment{
         return super.onOptionsItemSelected(item);
     }
 
-    public void callJsMethod(String method, List<String> params){
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(method);
-        sb.append("(");
-        if(params != null) {
-            for (String param : params) {
-                sb.append("\"");
-                sb.append(param);
-                sb.append("\",");
-            }
-            sb.deleteCharAt(sb.length() - 1);
-        }
-        sb.append(")");
-
-        mWebView.loadUrl("javascript:" + sb.toString());
+    public void callJsMethod(String method, String params){
+        JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 }

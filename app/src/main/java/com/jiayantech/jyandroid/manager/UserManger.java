@@ -39,6 +39,15 @@ public class UserManger {
 //        }
     }
 
+    public static long getUserId(){
+        return sLogin.id;
+    }
+
+    public static String getUserName(){
+        return sLogin.name;
+    }
+
+
     //    public static void mapSave(Map<String, String> data) {
 //        sProjectCategoryData = data;
 //        Set<Map.Entry<String, String>> entrySet = data.entrySet();
@@ -70,6 +79,7 @@ public class UserManger {
             }
         }
     }
+
 //
 //    public static List<String> getProjectCategoryTopLevels() {
 //        return sProjectCategoryTopLevels;

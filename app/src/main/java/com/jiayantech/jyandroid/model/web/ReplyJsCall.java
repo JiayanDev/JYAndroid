@@ -13,9 +13,11 @@ public class ReplyJsCall extends BaseJsCall<ReplyJsCall.ReplyData>{
     public static class ReplyData{
         public long subjectId;
         public String subject;
+        public long toUserId;
+        public String toUserName;
 
-        public String toString(){
-            return sGson.toJson(this).replace("\"", "\'");
-        }
+//        public String toString(){
+//            return sGson.toJson(this).replace("\"", "\'");
+//        }
     }
 }
