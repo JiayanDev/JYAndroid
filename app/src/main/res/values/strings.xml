@@ -73,4 +73,7 @@
     <string name="level_5">超好</string>
 
 
+    <string name="hint_reply_to">回复: %s</string>
+
+
 </resources>

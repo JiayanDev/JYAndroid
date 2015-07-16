@@ -16,13 +16,16 @@ public class PostDetailActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
         long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
+        long userId = getIntent().getLongExtra(WebViewFragment.EXTRA_USER_ID, -1);
+        String userName = getIntent().getStringExtra(WebViewFragment.EXTRA_USERNAME);
         String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
-        return PostDetailFragment.newInstance(id, type);
+
+        return PostDetailFragment.newInstance(id, userId, userName, type);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
     }
 }

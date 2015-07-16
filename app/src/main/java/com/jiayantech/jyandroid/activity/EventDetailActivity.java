@@ -12,7 +12,10 @@ import com.jiayantech.library.base.SingleFragmentActivity;
 public class EventDetailActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
-        return EventDetailFragment.newInstance(getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1)
-                , "event");
+        long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
+        long userId = getIntent().getLongExtra(WebViewFragment.EXTRA_USER_ID, -1);
+        String userName = getIntent().getStringExtra(WebViewFragment.EXTRA_USERNAME);
+
+        return EventDetailFragment.newInstance(id, userId, userName, "event");
     }
 }

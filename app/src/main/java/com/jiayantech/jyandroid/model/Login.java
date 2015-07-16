@@ -19,6 +19,10 @@ import java.util.List;
 public class Login {
     public String token;
     public ProjectCategory projectCategory;
+    public long id;
+    public String avatar;
+    public String name;
+
 
     public static class ProjectCategory {
         public int version;

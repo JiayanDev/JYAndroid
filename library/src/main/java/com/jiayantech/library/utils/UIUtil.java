@@ -2,9 +2,8 @@ package com.jiayantech.library.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.TypedValue;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.jiayantech.library.base.BaseApplication;
 
@@ -16,6 +15,14 @@ public class UIUtil {
         InputMethodManager manager = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public static void showSoftKeyBoard(Context context, View editText){
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, 0);
     }
 
     public static float dip2px(float dip) {

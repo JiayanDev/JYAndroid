@@ -21,12 +21,12 @@ public class Post extends BaseModel {
     public String[] photoes;
     public long commentCount;
     public long likeCount;
-    public String userId;
-    public String diaryId;
+    public long userId;
+    public long diaryId;
     public String type;
     public boolean isLike;
 
-    public String headerId;
+    public long headerId;
     public int[] categoryIds;
 
     @Expose

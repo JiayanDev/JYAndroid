@@ -37,6 +37,8 @@ public class EventAdapter extends BaseSimpleModelAdapter<Event> {
                 Intent intent = new Intent(mContext, EventDetailActivity.class);
                 intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
                 intent.putExtra(WebViewFragment.EXTRA_TYPE, item.id);
+                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
+                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
                 mContext.startActivity(intent);
             }
         });
