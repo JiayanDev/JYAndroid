@@ -1,15 +1,21 @@
 package com.jiayantech.library.base;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -75,7 +81,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     protected void setDisplayHomeAsUpEnabled(boolean flag) {
         if (flag) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.up_indicator);
+            getSupportActionBar().setHomeAsUpIndicator(R.mipmap.up_indicator);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -135,8 +141,8 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         Toolbar toolbar = (Toolbar) layout_base.findViewById(R.id.toolbar);
 
         //set toolbar style
-        toolbar.setBackgroundColor(Color.WHITE);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.theme_color));
+        //toolbar.setBackgroundColor(Color.WHITE);
+        //toolbar.setTitleTextColor(getResources().getColor(R.color.theme_color));
         setSupportActionBar(toolbar);
 
         setDisplayHomeAsUpEnabled(true);
@@ -210,5 +216,36 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+    }
+
+    /**
+     * 修改 ActionBar 上的菜单字体颜色
+     */
+    private static void setMenuItemTextColorToWhite(final Activity activity) {
+        activity.getLayoutInflater().setFactory(new LayoutInflater.Factory() {
+
+            @Override
+            public View onCreateView(String name, Context context,
+                                     AttributeSet attrs) {
+                if (name.equalsIgnoreCase("com.android.internal.view.menu.IconMenuItemView")
+                        || name.equalsIgnoreCase("com.android.internal.view.menu.ActionMenuItemView")) {
+                    try {
+                        LayoutInflater f = activity.getLayoutInflater();
+                        final View view = f.createView(name, null, attrs);
+                        System.out.println((view instanceof TextView));
+                        if (view instanceof TextView) {
+                            ((TextView) view).setTextColor(Color.WHITE/*这里修改颜色*/);
+                        }
+                        return view;
+                    } catch (InflateException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+
+        });
     }
 }

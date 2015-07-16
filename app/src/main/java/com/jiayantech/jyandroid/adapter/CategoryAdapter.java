@@ -1,13 +1,15 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.library.base.BaseGridAdapter;
+import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.ArrayList;
@@ -22,11 +24,16 @@ import java.util.List;
  */
 public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
     private final List<Boolean> selectedList;
+    private boolean mShowSelect;
 
+    public CategoryAdapter() {
+        this(false);
+    }
 
-    public CategoryAdapter(List<Login.Category> list) {
-        super(list);
-        selectedList = new ArrayList<>(list.size());
+    public CategoryAdapter(boolean showSelect) {
+        super(UserManger.sLogin.projectCategory.data);
+        mShowSelect = showSelect;
+        selectedList = new ArrayList<>(mList.size());
         for (int i = 0; i < mList.size(); i++) {
             selectedList.add(false);
         }
@@ -41,12 +48,29 @@ public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, R.layout.item_category, this);
+        ViewHolder viewHolder = new ViewHolder(viewGroup, R.layout.item_category, this);
+        if (mShowSelect) {
+            int pad = (int) UIUtil.getDimension(R.dimen.normal_padding);
+            viewHolder.txt_category.setPadding(pad, pad, pad, pad);
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ViewHolder) holder).onBind(mList.get(position), selectedList.get(position), position);
+    protected void onBind(BaseSimpleModelAdapter.ViewHolder viewHolder, Login.Category category, int position) {
+        ViewHolder holder = (ViewHolder) viewHolder;
+        if (mShowSelect) {
+            boolean select = selectedList.get(position);
+            holder.itemView.setSelected(select);
+            holder.img_category.setSelected(select);
+            holder.txt_category.setSelected(select);
+        }
+        if (category.resId == null) {
+            holder.img_category.setImageDrawable(null);
+        } else {
+            holder.img_category.setImageResource(category.resId);
+        }
+        holder.txt_category.setText(category.name);
     }
 
     public static class ViewHolder extends BaseGridAdapter.ViewHolder<Login.Category> {
@@ -58,19 +82,6 @@ public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
             mAdapter = adapter;
             img_category = (ImageView) itemView.findViewById(R.id.img_category);
             txt_category = (TextView) itemView.findViewById(R.id.txt_category);
-        }
-
-        public void onBind(Login.Category category, boolean selected, int position) {
-            mPosition = position;
-//            itemView.setBackgroundResource(position % 2 == 0 ? R.drawable.bg_category_white_selector :
-//                    R.drawable.bg_category_gray_selector);
-            //itemView.setSelected(selected);
-            if (category.reaId == null) {
-                img_category.setImageDrawable(null);
-            } else {
-                img_category.setImageResource(category.reaId);
-            }
-            txt_category.setText(category.name);
         }
     }
 }

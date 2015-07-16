@@ -13,7 +13,7 @@ import com.google.gson.annotations.Expose;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Post extends BaseModel {
+public class Post extends CategoryModel {
     public static final String POST_TYPE_DIARY = "diary";
     public static final String POST_TYPE_TOPIC = "topic";
     public String userName;
@@ -25,27 +25,6 @@ public class Post extends BaseModel {
     public String diaryId;
     public String type;
     public boolean isLike;
-
     public String headerId;
-    public int[] categoryIds;
 
-    @Expose
-    private String categoryNames;
-
-    public String getCategoryNames() {
-        if (TextUtils.isEmpty(categoryNames)) {
-            if (categoryIds != null) {
-                StringBuilder builder = new StringBuilder();
-                for (int categoryId : categoryIds) {
-                    Login.Category category = UserManger.sProjectCategoryData.get(categoryId);
-                    if (category != null) {
-                        builder.append(category.name);
-                        builder.append(' ');
-                    }
-                }
-                categoryNames = builder.toString();
-            }
-        }
-        return categoryNames;
-    }
 }

@@ -29,7 +29,7 @@ public class Login {
         public int id;
         public String name;
         @Expose
-        public Integer reaId;
+        public Integer resId;
         public ArrayList<Category> sub;
 
         public Category(Parcel source) {
@@ -46,6 +46,11 @@ public class Login {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(id);
             dest.writeString(name);
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(id);
         }
 
         public static final Parcelable.Creator<Category> CREATOR = new Creator<Category>() {
@@ -74,25 +79,6 @@ public class Login {
                     buffer.append(" ");
                 }
             }
-            return buffer.toString();
-        }
-
-        public static String toIdsString(List<Category> list) {
-            if (list.isEmpty()) {
-                return "[]";
-            }
-
-            StringBuilder buffer = new StringBuilder(list.size() * 16);
-            buffer.append('[');
-            Iterator<?> it = list.iterator();
-            while (it.hasNext()) {
-                Object next = it.next();
-                buffer.append(next);
-                if (it.hasNext()) {
-                    buffer.append(", ");
-                }
-            }
-            buffer.append(']');
             return buffer.toString();
         }
     }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.CardContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="25dip">
+
+        <LinearLayout
+            android:id="@+id/layout_share_diary"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dip">
+
+            <ImageView
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:background="@drawable/bg_circle_pink"
+                android:padding="20dip"
+                android:src="@mipmap/icon_create_diary" />
+
+            <TextView
+                style="@style/text_item_hint_style"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/share_diary" />
+        </LinearLayout>
+
+        <View
+            style="@style/divider_ver_gray_style"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginRight="@dimen/normal_margin" />
+
+        <LinearLayout
+            android:id="@+id/layout_publish_topic"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dip">
+
+            <ImageView
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:background="@drawable/bg_circle_orange_pink"
+                android:padding="20dip"
+                android:src="@mipmap/icon_create_diary" />
+
+            <TextView
+                style="@style/text_item_hint_style"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/publish_topic" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

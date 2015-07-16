@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="80dip"
         android:layout_height="80dip"
-        android:background="@drawable/bg_orange_pink"
+        android:background="@drawable/bg_circle_orange_pink"
         android:padding="20dip"
         android:src="@mipmap/icon_create_diary" />
 

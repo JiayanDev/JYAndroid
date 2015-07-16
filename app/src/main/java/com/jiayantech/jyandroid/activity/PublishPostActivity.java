@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,7 +58,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
     private ImageAdapter mImageAdapter;
     protected List<String> urlList = new ArrayList<>();
-    private List<Login.Category> categorylList;
+    private List<Login.Category> categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,8 +121,8 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                 mActivityResultHelper.addActivityResult(new ActivityResult() {
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                        categorylList = data.getParcelableArrayListExtra(SelectCategoryActivity.KEY_categories);
-                        txt_category.setText(Login.Category.toNamesString(categorylList));
+                        categoryList = data.getParcelableArrayListExtra(SelectCategoryActivity.KEY_categories);
+                        txt_category.setText(Login.Category.toNamesString(categoryList));
                     }
                 });
                 break;
@@ -131,12 +130,12 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void onPost(String content) {
-        if (categorylList == null || categorylList.size() <= 0) {
+        if (categoryList == null || categoryList.size() <= 0) {
             ToastUtil.showMessage("categoryIds null");
             return;
         }
         showProgressDialog();
-        String categoryIds = Login.Category.toIdsString(categorylList);
+        String categoryIds = categoryList.toString();
         String photoUrls = toString(urlList);
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override

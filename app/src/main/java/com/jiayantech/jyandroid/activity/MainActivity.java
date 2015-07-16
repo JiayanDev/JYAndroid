@@ -1,32 +1,25 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.UploadImageBiz;
-import com.jiayantech.jyandroid.fragment.EventsFragment;
-import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
+import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
-import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.library.base.BaseActivity;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
-
-import java.util.Map;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -66,7 +59,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(mTitles[0]);
+        //getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
@@ -74,6 +67,8 @@ public class MainActivity extends BaseActivity {
         mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+
+        setTitle(mRadioButtons[0].getText().toString());
     }
 
     @Override
@@ -86,7 +81,24 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_diary:
-                startActivity(new Intent(this, MyDiariesActivity.class));
+                //startActivity(new Intent(this, MyDiariesActivity.class));
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog_publish_actions);
+                dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(MyDiariesActivity.class);
+                    }
+                });
+                dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(PublishPostActivity.class);
+                    }
+                });
+                dialog.show();
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));
@@ -123,7 +135,8 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                getSupportActionBar().setTitle(mTitles[position]);
+                //getSupportActionBar().setTitle(mTitles[position]);
+                setTitle(mRadioButtons[position].getText().toString());
                 mRadioButtons[position].setChecked(true);
 
             }
