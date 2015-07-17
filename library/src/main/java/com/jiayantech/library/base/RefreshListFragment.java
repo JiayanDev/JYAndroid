@@ -113,6 +113,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         Map<String, String> params = new ArrayMap<>();
         String maxId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1).id);
         params.put("maxId", maxId);
+        if(mParams != null){
+            params.putAll(mParams);
+        }
 
         HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
             @Override
