@@ -144,7 +144,7 @@ public class PostDetailFragment extends WebViewFragment {
         postComment.userName = UserManger.getUserName();
 
 
-        if(postComment.toUserId == -1){
+        if(postComment.toUserId == -1 || postComment.toUserId == 0){
             postComment.toUserId = mUserId;
             postComment.toUserName = mUserName;
         }

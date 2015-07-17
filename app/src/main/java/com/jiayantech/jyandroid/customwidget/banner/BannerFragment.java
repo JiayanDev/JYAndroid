@@ -36,7 +36,6 @@ public class BannerFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_banner, container, false);
         mAutoScrollViewPager = (BannerViewPager)view.findViewById(R.id.view_pager);
-        mAutoScrollViewPager.setNestedParent((ViewGroup)view);
         mIndicator = (CirclePageIndicator)view.findViewById(R.id.indicator);
 
 

@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.http.HttpConfig;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -78,6 +80,11 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
         @Override
         public void onBind(Post item, int position) {
+            if (TextUtils.isEmpty(item.avatar)) {
+                mAvatar.setImageResource(HttpConfig.DEFAULT_IMAGE_ID);
+            } else {
+                BitmapBiz.display(mAvatar, item.avatar, 150);
+            }
             mUsername.setText(String.valueOf(item.userName));
             mContent.setText(item.content);
             mThumbsUpCount.setText(mContext.getResources().getString
@@ -89,9 +96,9 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                 for (int i = 0; i < item.photoes.size() && i < 3; i++) {
                     final ImageView image = (ImageView) LayoutInflater.
                             from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
-                    mPhotoLayout.addView(image);
                     image.setTag(i);
                     image.setOnClickListener(mImageClickListener);
+                    mPhotoLayout.addView(image);
                     BitmapBiz.display(image, item.photoes.get(i), 150);
                 }
             }

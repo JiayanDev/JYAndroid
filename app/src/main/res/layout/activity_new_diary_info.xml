@@ -124,7 +124,8 @@
                 <EditText
                     android:id="@+id/edit_price"
                     style="@style/text_item_style"
-                    android:layout_marginLeft="@dimen/normal_margin" />
+                    android:layout_marginLeft="@dimen/normal_margin"
+                    android:inputType="number" />
 
             </LinearLayout>
         </LinearLayout>
