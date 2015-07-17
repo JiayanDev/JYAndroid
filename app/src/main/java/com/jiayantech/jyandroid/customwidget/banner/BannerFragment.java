@@ -23,7 +23,7 @@ public class BannerFragment extends Fragment{
     private static int BANNER_SCROLL_INTERVAL = 2000;
 
     private Context mContext;
-    private AutoScrollViewPager mAutoScrollViewPager;
+    private BannerViewPager mAutoScrollViewPager;
     private CirclePageIndicator mIndicator;
 
     private int index;
@@ -35,7 +35,8 @@ public class BannerFragment extends Fragment{
 
 
         View view = inflater.inflate(R.layout.fragment_banner, container, false);
-        mAutoScrollViewPager = (AutoScrollViewPager)view.findViewById(R.id.view_pager);
+        mAutoScrollViewPager = (BannerViewPager)view.findViewById(R.id.view_pager);
+        mAutoScrollViewPager.setNestedParent((ViewGroup)view);
         mIndicator = (CirclePageIndicator)view.findViewById(R.id.indicator);
 
 
@@ -68,4 +69,6 @@ public class BannerFragment extends Fragment{
             mBannerList.add(banner);
         }
     }
+
+
 }

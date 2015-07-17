@@ -33,5 +33,6 @@ public class BeautyWithFragment extends RefreshListFragment<Post, AppResponse<Li
                 .build());
         setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);
         setHeader(R.layout.fragment_beauty_with);
+
     }
 }
