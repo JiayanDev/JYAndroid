@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.biz;
 
-import android.content.Context;
 import android.support.v4.util.ArrayMap;
 
 import com.jiayantech.jyandroid.manager.UserManger;
@@ -85,6 +84,7 @@ public class UserBiz {
             @Override
             public void onGetCode(String code) {
                 socailLogin("wxCode", code, l);
+                //LogUtil.i("wxCode", code);
             }
         });
     }
@@ -92,10 +92,10 @@ public class UserBiz {
     public static void socailLogin(String platformCodeKey, String code, LoginResponseListener l) {
         String configVersion = ConfigManager.getConfig(KEY_CONFIG_VERSION, "0");
         Map<String, String> params = new HashMap<>();
-        params.put("configVersion", configVersion);
+        //params.put("configVersion", configVersion);
         params.put(platformCodeKey, code);
-        params.put("deviceToken", UmengPushBiz.getDeviceToken());
-        HttpReq.post(ACTION_LOGIN, params, l);
+        //params.put("deviceToken", UmengPushBiz.getDeviceToken());
+        HttpReq.post(ACTION_RIGISTER, params, l);
     }
 
     /**
