@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -60,12 +62,15 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
+        //getSupportActionBar().setTitle(mTitles[0]);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
         mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+
+        setTitle(mRadioButtons[0].getText().toString());
     }
 
     @Override
@@ -78,7 +83,24 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_diary:
-                startActivity(new Intent(this, MyDiariesActivity.class));
+                //startActivity(new Intent(this, MyDiariesActivity.class));
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog_publish_actions);
+                dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(MyDiariesActivity.class);
+                    }
+                });
+                dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(PublishPostActivity.class);
+                    }
+                });
+                dialog.show();
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));
@@ -115,7 +137,8 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                getSupportActionBar().setTitle(mTitles[position]);
+                //getSupportActionBar().setTitle(mTitles[position]);
+                setTitle(mRadioButtons[position].getText().toString());
                 mRadioButtons[position].setChecked(true);
 
             }

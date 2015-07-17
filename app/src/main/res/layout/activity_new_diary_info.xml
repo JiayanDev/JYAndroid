@@ -118,14 +118,13 @@
                 <TextView
                     style="@style/text_hint_style"
                     android:layout_marginTop="@dimen/small_margin"
-                    android:text="@string/hospital"
+                    android:text="@string/price"
                     android:textColor="@color/theme_color" />
 
                 <EditText
                     android:id="@+id/edit_price"
                     style="@style/text_item_style"
-                    android:layout_marginLeft="@dimen/normal_margin"
-                    android:text="12000" />
+                    android:layout_marginLeft="@dimen/normal_margin" />
 
             </LinearLayout>
         </LinearLayout>

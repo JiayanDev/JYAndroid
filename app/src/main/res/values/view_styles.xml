@@ -67,7 +67,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/text_hint_color</item>
+        <item name="android:textColor">@color/text_light_color</item>
     </style>
 
     <style name="text_item_hint_style" parent="text_hint_style">

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.widget.drawable.BottomLineDrawable;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
@@ -75,6 +76,11 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     protected void setViewsContent() {
         setTitle(R.string.title_surgery_info);
+        txt_project.setBackgroundDrawable(new BottomLineDrawable(getResources().getColor(R.color.text_normal_color)));
+        txt_time.setBackgroundDrawable(new BottomLineDrawable(getResources().getColor(R.color.text_normal_color)));
+        txt_doctor.setBackgroundDrawable(new BottomLineDrawable(getResources().getColor(R.color.text_normal_color)));
+        txt_hospital.setBackgroundDrawable(new BottomLineDrawable(getResources().getColor(R.color.text_normal_color)));
+        edit_price.setBackgroundDrawable(new BottomLineDrawable(getResources().getColor(R.color.text_normal_color)));
         setCategories(getIntent());
     }
 

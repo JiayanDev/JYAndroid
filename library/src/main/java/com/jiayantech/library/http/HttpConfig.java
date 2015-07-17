@@ -17,7 +17,7 @@ public class HttpConfig {
     private static final Resources sResources = BaseApplication.getContext().getResources();
     private static final String sPackageName = BaseApplication.getContext().getPackageName();
 
-    private static final int DEFAULT_ID = android.R.drawable.ic_dialog_alert;
+    private static final int DEFAULT_ID = android.R.color.darker_gray;
 
     private static final String KEY_BASE_URL = "base.url";
     private static final String KEY_IMAGE_UPLOAD_URL = "image.upload.url";

@@ -25,8 +25,6 @@ public class JYApplication extends BaseApplication {
         UmengPushBiz.init(getApplicationContext());
     }
 
-
-
     private void initContext(Context context) {
         //重写友盟自定义行为处理
         UmengNotificationClickHandler handler = new UmengNotificationClickHandler() {

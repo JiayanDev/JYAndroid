@@ -7,10 +7,6 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.model.Login;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by janseon on 2015/7/2.
@@ -72,7 +68,7 @@ public class UserManger {
         resIdArray.put(10, R.drawable.category_face);
         resIdArray.put(20, R.drawable.category_nose);
         for (Login.Category category : data) {
-            category.reaId = resIdArray.get(category.id);
+            category.resId = resIdArray.get(category.id);
             sProjectCategoryData.put(category.id, category);
             if (category.sub != null && category.sub.size() > 0) {
                 listSave(category.sub);

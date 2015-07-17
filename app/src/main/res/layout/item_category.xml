@@ -17,6 +17,7 @@
         style="@style/text_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/small_padding" />
+        android:padding="@dimen/small_padding"
+        android:textColor="@color/txt_color_theme_white_selector" />
 
 </LinearLayout>

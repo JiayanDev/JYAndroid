@@ -62,7 +62,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         // recyclerView.setAdapter(new TopicCategoryAdapter(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), spanCount));
 
-        CategoryAdapter categoryAdapter = new CategoryAdapter(UserManger.sLogin.projectCategory.data);
+        CategoryAdapter categoryAdapter = new CategoryAdapter();
         categoryAdapter.resetGridHeight(recyclerView, spanCount);
 
         categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener<Login.Category>() {

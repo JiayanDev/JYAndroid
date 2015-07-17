@@ -27,10 +27,9 @@ import java.util.ArrayList;
 public class SelectCategoryActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<Login.Category> {
     public static final String KEY_categories = "categories";
 
+    private final int spanCount = 3;
     private RecyclerView mRecyclerView;
-
     private CategoryAdapter mAdapter;
-
     private ArrayList<Login.Category> mSelectedList = new ArrayList<>();
 
 
@@ -43,12 +42,12 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
         setViewsListener();
     }
 
-
     protected void setViewsContent() {
         setTitle(R.string.title_select_category);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        mAdapter = new CategoryAdapter(UserManger.sLogin.projectCategory.data);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new CategoryAdapter(true);
+        //mRecyclerView.setAdapter(mAdapter);
+        mAdapter.resetGridHeight(mRecyclerView, spanCount);
     }
 
     protected void setViewsListener() {

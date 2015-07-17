@@ -116,7 +116,8 @@ public class PublishDiaryActivity extends PublishPostActivity {
     protected void onPost(String content) {
         showProgressDialog();
         String photoUrls = toString(urlList);
-        DiaryBiz.create(Login.Category.toIdsString(categoryList), operationTime, hospitalId, doctorId, doctorName, price, satisfyLevel, content, photoUrls, new ResponseListener<BaseModel>() {
+        String categoryIds = categoryList.toString();
+        DiaryBiz.create(categoryIds, operationTime, hospitalId, doctorId, doctorName, price, satisfyLevel, content, photoUrls, new ResponseListener<BaseModel>() {
             @Override
             public void onResponse(BaseModel response) {
                 dismissProgressDialog();

@@ -19,14 +19,22 @@ import com.jiayantech.library.base.BaseApplication;
  */
 public class BitmapBiz {
 
+    private static final int DEFAULT_SIZE = BaseApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+
     /**
      * @param imageView
      * @param imageUrl
      */
+    public static void display(ImageView imageView, String imageUrl, int size) {
+        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
+                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
+                size, size);
+    }
+
     public static void display(ImageView imageView, String imageUrl) {
         sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
                 //Specify width & height of the bitmap to be scaled down when the image is downloaded.
-                0, 0);
+                DEFAULT_SIZE, DEFAULT_SIZE);
     }
 
     ///////////////////////////////////////private static class and method
@@ -50,7 +58,7 @@ public class BitmapBiz {
 
         @Override
         public Bitmap getBitmap(String url) {
-            System.out.println("######## BitmapLruCache GET ######## " + url);
+            //System.out.println("######## BitmapLruCache GET ######## " + url);
             return get(url);
         }
 

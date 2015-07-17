@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JYAndroid</string>
+    <string name="app_name">美丽天使</string>
 
     <string-array name="tab_title">
         <item>伴美</item>
@@ -30,8 +30,8 @@
     <string name="comment_count">%s</string>
 
     <string name="comment_hint">请留下你的评论</string>
-    <string name="next">next</string>
-    <string name="finish">finish</string>
+    <string name="next">下一步</string>
+    <string name="finish">完成</string>
     <string name="share">分享</string>
     <string name="post_share_text" formatted="false">Hello, 我看到有趣的内容想推荐给你，%s , %s</string>
 
@@ -71,6 +71,9 @@
     <string name="level_3">很好</string>
     <string name="level_4">非常好</string>
     <string name="level_5">超好</string>
+    <string name="price">价格</string>
+    <string name="share_diary">分享日志</string>
+    <string name="publish_topic">发表话题</string>
 
 
     <string name="hint_reply_to">回复: %s</string>

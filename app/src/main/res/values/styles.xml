@@ -7,11 +7,18 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
         <item name="android:windowIsTranslucent">true</item>
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">@android:color/white</item>
+        <!-- 状态栏颜色 -->
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <!-- toolbar（actionbar）文本颜色-->
+        <item name="android:textColorPrimary">@color/theme_color</item>
+        <item name="colorControlNormal">@color/theme_color</item>
+        <item name="actionMenuTextColor">@color/theme_color</item>
         <item name="android:windowAnimationStyle">@style/activitySlideAnimation</item>
-        <!--<item name="android:homeAsUpIndicator">@drawable/up_indicator</item>-->
-
+        <item name="android:homeAsUpIndicator">@mipmap/up_indicator</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -19,16 +26,21 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <!--toolbar theme-->
-    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!--<item name="android:actionOverflowButtonStyle"></item>-->
+    <style name="ActionBarStyle" parent="@android:style/Widget.DeviceDefault.ActionBar">
+        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
+        <item name="android:actionMenuTextAppearance">@style/ActionBarTitle</item>
+        <item name="android:actionMenuTextColor">@color/theme_color</item>
     </style>
 
+    <style name="ActionBarTitle" parent="@android:style/TextAppearance.Holo.Large">
+        <item name="android:textColor">@color/theme_color</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
 
     <!--普通文本-->
-    <style name="PrimaryText">
-        <item name="android:textColor">@color/primary_text</item>
-    </style>
+    <!--<style name="PrimaryText">-->
+    <!--<item name="android:textColor">@color/primary_text</item>-->
+    <!--</style>-->
 
     <style name="main_tab">
         <item name="android:textSize">13dp</item>

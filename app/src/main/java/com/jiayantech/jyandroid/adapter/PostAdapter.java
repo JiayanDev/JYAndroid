@@ -2,7 +2,9 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +17,9 @@ import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -84,10 +89,10 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mPhotoLayout.removeAllViews();
             if (item.photoes != null) {
                 for (int i = 0; i < item.photoes.length && i < 3; i++) {
-                    ImageView image = (ImageView) LayoutInflater.
+                    final ImageView image = (ImageView) LayoutInflater.
                             from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
                     mPhotoLayout.addView(image);
-                    BitmapBiz.display(image, item.photoes[i]);
+                    BitmapBiz.display(image, item.photoes[i], 150);
                 }
             }
 

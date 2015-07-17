@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.model.DiaryHeader;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -35,6 +36,15 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
     }
 
     @Override
+    public void addNew(List<DiaryHeader> list) {
+        super.addNew(list);
+        super.addNew(list);
+        super.addNew(list);
+        super.addNew(list);
+        super.addNew(list);
+    }
+
+    @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
         return new ViewHolder(viewGroup, R.layout.item_my_diary, this);
     }
@@ -44,38 +54,49 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.mDiaryHeader = diaryHeader;
         if (position == eventFirstPosition) {
+            viewHolder.view_big_divider.setVisibility(View.VISIBLE);
             viewHolder.txt_title.setVisibility(View.VISIBLE);
-            viewHolder.view_divider.setVisibility(View.VISIBLE);
+            setDividerMargin(viewHolder.view_divider, false);
             viewHolder.txt_title.setText(R.string.my_diary_share);
 
             viewHolder.txt_operate.setText(R.string.create_diary_book);
-            setTextDrawble(viewHolder.txt_operate, R.mipmap.icon_create_diary);
+            setTextDrawable(viewHolder.txt_operate, R.mipmap.icon_create_event_diary);
         } else if (position == diaryFirstPosition) {
+            viewHolder.view_big_divider.setVisibility(View.VISIBLE);
             viewHolder.txt_title.setVisibility(View.VISIBLE);
-            viewHolder.view_divider.setVisibility(View.VISIBLE);
+            setDividerMargin(viewHolder.view_divider, false);
             viewHolder.txt_title.setText(R.string.my_diary_mime);
 
             viewHolder.txt_operate.setText(R.string.update_diary);
-            setTextDrawble(viewHolder.txt_operate, R.mipmap.icon_update_diary);
+            setTextDrawable(viewHolder.txt_operate, R.mipmap.icon_update_diary);
         } else {
+            viewHolder.view_big_divider.setVisibility(View.GONE);
             viewHolder.txt_title.setVisibility(View.GONE);
-            viewHolder.view_divider.setVisibility(View.GONE);
+            setDividerMargin(viewHolder.view_divider, true);
 
             viewHolder.txt_operate.setText(R.string.update_diary);
-            setTextDrawble(viewHolder.txt_operate, R.mipmap.icon_update_diary);
+            setTextDrawable(viewHolder.txt_operate, R.mipmap.icon_update_diary);
         }
-        viewHolder.txt_content.setText(diaryHeader.projectName + diaryHeader.categoryIds);
+        viewHolder.txt_content.setText(diaryHeader.getCategoryNames());
         //viewHolder.img_diary.setImageResource(R.mipmap.icon_create_diary);
     }
 
-    public static void setTextDrawble(TextView txt, int resId) {
+    private void setTextDrawable(TextView txt, int resId) {
         Drawable drawable = txt.getResources().getDrawable(resId);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        txt.setCompoundDrawables(null, null, drawable, null);
+        //drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        txt.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+    }
+
+    private void setDividerMargin(View divider, boolean hasMargin) {
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) divider.getLayoutParams();
+        int px = hasMargin ? (int) UIUtil.getDimension(R.dimen.normal_margin) : 0;
+        lp.setMargins(px, 0, px, 0);
+        divider.setLayoutParams(lp);
     }
 
     private static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<DiaryHeader> implements View.OnClickListener {
         private DiaryHeader mDiaryHeader;
+        private View view_big_divider;
         private TextView txt_title;
         private View view_divider;
         private ImageView img_diary;
@@ -84,8 +105,9 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
 
         public ViewHolder(ViewGroup parent, int layoutId, MyDiaryAdapter adapter) {
             super(parent, layoutId, adapter);
-            img_diary = (ImageView) itemView.findViewById(R.id.img_diary);
+            view_big_divider = itemView.findViewById(R.id.view_big_divider);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
+            img_diary = (ImageView) itemView.findViewById(R.id.img_diary);
             view_divider = itemView.findViewById(R.id.view_divider);
             img_diary = (ImageView) itemView.findViewById(R.id.img_diary);
             txt_content = (TextView) itemView.findViewById(R.id.txt_content);

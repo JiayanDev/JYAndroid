@@ -35,7 +35,6 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 onBind(viewHolder, mList.get(position), position);
             }
         }
-
     }
 
     protected void onBind(ViewHolder viewHolder, T item, int position) {
