@@ -109,7 +109,7 @@ public class CommentFragment extends DialogFragment{
                                         + baseModelAppResponse.data.id);
                                 PostComment postComment = new PostComment();
                                 postComment.content = comment.getText().toString();
-                                postComment.createTime = System.currentTimeMillis();
+                                postComment.createTime = System.currentTimeMillis() / 1000;
                                 postComment.subject = mSubject;
                                 postComment.subjectId = mSubjectId;
                                 postComment.id = baseModelAppResponse.data.id;

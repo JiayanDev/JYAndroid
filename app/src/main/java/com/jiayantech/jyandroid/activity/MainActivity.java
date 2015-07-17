@@ -19,6 +19,7 @@ import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.widget.UnslidableViewPager;
 import com.jiayantech.library.utils.DialogUtils;
 import com.umeng.message.PushAgent;
 
@@ -29,7 +30,7 @@ public class MainActivity extends BaseActivity {
 
     private String[] mTitles;
 
-    private ViewPager mViewPager;
+    private UnslidableViewPager mViewPager;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
@@ -60,8 +61,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        getSupportActionBar().setTitle(mTitles[0]);
+        mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
         //getSupportActionBar().setTitle(mTitles[0]);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);

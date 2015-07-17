@@ -11,13 +11,14 @@ import com.jiayantech.jyandroid.model.Login;
 import com.jiayantech.jyandroid.widget.PagerSlidingTabStrip;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
+import com.jiayantech.library.widget.UnslidableViewPager;
 
 /**
  * Created by liangzili on 15/7/8.
  */
 public class PostActivity extends BaseActivity {
     private String[] mTabName;
-    private ViewPager mViewPager;
+    private UnslidableViewPager mViewPager;
     private PagerSlidingTabStrip mSlidingTabStrip;
     private BaseFragment[] mFragments;
     private Login.Category category;
@@ -35,7 +36,7 @@ public class PostActivity extends BaseActivity {
     public void init() {
         setTitle(category.name);
         mTabName = getResources().getStringArray(R.array.tab_post);
-        mViewPager = (ViewPager) findViewById(R.id.tab_content);
+        mViewPager = (UnslidableViewPager) findViewById(R.id.tab_content);
         mSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tab_title);
         mFragments = new BaseFragment[]{
                 PostListFragment.newInstance("topic", category.id, false),
