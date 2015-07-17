@@ -109,6 +109,8 @@ public abstract class WebViewFragment extends BaseFragment{
         settings.setBuiltInZoomControls(false);
         settings.setJavaScriptEnabled(true);
 
+        settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
+
         return mView;
     }
 
@@ -161,5 +163,9 @@ public abstract class WebViewFragment extends BaseFragment{
 
     public void callJsMethod(String method, String params){
         JsNativeBiz.callJsMethod(method, params, mWebView);
+    }
+
+    public void scrollToY(int y){
+        mWebView.scrollTo(mWebView.getScrollX(), y);
     }
 }

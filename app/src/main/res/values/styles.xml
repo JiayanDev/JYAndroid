@@ -12,7 +12,7 @@
         <!-- toolbar（actionbar）颜色 -->
         <item name="colorPrimary">@android:color/white</item>
         <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@android:color/white</item>
+        <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
         <!-- toolbar（actionbar）文本颜色-->
         <item name="android:textColorPrimary">@color/theme_color</item>
         <item name="colorControlNormal">@color/theme_color</item>

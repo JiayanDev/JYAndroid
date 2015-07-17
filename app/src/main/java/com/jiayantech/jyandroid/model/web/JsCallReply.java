@@ -2,13 +2,11 @@ package com.jiayantech.jyandroid.model.web;
 
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 /**
  * Created by liangzili on 15/7/15.
  */
-public class ReplyJsCall extends BaseJsCall<ReplyJsCall.ReplyData>{
-    private static Gson sGson = new Gson();
+public class JsCallReply extends BaseJsCall<JsCallReply.ReplyData>{
+//    private static Gson sGson = new Gson();
 
     public static class ReplyData{
         public long subjectId;
