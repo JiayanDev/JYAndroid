@@ -34,48 +34,70 @@ public class BannerViewPager extends AutoScrollViewPager {
         setCycle(true);
     }
 
-    public void setNestedParent(ViewGroup parent){
+    public void setNestedParent(ViewGroup parent) {
         mParent = parent;
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if(mParent != null){
-//            mParent.requestDisallowInterceptTouchEvent(true);
-//        }
-        switch (ev.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                mDownX = ev.getX();
-                mDownY = ev.getY();
-                getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
-                        + Math.abs(ev.getX() - mDownX) + " " +  Math.abs(ev.getY() - mDownY));
-                if(Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)){
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
-                }
-                else{
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
 //    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
 ////        if(mParent != null){
 ////            mParent.requestDisallowInterceptTouchEvent(true);
 ////        }
-//        return super.onInterceptTouchEvent(ev);
+//        switch (ev.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                mDownX = ev.getX();
+//                mDownY = ev.getY();
+//                getParent().requestDisallowInterceptTouchEvent(true);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
+//                        + Math.abs(ev.getX() - mDownX) + " " +  Math.abs(ev.getY() - mDownY));
+//                if(Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)){
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
+//                }
+//                else{
+//                    getParent().requestDisallowInterceptTouchEvent(false);
+//                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//        }
+//        return super.dispatchTouchEvent(ev);
 //    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        if(mParent != null){
+//            mParent.requestDisallowInterceptTouchEvent(true);
+//        }
+
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
+                        + Math.abs(ev.getX() - mDownX) + " " + Math.abs(ev.getY() - mDownY));
+                if (Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)) {
+                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
+                    return true;
+                } else {
+                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+                    return false;
+                }
+                //break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                //getParent().requestDisallowInterceptTouchEvent(false);
+                break;
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
 //
 //    @Override
 //    public boolean onTouchEvent(MotionEvent ev) {
