@@ -1,6 +1,8 @@
 package com.jiayantech.library.utils;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +22,24 @@ public class DialogUtils {
         dialog.setCanceledOnTouchOutside(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(view);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams localLayoutParams = window.getAttributes();
+        localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        localLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        if (isBottom) {
+            localLayoutParams.gravity = Gravity.BOTTOM;
+        }
+        window.setBackgroundDrawable(null);
+        window.setAttributes(localLayoutParams);
+        dialog.show();
+        return dialog;
+    }
+
+    public static Dialog showViewDialog(Context context, @LayoutRes int resId, boolean isBottom) {
+        Dialog dialog = new Dialog(context);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(resId);
         Window window = dialog.getWindow();
         WindowManager.LayoutParams localLayoutParams = window.getAttributes();
         localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;

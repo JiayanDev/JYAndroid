@@ -20,7 +20,7 @@ import uk.co.senab.photoview.PhotoView;
  * @Copyright: Copyright (c) 2014 Shenzhen Inser Technology Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ImagePagerAdapter<T extends ImagePagerAdapter.IUrl> extends BasePagerAdapter<T> {
+public class ImagePagerAdapter<T> extends BasePagerAdapter<T> {
 
     public ImagePagerAdapter(Context context, ArrayList<T> list) {
         super(context, list);
@@ -29,13 +29,8 @@ public class ImagePagerAdapter<T extends ImagePagerAdapter.IUrl> extends BasePag
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(container.getContext());
-        BitmapBiz.display(photoView, getItem(position).getUrl());
+        BitmapBiz.display(photoView, getItem(position).toString());
         container.addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         return photoView;
     }
-
-    public interface IUrl {
-        String getUrl();
-    }
-
 }

@@ -2,7 +2,6 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -76,6 +73,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mCommentCount = (TextView) itemView.findViewById(R.id.comment);
             mType = (ImageView) itemView.findViewById(R.id.ic_type);
             txt_category = (TextView) itemView.findViewById(R.id.txt_category);
+            //mPhotoLayout.setOnClickListener(mImageClickListener);
         }
 
         @Override
@@ -88,23 +86,32 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
             mPhotoLayout.removeAllViews();
             if (item.photoes != null) {
-                for (int i = 0; i < item.photoes.length && i < 3; i++) {
+                for (int i = 0; i < item.photoes.size() && i < 3; i++) {
                     final ImageView image = (ImageView) LayoutInflater.
                             from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
                     mPhotoLayout.addView(image);
-                    BitmapBiz.display(image, item.photoes[i], 150);
+                    image.setTag(i);
+                    image.setOnClickListener(mImageClickListener);
+                    BitmapBiz.display(image, item.photoes.get(i), 150);
                 }
             }
-
             if (item.type.equals("diary")) {
                 mType.setImageResource(R.drawable.ic_post_type_diary);
             } else {
                 mType.setImageResource(R.drawable.ic_post_type_topic);
             }
             txt_category.setText(item.getCategoryNames());
-
         }
 
-
+        private View.OnClickListener mImageClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItem == null && mItem.photoes.size() <= 0) {
+                    return;
+                }
+                Integer position = (Integer) v.getTag();
+                PhotosActivity.start(mContext, mItem.content, mItem.photoes, position);
+            }
+        };
     }
 }

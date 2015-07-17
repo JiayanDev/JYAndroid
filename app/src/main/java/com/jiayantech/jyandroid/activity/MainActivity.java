@@ -19,6 +19,7 @@ import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.utils.DialogUtils;
 import com.umeng.message.PushAgent;
 
 /**
@@ -82,8 +83,7 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_diary:
                 //startActivity(new Intent(this, MyDiariesActivity.class));
-                final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.dialog_publish_actions);
+                final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
                 dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -98,7 +98,6 @@ public class MainActivity extends BaseActivity {
                         startActivity(PublishPostActivity.class);
                     }
                 });
-                dialog.show();
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));
