@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Post extends CategoryModel {
     public static final String POST_TYPE_DIARY = "diary";
     public static final String POST_TYPE_TOPIC = "topic";
+    public String avatar;
     public String userName;
     public String content;
     public ArrayList<String> photoes;

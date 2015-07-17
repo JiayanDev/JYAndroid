@@ -36,6 +36,7 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.ToastUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +50,8 @@ import java.util.List;
  */
 public class PublishPostActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener, BaseSimpleModelAdapter.OnItemClickListener<Bitmap> {
     private final int spanCount = 3;
-    protected String UPLOAD_TYPE = "topic";
+    private final String UPLOAD_TYPE_TOPIC = "topic";
+    protected String UPLOAD_TYPE = UPLOAD_TYPE_TOPIC;
 
     protected RecyclerView recycler_view;
     protected ImageView img_photo;
@@ -185,7 +187,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
         showProgressDialog();
-        UploadImageBiz.uploadImage(UPLOAD_TYPE, path,
+        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
                 new ResponseListener<ImageUploadCallback>() {
                     @Override
                     public void onResponse(ImageUploadCallback o) {

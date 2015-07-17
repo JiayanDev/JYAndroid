@@ -28,6 +28,7 @@ import java.util.Calendar;
  * rights reserved.
  */
 public class PublishDiaryActivity extends PublishPostActivity {
+    private final String UPLOAD_TYPE_DIARY = "diary";
     private LinearLayout layout_container;
     private TextView txt_project;
     private TextView txt_time;
@@ -66,6 +67,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
         setTime(intent);
         price = intent.getStringExtra(NewDiaryInfoActivity.KEY_price);
         satisfyLevel = intent.getFloatExtra(NewDiaryInfoActivity.KEY_satisfyLevel, 0);
+        UPLOAD_TYPE = UPLOAD_TYPE_DIARY;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class FormImage {
     private static final String FORM_NAME = "file";
 
     public static final int COMPRESS_FACTOR = 60;
-    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.JPEG;
+    public static final Bitmap.CompressFormat IMAGE_FORMAT = Bitmap.CompressFormat.PNG;
 
     private String mFileName;
     private String mName;
