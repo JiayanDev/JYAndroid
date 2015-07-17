@@ -1,10 +1,6 @@
 package com.jiayantech.jyandroid.model;
 
-import android.text.TextUtils;
-
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.library.base.BaseModel;
-import com.google.gson.annotations.Expose;
+import java.util.ArrayList;
 
 /**
  * Created by janseon on 2015/6/29.
@@ -18,7 +14,7 @@ public class Post extends CategoryModel {
     public static final String POST_TYPE_TOPIC = "topic";
     public String userName;
     public String content;
-    public String[] photoes;
+    public ArrayList<String> photoes;
     public long commentCount;
     public long likeCount;
     public String userId;

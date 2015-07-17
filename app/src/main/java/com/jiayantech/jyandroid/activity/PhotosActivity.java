@@ -1,8 +1,11 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImagePagerAdapter;
 import com.jiayantech.jyandroid.model.Photo;
 import com.jiayantech.library.base.BaseActivity;
@@ -18,6 +21,9 @@ import java.util.ArrayList;
  * rights reserved.
  */
 public class PhotosActivity extends BaseActivity {
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_PHOTO_LIST = "photoList";
+    private static final String KEY_PHOTO_POSITION = "photoPosition";
     private ViewPager mViewPager;
 
     @Override
@@ -29,10 +35,20 @@ public class PhotosActivity extends BaseActivity {
     }
 
     protected void setViewsContent() {
-        ArrayList<Photo> photoList = new ArrayList<>();
-        photoList.add(new Photo("https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=9d5ecce64434970a4726436ff3f7e5fa/64380cd7912397dd94c99ccd5c82b2b7d1a28742.jpg"));
-        photoList.add(new Photo("https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=d96fe1a5153853438c9ad461f52e844c/86d6277f9e2f0708c47d38c9ec24b899a801f2fb.jpg"));
-        photoList.add(new Photo("https://ss3.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=da906c02feedab6474271e80910b9bf1/9d82d158ccbf6c81fe953e21b93eb13532fa405c.jpg"));
+        Intent intent = getIntent();
+        String title = intent.getStringExtra(KEY_TITLE);
+        ArrayList<String> photoList = intent.getStringArrayListExtra(KEY_PHOTO_LIST);
+        int position = intent.getIntExtra(KEY_PHOTO_POSITION, 0);
+        setTitle(title == null ? getString(R.string.title_photo_browse) : title);
         mViewPager.setAdapter(new ImagePagerAdapter<>(this, photoList));
+        mViewPager.setCurrentItem(position);
+    }
+
+    public static void start(Context context, String title, ArrayList<String> list, int position) {
+        Intent intent = new Intent(context, PhotosActivity.class);
+        intent.putExtra(KEY_TITLE, title);
+        intent.putExtra(KEY_PHOTO_LIST, list);
+        intent.putExtra(KEY_PHOTO_POSITION, position);
+        context.startActivity(intent);
     }
 }

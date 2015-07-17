@@ -9,7 +9,7 @@ import com.jiayantech.jyandroid.adapter.ImagePagerAdapter;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Photo implements ImagePagerAdapter.IUrl {
+public class Photo {
     public String url;
 
     public Photo() {
@@ -20,7 +20,7 @@ public class Photo implements ImagePagerAdapter.IUrl {
     }
 
     @Override
-    public String getUrl() {
+    public String toString() {
         return url;
     }
 }
