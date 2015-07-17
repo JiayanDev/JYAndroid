@@ -17,7 +17,7 @@ import com.jiayantech.jyandroid.manager.UserManger;
 import com.jiayantech.jyandroid.model.Photo;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.PostComment;
-import com.jiayantech.jyandroid.model.web.ReplyJsCall;
+import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.UIUtil;
 
@@ -85,14 +85,14 @@ public class PostDetailFragment extends WebViewFragment {
     protected WebViewClient onSetWebViewClient() {
         return new BaseWebViewClient(getActivity()) {
             @Override
-            protected void onJsCallNativeOpenCommentPanel(ReplyJsCall call) {
+            protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
                 CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
                         call.data.subject, call.data.toUserId, call.data.toUserName);
                 fragment.show(getActivity().getSupportFragmentManager(), "comment");
             }
 
             @Override
-            protected void onJsCallNativeTest(ReplyJsCall call) {
+            protected void onJsCallNativeTest(JsCallReply call) {
                 super.onJsCallNativeTest(call);
                 List<String> params = new ArrayList<>();
                 params.add(call.data.toString());
@@ -125,6 +125,16 @@ public class PostDetailFragment extends WebViewFragment {
                 navigate(id, WebViewFragment.TYPE_DIARY, PostDetailActivity.class);
             }
 
+            @Override
+            protected void onJsCallNativeSetTitle(String title) {
+                getActivity().setTitle(title);
+            }
+
+            @Override
+            protected void onJscallNativeScroll(int posY) {
+                scrollToY(posY);
+            }
+
             private void navigate(long id, String type, Class<? extends BaseActivity> clazz){
                 Intent intent = new Intent(getActivity(), clazz);
                 intent.putExtra(WebViewFragment.EXTRA_ID, id);
@@ -136,15 +146,18 @@ public class PostDetailFragment extends WebViewFragment {
         };
     }
 
+    /**
+     * 评论完后的回调
+     * @param postComment
+     */
     public void onEvent(PostComment postComment){
-        //postComment.userId = mUserId;
-        //postComment.userName = mUserName;
-        //postComment.userId = UserBiz.ge
+        //if(getActivity().
         postComment.userId = UserManger.getUserId();
         postComment.userName = UserManger.getUserName();
 
-
-        if(postComment.toUserId == -1){
+        //如果评论的是评论，在跳入CommentFragment时会带入要评论的该条评论的参数，并会返回来
+        //如果toUserId为0， 则表示未有参数传入，将要回复的人设置为该post的作者
+        if(postComment.toUserId == -1 || postComment.toUserId == 0){
             postComment.toUserId = mUserId;
             postComment.toUserName = mUserName;
         }
@@ -156,7 +169,6 @@ public class PostDetailFragment extends WebViewFragment {
 
         String result = comment.toString();
         callJsMethod(JsNativeBiz.JS_METHOD_G_renderPostComment, result);
-
     }
 
 }

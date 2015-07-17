@@ -19,23 +19,23 @@ public class BannerViewPager extends AutoScrollViewPager {
     private Context mContext;
     private ViewGroup mParent;
 
-    private float mDownX;
-    private float mDownY;
+    private float mDX;
+    private float mDY;
+    private float mLX;
+    private float mLY;
+    private boolean mIntercept;
+    private int mLastAct;
 
     public BannerViewPager(Context paramContext) {
-        super(paramContext);
-        mContext = paramContext;
-        this.setCycle(true);
+        this(paramContext, null);
+
     }
 
     public BannerViewPager(Context paramContext, AttributeSet paramAttributeSet) {
         super(paramContext, paramAttributeSet);
         mContext = paramContext;
         setCycle(true);
-    }
 
-    public void setNestedParent(ViewGroup parent) {
-        mParent = parent;
     }
 
 //    @Override
@@ -74,30 +74,103 @@ public class BannerViewPager extends AutoScrollViewPager {
 //        if(mParent != null){
 //            mParent.requestDisallowInterceptTouchEvent(true);
 //        }
+//        switch (ev.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                mDownX = ev.getX();
+//                mDownY = ev.getY();
+//                getParent().requestDisallowInterceptTouchEvent(true);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
+//                        + Math.abs(ev.getX() - mDownX) + " " +  Math.abs(ev.getY() - mDownY));
+//                if(Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)){
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+//                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
+//                }
+//                else{
+//                    getParent().requestDisallowInterceptTouchEvent(false);
+//                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                getParent().requestDisallowInterceptTouchEvent(false);
+//                break;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
+//
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        if(mParent != null){
+//            mParent.requestDisallowInterceptTouchEvent(true);
+//        }
 
+////        switch (ev.getAction()) {
+////            case MotionEvent.ACTION_DOWN:
+////                mDownX = ev.getX();
+////                mDownY = ev.getY();
+////                break;
+////            case MotionEvent.ACTION_MOVE:
+////                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
+////                        + Math.abs(ev.getX() - mDownX) + " " + Math.abs(ev.getY() - mDownY));
+////                if (Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)) {
+////                    //getParent().requestDisallowInterceptTouchEvent(true);
+////                    //LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
+////                    return false;
+////                } else {
+////                    //getParent().requestDisallowInterceptTouchEvent(false);
+////                    return true;
+////                    //LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+////                }
+//////                // break;
+//////                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
+//////                    return true;
+//////                } else {
+//////                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+//////                    return false;
+//////                }
+////                //break;
+////            case MotionEvent.ACTION_UP:
+////            case MotionEvent.ACTION_CANCEL:
+////                //getParent().requestDisallowInterceptTouchEvent(false);
+////                break;
+////        }
+////        //return super.dispatchTouchEvent(ev);
+//        return super.onInterceptTouchEvent(ev);
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mDownX = ev.getX();
-                mDownY = ev.getY();
+            case MotionEvent.ACTION_DOWN :
+                mDX = mDY = 0f;
+                mLX = ev.getX();
+                mLY = ev.getY();
+
                 break;
-            case MotionEvent.ACTION_MOVE:
-                LogUtil.i("viewpager", "Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY))"
-                        + Math.abs(ev.getX() - mDownX) + " " + Math.abs(ev.getY() - mDownY));
-                if (Math.abs(ev.getX() - mDownX) > Math.abs(ev.getY() - mDownY)) {
-                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(true);");
-                    return true;
-                } else {
-                    LogUtil.i("viewpager", "requestDisallowInterceptTouchEvent(false);");
+
+            case MotionEvent.ACTION_MOVE :
+                final float X = ev.getX();
+                final float Y = ev.getY();
+                mDX += Math.abs(X - mLX);
+                mDY += Math.abs(Y - mLY);
+                mLX = X;
+                mLY = Y;
+
+                if (mIntercept && mLastAct == MotionEvent.ACTION_MOVE) {
                     return false;
                 }
-                //break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                //getParent().requestDisallowInterceptTouchEvent(false);
-                break;
+
+                if (mDX > mDY) {
+
+                    mIntercept = true;
+                    mLastAct = MotionEvent.ACTION_MOVE;
+                    return false;
+                }
+
         }
+        mLastAct = ev.getAction();
+        mIntercept = false;
         return super.onInterceptTouchEvent(ev);
     }
+//    }
 //
 //    @Override
 //    public boolean onTouchEvent(MotionEvent ev) {

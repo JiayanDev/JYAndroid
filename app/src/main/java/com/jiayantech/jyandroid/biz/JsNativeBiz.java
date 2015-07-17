@@ -5,19 +5,18 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
-import com.jiayantech.jyandroid.model.web.ReplyJsCall;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by liangzili on 15/7/15.
  */
 public class JsNativeBiz {
     public static final String ACTION_OPEN_COMMENT_PANEL = "openCommentPanel";
-    public static final String ACTION_PLAY_IMAGE = "viewImage";
+    public static final String ACTION_PLAY_IMAGE = "playImage";
+    public static final String ACTION_SET_NAVIGATION_BAR_TITLE = "setNavigationBarTitle";
+    public static final String ACTION_SCROLL_BOTTOM_TO_POS_Y = "scrollBottomToPosY";
     public static final String ACTION_TEST = "testForCallNativePleaseGiveBackWhatIHadSend";
 
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
