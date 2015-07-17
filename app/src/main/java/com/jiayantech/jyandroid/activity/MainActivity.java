@@ -74,15 +74,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.post_actions, menu);
+        //getMenuInflater().inflate(R.menu.post_actions, menu);
+        getMenuInflater().inflate(R.menu.select_publish_action, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_diary:
-                //startActivity(new Intent(this, MyDiariesActivity.class));
+            case R.id.action_select_publish:
                 final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
                 dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,6 +98,9 @@ public class MainActivity extends BaseActivity {
                         startActivity(PublishPostActivity.class);
                     }
                 });
+                return true;
+            case R.id.action_diary:
+                startActivity(new Intent(this, MyDiariesActivity.class));
                 return true;
             case R.id.action_topic:
                 startActivity(new Intent(this, PublishPostActivity.class));

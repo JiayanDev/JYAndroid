@@ -78,6 +78,7 @@
 
 
     <string name="hint_reply_to">回复: %s</string>
+    <string name="select_publish">选择发布</string>
 
 
 </resources>
