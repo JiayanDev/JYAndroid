@@ -48,7 +48,6 @@ public class BaseWebViewClient extends WebViewClient{
             URI uri = URI.create(url);
             String action = uri.getPath();
             if(uri.getPath().endsWith(WebViewFragment.ACTION_DIARY_HEADER)){
-
                 String query = uri.getQuery();
                 String sub = query.substring(query.indexOf("=") + 1);
                 long id = Long.valueOf(sub);

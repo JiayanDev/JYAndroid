@@ -7,4 +7,9 @@
         <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
+
+    <!--UnslidableViewPager的自定义属性 -->
+    <declare-styleable name="UnslidableViewPager">
+        <attr name="slidable" format="boolean" />
+    </declare-styleable>
 </resources>

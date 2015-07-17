@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,20 +12,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.UploadImageBiz;
-import com.jiayantech.jyandroid.fragment.EventsFragment;
-import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
+import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
-import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
-
-import java.util.Map;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -35,7 +27,7 @@ public class MainActivity extends BaseActivity {
 
     private String[] mTitles;
 
-    private ViewPager mViewPager;
+    private UnslidableViewPager mViewPager;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
@@ -67,7 +59,7 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);

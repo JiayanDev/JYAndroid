@@ -25,5 +25,5 @@ public class BannerViewPager extends AutoScrollViewPager {
         mContext = paramContext;
     }
 
-
+    
 }
