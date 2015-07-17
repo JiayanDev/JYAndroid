@@ -29,7 +29,7 @@ public class DialogUtils {
         if (isBottom) {
             localLayoutParams.gravity = Gravity.BOTTOM;
         }
-        window.setBackgroundDrawable(null);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setAttributes(localLayoutParams);
         dialog.show();
         return dialog;
@@ -47,7 +47,7 @@ public class DialogUtils {
         if (isBottom) {
             localLayoutParams.gravity = Gravity.BOTTOM;
         }
-        window.setBackgroundDrawable(null);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setAttributes(localLayoutParams);
         dialog.show();
         return dialog;
