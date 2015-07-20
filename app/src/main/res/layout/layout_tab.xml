@@ -10,6 +10,7 @@
     >
 
     <RadioGroup
+        android:id="@+id/radiogroup_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -25,7 +26,8 @@
             android:text="@string/topic"
             android:checked="true"
             android:button="@null"
-            android:background="@drawable/tab_post_selector"
+            android:textColor="@drawable/bg_tab_text_selector"
+            android:background="@drawable/tab_topic_selector"
             android:gravity="center_vertical|center_horizontal"/>
 
         <RadioButton
@@ -34,8 +36,9 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/diary"
+            android:textColor="@drawable/bg_tab_text_selector"
             android:button="@null"
-            android:background="@drawable/tab_post_selector"
+            android:background="@drawable/tab_diary_selector"
             android:gravity="center_vertical|center_horizontal"/>
     </RadioGroup>
 
