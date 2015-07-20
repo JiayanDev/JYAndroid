@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 public class JsNativeBiz {
     public static final String ACTION_OPEN_COMMENT_PANEL = "openCommentPanel";
-    public static final String ACTION_PLAY_IMAGE = "playImage";
+    public static final String ACTION_PLAY_IMAGE = "playImg";
     public static final String ACTION_SET_NAVIGATION_BAR_TITLE = "setNavigationBarTitle";
     public static final String ACTION_SCROLL_BOTTOM_TO_POS_Y = "scrollBottomToPosY";
     public static final String ACTION_TEST = "testForCallNativePleaseGiveBackWhatIHadSend";
@@ -74,14 +74,6 @@ public class JsNativeBiz {
         StringBuilder sb = new StringBuilder();
         sb.append(method);
         sb.append("(");
-//        if (params != null) {
-//            for (String param : params) {
-//                sb.append("\"");
-//                sb.append(param);
-//                sb.append("\",");
-//            }
-//            sb.deleteCharAt(sb.length() - dfasdfa
-//        }
         sb.append(params);
         sb.append(")");
 

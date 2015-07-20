@@ -60,6 +60,7 @@ public class PostActivity extends BaseActivity {
                 return mTabName[position];
             }
         });
+
         mSlidingTabStrip.setViewPager(mViewPager);
         mSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -77,7 +78,6 @@ public class PostActivity extends BaseActivity {
 
             }
         });
-
 
     }
 }

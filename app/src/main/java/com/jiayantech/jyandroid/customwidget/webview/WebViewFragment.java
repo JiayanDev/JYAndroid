@@ -17,6 +17,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.library.utils.UIUtil;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 
@@ -117,7 +118,6 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //mWebView.loadUrl("http://www.baidu.com");
         mWebView.loadUrl(mUrl);
     }
 
@@ -166,6 +166,7 @@ public abstract class WebViewFragment extends BaseFragment{
     }
 
     public void scrollToY(int y){
-        mWebView.scrollTo(mWebView.getScrollX(), y);
+
+        mWebView.scrollBy(0, y);
     }
 }

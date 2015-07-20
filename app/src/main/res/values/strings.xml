@@ -12,6 +12,9 @@
         <item>话题</item>
         <item>日志</item>
     </string-array>
+    
+    <string name="topic">话题</string>
+    <string name="diary">日记</string>
 
     <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
     cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian

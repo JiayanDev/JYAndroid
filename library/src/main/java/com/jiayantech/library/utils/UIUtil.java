@@ -36,4 +36,8 @@ public class UIUtil {
     public static float getDimension(int resId) {
         return BaseApplication.getContext().getResources().getDimension(resId);
     }
+
+    public static int px2dip(int pixel){
+        return 0;
+    };
 }
