@@ -4,16 +4,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.jiayantech.jyandroid.widget.PagerSlidingTabStrip
-        android:id="@+id/tab_title"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        PagerSlidingTabStrip:pstsShouldExpand="true"
-        PagerSlidingTabStrip:pstsIndicatorColor="@color/theme_color"
-        PagerSlidingTabStrip:pstsIndicatorHeight="5dp"
-        >
+    <include layout="@layout/layout_tab"/>
 
-    </com.jiayantech.jyandroid.widget.PagerSlidingTabStrip>
     <com.jiayantech.library.widget.UnslidableViewPager
         android:id="@+id/tab_content"
         android:layout_weight="1"

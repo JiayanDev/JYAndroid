@@ -24,7 +24,6 @@ import com.jiayantech.library.utils.UIUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
 
 
 /**
@@ -32,8 +31,7 @@ import de.greenrobot.event.EventBus;
  */
 public class PostDetailFragment extends WebViewFragment {
 
-    //private String mSubject;
-    //private long subjectId;
+    public static final int REQUEST_CODE_COMMENT = 1;
 
     private View mBottomView;
     private Button mContent;
@@ -51,7 +49,7 @@ public class PostDetailFragment extends WebViewFragment {
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
 
         mBottomView = inflater.inflate(R.layout.layout_post_detail_bottom, null);
         ImageButton sendButton = (ImageButton) mBottomView.findViewById(R.id.button_send);
@@ -60,7 +58,8 @@ public class PostDetailFragment extends WebViewFragment {
             @Override
             public void onClick(View v) {
                 CommentFragment fragment = CommentFragment.newInstance(mId, mType);
-                    fragment.show(getActivity().getSupportFragmentManager(), "comment");
+                fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
+                fragment.show(getActivity().getSupportFragmentManager(), "comment");
             }
         });
 
@@ -86,8 +85,10 @@ public class PostDetailFragment extends WebViewFragment {
         return new BaseWebViewClient(getActivity()) {
             @Override
             protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
+
                 CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
                         call.data.subject, call.data.toUserId, call.data.toUserName);
+                fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
                 fragment.show(getActivity().getSupportFragmentManager(), "comment");
             }
 
@@ -108,15 +109,8 @@ public class PostDetailFragment extends WebViewFragment {
             }
 
             @Override
-            protected void onJsCallNativeViewImage(List<String> images) {
-                super.onJsCallNativeViewImage(images);
-                List<Photo> photoList = new ArrayList<>();
-                for(String image: images){
-                    Photo photo = new Photo(image);
-                    photoList.add(photo);
-                }
-                Intent intent = new Intent(getActivity(), PhotosActivity.class);
-                getActivity().startActivity(intent);
+            protected void onJsCallNativePlayImage(int index, ArrayList<String> images) {
+               PhotosActivity.start(getActivity(),"",images, index);
             }
 
             @Override
@@ -135,7 +129,7 @@ public class PostDetailFragment extends WebViewFragment {
                 scrollToY(posY);
             }
 
-            private void navigate(long id, String type, Class<? extends BaseActivity> clazz){
+            private void navigate(long id, String type, Class<? extends BaseActivity> clazz) {
                 Intent intent = new Intent(getActivity(), clazz);
                 intent.putExtra(WebViewFragment.EXTRA_ID, id);
                 intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
@@ -148,16 +142,17 @@ public class PostDetailFragment extends WebViewFragment {
 
     /**
      * 评论完后的回调
+     *
      * @param postComment
      */
-    public void onEvent(PostComment postComment){
+    public void onCommentFinish(PostComment postComment) {
         //if(getActivity().
         postComment.userId = UserManger.getUserId();
         postComment.userName = UserManger.getUserName();
 
         //如果评论的是评论，在跳入CommentFragment时会带入要评论的该条评论的参数，并会返回来
         //如果toUserId为0， 则表示未有参数传入，将要回复的人设置为该post的作者
-        if(postComment.toUserId == -1 || postComment.toUserId == 0){
+        if (postComment.toUserId == -1 || postComment.toUserId == 0) {
             postComment.toUserId = mUserId;
             postComment.toUserName = mUserName;
         }
