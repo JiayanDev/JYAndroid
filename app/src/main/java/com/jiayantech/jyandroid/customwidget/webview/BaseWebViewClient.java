@@ -1,15 +1,13 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.jiayantech.jyandroid.activity.PostActivity;
-import com.jiayantech.jyandroid.activity.PostDetailActivity;
-import com.jiayantech.jyandroid.app.JYApplication;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
-import com.jiayantech.jyandroid.model.web.ReplyJsCall;
+import com.jiayantech.jyandroid.model.web.JsCallReply;
+import com.jiayantech.jyandroid.model.web.JsCallScroll;
+import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.net.URI;
@@ -32,15 +30,24 @@ public class BaseWebViewClient extends WebViewClient{
             ToastUtil.showMessage(action);
             switch (action){
                 case JsNativeBiz.ACTION_TEST:
-                    ReplyJsCall test = JsNativeBiz.parse(url, ReplyJsCall.class);
+                    JsCallReply test = JsNativeBiz.parse(url, JsCallReply.class);
                     onJsCallNativeTest(test);
                     break;
                 case JsNativeBiz.ACTION_OPEN_COMMENT_PANEL:
-                    ReplyJsCall call = JsNativeBiz.parse(url, ReplyJsCall.class);
+                    JsCallReply call = JsNativeBiz.parse(url, JsCallReply.class);
                     onJsCallNativeOpenCommentPanel(call);
                     break;
                 case JsNativeBiz.ACTION_PLAY_IMAGE:
-
+                    // TODO
+                    break;
+                case JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE:
+                    JsCallSetTitle title = JsNativeBiz.parse(url, JsCallSetTitle.class);
+                    onJsCallNativeSetTitle(title.data.title);
+                    break;
+                case JsNativeBiz.ACTION_SCROLL_BOTTOM_TO_POS_Y:
+                    JsCallScroll scroll = JsNativeBiz.parse(url, JsCallScroll.class);
+                    onJscallNativeScroll(scroll.data.posY);
+                    break;
 
             }
             return super.shouldOverrideUrlLoading(view, url);
@@ -64,11 +71,11 @@ public class BaseWebViewClient extends WebViewClient{
 
     }
 
-    protected void onJsCallNativeOpenCommentPanel(ReplyJsCall call){
+    protected void onJsCallNativeOpenCommentPanel(JsCallReply call){
 
     }
 
-    protected void onJsCallNativeTest(ReplyJsCall call){
+    protected void onJsCallNativeTest(JsCallReply call){
 
     }
 
@@ -81,6 +88,14 @@ public class BaseWebViewClient extends WebViewClient{
     }
 
     protected void onJsCallNativeNavigateToDiary(long id){
+
+    }
+
+    protected void onJsCallNativeSetTitle(String title){
+
+    }
+
+    protected void onJscallNativeScroll(int posY){
 
     }
 }

@@ -13,7 +13,7 @@ import com.jiayantech.library.base.BaseModel;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class CategoryModel extends BaseModel {
+public class CategoriesModel extends BaseModel {
     public int[] categoryIds;
     @Expose
     private String categoryNames;
