@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
+import com.jiayantech.jyandroid.activity.NotificationListActivity;
 import com.jiayantech.library.base.BaseFragment;
 
 /**
@@ -24,6 +25,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     }
 
     private TextView txt_events;
+    private TextView txt_notifications;
 
     @Override
     protected int getInflaterResId() {
@@ -34,6 +36,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     protected void onInitView() {
         txt_events = (TextView) findViewById(R.id.txt_events);
         txt_events.setOnClickListener(this);
+
+        txt_notifications = (TextView)findViewById(R.id.txt_notification);
+        txt_notifications.setOnClickListener(this);
     }
 
     @Override
@@ -41,6 +46,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.txt_events:
                 startActivity(MyEventsActivity.class);
+                break;
+            case R.id.txt_notification:
+                startActivity(NotificationListActivity.class);
                 break;
         }
     }
