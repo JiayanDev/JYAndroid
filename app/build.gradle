@@ -46,6 +46,7 @@ dependencies {
     compile project(':library')
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'
+    compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT@aar'
     compile 'com.makeramen:roundedimageview:2.1.1'
     compile files('src/main/libs/SocialSDK_QQZone_1.jar')

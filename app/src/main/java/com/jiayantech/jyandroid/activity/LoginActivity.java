@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.util.Map;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
-import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
-import com.jiayantech.jyandroid.model.ImageUploadCallback;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
-import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.helper.ActivityResultHelper;
 
 
 /**
@@ -27,13 +24,10 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button btn_direct_login;
-    private Button btn_sina_login;
-    private Button btn_qq_login;
+    private ImageView img_close;
     private Button btn_wechat_login;
-    private Button btn_sina_logout;
-    private Button btn_qq_logout;
-    private Button btn_wechat_logout;
+    private TextView txt_other_login;
+    private TextView txt_register;
 
     private SocialLoginBiz mSocialLoginBiz;
 
@@ -45,48 +39,55 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViews();
         setViewsContent();
         setViewsListener();
-
-        setDisplayHomeAsUpEnabled(false);
-        //finishToStartActivity(MainActivity.class);
+        hideActionBar();
     }
 
 
     protected void findViews() {
-        btn_direct_login = (Button) this.findViewById(R.id.btn_direct_login);
-        btn_wechat_login = (Button) this.findViewById(R.id.btn_wechat_login);
-        btn_qq_login = (Button) this.findViewById(R.id.btn_qq_login);
-        btn_sina_login = (Button) this.findViewById(R.id.btn_sina_login);
-
-        btn_wechat_logout = (Button) this.findViewById(R.id.btn_wechat_logout);
-        btn_qq_logout = (Button) this.findViewById(R.id.btn_qq_logout);
-        btn_sina_logout = (Button) this.findViewById(R.id.btn_sina_logout);
+        img_close = (ImageView) findViewById(R.id.img_close);
+        btn_wechat_login = (Button) findViewById(R.id.btn_wechat_login);
+        txt_other_login = (TextView) findViewById(R.id.txt_other_login);
+        txt_register = (TextView) findViewById(R.id.txt_register);
     }
 
     protected void setViewsContent() {
-        setTitle("登录");
-        setSwipeBackEnable(false);
+        setTitle(R.string.login);
+        setBackgroundResource(android.R.color.white);
         mSocialLoginBiz = new SocialLoginBiz(this);
     }
 
     protected void setViewsListener() {
-        btn_direct_login.setOnClickListener(this);
+        img_close.setOnClickListener(this);
         btn_wechat_login.setOnClickListener(this);
-        btn_qq_login.setOnClickListener(this);
-        btn_sina_login.setOnClickListener(this);
+        txt_other_login.setOnClickListener(this);
+        txt_register.setOnClickListener(this);
+    }
 
-        btn_wechat_logout.setOnClickListener(this);
-        btn_qq_logout.setOnClickListener(this);
-        btn_sina_logout.setOnClickListener(this);
+    @Override
+    protected void onHome() {
+        popFinishActivity();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_direct_login:
-                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+            case R.id.img_close:
+                popFinishActivity();
+                break;
+            case R.id.btn_wechat_login:
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new UserBiz.RegisterRunnable() {
                     @Override
-                    public void run() {
-                        finishToStartActivity(MainActivity.class);
+                    public void onRegister(String code) {
+                        Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
+                        intent.putExtra(UserBiz.SOCIAL_CODE, code);
+                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
+                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+                            @Override
+                            public void onActivityResult(Intent data) {
+                                ActivityResult.onFinishResult(LoginActivity.this);
+                            }
+                        });
                     }
                 }));
                 //startActivity(NotificationListActivity.class);
@@ -94,56 +95,77 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 //                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
 //                        new ResponseListener<ImageUploadCallback>() {
+//                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+//                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
+//                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
+//                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
 //                            @Override
-//                            public void onResponse(ImageUploadCallback callback) {
-//                                ToastUtil.showMessage(LoginActivity.this, "上传完啦");
+//                            public void onActivityResult(Intent data) {
+//                                ActivityResult.onFinishResult(LoginActivity.this);
 //                            }
 //                        });
-                //startActivity(PhotosActivity.class);
-                break;
-            case R.id.btn_wechat_login:
-//                mSocialLoginBiz.login(SHARE_MEDIA.WEIXIN, new SocialLoginBiz.GetUserInfoListener() {
+//                    }
+//                }));
+//                SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
 //                    @Override
-//                    public void onGetUserInfo(Map<String, Object> info) {
+//                    public void onGetCode(final String code) {
+//                        UserBiz.socialLogin(UserBiz.KEY_SOCIAL_COED_WECHAT, code, new UserBiz.LoginResponseListener(LoginActivity.this).setRegisterRunnable(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+//                                intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
+//                                intent.putExtra(UserBiz.SOCIAL_CODE, code);
+//                                startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
+//                                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+//                                    @Override
+//                                    public void onActivityResult(Intent data) {
+//                                        ActivityResult.onFinishResult(LoginActivity.this);
+//                                    }
+//                                });
+//                            }
+//                        });
 //                    }
 //                });
-                UserBiz.wechatLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishToStartActivity(MainActivity.class);
-                    }
-                }));
                 break;
-            case R.id.btn_qq_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {
+            case R.id.txt_other_login:
+                startActivityForResult(new Intent(this, OtherLoginActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
+                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
                     @Override
-                    public void onGetUserInfo(Map<String, Object> info) {
+                    public void onActivityResult(Intent data) {
+                        //finishToStartActivity(MainActivity.class);
+                        ActivityResult.onFinishResult(LoginActivity.this);
                     }
                 });
                 break;
-            case R.id.btn_sina_login:
-                mSocialLoginBiz.login(SHARE_MEDIA.SINA, new SocialLoginBiz.GetUserInfoListener() {
+            case R.id.txt_register:
+                startActivityForResult(new Intent(this, VerifyPhoneActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
+                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
                     @Override
-                    public void onGetUserInfo(Map<String, Object> info) {
+                    public void onActivityResult(Intent data) {
+                        //finishToStartActivity(MainActivity.class);
+                        ActivityResult.onFinishResult(LoginActivity.this);
                     }
                 });
-                break;
-            case R.id.btn_wechat_logout:
-                mSocialLoginBiz.logout(SHARE_MEDIA.WEIXIN);
-                break;
-            case R.id.btn_qq_logout:
-                mSocialLoginBiz.logout(SHARE_MEDIA.QQ);
-                break;
-            case R.id.btn_sina_logout:
-                mSocialLoginBiz.logout(SHARE_MEDIA.SINA);
                 break;
         }
     }
 
+    //////////////////////
+    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
         mSocialLoginBiz.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public static void startLoginActivity(BaseActivity context) {
+        context.popStartActivity(new Intent(context, LoginActivity.class));
     }
 }
 

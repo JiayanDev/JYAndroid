@@ -1,9 +1,10 @@
 package com.jiayantech.jyandroid.model;
 
 import android.text.TextUtils;
+import android.util.SparseArray;
 
 import com.google.gson.annotations.Expose;
-import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseModel;
 
 /**
@@ -13,7 +14,7 @@ import com.jiayantech.library.base.BaseModel;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class CategoryModel extends BaseModel {
+public class CategoriesModel extends BaseModel {
     public int[] categoryIds;
     @Expose
     private String categoryNames;
@@ -22,8 +23,9 @@ public class CategoryModel extends BaseModel {
         if (TextUtils.isEmpty(categoryNames)) {
             if (categoryIds != null) {
                 StringBuilder builder = new StringBuilder();
+                SparseArray<AppInit.Category> data = AppInitManger.getProjectCategoryData();
                 for (int categoryId : categoryIds) {
-                    Login.Category category = UserManger.sProjectCategoryData.get(categoryId);
+                    AppInit.Category category = data.get(categoryId);
                     if (category != null) {
                         builder.append(category.name);
                         builder.append(' ');

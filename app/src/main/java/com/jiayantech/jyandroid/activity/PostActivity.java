@@ -9,7 +9,7 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.widget.PagerSlidingTabStrip;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
@@ -21,7 +21,7 @@ import com.jiayantech.library.widget.UnslidableViewPager;
 public class PostActivity extends BaseActivity {
     private UnslidableViewPager mViewPager;
     private BaseFragment[] mFragments;
-    private Login.Category category;
+    private AppInit.Category category;
     private RadioGroup mRadioGroup;
     private RadioButton mTopicRadioBtn;
     private RadioButton mDiaryRadioBtn;

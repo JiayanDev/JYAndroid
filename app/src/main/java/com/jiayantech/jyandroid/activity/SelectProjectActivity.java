@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ProjectCategoryAdapter;
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.widget.FlowLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -31,7 +30,7 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<Login.Category>, FlowLayout.OnItemClickListener {
+public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<AppInit.Category>, FlowLayout.OnItemClickListener {
     public static final String KEY_TO_PICK = "toPick";
     public static final String KEY_categories = "categories";
     public static final int REQUEST_CODE_SELECT = 0x100;
@@ -43,7 +42,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     private boolean toPick;
     private ProjectCategoryAdapter mAdapter;
 
-    private ArrayList<Login.Category> mSelecteds = new ArrayList<>();
+    private ArrayList<AppInit.Category> mSelecteds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
         toPick = getIntent().getBooleanExtra(KEY_TO_PICK, false);
         layout_selected.setViews(idSelectedSet, mSelecteds);
         list_parents.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ProjectCategoryAdapter(UserManger.sLogin.projectCategory.data);
+        mAdapter = new ProjectCategoryAdapter(AppInitManger.getProjectCategoryTopList());
         list_parents.setAdapter(mAdapter);
     }
 
@@ -103,10 +102,10 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     }
 
     @Override
-    public void onItemClick(BaseSimpleModelAdapter<Login.Category> adapter, int position, Login.Category category) {
+    public void onItemClick(BaseSimpleModelAdapter<AppInit.Category> adapter, int position, AppInit.Category category) {
         list_children.removeAllViews();
-        final List<Login.Category> list = category.sub;
-        for (final Login.Category itemCategory : list) {
+        final List<AppInit.Category> list = category.sub;
+        for (final AppInit.Category itemCategory : list) {
             final String name = itemCategory.name;
 
             View view = getLayoutInflater().inflate(R.layout.item_select_project, list_children, false);
@@ -131,7 +130,7 @@ public class SelectProjectActivity extends BaseActivity implements BaseSimpleMod
     private HashSet<Integer> idSelectedSet = new HashSet<>();
 
     private void onFlowItemClick(View v) {
-        Login.Category category = (Login.Category) v.getTag();
+        AppInit.Category category = (AppInit.Category) v.getTag();
         int id = v.getId();
         v.setSelected(!v.isSelected());
         if (v.isSelected()) {

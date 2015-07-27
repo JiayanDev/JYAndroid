@@ -16,7 +16,8 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Login {
+public class AppInit {
+    public boolean register;
     public String token;
     public ProjectCategory projectCategory;
     public long id;
@@ -77,7 +78,7 @@ public class Login {
             StringBuilder buffer = new StringBuilder(list.size() * 16);
             Iterator<Category> it = list.iterator();
             while (it.hasNext()) {
-                Login.Category next = it.next();
+                AppInit.Category next = it.next();
                 buffer.append(next.name);
                 if (it.hasNext()) {
                     buffer.append(" ");

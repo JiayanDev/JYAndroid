@@ -102,7 +102,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                     BitmapBiz.display(image, item.photoes.get(i), 150);
                 }
             }
-            if (item.type.equals("diary")) {
+            if (Post.POST_TYPE_DIARY.equals(item.type)) {
                 mType.setImageResource(R.drawable.ic_post_type_diary);
             } else {
                 mType.setImageResource(R.drawable.ic_post_type_topic);

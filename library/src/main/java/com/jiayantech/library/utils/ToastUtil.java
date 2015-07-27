@@ -37,6 +37,10 @@ public class ToastUtil {
         showMessage(act, msg, Toast.LENGTH_SHORT, true);
     }
 
+    public static void showMessage(int resId) {
+        showMessage(BaseApplication.getContext().getString(resId));
+    }
+
     /**
      * 底部显示
      */

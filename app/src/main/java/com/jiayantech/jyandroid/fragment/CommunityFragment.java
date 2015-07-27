@@ -13,8 +13,7 @@ import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -65,9 +64,9 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         CategoryAdapter categoryAdapter = new CategoryAdapter();
         categoryAdapter.resetGridHeight(recyclerView, spanCount);
 
-        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener<Login.Category>() {
+        categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener<AppInit.Category>() {
             @Override
-            public void onItemClick(BaseSimpleModelAdapter<Login.Category> adapter, int position, Login.Category item) {
+            public void onItemClick(BaseSimpleModelAdapter<AppInit.Category> adapter, int position, AppInit.Category item) {
                 Intent intent = new Intent(getActivity(), PostActivity.class);
                 intent.putExtra(PostListFragment.EXTRA_CATEGORY, item);
                 getActivity().startActivity(intent);

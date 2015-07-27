@@ -9,7 +9,7 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.BroadcastHelper;
@@ -37,7 +37,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
     private String doctorName;
     private String hospitalId;
     private String hospitalName;
-    private ArrayList<Login.Category> categoryList;
+    private ArrayList<AppInit.Category> categoryList;
     private long operationTime;
     private String price;
     private float satisfyLevel;
@@ -79,7 +79,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
 
     private void setCategories(Intent intent) {
         categoryList = intent.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
-        txt_project.setText(Login.Category.toNamesString(categoryList));
+        txt_project.setText(AppInit.Category.toNamesString(categoryList));
     }
 
     private void setTime(Intent intent) {

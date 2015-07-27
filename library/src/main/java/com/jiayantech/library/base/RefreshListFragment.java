@@ -33,12 +33,15 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  */
 public class RefreshListFragment<T extends BaseModel, ResponseT extends AppResponse<List<T>>> extends BaseFragment {
 
+    private static final String REFRESH_ID = "sinceId";
+    private static final String MORE_ID = "maxId";
+
     private BaseSimpleModelAdapter<T> mAdapter;
     private String mAction;
     private Type mType;
     private Map<String, String> mParams;
 
-    protected void setParams(BaseSimpleModelAdapter<T> adapter, String action){
+    protected void setParams(BaseSimpleModelAdapter<T> adapter, String action) {
         setParams(adapter, action, null);
     }
 
@@ -71,27 +74,37 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             return;
         }
         mIsLoading = true;
-        Map<String, String> params = new ArrayMap<>();
-        if(mParams != null) {
-            params.putAll(mParams);
-        }
-        if (0 != mAdapter.getList().size()) {
+        Map<String, String> page = null;
+        final int size = mAdapter.getList().size();
+        if (0 != size) {
             String sinceId = String.valueOf(mAdapter.getList().get(0).id);
-            //params = new ArrayMap<>();
-            params.put("sinceId", sinceId);
-
+            page = new ArrayMap<>();
+            page.put(REFRESH_ID, sinceId);
         }
-        HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
+        HttpReq.get(mAction, mParams, page, size == 0, true, mType, new ResponseListener<ResponseT>() {
+            @Override
+            public void onLoadResponse(ResponseT response) {
+                List<T> list = response.data;
+                mAdapter.clear();
+                mAdapter.addNew(list);
+            }
+
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
+                if (size == 0) {
+                    mAdapter.clear();
+                }
                 mAdapter.addNew(list);
-                ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
-                mIsLoading = false;
+                onFinal();
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                onFinal();
+            }
+
+            private void onFinal() {
                 ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
                 mIsLoading = false;
             }
@@ -110,32 +123,34 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             return;
         }
         mIsLoading = true;
-        Map<String, String> params = new ArrayMap<>();
+        Map<String, String> page = new ArrayMap<>();
         String maxId = String.valueOf(mAdapter.getList().get(mAdapter.getList().size() - 1).id);
-        params.put("maxId", maxId);
-        if(mParams != null){
-            params.putAll(mParams);
-        }
-
-        HttpReq.get(mAction, params, mType, new ResponseListener<ResponseT>() {
+        page.put(MORE_ID, maxId);
+        HttpReq.get(mAction, mParams, page, false, false, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
                 List<T> list = response.data;
                 if (list.size() > 0) {
                     mAdapter.addMore(list);
                 } else {
-//                    mAdapter.setCustomLoadMoreView(null);
-//                    mAdapter.notifyDataSetChanged();
-                    if (mAdapter.getCustomLoadMoreView() != null) {
-                        mAdapter.getCustomLoadMoreView().setVisibility(View.GONE);
-                    }
+                    mAdapter.setCustomLoadMoreView(null);
+                    mAdapter.notifyDataSetChanged();
+//                    if (mAdapter.getCustomLoadMoreView() != null) {
+//                        mAdapter.getCustomLoadMoreView().setVisibility(View.GONE);
+//                    }
+                    ultimateRecyclerView.disableLoadmore();
                 }
-                mIsLoading = false;
+                onFinal();
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                onFinal();
+            }
+
+            private void onFinal() {
                 mIsLoading = false;
+                //mAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -175,21 +190,8 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
                 onLoadMore();
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        //simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
-//                        //simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
-//                        //simpleRecyclerViewAdapter.insert("More " + moreNum++, simpleRecyclerViewAdapter.getAdapterItemCount());
-//                        // linearLayoutManager.scrollToPositionWithOffset(maxLastVisiblePosition,-1);
-//                        //   linearLayoutManager.scrollToPosition(maxLastVisiblePosition);
-//
-//                    }
-//                }, 1000);
             }
         });
-        // ultimateRecyclerView.hideDefaultFloatingActionButton();
-        // ultimateRecyclerView.hideFloatingActionMenu();
         ultimateRecyclerView.displayCustomFloatingActionView(false);
 
 
@@ -200,33 +202,20 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     private void refreshingString() {
         storeHouseHeader = new StoreHouseHeader(getActivity());
-        //   header.setPadding(0, 15, 0, 0);
-        storeHouseHeader.initWithString("Marshal Chen");
-        //  header.initWithStringArray(R.array.akta);
+        storeHouseHeader.initWithString("Loading");
         ultimateRecyclerView.mPtrFrameLayout.setHeaderView(storeHouseHeader);
         ultimateRecyclerView.mPtrFrameLayout.addPtrUIHandler(storeHouseHeader);
         ultimateRecyclerView.mPtrFrameLayout.autoRefresh(false);
         ultimateRecyclerView.mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout ptrFrameLayout, View view, View view2) {
-                boolean canbePullDown = PtrDefaultHandler.checkContentCanBePulledDown(ptrFrameLayout, view, view2);
-                return canbePullDown;
+                boolean canBePullDown = PtrDefaultHandler.checkContentCanBePulledDown(ptrFrameLayout, view, view2);
+                return canBePullDown;
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
                 onRefresh();
-//                ptrFrameLayout.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //simpleRecyclerViewAdapter.insert("Refresh things", 0);
-//                        //ultimateRecyclerView.scrollBy(0, -50);
-//                        linearLayoutManager.scrollToPosition(0);
-//                        ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
-//                        //changeHeaderHandler.sendEmptyMessageDelayed(0, 500);
-//
-//                    }
-//                }, 1800);
             }
         });
     }

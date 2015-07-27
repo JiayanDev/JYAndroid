@@ -82,6 +82,26 @@
 
     <string name="hint_reply_to">回复: %s</string>
     <string name="select_publish">选择发布</string>
+    <string name="other_login">其他登录方式</string>
+    <string name="register">立即注册</string>
+    <string name="hint_input_phone">请输入手机号码</string>
+    <string name="hint_input_pass">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="hint_social_login_account">第三方登录帐号</string>
+    <string name="txt_forget_pass">忘记密码？</string>
+    <string name="send_verify_code">发送验证码</string>
+    <string name="verify">验证</string>
+    <string name="verify_phone">验证手机</string>
+    <string name="female">女</string>
+    <string name="male">男</string>
+    <string name="hint_input_nickname">请输入呢称(2-20个字符)</string>
+    <string name="hint_input_set_pass">设置新密码(6-20个字符)</string>
+    <string name="hint_input_set_pass_again">请再次输入新密码</string>
+    <string name="confirm_reset">确认并登录</string>
+    <string name="hint_input_phone_code">请输入短信验证码</string>
+    <string name="hint_waring_send_phone_code">请点击发送验证码</string>
+    <string name="title_set_info">完善帐户信息</string>
+    <string name="waring_pass_is_not_same">再次输入的密码不一致</string>
 
 
 </resources>

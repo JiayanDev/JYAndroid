@@ -13,7 +13,7 @@ import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
-import com.jiayantech.jyandroid.manager.UserManger;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.Photo;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.PostComment;
@@ -147,8 +147,8 @@ public class PostDetailFragment extends WebViewFragment {
      */
     public void onCommentFinish(PostComment postComment) {
         //if(getActivity().
-        postComment.userId = UserManger.getUserId();
-        postComment.userName = UserManger.getUserName();
+        postComment.userId = AppInitManger.getUserId();
+        postComment.userName = AppInitManger.getUserName();
 
         //如果评论的是评论，在跳入CommentFragment时会带入要评论的该条评论的参数，并会返回来
         //如果toUserId为0， 则表示未有参数传入，将要回复的人设置为该post的作者

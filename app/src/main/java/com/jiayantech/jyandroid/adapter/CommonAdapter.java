@@ -44,7 +44,7 @@ public class CommonAdapter<T, VH> extends BaseSimpleModelAdapter<T> {
 
         @Override
         public void onBind(User user, int position) {
-            mTextView.setText(user.firstName);
+            mTextView.setText(user.name);
         }
     }
 }

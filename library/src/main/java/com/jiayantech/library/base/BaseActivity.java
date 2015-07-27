@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.jiayantech.library.http.ResponseListener;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
@@ -179,13 +181,13 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     /////////////////////////
     ProgressDialog mProgressDialog;
 
-    protected void showProgressDialog() {
+    public void showProgressDialog() {
         dismissProgressDialog();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.show();
     }
 
-    protected void dismissProgressDialog() {
+    public void dismissProgressDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
             mProgressDialog = null;
@@ -193,6 +195,21 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     }
 
     ///
+    public void popStartActivityForResult(Intent intent, int requestCode, Bundle options) {
+        startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
+    }
+
+    public void popStartActivity(Intent intent) {
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_bottom_in, R.anim.no_anim);
+    }
+
+    public void popFinishActivity() {
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.slide_bottom_out);
+    }
+
     protected void finishToStartActivity(Class<?> cls) {
         finishToStartActivity(new Intent(this, cls));
     }
@@ -247,5 +264,20 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
             }
 
         });
+    }
+
+
+    protected abstract class SimpleResponseListener<T> extends ResponseListener<T> {
+        public SimpleResponseListener() {
+            showProgressDialog();
+        }
+
+        public void onResponse(T var1) {
+            dismissProgressDialog();
+        }
+
+        public void onErrorResponse(VolleyError error) {
+            dismissProgressDialog();
+        }
     }
 }

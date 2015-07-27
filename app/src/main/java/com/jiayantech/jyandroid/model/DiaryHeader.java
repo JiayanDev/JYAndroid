@@ -7,7 +7,7 @@ package com.jiayantech.jyandroid.model;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class DiaryHeader extends CategoryModel {
+public class DiaryHeader extends CategoriesModel {
     public long userId;
     public String verifyStatus;
     public String hospitalId;

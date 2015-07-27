@@ -9,6 +9,7 @@ package com.jiayantech.library.http;
  * rights reserved.
  */
 public class BaseAppResponse {
+    public String jsonString;
     public int code;
     public String msg;
 }
