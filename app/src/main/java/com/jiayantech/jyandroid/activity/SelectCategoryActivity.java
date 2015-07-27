@@ -9,8 +9,7 @@ import android.view.MenuItem;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.CategoryAdapter;
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
@@ -24,13 +23,13 @@ import java.util.ArrayList;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class SelectCategoryActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<Login.Category> {
+public class SelectCategoryActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<AppInit.Category> {
     public static final String KEY_categories = "categories";
 
     private final int spanCount = 3;
     private RecyclerView mRecyclerView;
     private CategoryAdapter mAdapter;
-    private ArrayList<Login.Category> mSelectedList = new ArrayList<>();
+    private ArrayList<AppInit.Category> mSelectedList = new ArrayList<>();
 
 
     @Override
@@ -76,7 +75,7 @@ public class SelectCategoryActivity extends BaseActivity implements BaseSimpleMo
     }
 
     @Override
-    public void onItemClick(BaseSimpleModelAdapter<Login.Category> adapter, int position, Login.Category category) {
+    public void onItemClick(BaseSimpleModelAdapter<AppInit.Category> adapter, int position, AppInit.Category category) {
         boolean selected = mAdapter.select(position);
         if (selected) {
             mSelectedList.add(category);

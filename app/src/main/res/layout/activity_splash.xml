@@ -10,6 +10,6 @@
         android:layout_margin="50dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_logo"/>
+        android:src="@mipmap/icon_logo"/>
 
 </LinearLayout>

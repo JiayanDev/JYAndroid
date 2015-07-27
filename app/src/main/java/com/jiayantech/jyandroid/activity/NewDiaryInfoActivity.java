@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.widget.drawable.BottomLineDrawable;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
@@ -52,7 +52,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     private String doctorName;
     private String hospitalId;
     private String hospitalName;
-    private ArrayList<Login.Category> categoryList;
+    private ArrayList<AppInit.Category> categoryList;
     private long operationTime = 0;
 
     @Override
@@ -93,7 +93,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
 
     private void setCategories(Intent intent) {
         categoryList = intent.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
-        txt_project.setText(Login.Category.toNamesString(categoryList));
+        txt_project.setText(AppInit.Category.toNamesString(categoryList));
     }
 
     @Override

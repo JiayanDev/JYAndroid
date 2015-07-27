@@ -1,6 +1,8 @@
 package com.jiayantech.library.http;
 
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,12 +25,16 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.comm.DataManager;
 import com.jiayantech.library.utils.LogUtil;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -40,43 +46,36 @@ import com.jiayantech.library.utils.LogUtil;
  */
 public class HttpReq<T> extends Request<T> {
     private static final String TAG = HttpReq.class.getSimpleName();
+    private static final int PAGE_NUM = 10;
+    private static final int MAX_CACHE_NUM = 40;
 
-    /**
-     * @param action
-     * @param params
-     * @param l
-     */
+
     public static void post(String action, Map<String, String> params, ResponseListener<?> l) {
-        request(Request.Method.POST, action, params, null, l);
+        request(Request.Method.POST, action, params, null, false, false, null, l);
     }
 
-    /**
-     * @param action
-     * @param params
-     * @param classType
-     * @param l
-     */
     public static void post(String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
-        request(Request.Method.POST, action, params, classType, l);
+        request(Request.Method.POST, action, params, null, false, false, classType, l);
     }
 
-    /**
-     * @param action
-     * @param params
-     * @param l
-     */
+    public static void post(String action, Map<String, String> params, boolean toLoad, boolean toSave, ResponseListener<?> l) {
+        request(Request.Method.POST, action, params, null, toLoad, toSave, null, l);
+    }
+
+    public static void post(String action, Map<String, String> params, boolean toLoad, boolean toSave, Type classType, ResponseListener<?> l) {
+        request(Request.Method.POST, action, params, null, toLoad, toSave, classType, l);
+    }
+
     public static void get(String action, Map<String, String> params, ResponseListener<?> l) {
-        request(Request.Method.GET, action, params, null, l);
+        request(Request.Method.GET, action, params, null, false, false, null, l);
     }
 
-    /**
-     * @param action
-     * @param params
-     * @param classType
-     * @param l
-     */
-    public static void get(String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
-        request(Request.Method.GET, action, params, classType, l);
+    public static void get(String action, Map<String, String> params, boolean toLoad, boolean toSave, ResponseListener<?> l) {
+        request(Request.Method.GET, action, params, null, toLoad, toSave, null, l);
+    }
+
+    public static void get(String action, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, ResponseListener<?> l) {
+        request(Request.Method.GET, action, params, page, toLoad, toSave, classType, l);
     }
 
     public static Map<String, String> getInitParams(String key, String value) {
@@ -91,6 +90,16 @@ public class HttpReq<T> extends Request<T> {
         }
     }
 
+    public static Map<String, String> putParams(Map<String, String> params, Map<String, String> other) {
+        if (params == null) {
+            return other;
+        }
+        if (other != null) {
+            params.putAll(other);
+        }
+        return params;
+    }
+
     ///////////////////////////////////////private static class and method
     /**
      * Initialise Volley Request Queue.
@@ -101,10 +110,13 @@ public class HttpReq<T> extends Request<T> {
      * @param method
      * @param action
      * @param params
+     * @param page
+     * @param toLoad
+     * @param toSave
      * @param classType
      * @param l
      */
-    public static void request(int method, String action, Map<String, String> params, Type classType, ResponseListener<?> l) {
+    public static void request(int method, String action, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, ResponseListener<?> l) {
         //method = Request.Method.GET;
 //        if (params == null) {
 //            params = getInitParams("daddy", "8");
@@ -114,12 +126,19 @@ public class HttpReq<T> extends Request<T> {
 
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
-        HttpReq request = new HttpReq<>(method, builderAction.toString(), params, classType, l, new ErrorListener(l));
-        request.setShouldCache(false);
-        sVolleyQueue.add(request);
+        new HttpReq<>(method, builderAction.toString(), params, page, toLoad, toSave, classType, l, new ErrorListener(l));
     }
 
+    public static <T> T getCache(String action, Map<String, String> params, Class<T> cls) {
+        String value = DataManager.get(getUrlKey(action, params));
+        if (TextUtils.isEmpty(value)) return null;
+        return new Gson().fromJson(value, cls);
+    }
 
+    private static String getUrlKey(String action, Map<String, String> params) {
+        Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
+        return params == null ? builderAction.toString() : builderAction.toString() + params.toString();
+    }
 
     private static class ErrorListener implements Response.ErrorListener {
         ResponseListener mResponseListener;
@@ -132,6 +151,8 @@ public class HttpReq<T> extends Request<T> {
         public void onErrorResponse(VolleyError error) {
             mResponseListener.onErrorResponse(error);
             if (error instanceof MsgError) {
+                //Toast.makeText(BaseApplication.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                //return;
             } else if (error instanceof NetworkError) {
             } else if (error instanceof ServerError) {
             } else if (error instanceof AuthFailureError) {
@@ -139,13 +160,19 @@ public class HttpReq<T> extends Request<T> {
             } else if (error instanceof NoConnectionError) {
             } else if (error instanceof TimeoutError) {
             }
-            Toast.makeText(BaseApplication.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(BaseApplication.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BaseApplication.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     public static class MsgError extends VolleyError {
-        public MsgError(String exceptionMessage) {
-            super(exceptionMessage);
+        public int code;
+        public String msg;
+
+        public MsgError(int code, String msg) {
+            super(code + ": " + msg);
+            this.code = code;
+            this.msg = msg;
         }
     }
 
@@ -178,16 +205,85 @@ public class HttpReq<T> extends Request<T> {
     private Type mClassType;
     private final Gson mGson = new Gson();
 
-    private HttpReq(int method, String url, Map<String, String> params, Type classType, Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(method, (method == Request.Method.GET && params != null) ?
-                url + "?" + encodeParameters(params, PROTOCOL_CHARSET) : url, errorListener);
+    private boolean mToSave;
+    private String mUrlKey;
+    private T mCache;
+
+
+    private HttpReq(int method, String url, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, final ResponseListener<T> listener, Response.ErrorListener errorListener) {
+        super(method, (method == Request.Method.GET && params != null || page != null) ?
+                url + "?" + encodeParameters(putParams(page, params), PROTOCOL_CHARSET) : url, errorListener);
         mParams = params;
         mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
         mClassType = classType == null ? getClassType(listener, 0) : classType;
         mListener = listener;
 
+        setShouldCache(false);
+
+        mToSave = toSave;
+        mUrlKey = url + (params == null ? "" : params.toString());
         LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
-        LogUtil.i(TAG, url + (params == null ? "" : params.toString()));
+        LogUtil.i(TAG, mUrlKey);
+
+        if (toLoad) {
+            /**
+             * 加载缓存，加载后，调用http请求
+             */
+            new AsyncTask<Void, Void, T>() {
+                @Override
+                protected T doInBackground(Void... params) {
+                    String value = DataManager.get(mUrlKey);
+                    if (TextUtils.isEmpty(value)) return null;
+                    try {
+                        return mGson.fromJson(value, mClassType);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(T t) {
+                    mCache = t;
+                    if (t != null) listener.onLoadResponse(t);
+                    if (!isCancelled()) sVolleyQueue.add(HttpReq.this);
+                }
+            }.execute((Void) null);
+        } else {
+            sVolleyQueue.add(HttpReq.this);
+        }
+    }
+
+
+    /**
+     * 保存缓存
+     *
+     * @param jsonString
+     * @param parsedGSON
+     */
+    private void saveCache(String jsonString, T parsedGSON) {
+        AppResponse appResponse = (AppResponse) parsedGSON;
+        if (appResponse.data instanceof ArrayList) {
+            if (mCache != null) {
+                ArrayList list = (ArrayList) appResponse.data;
+                int newSize = list.size();
+                if (newSize > 0 && newSize < PAGE_NUM) {
+                    AppResponse cache = (AppResponse) mCache;
+                    ArrayList cacheList = (ArrayList) cache.data;
+                    int cacheSize = cacheList.size();
+                    int size = newSize + cacheSize;
+                    if (size > MAX_CACHE_NUM) {
+                        list.addAll(cacheList.subList(0, MAX_CACHE_NUM / 2 - newSize));
+                        cache.data = list;
+                    } else {
+                        cacheList.addAll(0, list);
+                    }
+                    DataManager.put(mUrlKey, mGson.toJson(cache));
+                    return;
+                }
+            }
+        }
+        DataManager.put(mUrlKey, jsonString);
     }
 
     protected Map<String, String> getParams() throws AuthFailureError {
@@ -199,13 +295,14 @@ public class HttpReq<T> extends Request<T> {
         try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             LogUtil.i(TAG, jsonString);
-            BaseAppResponse appResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
-            if (appResponse.code == 0) {
+            BaseAppResponse baseAppResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
+            if (baseAppResponse.code == 0) {
                 T parsedGSON = mGson.fromJson(jsonString, mClassType);
+                if (mToSave) saveCache(jsonString, parsedGSON);
                 return Response.success(parsedGSON,
                         HttpHeaderParser.parseCacheHeaders(response));
             } else {
-                return Response.error(new MsgError(appResponse.code + ": " + appResponse.msg));
+                return Response.error(new MsgError(baseAppResponse.code, baseAppResponse.msg));
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -245,6 +342,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
      */
+
     private static String encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {

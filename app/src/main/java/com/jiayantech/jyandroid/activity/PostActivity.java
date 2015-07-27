@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.widget.PagerSlidingTabStrip;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
@@ -21,7 +21,7 @@ public class PostActivity extends BaseActivity {
     private UnslidableViewPager mViewPager;
     private PagerSlidingTabStrip mSlidingTabStrip;
     private BaseFragment[] mFragments;
-    private Login.Category category;
+    private AppInit.Category category;
 
     //private String mType;
     @Override

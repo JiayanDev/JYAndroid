@@ -2,13 +2,12 @@ package com.jiayantech.jyandroid.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.HashMap;
@@ -40,15 +39,15 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
         super(context, attrs, defStyle);
     }
 
-    public void setViews(HashSet<Integer> idSelected, List<Login.Category> list) {
+    public void setViews(HashSet<Integer> idSelected, List<AppInit.Category> list) {
         removeAllViews();
         for (int i = 0; i < list.size(); i++) {
-            Login.Category category = list.get(i);
+            AppInit.Category category = list.get(i);
             addView(category, idSelected.contains(category.id));
         }
     }
 
-    public void addView(Login.Category category, boolean selected) {
+    public void addView(AppInit.Category category, boolean selected) {
         TextView button = new TextView(getContext());
         button.setTag(category);
         button.setBackgroundResource(R.drawable.bg_project_child_category_gray_selector);

@@ -1,64 +1,72 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
-
-import org.json.JSONObject;
 
 /**
  * Created by liangzili on 15/6/24.
  */
 public class SplashActivity extends BaseActivity {
+    private final long delayMillis = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         setSwipeBackEnable(false);
         hideActionBar();
-
-//        UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-//            @Override
-//            public void run() {
-//                finishToStartActivity(MainActivity.class);
-//                //startActivity(new Intent(SplashActivity.this, SearchActivity.class));
-//            }
-//        }));
-
-//        HttpReq.uploadImage("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-03-02-10-43-55.png",
-//                new ResponseListener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject jsonObject) {
-//                        ToastUtil.showMessage("Upload Complete");
-//                    }
-//
-//                });
-////        startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
-////        finish();
-
-        new Handler().postDelayed(new Runnable() {
+        final long currentTimeMillis = System.currentTimeMillis();
+        CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
             @Override
-            public void run() {
-                finishToStartActivity(LoginActivity.class);
+            public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                AppInit appInit = appInitAppResponse.data;
+                AppInitManger.save(appInit);
+                if (appInit.register) {
+                    UserBiz.quickLogin(new ResponseListener<AppResponse<AppInit>>() {
+                        @Override
+                        public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                            AppInitManger.save(appInitAppResponse.data);
+                            gotoMainActivity(currentTimeMillis);
+                        }
+                    });
+                } else {
+                    gotoMainActivity(currentTimeMillis);
+                }
             }
-        }, 1000);
-//        HttpReq.uploadImage("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-03-02-10-43-55.png",
-//                new ResponseListener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject jsonObject) {
-//                        ToastUtil.showMessage("Upload Complete");
-//                    }
-//
-//                });
-//        startActivity(new Intent(SplashActivity.this, MyDiaryActivity.class));
-//        finish();
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (!(error instanceof HttpReq.MsgError)) {
+                    if (AppInitManger.getProjectCategoryData() != null) {
+                        gotoMainActivity(currentTimeMillis);
+                    }
+                }
+            }
+        });
+    }
+
+    private void gotoMainActivity(long currentTimeMillis) {
+        long dTimeMillis = System.currentTimeMillis() - currentTimeMillis;
+        if (dTimeMillis < delayMillis) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finishToStartActivity(MainActivity.class);
+                }
+            }, delayMillis - dTimeMillis);
+            return;
+        }
+        finishToStartActivity(MainActivity.class);
     }
 }

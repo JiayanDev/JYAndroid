@@ -10,6 +10,14 @@ import com.jiayantech.library.base.BaseModel;
  * rights reserved.
  */
 public class User extends BaseModel {
-    public String firstName;
-    public String lastName;
+    public String name;
+    public String avatar;
+    public String phone;
+    public String province;
+    public String city;
+    public String gender;
+    public boolean bindQQ;
+    public long birthday;
+    public boolean bindWX;
+    public boolean bindWB;
 }

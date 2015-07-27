@@ -12,6 +12,9 @@ import com.android.volley.VolleyError;
  * rights reserved.
  */
 public abstract class ResponseListener<T> implements Response.Listener<T> {
+    public void onLoadResponse(T t) {
+    }
+
     public void onErrorResponse(VolleyError error) {
     }
 }

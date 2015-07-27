@@ -4,7 +4,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
@@ -17,9 +17,9 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<Login.Category> {
+public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<AppInit.Category> {
 
-    public ProjectCategoryAdapter(List<Login.Category> list) {
+    public ProjectCategoryAdapter(List<AppInit.Category> list) {
         super(list);
     }
 
@@ -29,12 +29,12 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<Login.Categor
     }
 
     @Override
-    public void setOnItemClickListener(OnItemClickListener<Login.Category> l) {
+    public void setOnItemClickListener(OnItemClickListener<AppInit.Category> l) {
         super.setOnItemClickListener(l);
         l.onItemClick(this, mSelectedPos, mList.get(mSelectedPos));
     }
 
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Login.Category> {
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<AppInit.Category> {
         private TextView txt_category;
 
         public ViewHolder(ViewGroup parent, int layoutId, ProjectCategoryAdapter adapter) {
@@ -44,7 +44,7 @@ public class ProjectCategoryAdapter extends BaseSimpleModelAdapter<Login.Categor
         }
 
         @Override
-        public void onBind(Login.Category category, int position) {
+        public void onBind(AppInit.Category category, int position) {
             txt_category.setSelected(mAdapter.mSelectedPos == position);
             txt_category.setText(category.name);
         }

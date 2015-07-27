@@ -79,20 +79,10 @@ public class LoginActivity0 extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_direct_login:
-                UserBiz.quickLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishToStartActivity(MainActivity.class);
-                    }
-                }));
+                UserBiz.quickLogin(new UserBiz.LoginResponseListener(this));
                 break;
             case R.id.btn_wechat_login:
-                UserBiz.wechatLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishToStartActivity(MainActivity.class);
-                    }
-                }));
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this));
                 break;
             case R.id.btn_qq_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {

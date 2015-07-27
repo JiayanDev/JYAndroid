@@ -22,7 +22,7 @@ import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.model.ImageUploadCallback;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -60,7 +60,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
     private ImageAdapter mImageAdapter;
     protected List<String> urlList = new ArrayList<>();
-    private List<Login.Category> categoryList;
+    private List<AppInit.Category> categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
                         categoryList = data.getParcelableArrayListExtra(SelectCategoryActivity.KEY_categories);
-                        txt_category.setText(Login.Category.toNamesString(categoryList));
+                        txt_category.setText(AppInit.Category.toNamesString(categoryList));
                     }
                 });
                 break;

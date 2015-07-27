@@ -16,29 +16,43 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_input_phone"
             android:maxLines="1"
-            android:paddingLeft="30dip" />
+            android:paddingLeft="40dip"
+            android:paddingRight="80dip" />
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
+    <ImageView
+        android:id="@+id/img_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/input_phone"
         android:layout_alignLeft="@id/input_phone"
-        android:layout_marginBottom="@dimen/normal_margin"
-        android:text="+86" />
+        android:layout_marginBottom="15dip"
+        android:src="@mipmap/icon_phone" />
 
-    <Button
-        android:id="@+id/btn_send_verify_code"
+    <View
+        style="@style/divider_ver_gray_style"
+        android:layout_height="20dip"
+        android:layout_alignBottom="@id/img_phone"
+        android:layout_marginLeft="@dimen/normal_margin"
+        android:layout_toRightOf="@id/img_phone" />
+
+    <TextView
+        android:id="@+id/txt_send_verify_code"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="22dip"
         android:layout_alignBottom="@id/input_phone"
         android:layout_alignRight="@id/input_phone"
-        android:layout_marginBottom="@dimen/normal_margin"
-        android:background="@null"
-        android:text="@string/send_verify_code" />
+        android:layout_marginBottom="12dip"
+        android:background="@drawable/bg_big_round_theme"
+        android:gravity="center"
+        android:paddingLeft="@dimen/normal_padding"
+        android:paddingRight="@dimen/normal_padding"
+        android:text="@string/send_verify_code"
+        android:textColor="@android:color/white"
+        android:textSize="13sp" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_pass"
+        android:id="@+id/input_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/input_phone"
@@ -49,16 +63,30 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_input_pass"
-            android:inputType="textPassword"
+            android:hint="@string/hint_input_phone_code"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
+    <ImageView
+        android:id="@+id/img_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/input_code"
+        android:layout_alignLeft="@id/input_code"
+        android:layout_marginBottom="15dip"
+        android:src="@mipmap/icon_pass" />
+
+    <View
+        style="@style/divider_ver_gray_style"
+        android:layout_height="20dip"
+        android:layout_alignBottom="@id/img_code"
+        android:layout_marginLeft="@dimen/normal_margin"
+        android:layout_toRightOf="@id/img_code" />
+
     <Button
         android:id="@+id/btn_verify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/input_pass"
+        style="@style/btn_theme"
+        android:layout_below="@id/input_code"
         android:layout_margin="30dip"
         android:text="@string/verify" />
 

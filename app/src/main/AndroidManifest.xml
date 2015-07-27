@@ -21,6 +21,18 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.OtherLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VerifyPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SetInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ResetPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -65,8 +77,9 @@
         <activity
             android:name=".activity.EventDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ApplyEventActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ApplyEventActivity"
+            android:screenOrientation="portrait" />
 
         <!--友盟推送服务相关-->
         <receiver

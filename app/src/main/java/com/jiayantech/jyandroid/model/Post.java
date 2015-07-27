@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Post extends CategoryModel {
+public class Post extends CategoriesModel {
     public static final String POST_TYPE_DIARY = "diary";
     public static final String POST_TYPE_TOPIC = "topic";
     public String avatar;

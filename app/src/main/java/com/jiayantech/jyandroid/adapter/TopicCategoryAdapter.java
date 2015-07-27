@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ import java.util.List;
  * Created by liangzili on 15/7/3.
  */
 public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdapter.ViewHolder> {
-    private List<Login.Category> mCategoryList;
+    private List<AppInit.Category> mCategoryList;
     private Context mContext;
 
     public TopicCategoryAdapter(Context context) {
         mContext = context;
-        mCategoryList = UserManger.sLogin.projectCategory.data;
+        mCategoryList = AppInitManger.getProjectCategoryTopList();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Login.Category category = mCategoryList.get(position);
+        AppInit.Category category = mCategoryList.get(position);
         holder.name.setText(category.name);
         holder.listener.setPosition(position);
     }

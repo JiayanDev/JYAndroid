@@ -2,14 +2,20 @@ package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.helper.ActivityResultHelper;
+import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
@@ -19,6 +25,9 @@ import java.util.Map;
  */
 public class OtherLoginActivity extends BaseActivity implements View.OnClickListener {
 
+    private TextInputLayout input_phone;
+    private TextInputLayout input_pass;
+    private TextView txt_forget_pass;
     private Button btn_login;
     private ImageView img_wechat_login;
     private ImageView img_qq_login;
@@ -35,12 +44,14 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
         setViewsListener();
     }
 
-
     protected void findViews() {
-        btn_login = (Button) this.findViewById(R.id.btn_login);
-        img_wechat_login = (ImageView) this.findViewById(R.id.img_wechat_login);
-        img_qq_login = (ImageView) this.findViewById(R.id.img_qq_login);
-        img_sina_login = (ImageView) this.findViewById(R.id.img_sina_login);
+        input_phone = (TextInputLayout) findViewById(R.id.input_phone);
+        input_pass = (TextInputLayout) findViewById(R.id.input_pass);
+        txt_forget_pass = (TextView) findViewById(R.id.txt_forget_pass);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        img_wechat_login = (ImageView) findViewById(R.id.img_wechat_login);
+        img_qq_login = (ImageView) findViewById(R.id.img_qq_login);
+        img_sina_login = (ImageView) findViewById(R.id.img_sina_login);
     }
 
     protected void setViewsContent() {
@@ -49,6 +60,7 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
     }
 
     protected void setViewsListener() {
+        txt_forget_pass.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         img_wechat_login.setOnClickListener(this);
         img_qq_login.setOnClickListener(this);
@@ -58,11 +70,42 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_wechat_login:
-                UserBiz.wechatLogin(new UserBiz.LoginResponseListener().setRunnable(new Runnable() {
+            case R.id.txt_forget_pass:
+                startActivityForResult(new Intent(this, VerifyPhoneActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
+                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
                     @Override
-                    public void run() {
+                    public void onActivityResult(Intent data) {
                         finishToStartActivity(MainActivity.class);
+                    }
+                });
+                break;
+            case R.id.btn_login:
+                String phone = input_phone.getEditText().getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    ToastUtil.showMessage(R.string.hint_input_phone);
+                    return;
+                }
+                String pass = input_pass.getEditText().getText().toString();
+                if (TextUtils.isEmpty(pass)) {
+                    ToastUtil.showMessage(R.string.hint_input_pass);
+                    return;
+                }
+                UserBiz.login(phone, pass, new UserBiz.LoginResponseListener(this));
+                break;
+            case R.id.img_wechat_login:
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new UserBiz.RegisterRunnable() {
+                    @Override
+                    public void onRegister(String code) {
+                        Intent intent = new Intent(OtherLoginActivity.this, VerifyPhoneActivity.class);
+                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
+                        intent.putExtra(UserBiz.SOCIAL_CODE, code);
+                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
+                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+                            @Override
+                            public void onActivityResult(Intent data) {
+                                ActivityResult.onFinishResult(OtherLoginActivity.this);
+                            }
+                        });
                     }
                 }));
                 break;
@@ -83,10 +126,14 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    //////////////////////
+    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
         mSocialLoginBiz.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 

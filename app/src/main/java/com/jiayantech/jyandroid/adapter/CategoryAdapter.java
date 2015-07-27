@@ -5,8 +5,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.manager.UserManger;
-import com.jiayantech.jyandroid.model.Login;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseGridAdapter;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.utils.UIUtil;
@@ -22,7 +22,7 @@ import java.util.List;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
+public class CategoryAdapter extends BaseGridAdapter<AppInit.Category> {
     private final List<Boolean> selectedList;
     private boolean mShowSelect;
 
@@ -31,7 +31,7 @@ public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
     }
 
     public CategoryAdapter(boolean showSelect) {
-        super(UserManger.sLogin.projectCategory.data);
+        super(AppInitManger.getProjectCategoryTopList());
         mShowSelect = showSelect;
         selectedList = new ArrayList<>(mList.size());
         for (int i = 0; i < mList.size(); i++) {
@@ -57,7 +57,7 @@ public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
     }
 
     @Override
-    protected void onBind(BaseSimpleModelAdapter.ViewHolder viewHolder, Login.Category category, int position) {
+    protected void onBind(BaseSimpleModelAdapter.ViewHolder viewHolder, AppInit.Category category, int position) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (mShowSelect) {
             boolean select = selectedList.get(position);
@@ -73,7 +73,7 @@ public class CategoryAdapter extends BaseGridAdapter<Login.Category> {
         holder.txt_category.setText(category.name);
     }
 
-    public static class ViewHolder extends BaseGridAdapter.ViewHolder<Login.Category> {
+    public static class ViewHolder extends BaseGridAdapter.ViewHolder<AppInit.Category> {
         private ImageView img_category;
         private TextView txt_category;
 
