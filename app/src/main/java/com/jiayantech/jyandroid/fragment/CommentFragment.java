@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.PostBiz;
+import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
@@ -117,8 +118,8 @@ public class CommentFragment extends DialogFragment{
                                     postComment.toUserId = mToUserId;
                                     postComment.toUserName = mToUserName;
                                 }
-
-                                EventBus.getDefault().post(postComment);
+                                ((PostDetailFragment)getTargetFragment()).
+                                        onCommentFinish(postComment);
                             }
 
                         });
@@ -130,14 +131,14 @@ public class CommentFragment extends DialogFragment{
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        comment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
-            }
-        });
+//        comment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//                }
+//            }
+//        });
 
         ToastUtil.showMessage("subject: " + mSubject + " subjectId: " + mSubjectId +
             "mToUserId:  " + mToUserId + " toUsername: " + mToUserName);

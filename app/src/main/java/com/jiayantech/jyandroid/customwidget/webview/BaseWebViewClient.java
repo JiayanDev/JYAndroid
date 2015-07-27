@@ -5,13 +5,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.JsCallScroll;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.net.URI;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by liangzili on 15/7/16.
@@ -39,6 +40,9 @@ public class BaseWebViewClient extends WebViewClient{
                     break;
                 case JsNativeBiz.ACTION_PLAY_IMAGE:
                     // TODO
+                    JsCallPlayImage playImage = JsNativeBiz.parse(url, JsCallPlayImage.class);
+                    onJsCallNativePlayImage(playImage.data.defaultIndex,
+                            playImage.data.imgList);
                     break;
                 case JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE:
                     JsCallSetTitle title = JsNativeBiz.parse(url, JsCallSetTitle.class);
@@ -46,12 +50,14 @@ public class BaseWebViewClient extends WebViewClient{
                     break;
                 case JsNativeBiz.ACTION_SCROLL_BOTTOM_TO_POS_Y:
                     JsCallScroll scroll = JsNativeBiz.parse(url, JsCallScroll.class);
+                    //ToastUtil.showMessage("YPosition: " + scroll.data.posY);
                     onJscallNativeScroll(scroll.data.posY);
                     break;
 
             }
             return super.shouldOverrideUrlLoading(view, url);
         }else{
+            //URL监听跳转
             URI uri = URI.create(url);
             String action = uri.getPath();
             if(uri.getPath().endsWith(WebViewFragment.ACTION_DIARY_HEADER)){
@@ -83,7 +89,7 @@ public class BaseWebViewClient extends WebViewClient{
 
     }
 
-    protected void onJsCallNativeViewImage(List<String> images){
+    protected void onJsCallNativePlayImage(int index, ArrayList<String> images){
 
     }
 

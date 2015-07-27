@@ -18,8 +18,8 @@ public class Post extends CategoriesModel {
     public ArrayList<String> photoes;
     public long commentCount;
     public long likeCount;
-    public String userId;
-    public String diaryId;
+    public long userId;
+    public long diaryId;
     public String type;
     public boolean isLike;
     public String headerId;

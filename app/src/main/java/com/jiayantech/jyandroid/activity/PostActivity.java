@@ -17,11 +17,13 @@ import com.jiayantech.library.widget.UnslidableViewPager;
  * Created by liangzili on 15/7/8.
  */
 public class PostActivity extends BaseActivity {
-    private String[] mTabName;
     private UnslidableViewPager mViewPager;
-    private PagerSlidingTabStrip mSlidingTabStrip;
     private BaseFragment[] mFragments;
     private AppInit.Category category;
+    private Login.Category category;
+    private RadioGroup mRadioGroup;
+    private RadioButton mTopicRadioBtn;
+    private RadioButton mDiaryRadioBtn;
 
     //private String mType;
     @Override
@@ -35,13 +37,26 @@ public class PostActivity extends BaseActivity {
 
     public void init() {
         setTitle(category.name);
-        mTabName = getResources().getStringArray(R.array.tab_post);
         mViewPager = (UnslidableViewPager) findViewById(R.id.tab_content);
-        mSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tab_title);
+        mRadioGroup = (RadioGroup)findViewById(R.id.radiogroup_tab);
+        mTopicRadioBtn = (RadioButton)findViewById(R.id.tab_topic);
+        mDiaryRadioBtn = (RadioButton)findViewById(R.id.tab_diary);
+
         mFragments = new BaseFragment[]{
                 PostListFragment.newInstance("topic", category.id, false),
                 PostListFragment.newInstance("diary", category.id, false)
         };
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == mTopicRadioBtn.getId()){
+                    mViewPager.setCurrentItem(0);
+                }else{
+                    mViewPager.setCurrentItem(1);
+                }
+            }
+        });
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -54,14 +69,14 @@ public class PostActivity extends BaseActivity {
                 return mFragments.length;
             }
 
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTabName[position];
-            }
+//
+//            @Override
+//            public CharSequence getPageTitle(int position) {
+//                return mTabName[position];
+//            }
         });
-        mSlidingTabStrip.setViewPager(mViewPager);
-        mSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -69,7 +84,11 @@ public class PostActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                if(position == 0){
+                    mTopicRadioBtn.setChecked(true);
+                }else{
+                    mDiaryRadioBtn.setChecked(true);
+                }
             }
 
             @Override
@@ -78,6 +97,23 @@ public class PostActivity extends BaseActivity {
             }
         });
 
+//        mSlidingTabStrip.setViewPager(mViewPager);
+//        mSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
     }
 }
