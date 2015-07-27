@@ -18,9 +18,9 @@ import java.util.ArrayList;
  * Created by liangzili on 15/7/16.
  */
 public class BaseWebViewClient extends WebViewClient{
-    private Context mContext;
-    public BaseWebViewClient(Context context){
-        mContext = context;
+    private WebViewFragment mWebViewFragment;
+    public BaseWebViewClient(WebViewFragment fragment){
+        mWebViewFragment = fragment;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class BaseWebViewClient extends WebViewClient{
         if(url.startsWith("jiayan://js_call_native?")){
             //native与Js相互调用
             String action = JsNativeBiz.getJsAction(url);
-            ToastUtil.showMessage(action);
+            //ToastUtil.showMessage(action);
             switch (action){
                 case JsNativeBiz.ACTION_TEST:
                     JsCallReply test = JsNativeBiz.parse(url, JsCallReply.class);
@@ -39,7 +39,6 @@ public class BaseWebViewClient extends WebViewClient{
                     onJsCallNativeOpenCommentPanel(call);
                     break;
                 case JsNativeBiz.ACTION_PLAY_IMAGE:
-                    // TODO
                     JsCallPlayImage playImage = JsNativeBiz.parse(url, JsCallPlayImage.class);
                     onJsCallNativePlayImage(playImage.data.defaultIndex,
                             playImage.data.imgList);
@@ -73,8 +72,12 @@ public class BaseWebViewClient extends WebViewClient{
             }
             return true;
         }
+    }
 
-
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        mWebViewFragment.finishLoading();
     }
 
     protected void onJsCallNativeOpenCommentPanel(JsCallReply call){

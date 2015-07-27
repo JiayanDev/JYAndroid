@@ -82,7 +82,7 @@ public class PostDetailFragment extends WebViewFragment {
 
     @Override
     protected WebViewClient onSetWebViewClient() {
-        return new BaseWebViewClient(getActivity()) {
+        return new BaseWebViewClient(this) {
             @Override
             protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
 
