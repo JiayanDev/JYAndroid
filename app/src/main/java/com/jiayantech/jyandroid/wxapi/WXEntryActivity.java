@@ -17,10 +17,10 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import java.lang.ref.WeakReference;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
-    private static WeakReference<SocialLoginBiz.GetCodeListener> sGetCodeListenerReference;
+    private static SocialLoginBiz.GetCodeListener sGetCodeListener;
 
     public static void setGetCodeListener(SocialLoginBiz.GetCodeListener l) {
-        sGetCodeListenerReference = new WeakReference<>(l);
+        sGetCodeListener = l;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 //      或者
                 String code = ((SendAuth.Resp) resp).code;
                 //上面的code就是接入指南里要拿到的code
-                if (sGetCodeListenerReference != null && sGetCodeListenerReference.get() != null) {
-                    SocialLoginBiz.GetCodeListener getCodeListener = sGetCodeListenerReference.get();
+                if (sGetCodeListener != null) {
+                    SocialLoginBiz.GetCodeListener getCodeListener = sGetCodeListener;
                     getCodeListener.onGetCode(code);
                 } else {
                     ToastUtil.showMessage("code:" + code);
@@ -63,9 +63,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (sGetCodeListenerReference != null) {
-            sGetCodeListenerReference.clear();
-            sGetCodeListenerReference = null;
+        if (sGetCodeListener != null) {
+            sGetCodeListener = null;
         }
     }
 }

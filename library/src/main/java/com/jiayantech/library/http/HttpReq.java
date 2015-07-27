@@ -314,7 +314,6 @@ public class HttpReq<T> extends Request<T> {
         }
     }
 
-
     @Override
     public String getBodyContentType() {
         return PROTOCOL_CONTENT_TYPE;

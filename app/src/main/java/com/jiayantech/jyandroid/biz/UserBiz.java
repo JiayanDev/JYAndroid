@@ -9,6 +9,7 @@ import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -122,14 +123,15 @@ public class UserBiz {
     }
 
     public static void wechatLogin(final LoginResponseListener l) {
-        SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
-            @Override
-            public void onGetCode(String code) {
-                if (l.mRegisterRunnable != null) l.mRegisterRunnable.code = code;
-                socialLogin(KEY_SOCIAL_COED_WECHAT, code, l);
-                //LogUtil.i("wxCode", code);
-            }
-        });
+//        SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
+//            @Override
+//            public void onGetCode(String code) {
+//                if (l.mRegisterRunnable != null) l.mRegisterRunnable.code = code;
+//                //socialLogin(KEY_SOCIAL_COED_WECHAT, code, l);
+//                LogUtil.i("wxCode", code);
+//            }
+//        });
+        socialLogin(KEY_SOCIAL_COED_WECHAT, "0211a93fbdccc024cce8897b8e19f65c", l);
     }
 
     /**
