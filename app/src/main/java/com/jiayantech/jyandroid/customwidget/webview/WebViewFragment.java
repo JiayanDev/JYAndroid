@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.utils.UIUtil;
@@ -50,7 +51,7 @@ public abstract class WebViewFragment extends BaseFragment{
     public static final String EXTRA_USERNAME = "username";
     public static final String EXTRA_USER_ID = "user_id";
 
-    final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+    //final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
     protected View mView;
     protected FrameLayout mNativeLayout;
@@ -128,7 +129,7 @@ public abstract class WebViewFragment extends BaseFragment{
         ToastUtil.showMessage(getActivity(), "the postId is " + mId);
 
         String content = getString(R.string.post_share_text, new Object[] {"我爱你", "http://www.baidu.com"});
-        mController.setShareContent(content);
+        //mController.setShareContent(content);
 
         ToastUtil.showMessage(getActivity(), mUrl);
     }
@@ -156,7 +157,8 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_share){
-            mController.openShare(getActivity(), false);
+            //mController.openShare(getActivity(), false);
+            ShareBiz.shareToWechat(mUrl, ShareBiz.WECHAT_TIMELINE);
         }
         return super.onOptionsItemSelected(item);
     }

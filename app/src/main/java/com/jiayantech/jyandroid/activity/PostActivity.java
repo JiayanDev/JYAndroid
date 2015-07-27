@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
@@ -20,7 +22,6 @@ public class PostActivity extends BaseActivity {
     private UnslidableViewPager mViewPager;
     private BaseFragment[] mFragments;
     private AppInit.Category category;
-    private Login.Category category;
     private RadioGroup mRadioGroup;
     private RadioButton mTopicRadioBtn;
     private RadioButton mDiaryRadioBtn;
