@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.ApplyEventActivity;
 import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/7/9.
@@ -45,17 +46,8 @@ public class EventDetailFragment extends WebViewFragment{
     }
 
     @Override
-    protected BaseWebChromeClient onSetWebChromeClient() {
-        return null;
-    }
-
-    @Override
-    protected JavascriptInterface onAddJavascriptInterface() {
-        return null;
-    }
-
-    @Override
-    protected WebViewClient onSetWebViewClient() {
-        return new BaseWebViewClient(this);
+    public void onResume() {
+        super.onResume();
+        ToastUtil.showMessage(String.format("eventId is %d", mId));
     }
 }

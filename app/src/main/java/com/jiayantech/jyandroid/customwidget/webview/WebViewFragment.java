@@ -58,8 +58,6 @@ public abstract class WebViewFragment extends BaseFragment{
     protected FrameLayout mNativeLayout;
     protected WebView mWebView;
 
-
-
     protected String mType;
     protected long mId;
     protected String mUserName;
@@ -79,13 +77,6 @@ public abstract class WebViewFragment extends BaseFragment{
     }
 
     private void setUrl(){
-//        if(mType.equals(TYPE_DIARY)){
-//            mUrl = BASE_URL + ACTION_DIARY;
-//        }else if(mType.equals(TYPE_DIARY_HEADER)){
-//            mUrl = BASE_URL + ACTION_DIARY_HEADER;
-//        }else if(mType.equals(TYPE_TOPIC)){
-//            mUrl = BASE_URL + ACTION_DIARY;
-//        }
         switch (mType.toString()){
             case TYPE_DIARY:
                 mUrl = BASE_URL + ACTION_DIARY;
@@ -147,12 +138,6 @@ public abstract class WebViewFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        //ToastUtil.showMessage(getActivity(), "the postId is " + mId);
-
-        //String content = getString(R.string.post_share_text, new Object[] {"我爱你", "http://www.baidu.com"});
-        //mController.setShareContent(content);
-
-        //ToastUtil.showMessage(getActivity(), mUrl);
     }
 
     @Override
@@ -163,13 +148,7 @@ public abstract class WebViewFragment extends BaseFragment{
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);
 
-    protected abstract BaseWebChromeClient onSetWebChromeClient();
 
-    protected abstract JavascriptInterface onAddJavascriptInterface();
-
-    protected abstract WebViewClient onSetWebViewClient(
-
-    );
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -189,17 +168,21 @@ public abstract class WebViewFragment extends BaseFragment{
         JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 
-    public void scrollToY(int y){
-
-        //mWebView.scrollBy(0, y);
-    }
 
     public void finishLoading(){
         mContentLayout.setVisibility(View.VISIBLE);
         mLoadingLayout.setVisibility(View.GONE);
     }
 
-    interface onPageLoadingFinishListener{
-        void onPageLoadFinish();
+    protected BaseWebChromeClient onSetWebChromeClient(){
+        return new BaseWebChromeClient();
+    }
+
+    protected JavascriptInterface onAddJavascriptInterface(){
+        return new JavascriptInterface();
+    }
+
+    protected BaseWebViewClient onSetWebViewClient(){
+        return new BaseWebViewClient(this);
     }
 }
