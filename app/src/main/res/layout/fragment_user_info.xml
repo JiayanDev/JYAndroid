@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/txt_notification"
-                style="@style/text_item_style"
+                style="@style/text_mid_item_style"
                 android:text="我的通知" />
 
             <View
@@ -55,7 +55,7 @@
 
             <TextView
                 android:id="@+id/txt_mime"
-                style="@style/text_item_style"
+                style="@style/text_mid_item_style"
                 android:text="我的伴美" />
 
             <View
@@ -66,7 +66,7 @@
 
             <TextView
                 android:id="@+id/txt_events"
-                style="@style/text_item_style"
+                style="@style/text_mid_item_style"
                 android:text="成为美丽天使" />
 
             <View
@@ -77,8 +77,30 @@
 
             <TextView
                 android:id="@+id/txt_help"
-                style="@style/text_item_style"
+                style="@style/text_mid_item_style"
                 android:text="帮助" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dip"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_logout"
+                style="@style/text_mid_item_style"
+                android:text="退出" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dip"
+                android:background="@color/font_gray" />
+
+            <TextView
+                android:id="@+id/txt_delete"
+                style="@style/text_mid_item_style"
+                android:text="删除用户" />
 
             <View
                 android:layout_width="match_parent"

@@ -16,7 +16,6 @@ import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.widget.drawable.BottomLineDrawable;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -102,8 +101,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
             case R.id.txt_project:
                 Intent intent = new Intent(this, SelectProjectActivity.class);
                 intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
-                startActivityForResult(intent, SelectProjectActivity.REQUEST_CODE_SELECT);
-                mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
+                startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         setCategories(data);
@@ -120,8 +118,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 });
                 break;
             case R.id.txt_doctor:
-                SearchActivity.start(this, getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION);
-                mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                SearchActivity.start(this, getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         doctorId = data.getStringExtra(SearchActivity.KEY_ID);
@@ -131,8 +128,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 });
                 break;
             case R.id.txt_hospital:
-                SearchActivity.start(this, getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION);
-                mActivityResultHelper.addActivityResult(new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                SearchActivity.start(this, getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
@@ -178,15 +174,5 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    //////////////////////
-    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

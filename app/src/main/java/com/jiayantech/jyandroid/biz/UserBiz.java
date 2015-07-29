@@ -1,15 +1,24 @@
 package com.jiayantech.jyandroid.biz;
 
+import android.content.Intent;
+import android.text.TextUtils;
+
 import com.android.volley.VolleyError;
+import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.VerifyPhoneActivity;
+import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.comm.MD5;
+import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
+import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,19 +32,17 @@ import java.util.Map;
  * rights reserved.
  */
 public class UserBiz {
-    /**
-     * token过期
-     */
-    private static final int CODE_EXPIRE = -40;
     private static final String KEY_CONFIG_VERSION = "configVersion";
     public static final String KEY_PHONE = "phoneNum";
     public static final String KEY_PHONE_CODE_RESPONSE = "confirmId";
-    public static final String KEY_PHONE_CODE_CONFIRM_RESPONSE = "receipt";
+    public static final String KEY_RESPONSE = "receipt";
+    public static final String KEY_SOCIAL_RESPONSE = "social_receipt";
 
+    public static final String SOCIAL_TYPE = "social_type";
+    public static final String SOCIAL_TYPE_WECHAT = "wx";
 
-    public static final String SOCIAL_CODE = "social_code";
-    public static final String SOCIAL_CODE_TYPE = "social_code_type";
-    public static final String KEY_SOCIAL_COED_WECHAT = "wxCode";
+    public static final String SOCIAL_CODE = "code";
+
 
     private static final String MODEL = "user";
 
@@ -49,14 +56,16 @@ public class UserBiz {
     private static final String ACTION_LOGOUT = MODEL + "/logout";
     private static final String ACTION_DETAIL = MODEL + "/detail";
     private static final String ACTION_UPDATE = MODEL + "/update";
+    private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
+    private static final String ACTION_DELETE = MODEL + "/delete";
 
     /**
      * 注册
      *
      * @param l
      */
-    private static void register(LoginResponseListener l) {
+    private static void register(RegisterResponseListener l) {
         HttpReq.post(ACTION_REGISTER, null, l);
     }
 
@@ -65,16 +74,15 @@ public class UserBiz {
      *
      * @param receipt
      * @param phoneNum
-     * @param social_code_type
-     * @param social_code
-     * @param psw
      * @param l
      */
-    public static void register(String receipt, String phoneNum, String social_code_type, String social_code, String psw, LoginResponseListener l) {
-        Map<String, String> params = HttpReq.getInitParams(KEY_PHONE_CODE_CONFIRM_RESPONSE, receipt);
+    public static void register(String receipt, String social_type, String social_response, String phoneNum, RegisterResponseListener l) {
+        Map<String, String> params = HttpReq.getInitParams(KEY_RESPONSE, receipt);
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
-        HttpReq.putParams(params, social_code_type, social_code);
-        HttpReq.putParams(params, "psw", psw);
+        //HttpReq.putParams(params, social_type, social_code);
+        //HttpReq.putParams(params, "psw", MD5.encode(psw));
+        HttpReq.putParams(params, social_type + "Receipt", social_response);
+        l.phoneNum = phoneNum;
         HttpReq.post(ACTION_REGISTER, params, l);
     }
 
@@ -88,12 +96,13 @@ public class UserBiz {
      * @param psw
      * @param l
      */
-    public static void register(String receipt, String phoneNum, String name, int gender, String psw, LoginResponseListener l) {
-        Map<String, String> params = HttpReq.getInitParams(KEY_PHONE_CODE_CONFIRM_RESPONSE, receipt);
+    public static void register(String receipt, String phoneNum, String name, int gender, String psw, RegisterResponseListener l) {
+        Map<String, String> params = HttpReq.getInitParams(KEY_RESPONSE, receipt);
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
         HttpReq.putParams(params, "name", name);
         HttpReq.putParams(params, "gender", gender);
-        HttpReq.putParams(params, "psw", psw);
+        HttpReq.putParams(params, "psw", MD5.encode(psw));
+        l.phoneNum = phoneNum;
         HttpReq.post(ACTION_REGISTER, params, l);
     }
 
@@ -101,9 +110,9 @@ public class UserBiz {
         HttpReq.get(ACTION_PHONE_SEND_CODE, HttpReq.getInitParams(KEY_PHONE, phoneNum), l);
     }
 
-    public static void confirmPhoneCode(String social_code_type, String social_code, String phoneCodeResponse, String code, ResponseListener<?> l) {
+    public static void confirmPhoneCode(String phoneCodeResponse, String code, ResponseListener<?> l) {
         Map<String, String> params = HttpReq.getInitParams("code", code);
-        HttpReq.putParams(params, social_code_type, social_code);
+        //HttpReq.putParams(params, social_type, social_code);
         HttpReq.putParams(params, KEY_PHONE_CODE_RESPONSE, phoneCodeResponse);
         HttpReq.post(ACTION_PHONE_CONFIRM_CODE, params, l);
     }
@@ -123,15 +132,15 @@ public class UserBiz {
     }
 
     public static void wechatLogin(final LoginResponseListener l) {
-//        SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
-//            @Override
-//            public void onGetCode(String code) {
-//                if (l.mRegisterRunnable != null) l.mRegisterRunnable.code = code;
-//                //socialLogin(KEY_SOCIAL_COED_WECHAT, code, l);
-//                LogUtil.i("wxCode", code);
-//            }
-//        });
-        socialLogin(KEY_SOCIAL_COED_WECHAT, "0211a93fbdccc024cce8897b8e19f65c", l);
+        SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
+            @Override
+            public void onGetCode(String code) {
+                l.social_type = SOCIAL_TYPE_WECHAT;
+                l.social_code = code;
+                LogUtil.i(SOCIAL_TYPE_WECHAT, code);
+                socialLogin(SOCIAL_TYPE_WECHAT, code, l);
+            }
+        });
     }
 
     /**
@@ -144,12 +153,13 @@ public class UserBiz {
     public static void login(String phoneNum, String psw, LoginResponseListener l) {
         Map<String, String> params = new HashMap<>();
         params.put(KEY_PHONE, phoneNum);
-        params.put("psw", psw);
+        params.put("psw", MD5.encode(psw));
+        l.phoneNum = phoneNum;
         postLogin(ACTION_LOGIN, params, l);
     }
 
-    public static void socialLogin(String platformCodeKey, String code, LoginResponseListener l) {
-        postLogin(ACTION_LOGIN, HttpReq.getInitParams(platformCodeKey, code), l);
+    public static void socialLogin(String social_type, String code, LoginResponseListener l) {
+        postLogin(ACTION_LOGIN, HttpReq.getInitParams(social_type + "Code", code), l);
     }
 
     private static void postLogin(String action, Map<String, String> params, ResponseListener<?> l) {
@@ -173,7 +183,7 @@ public class UserBiz {
         if (!ConfigManager.checkTokenWithTips()) return;
         Map<String, String> params = HttpReq.getInitParams("type", type);
         HttpReq.putParams(params, "name", name);
-        HttpReq.putParams(params, "psw", psw);
+        HttpReq.putParams(params, "psw", MD5.encode(psw));
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
         HttpReq.putParams(params, "confirmCode", confirmCode);
         HttpReq.putParams(params, "wxCode", wxCode);
@@ -196,96 +206,111 @@ public class UserBiz {
         HttpReq.post(ACTION_UPDATE, params, l);
     }
 
+    public static void update(String receipt, String phoneNum, String psw, ResponseListener<?> l) {
+        Map<String, String> params = HttpReq.getInitParams(KEY_RESPONSE, receipt);
+        HttpReq.putParams(params, KEY_PHONE, phoneNum);
+        HttpReq.putParams(params, "psw", MD5.encode(psw));
+        HttpReq.post(ACTION_UPDATE_PASS, params, l);
+    }
+
     public static void logout(ResponseListener<?> l) {
-        if (!ConfigManager.checkTokenWithTips()) return;
+        if (ConfigManager.checkTokenWithTips()) return;
         HttpReq.post(ACTION_LOGOUT, null, l);
+    }
+
+    public static void delete(ResponseListener<?> l) {
+        if (ConfigManager.checkTokenWithTips()) return;
+        HttpReq.post(ACTION_DELETE, null, l);
     }
 
     /**
      *
      */
     public static class LoginResponseListener extends ResponseListener<AppResponse<AppInit>> {
-        private RegisterRunnable mRegisterRunnable;
+        private String phoneNum;
+        private String social_type;
+        private String social_code;
         private BaseActivity mActivity;
 
         public LoginResponseListener(BaseActivity activity) {
             mActivity = activity;
-            mActivity.showProgressDialog();
+            if (mActivity != null) mActivity.showProgressDialog();
         }
 
-        public void success() {
-            mActivity.dismissProgressDialog();
-            ActivityResult.onFinishResult(mActivity);
-        }
-
-
-        public LoginResponseListener setRegisterRunnable(RegisterRunnable r) {
-            mRegisterRunnable = r;
-            return this;
-        }
-
-        @Override
-        public void onLoadResponse(AppResponse<AppInit> response) {
-            AppInit login = response.data;
-            if (login.projectCategory != null) {
-                AppInitManger.save(login);
-            }
+        public LoginResponseListener(BaseActivity activity, String phoneNum) {
+            this(activity);
+            this.phoneNum = phoneNum;
         }
 
         @Override
         public void onResponse(AppResponse<AppInit> response) {
+            if (mActivity != null) mActivity.dismissProgressDialog();
             AppInit appInit = response.data;
             AppInitManger.save(appInit);
-            success();
-            if (mRegisterRunnable != null) {
-                mRegisterRunnable.run();
+            String social_response = getSocialReceipt(appInit, social_type);
+            if (appInit.register && TextUtils.isEmpty(social_response) && !TextUtils.isEmpty(appInit.phoneNum)) {
+                BroadcastHelper.send(Broadcasts.ACTION_LOGINED);
+                if (!TextUtils.isEmpty(phoneNum)) ConfigManager.putConfig(KEY_PHONE, phoneNum);
+                onFinishResult();
+            } else {
+                if (mActivity != null) {
+                    ToastUtil.showMessage(R.string.msg_account_not_register);
+                    Intent intent = new Intent(mActivity, VerifyPhoneActivity.class);
+                    if (!TextUtils.isEmpty(social_type)) {
+                        intent.putExtra(UserBiz.KEY_SOCIAL_RESPONSE, social_response);
+                        intent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
+                        intent.putExtra(UserBiz.SOCIAL_CODE, social_code);
+                    }
+                    mActivity.startActivityForResult(intent, new ActivityResult() {
+                        @Override
+                        public void onActivityResult(Intent data) {
+                            UserBiz.quickLogin(new UserBiz.LoginResponseListener(mActivity));
+                        }
+                    });
+                }
             }
+        }
 
-//            AppInit appInit = response.data;
-////            if (login.projectCategory != null) {
-////                AppInitManger.save(login);
-////                success();
-////                if (mRegisterRunnable != null) {
-////                    mRegisterRunnable.run();
-////                }
-////                return;
-////            }
-//            if (appInit.id != 0) {
-//                AppInitManger.save(appInit);
-//                success();
-//                if (mRegisterRunnable != null) {
-//                    mRegisterRunnable.run();
-//                }
-//                return;
-//            }
-//            ConfigManager.putToken(appInit.token);
-//            quickLogin(this);
-////            if (response.code == CODE_EXPIRE && mResponseListener != null && mConfigVersion != null) {
-////                quickLogin(mConfigVersion, mResponseListener);
-////            } else {
-////                mResponseListener.onResponse(response);
-////            }
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            if (mActivity != null) mActivity.dismissProgressDialog();
+            if (!(error instanceof HttpReq.MsgError)) {
+                if (AppInitManger.getProjectCategoryData() != null) {
+                    onFinishResult();
+                }
+            }
+        }
+
+        private void onFinishResult() {
+            if (mActivity != null) ActivityResult.onFinishResult(mActivity);
+        }
+    }
+
+    private static String getSocialReceipt(AppInit appInit, String social_type) {
+        if (SOCIAL_TYPE_WECHAT.equals(social_type)) {
+            return appInit.wxReceipt;
+        }
+        return null;
+    }
+
+    public static class RegisterResponseListener extends ResponseListener<AppResponse<AppInit>> {
+        private String phoneNum;
+        private BaseActivity mActivity;
+
+        public RegisterResponseListener(BaseActivity activity) {
+            mActivity = activity;
+            mActivity.showProgressDialog();
+        }
+
+        @Override
+        public void onResponse(AppResponse<AppInit> response) {
+            AppInitManger.saveToken(response.data);
+            quickLogin(new LoginResponseListener(mActivity, phoneNum));
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
             mActivity.dismissProgressDialog();
-            if (!(error instanceof HttpReq.MsgError)) {
-                if (AppInitManger.getProjectCategoryData() != null) {
-                    success();
-                }
-            }
         }
-    }
-
-    public static abstract class RegisterRunnable implements Runnable {
-        String code;
-
-        @Override
-        public final void run() {
-            onRegister(code);
-        }
-
-        public abstract void onRegister(String code);
     }
 }

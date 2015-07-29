@@ -14,6 +14,8 @@ import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.comm.MD5;
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -57,6 +59,7 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
     protected void setViewsContent() {
         setTitle(getString(R.string.login) + getString(R.string.app_name));
         mSocialLoginBiz = new SocialLoginBiz(this);
+        input_phone.getEditText().setText(ConfigManager.getConfig(UserBiz.KEY_PHONE));
     }
 
     protected void setViewsListener() {
@@ -71,13 +74,9 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_forget_pass:
-                startActivityForResult(new Intent(this, VerifyPhoneActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
-                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
-                    @Override
-                    public void onActivityResult(Intent data) {
-                        finishToStartActivity(MainActivity.class);
-                    }
-                });
+                Intent intent = new Intent(this, VerifyPhoneActivity.class);
+                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
+                startActivity(intent);
                 break;
             case R.id.btn_login:
                 String phone = input_phone.getEditText().getText().toString();
@@ -93,21 +92,7 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
                 UserBiz.login(phone, pass, new UserBiz.LoginResponseListener(this));
                 break;
             case R.id.img_wechat_login:
-                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new UserBiz.RegisterRunnable() {
-                    @Override
-                    public void onRegister(String code) {
-                        Intent intent = new Intent(OtherLoginActivity.this, VerifyPhoneActivity.class);
-                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
-                        intent.putExtra(UserBiz.SOCIAL_CODE, code);
-                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
-                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
-                            @Override
-                            public void onActivityResult(Intent data) {
-                                ActivityResult.onFinishResult(OtherLoginActivity.this);
-                            }
-                        });
-                    }
-                }));
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this));
                 break;
             case R.id.img_qq_login:
                 mSocialLoginBiz.login(SHARE_MEDIA.QQ, new SocialLoginBiz.GetUserInfoListener() {
@@ -126,12 +111,7 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    //////////////////////
-    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
         mSocialLoginBiz.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }

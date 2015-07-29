@@ -1,9 +1,10 @@
 package com.jiayantech.library.base;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.jiayantech.library.comm.CrashHandler;
+import com.jiayantech.library.helper.BroadcastHelper;
+import com.jiayantech.library.http.HttpReq;
 
 /**
  * Created by janseon on 2015/6/28.
@@ -13,21 +14,43 @@ import com.jiayantech.library.comm.CrashHandler;
  * rights reserved.
  */
 public abstract class BaseApplication extends Application {
-    private static Context sContext;
+    private static BaseApplication sContext;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sContext = this;
-        // 注册crashHandler
-        CrashHandler.getInstance().init(getApplicationContext());
-    }
-
-    public static Context getContext() {
+    public static BaseApplication getContext() {
         return sContext;
     }
 
-    public static void onCrash(Throwable ex, String message) {
+    @Override
+    public void onCreate() {
+        sContext = this;
+        super.onCreate();
+        mBroadcastHelper = new BroadcastHelper();
+        CrashHandler.getInstance().init(getApplicationContext());// 注册crashHandler
+    }
+
+    /**
+     * 请求过期
+     *
+     * @param httpReq
+     */
+    public void onOverdue(HttpReq httpReq) {
+    }
+
+    /**
+     * app crash之后
+     *
+     * @param ex
+     * @param message
+     */
+    public void onCrash(Throwable ex, String message) {
+    }
+
+    protected BroadcastHelper mBroadcastHelper;
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        mBroadcastHelper.onDestroy();
     }
 
 }

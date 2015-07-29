@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.http.ResponseListener;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -184,6 +186,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     public void showProgressDialog() {
         dismissProgressDialog();
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
     }
 
@@ -194,20 +197,12 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         }
     }
 
-    ///
-    public void popStartActivityForResult(Intent intent, int requestCode, Bundle options) {
-        startActivityForResult(intent, requestCode, options);
-        overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
+    public void popBottomIn() {
+        overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.no_anim);
     }
 
-    public void popStartActivity(Intent intent) {
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_bottom_in, R.anim.no_anim);
-    }
-
-    public void popFinishActivity() {
-        super.finish();
-        overridePendingTransition(R.anim.no_anim, R.anim.slide_bottom_out);
+    public void popBottomOut() {
+        overridePendingTransition(R.anim.no_anim, R.anim.abc_slide_out_bottom);
     }
 
     protected void finishToStartActivity(Class<?> cls) {
@@ -229,10 +224,41 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
 
+    public void startActivityForFinishResult(Intent intent) {
+        startActivityForResult(intent, new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+            @Override
+            public void onActivityResult(Intent data) {
+                ActivityResult.onFinishResult(BaseActivity.this);
+            }
+        });
+    }
+
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+    }
+
+
+    public void startActivityForResult(Intent intent, int requestCode, ActivityResult activityResult) {
+        startActivityForResult(intent, requestCode);
+        mActivityResultHelper.addActivityResult(activityResult);
+    }
+
+    public void startActivityForResult(Intent intent, ActivityResult activityResult) {
+        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
+    }
+
+    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
+
+    public ActivityResultHelper getActivityResultHelper() {
+        return mActivityResultHelper;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

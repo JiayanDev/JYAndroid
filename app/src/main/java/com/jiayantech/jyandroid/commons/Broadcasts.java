@@ -15,4 +15,5 @@ public class Broadcasts {
     public static final String ACTION_PUBLISH_TOPIC = sPackageName + ".publishTopic";
     public static final String ACTION_PUBLISH_DIARY_BOOK = sPackageName + ".publishDiaryBook";
     public static final String ACTION_PUBLISH_DIARY = sPackageName + ".publishDiary";
+    public static final String ACTION_LOGINED = sPackageName + ".logined";
 }

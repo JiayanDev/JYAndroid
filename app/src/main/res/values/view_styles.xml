@@ -56,6 +56,10 @@
         <item name="android:textColor">@color/text_normal_color</item>
     </style>
 
+    <style name="text_mid_item_style" parent="text_item_style">
+        <item name="android:padding">15dip</item>
+    </style>
+
     <style name="text_item_right_arrow_style" parent="text_item_style">
         <item name="android:drawableRight">@drawable/img_right_arrow_selector</item>
         <item name="android:drawablePadding">5dip</item>

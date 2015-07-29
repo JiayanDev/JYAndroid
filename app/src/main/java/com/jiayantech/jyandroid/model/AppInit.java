@@ -17,6 +17,7 @@ import java.util.List;
  * rights reserved.
  */
 public class AppInit {
+    public String wxReceipt;
     public boolean register;
     public String token;
     public ProjectCategory projectCategory;
@@ -24,6 +25,10 @@ public class AppInit {
     public String avatar;
     public String name;
 
+    public String phoneNum;
+    public boolean bindWX;
+    public boolean bindWB;
+    public boolean bindQQ;
 
     public static class ProjectCategory {
         public int version;

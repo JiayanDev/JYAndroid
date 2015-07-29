@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.helper.ActivityResultHelper;
+
 /**
  * Created by janseon on 2015/6/29.
  *
@@ -49,5 +52,23 @@ public abstract class BaseFragment extends Fragment {
 
     protected void startActivity(Class<?> cls) {
         startActivity(new Intent(getActivity(), cls));
+    }
+
+
+    public void startActivityForResult(Intent intent, int requestCode, ActivityResult activityResult) {
+        startActivityForResult(intent, requestCode);
+        mActivityResultHelper.addActivityResult(activityResult);
+    }
+
+    public void startActivityForResult(Intent intent, ActivityResult activityResult) {
+        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
+    }
+
+    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -11,7 +11,6 @@ import com.jiayantech.jyandroid.activity.SelectProjectActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -90,8 +89,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
             case R.id.txt_project:
                 Intent intent = new Intent(getActivity(), SelectProjectActivity.class);
                 intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
-                startActivityForResult(intent, SelectProjectActivity.REQUEST_CODE_SELECT);
-                mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
+                startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
 //                        categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
@@ -139,17 +137,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
     }
 
     private void search(String title, String action, ActivityResult activityResult) {
-        SearchActivity.start(this, title, action);
-        mActivityResultHelper.addActivityResult(activityResult);
-    }
-
-    //////////////////////
-    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
+        SearchActivity.start(this, title, action, activityResult);
     }
 
     protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, double time);

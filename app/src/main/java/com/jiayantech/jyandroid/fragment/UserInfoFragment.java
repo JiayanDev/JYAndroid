@@ -10,7 +10,13 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.NotificationListActivity;
+import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.BaseAppResponse;
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/6/25.
@@ -26,6 +32,8 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     private TextView txt_events;
     private TextView txt_notifications;
+    private TextView txt_logout;
+    private TextView txt_delete;
 
     @Override
     protected int getInflaterResId() {
@@ -37,8 +45,14 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         txt_events = (TextView) findViewById(R.id.txt_events);
         txt_events.setOnClickListener(this);
 
-        txt_notifications = (TextView)findViewById(R.id.txt_notification);
+        txt_notifications = (TextView) findViewById(R.id.txt_notification);
         txt_notifications.setOnClickListener(this);
+
+        txt_logout = (TextView) findViewById(R.id.txt_logout);
+        txt_logout.setOnClickListener(this);
+
+        txt_delete = (TextView) findViewById(R.id.txt_delete);
+        txt_delete.setOnClickListener(this);
     }
 
     @Override
@@ -49,6 +63,26 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.txt_notification:
                 startActivity(NotificationListActivity.class);
+                break;
+            case R.id.txt_logout:
+                ((BaseActivity) getActivity()).showProgressDialog();
+                UserBiz.logout(new ResponseListener<BaseAppResponse>() {
+                    @Override
+                    public void onResponse(BaseAppResponse baseAppResponse) {
+                        ((BaseActivity) getActivity()).dismissProgressDialog();
+                        ToastUtil.showMessage("logout");
+                    }
+                });
+                break;
+            case R.id.txt_delete:
+                ((BaseActivity) getActivity()).showProgressDialog();
+                UserBiz.delete(new ResponseListener<BaseAppResponse>() {
+                    @Override
+                    public void onResponse(BaseAppResponse baseAppResponse) {
+                        ((BaseActivity) getActivity()).dismissProgressDialog();
+                        ToastUtil.showMessage("delete");
+                    }
+                });
                 break;
         }
     }

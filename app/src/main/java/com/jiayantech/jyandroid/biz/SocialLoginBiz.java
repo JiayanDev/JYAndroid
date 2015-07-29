@@ -36,8 +36,8 @@ import java.util.Map;
  * rights reserved.
  */
 public class SocialLoginBiz {
-    //////////////////原生sdk 登录
 
+    //////////////////原生sdk 登录
     public static void wechatLogin(final GetCodeListener getCodeListener) {
         WXEntryActivity.setGetCodeListener(getCodeListener);
         IWXAPI api = WXAPIFactory.createWXAPI(BaseApplication.getContext(), Constants.WECHAT_appId);

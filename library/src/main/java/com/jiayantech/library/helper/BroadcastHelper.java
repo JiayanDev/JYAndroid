@@ -30,15 +30,15 @@ public class BroadcastHelper {
     }
 
     // /////////////////////////////注册广播
-    private ArrayList<BroadcastReceiver> mRreceivers;
+    private ArrayList<BroadcastReceiver> mReceivers;
 
     public void registerReceiver(BroadcastReceiver receiver, String... actions) {
         registerReceiver(false, receiver, actions);
     }
 
     public void registerReceiver(BroadcastReceiver[] receivers, String... actions) {
-        if (mRreceivers == null) {
-            mRreceivers = new ArrayList<>();
+        if (mReceivers == null) {
+            mReceivers = new ArrayList<>();
         }
         int length = receivers.length;
         for (int i = 0; i < length; i++) {
@@ -46,15 +46,15 @@ public class BroadcastHelper {
             IntentFilter filter = new IntentFilter();
             filter.addAction(action);
             sLocalBroadcastManager.registerReceiver(receivers[i], filter);
-            mRreceivers.add(receivers[i]);
+            mReceivers.add(receivers[i]);
         }
     }
 
     public void registerReceiver(boolean firstRun, BroadcastReceiver receiver, String... actions) {
-        if (mRreceivers == null) {
-            mRreceivers = new ArrayList<>();
+        if (mReceivers == null) {
+            mReceivers = new ArrayList<>();
         }
-        mRreceivers.add(receiver);
+        mReceivers.add(receiver);
         IntentFilter filter = new IntentFilter();
         for (String action : actions) {
             filter.addAction(action);
@@ -64,27 +64,45 @@ public class BroadcastHelper {
             Intent intent = new Intent(actions[0]);
             receiver.onReceive(null, intent);
         }
+
+        if (receiver instanceof OnceBroadcastReceiver) {
+            ((OnceBroadcastReceiver) receiver).mBroadcastHelper = this;
+        }
     }
 
-    public void unReceiver(BroadcastReceiver... rs) {
-        if (mRreceivers != null) {
-            ArrayList<BroadcastReceiver> removeRreceivers = new ArrayList<>();
+    public void unregisterReceiver(BroadcastReceiver... rs) {
+        if (mReceivers != null) {
+            ArrayList<BroadcastReceiver> removeReceivers = new ArrayList<>();
             for (BroadcastReceiver r : rs) {
-                if (mRreceivers.contains(r)) {
+                if (mReceivers.contains(r)) {
                     sLocalBroadcastManager.unregisterReceiver(r);
-                    removeRreceivers.add(r);
+                    removeReceivers.add(r);
                 }
             }
-            mRreceivers.removeAll(removeRreceivers);
+            mReceivers.removeAll(removeReceivers);
         }
     }
 
     public void onDestroy() {
-        if (mRreceivers != null) {
-            for (BroadcastReceiver receiver : mRreceivers) {
+        if (mReceivers != null) {
+            for (BroadcastReceiver receiver : mReceivers) {
                 sLocalBroadcastManager.unregisterReceiver(receiver);
             }
-            mRreceivers.clear();
+            mReceivers.clear();
+        }
+    }
+
+    public static abstract class OnceBroadcastReceiver extends BroadcastReceiver {
+        public abstract void onOnceReceive(Context context, Intent intent);
+
+        private BroadcastHelper mBroadcastHelper;
+
+        @Override
+        public final void onReceive(Context context, Intent intent) {
+            if (mBroadcastHelper != null) {
+                mBroadcastHelper.unregisterReceiver(this);
+            }
+            onOnceReceive(context, intent);
         }
     }
 }
