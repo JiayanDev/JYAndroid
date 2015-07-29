@@ -4,7 +4,9 @@ import android.content.Context;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.JsCallScroll;
@@ -80,8 +82,13 @@ public class BaseWebViewClient extends WebViewClient{
         mWebViewFragment.finishLoading();
     }
 
-    protected void onJsCallNativeOpenCommentPanel(JsCallReply call){
 
+
+    protected void onJsCallNativeOpenCommentPanel(JsCallReply call){
+        CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
+                call.data.subject, call.data.toUserId, call.data.toUserName);
+        fragment.setTargetFragment(mWebViewFragment, WebViewFragment.REQUEST_CODE_COMMENT);
+        fragment.show(mWebViewFragment.getActivity().getSupportFragmentManager(), "comment");
     }
 
     protected void onJsCallNativeTest(JsCallReply call){
@@ -93,7 +100,7 @@ public class BaseWebViewClient extends WebViewClient{
     }
 
     protected void onJsCallNativePlayImage(int index, ArrayList<String> images){
-
+        PhotosActivity.start(mWebViewFragment.getActivity(), "", images, index);
     }
 
     protected void onJsCallNativeNavigateToDiary(long id){
@@ -101,7 +108,7 @@ public class BaseWebViewClient extends WebViewClient{
     }
 
     protected void onJsCallNativeSetTitle(String title){
-
+        mWebViewFragment.getActivity().setTitle(title);
     }
 
     protected void onJscallNativeScroll(int posY){

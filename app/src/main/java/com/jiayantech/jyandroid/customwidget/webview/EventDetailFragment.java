@@ -56,6 +56,6 @@ public class EventDetailFragment extends WebViewFragment{
 
     @Override
     protected WebViewClient onSetWebViewClient() {
-        return null;
+        return new BaseWebViewClient(this);
     }
 }

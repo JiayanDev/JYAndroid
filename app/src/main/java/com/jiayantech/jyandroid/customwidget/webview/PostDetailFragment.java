@@ -9,15 +9,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
-import com.jiayantech.jyandroid.model.Photo;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
-import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
+import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.UIUtil;
 
@@ -31,7 +29,6 @@ import java.util.List;
  */
 public class PostDetailFragment extends WebViewFragment {
 
-    public static final int REQUEST_CODE_COMMENT = 1;
 
     private View mBottomView;
     private Button mContent;
@@ -83,14 +80,13 @@ public class PostDetailFragment extends WebViewFragment {
     @Override
     protected WebViewClient onSetWebViewClient() {
         return new BaseWebViewClient(this) {
-            @Override
-            protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
-
-                CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
-                        call.data.subject, call.data.toUserId, call.data.toUserName);
-                fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
-                fragment.show(getActivity().getSupportFragmentManager(), "comment");
-            }
+//            @Override
+//            protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
+//                CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
+//                        call.data.subject, call.data.toUserId, call.data.toUserName);
+//                fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
+//                fragment.show(getActivity().getSupportFragmentManager(), "comment");
+//            }
 
             @Override
             protected void onJsCallNativeTest(JsCallReply call) {
@@ -108,10 +104,10 @@ public class PostDetailFragment extends WebViewFragment {
                 navigate(id, WebViewFragment.TYPE_DIARY_HEADER, PostDetailActivity.class);
             }
 
-            @Override
-            protected void onJsCallNativePlayImage(int index, ArrayList<String> images) {
-               PhotosActivity.start(getActivity(),"",images, index);
-            }
+//            @Override
+//            protected void onJsCallNativePlayImage(int index, ArrayList<String> images) {
+//               PhotosActivity.start(getActivity(),"",images, index);
+//            }
 
             @Override
             protected void onJsCallNativeNavigateToDiary(long id) {
@@ -119,10 +115,10 @@ public class PostDetailFragment extends WebViewFragment {
                 navigate(id, WebViewFragment.TYPE_DIARY, PostDetailActivity.class);
             }
 
-            @Override
-            protected void onJsCallNativeSetTitle(String title) {
-                getActivity().setTitle(title);
-            }
+//            @Override
+//            protected void onJsCallNativeSetTitle(String title) {
+//                getActivity().setTitle(title);
+//            }
 
             @Override
             protected void onJscallNativeScroll(int posY) {

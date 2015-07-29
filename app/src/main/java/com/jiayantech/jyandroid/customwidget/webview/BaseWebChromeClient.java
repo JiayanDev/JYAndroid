@@ -15,6 +15,4 @@ public class BaseWebChromeClient extends WebChromeClient{
         super.onProgressChanged(view, newProgress);
     }
 
-
-
 }

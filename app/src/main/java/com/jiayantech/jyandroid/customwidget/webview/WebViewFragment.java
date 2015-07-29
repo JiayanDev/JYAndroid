@@ -27,6 +27,8 @@ import com.jiayantech.library.comm.Property;
 public abstract class WebViewFragment extends BaseFragment{
     public static final String TAG = WebViewFragment.class.getSimpleName();
 
+    public static final int REQUEST_CODE_COMMENT = 1;
+
     //public static final String BASE_URL = "http://app.jiayantech.com/app/htm/";
     public static final String BASE_URL = Property.getProperty("html.url");
     public static final String ACTION_DIARY = "diary.html";
@@ -93,6 +95,9 @@ public abstract class WebViewFragment extends BaseFragment{
                 break;
             case TYPE_TOPIC:
                 mUrl = BASE_URL + ACTION_DIARY;
+                break;
+            case TYPE_EVENT:
+                mUrl = "http://www.baidu.com";
                 break;
             default:
                 throw new IllegalArgumentException(String.format("type %s not supported.", mType));
