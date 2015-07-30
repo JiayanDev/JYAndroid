@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.app;
 import android.content.Context;
 import android.content.Intent;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.LoginActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
@@ -15,6 +16,7 @@ import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -31,6 +33,7 @@ public class JYApplication extends BaseApplication {
     @Override
     public void onOverdue(final HttpReq httpReq) {
         if (AppInitManger.isRegister()) {
+            ToastUtil.showMessage(R.string.msg_overdue_to_login);
             LoginActivity.start(this);
             mBroadcastHelper.registerReceiver(new BroadcastHelper.OnceBroadcastReceiver() {
                 @Override
