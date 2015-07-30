@@ -12,17 +12,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.library.base.BaseFragment;
-import com.jiayantech.library.utils.ToastUtil;
-import com.jiayantech.library.utils.UIUtil;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-
-import java.util.List;
+import com.jiayantech.library.comm.Property;
 
 /**
  * Created by liangzili on 15/7/7.
@@ -30,7 +27,10 @@ import java.util.List;
 public abstract class WebViewFragment extends BaseFragment{
     public static final String TAG = WebViewFragment.class.getSimpleName();
 
-    public static final String BASE_URL = "http://app.jiayantech.com/app/html/";
+    public static final int REQUEST_CODE_COMMENT = 1;
+
+    //public static final String BASE_URL = "http://app.jiayantech.com/app/htm/";
+    public static final String BASE_URL = Property.getProperty("html.url");
     public static final String ACTION_DIARY = "diary.html";
     public static final String ACTION_DIARY_HEADER = "diaryheader.html";
 
@@ -51,12 +51,12 @@ public abstract class WebViewFragment extends BaseFragment{
     public static final String EXTRA_USERNAME = "username";
     public static final String EXTRA_USER_ID = "user_id";
 
-    //final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+    private LinearLayout mContentLayout;
+    private RelativeLayout mLoadingLayout;
 
     protected View mView;
     protected FrameLayout mNativeLayout;
     protected WebView mWebView;
-
 
     protected String mType;
     protected long mId;
@@ -77,12 +77,21 @@ public abstract class WebViewFragment extends BaseFragment{
     }
 
     private void setUrl(){
-        if(mType.equals(TYPE_DIARY)){
-            mUrl = BASE_URL + ACTION_DIARY;
-        }else if(mType.equals(TYPE_DIARY_HEADER)){
-            mUrl = BASE_URL + ACTION_DIARY_HEADER;
-        }else if(mType.equals(TYPE_TOPIC)){
-            mUrl = BASE_URL + ACTION_DIARY;
+        switch (mType.toString()){
+            case TYPE_DIARY:
+                mUrl = BASE_URL + ACTION_DIARY;
+                break;
+            case TYPE_DIARY_HEADER:
+                mUrl = BASE_URL + ACTION_DIARY_HEADER;
+                break;
+            case TYPE_TOPIC:
+                mUrl = BASE_URL + ACTION_DIARY;
+                break;
+            case TYPE_EVENT:
+                mUrl = "http://www.baidu.com";
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("type %s not supported.", mType));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -97,6 +106,9 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_webview, container, false);
+
+        mContentLayout = (LinearLayout)mView.findViewById(R.id.layout_content);
+        mLoadingLayout = (RelativeLayout)mView.findViewById(R.id.layout_loading);
         mNativeLayout = (FrameLayout)mView.findViewById(R.id.layout_native);
         mWebView = (WebView)mView.findViewById(R.id.web);
 
@@ -126,12 +138,6 @@ public abstract class WebViewFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        ToastUtil.showMessage(getActivity(), "the postId is " + mId);
-
-        String content = getString(R.string.post_share_text, new Object[] {"我爱你", "http://www.baidu.com"});
-        //mController.setShareContent(content);
-
-        ToastUtil.showMessage(getActivity(), mUrl);
     }
 
     @Override
@@ -142,11 +148,7 @@ public abstract class WebViewFragment extends BaseFragment{
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);
 
-    protected abstract BaseWebChromeClient onSetWebChromeClient();
 
-    protected abstract JavascriptInterface onAddJavascriptInterface();
-
-    protected abstract WebViewClient onSetWebViewClient();
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -157,7 +159,6 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_share){
-            //mController.openShare(getActivity(), false);
             ShareBiz.shareToWechat(mUrl, ShareBiz.WECHAT_TIMELINE);
         }
         return super.onOptionsItemSelected(item);
@@ -167,8 +168,21 @@ public abstract class WebViewFragment extends BaseFragment{
         JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 
-    public void scrollToY(int y){
 
-        mWebView.scrollBy(0, y);
+    public void finishLoading(){
+        mContentLayout.setVisibility(View.VISIBLE);
+        mLoadingLayout.setVisibility(View.GONE);
+    }
+
+    protected BaseWebChromeClient onSetWebChromeClient(){
+        return new BaseWebChromeClient();
+    }
+
+    protected JavascriptInterface onAddJavascriptInterface(){
+        return new JavascriptInterface();
+    }
+
+    protected BaseWebViewClient onSetWebViewClient(){
+        return new BaseWebViewClient(this);
     }
 }

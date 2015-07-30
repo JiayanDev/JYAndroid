@@ -1,19 +1,15 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
-import com.jiayantech.jyandroid.activity.NotificationListActivity;
+import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
-import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
@@ -62,7 +58,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 startActivity(MyEventsActivity.class);
                 break;
             case R.id.txt_notification:
-                startActivity(NotificationListActivity.class);
+                startActivity(MessagesActivity.class);
                 break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();
