@@ -6,20 +6,20 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.jiayantech.library.base.BaseApplication;
+import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.comm.DataManager;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
@@ -28,13 +28,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.jiayantech.library.base.BaseApplication;
-import com.jiayantech.library.comm.ConfigManager;
-import com.jiayantech.library.comm.DataManager;
-import com.jiayantech.library.utils.LogUtil;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -48,6 +41,9 @@ public class HttpReq<T> extends Request<T> {
     private static final String TAG = HttpReq.class.getSimpleName();
     private static final int PAGE_NUM = 10;
     private static final int MAX_CACHE_NUM = 40;
+
+    private static final int CODE_SUCCESS = 0;
+    private static final int CODE_OVERDUE = -36;
 
 
     public static void post(String action, Map<String, String> params, ResponseListener<?> l) {
@@ -126,7 +122,11 @@ public class HttpReq<T> extends Request<T> {
 
         Uri.Builder builderAction = Uri.parse(HttpConfig.BASE_URL + action).buildUpon();
         //builder.appendQueryParameter("time", System.currentTimeMillis() + "");
-        new HttpReq<>(method, builderAction.toString(), params, page, toLoad, toSave, classType, l, new ErrorListener(l));
+        new HttpReq<>(method, builderAction.toString(), params, page, toLoad, toSave, classType, l);
+    }
+
+    public static void request(HttpReq httpReq) {
+        new HttpReq<>(httpReq);
     }
 
     public static <T> T getCache(String action, Map<String, String> params, Class<T> cls) {
@@ -149,20 +149,30 @@ public class HttpReq<T> extends Request<T> {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            mResponseListener.onErrorResponse(error);
-            if (error instanceof MsgError) {
-                //Toast.makeText(BaseApplication.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                //return;
-            } else if (error instanceof NetworkError) {
-            } else if (error instanceof ServerError) {
-            } else if (error instanceof AuthFailureError) {
-            } else if (error instanceof ParseError) {
-            } else if (error instanceof NoConnectionError) {
-            } else if (error instanceof TimeoutError) {
+            if (error instanceof OverdueError) {
+                OverdueError overdueError = (OverdueError) error;
+                BaseApplication.getContext().onOverdue(overdueError.mHttpReq);
+                return;
+//            } else if (error instanceof MsgError) {
+//            } else if (error instanceof NetworkError) {
+//            } else if (error instanceof ServerError) {
+//            } else if (error instanceof AuthFailureError) {
+//            } else if (error instanceof ParseError) {
+//            } else if (error instanceof NoConnectionError) {
+//            } else if (error instanceof TimeoutError) {
             }
-            //Toast.makeText(BaseApplication.getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(BaseApplication.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            mResponseListener.onErrorResponse(error);
+            Toast.makeText(BaseApplication.getContext(), toErrorString(error), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private static String toErrorString(VolleyError error) {
+        String msg = error.getLocalizedMessage();
+        String name = error.getClass().getSimpleName();
+        if (msg == null) {
+            return name;
+        }
+        return name + ": " + msg;
     }
 
     public static class MsgError extends VolleyError {
@@ -173,6 +183,15 @@ public class HttpReq<T> extends Request<T> {
             super(code + ": " + msg);
             this.code = code;
             this.msg = msg;
+        }
+    }
+
+    public static class OverdueError extends MsgError {
+        private HttpReq mHttpReq;
+
+        public OverdueError(int code, String msg, HttpReq httpReq) {
+            super(code, msg);
+            mHttpReq = httpReq;
         }
     }
 
@@ -189,10 +208,16 @@ public class HttpReq<T> extends Request<T> {
     private static final String PROTOCOL_CONTENT_TYPE =
             "application/x-www-form-urlencoded";
 
+    private int mMethod;
+    private final String mUrl;
     /**
      * request params
      */
     private final Map<String, String> mParams;
+    private final Map<String, String> mPage;
+    private final boolean mToSave;
+    private final boolean mToLoad;
+
     /**
      * request header
      */
@@ -200,27 +225,30 @@ public class HttpReq<T> extends Request<T> {
     /**
      * success listener
      */
-    private final Response.Listener<T> mListener;
+    private final ResponseListener<T> mListener;
 
     private Type mClassType;
     private final Gson mGson = new Gson();
 
-    private boolean mToSave;
     private String mUrlKey;
     private T mCache;
 
 
-    private HttpReq(int method, String url, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, final ResponseListener<T> listener, Response.ErrorListener errorListener) {
+    private HttpReq(int method, String url, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, final ResponseListener<T> listener) {
         super(method, (method == Request.Method.GET && params != null || page != null) ?
-                url + "?" + encodeParameters(putParams(page, params), PROTOCOL_CHARSET) : url, errorListener);
+                url + "?" + encodeParameters(putParams(page, params), PROTOCOL_CHARSET) : url, new ErrorListener(listener));
+        mMethod = method;
+        mUrl = url;
         mParams = params;
-        mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
+        mPage = page;
+        mToLoad = toLoad;
+        mToSave = toSave;
         mClassType = classType == null ? getClassType(listener, 0) : classType;
         mListener = listener;
 
+        mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
         setShouldCache(false);
 
-        mToSave = toSave;
         mUrlKey = url + (params == null ? "" : params.toString());
         LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
         LogUtil.i(TAG, mUrlKey);
@@ -254,6 +282,9 @@ public class HttpReq<T> extends Request<T> {
         }
     }
 
+    private HttpReq(HttpReq httpReq) {
+        this(httpReq.mMethod, httpReq.mUrl, httpReq.mParams, httpReq.mPage, httpReq.mToLoad, httpReq.mToSave, httpReq.mClassType, httpReq.mListener);
+    }
 
     /**
      * 保存缓存
@@ -296,11 +327,13 @@ public class HttpReq<T> extends Request<T> {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             LogUtil.i(TAG, jsonString);
             BaseAppResponse baseAppResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
-            if (baseAppResponse.code == 0) {
+            if (baseAppResponse.code == CODE_SUCCESS) {
                 T parsedGSON = mGson.fromJson(jsonString, mClassType);
                 if (mToSave) saveCache(jsonString, parsedGSON);
                 return Response.success(parsedGSON,
                         HttpHeaderParser.parseCacheHeaders(response));
+            } else if (baseAppResponse.code == CODE_OVERDUE) {
+                return Response.error(new OverdueError(baseAppResponse.code, baseAppResponse.msg, this));
             } else {
                 return Response.error(new MsgError(baseAppResponse.code, baseAppResponse.msg));
             }
@@ -313,7 +346,6 @@ public class HttpReq<T> extends Request<T> {
             return Response.error(new ParseError(e));
         }
     }
-
 
     @Override
     public String getBodyContentType() {
@@ -342,7 +374,6 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
      */
-
     private static String encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {
@@ -354,7 +385,6 @@ public class HttpReq<T> extends Request<T> {
                 encodedParams.append('=');
                 encodedParams.append(URLEncoder.encode(entry.getValue(), paramsEncoding));
                 encodedParams.append('&');
-
             }
             String encoded;
             if (encodedParams.length() > 0) {

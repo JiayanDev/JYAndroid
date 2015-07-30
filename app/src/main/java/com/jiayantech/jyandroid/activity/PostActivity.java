@@ -10,7 +10,6 @@ import android.widget.RadioGroup;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.fragment.PostListFragment;
 import com.jiayantech.jyandroid.model.AppInit;
-import com.jiayantech.jyandroid.widget.PagerSlidingTabStrip;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.widget.UnslidableViewPager;
@@ -39,9 +38,9 @@ public class PostActivity extends BaseActivity {
     public void init() {
         setTitle(category.name);
         mViewPager = (UnslidableViewPager) findViewById(R.id.tab_content);
-        mRadioGroup = (RadioGroup)findViewById(R.id.radiogroup_tab);
-        mTopicRadioBtn = (RadioButton)findViewById(R.id.tab_topic);
-        mDiaryRadioBtn = (RadioButton)findViewById(R.id.tab_diary);
+        mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
+        mTopicRadioBtn = (RadioButton) findViewById(R.id.tab_topic);
+        mDiaryRadioBtn = (RadioButton) findViewById(R.id.tab_diary);
 
         mFragments = new BaseFragment[]{
                 PostListFragment.newInstance("topic", category.id, false),
@@ -51,9 +50,9 @@ public class PostActivity extends BaseActivity {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == mTopicRadioBtn.getId()){
+                if (checkedId == mTopicRadioBtn.getId()) {
                     mViewPager.setCurrentItem(0);
-                }else{
+                } else {
                     mViewPager.setCurrentItem(1);
                 }
             }
@@ -85,9 +84,9 @@ public class PostActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
+                if (position == 0) {
                     mTopicRadioBtn.setChecked(true);
-                }else{
+                } else {
                     mDiaryRadioBtn.setChecked(true);
                 }
             }

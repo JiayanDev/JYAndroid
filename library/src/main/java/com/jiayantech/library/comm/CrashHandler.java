@@ -105,7 +105,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             public void run() {
                 Looper.prepare();
                 String message = toStackTraceString(ex);
-                BaseApplication.onCrash(ex, message);
+                BaseApplication.getContext().onCrash(ex, message);
                 // 可以只创建一个文件，以后全部往里面append然后发送，这样就会有重复的信息，个人不推荐
                 String filePath = null;
                 String fileName = TimeUtil.getStrTimeToFileName(System.currentTimeMillis()) + ".txt";

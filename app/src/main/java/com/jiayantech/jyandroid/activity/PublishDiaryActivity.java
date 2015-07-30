@@ -94,8 +94,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
             case R.id.txt_project:
                 Intent intent = new Intent(this, SelectProjectActivity.class);
                 intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
-                startActivityForResult(intent, SelectProjectActivity.REQUEST_CODE_SELECT);
-                mActivityResultHelper.addActivityResult(new ActivityResult(SelectProjectActivity.REQUEST_CODE_SELECT) {
+                startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         setCategories(data);

@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="30dip"
     android:layout_marginRight="30dip"
+    android:layout_marginTop="@dimen/login_margin_top"
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_nickname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/login_margin_top">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="match_parent"
@@ -18,7 +18,6 @@
             android:hint="@string/hint_input_nickname"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
-
 
     <RadioGroup
         android:id="@+id/radio_group_gender"
@@ -73,8 +72,7 @@
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/btn_theme"
         android:layout_marginTop="30dip"
         android:text="@string/register" />
 

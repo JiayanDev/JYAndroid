@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_input_set_pass"
+            android:inputType="textPassword"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
 
@@ -37,8 +38,7 @@
 
     <Button
         android:id="@+id/btn_reset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/btn_theme"
         android:layout_margin="30dip"
         android:text="@string/confirm_reset" />
 

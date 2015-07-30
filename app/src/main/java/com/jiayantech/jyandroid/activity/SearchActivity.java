@@ -143,7 +143,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
     public static final String KEY_TITLE = "title";
     public static final String KEY_ACTION = "action";
 
-    public static void start(Fragment fragment, String title, String action) {
+    public static void start(Fragment fragment, String title, String action, ActivityResult activityResult) {
         Intent intent = new Intent(fragment.getActivity(), SearchActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         intent.putExtra(KEY_TITLE, title);
@@ -151,12 +151,12 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
-    public static void start(Activity activity, String title, String action) {
+    public static void start(BaseActivity activity, String title, String action, ActivityResult activityResult) {
         Intent intent = new Intent(activity, SearchActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         intent.putExtra(KEY_TITLE, title);
         intent.putExtra(KEY_ACTION, action);
-        activity.startActivityForResult(intent, REQUEST_CODE_SELECT);
+        activity.startActivityForResult(intent, activityResult);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,6 @@ import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.library.helper.ActivityResultHelper;
 
 
 /**
@@ -23,7 +23,6 @@ import com.jiayantech.library.helper.ActivityResultHelper;
  * rights reserved.
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-
     private ImageView img_close;
     private Button btn_wechat_login;
     private TextView txt_other_login;
@@ -33,6 +32,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        popBottomIn();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setSwipeBackEnable(false);
@@ -41,7 +41,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setViewsListener();
         hideActionBar();
     }
-
 
     protected void findViews() {
         img_close = (ImageView) findViewById(R.id.img_close);
@@ -63,33 +62,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         txt_register.setOnClickListener(this);
     }
 
+
     @Override
-    protected void onHome() {
-        popFinishActivity();
+    public void finish() {
+        super.finish();
+        popBottomOut();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_close:
-                popFinishActivity();
+                onBackPressed();
                 break;
             case R.id.btn_wechat_login:
-                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new UserBiz.RegisterRunnable() {
-                    @Override
-                    public void onRegister(String code) {
-                        Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
-                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
-                        intent.putExtra(UserBiz.SOCIAL_CODE, code);
-                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
-                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
-                            @Override
-                            public void onActivityResult(Intent data) {
-                                ActivityResult.onFinishResult(LoginActivity.this);
-                            }
-                        });
-                    }
-                }));
+//                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new UserBiz.RegisterRunnable() {
+//                    @Override
+//                    public void onRegister(String code) {
+//                        Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
+//                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, UserBiz.KEY_SOCIAL_COED_WECHAT);
+//                        intent.putExtra(UserBiz.SOCIAL_CODE, code);
+//                        startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE);
+//                        mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+//                            @Override
+//                            public void onActivityResult(Intent data) {
+//                                ActivityResult.onFinishResult(LoginActivity.this);
+//                            }
+//                        });
+//                    }
+//                }));
                 //startActivity(MessagesActivity.class);
                 //finishToStartActivity(MainActivity.class);
 
@@ -129,23 +130,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                        });
 //                    }
 //                });
+                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this));
                 break;
             case R.id.txt_other_login:
-                startActivityForResult(new Intent(this, OtherLoginActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
-                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+                startActivityForResult(new Intent(this, OtherLoginActivity.class), new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        //finishToStartActivity(MainActivity.class);
                         ActivityResult.onFinishResult(LoginActivity.this);
                     }
                 });
                 break;
             case R.id.txt_register:
-                startActivityForResult(new Intent(this, VerifyPhoneActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
-                mActivityResultHelper.addActivityResult(new ActivityResult(ActivityResult.REQUEST_CODE_DEFAUTE) {
+                startActivityForResult(new Intent(this, VerifyPhoneActivity.class), new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        //finishToStartActivity(MainActivity.class);
                         ActivityResult.onFinishResult(LoginActivity.this);
                     }
                 });
@@ -153,19 +151,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    //////////////////////
-    private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
         mSocialLoginBiz.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-    public static void startLoginActivity(BaseActivity context) {
-        context.popStartActivity(new Intent(context, LoginActivity.class));
+    public static void start(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
 

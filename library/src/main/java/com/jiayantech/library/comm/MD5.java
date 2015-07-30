@@ -15,7 +15,7 @@ public class MD5 {
 
 	/** MD5编码 */
 	public static String encode(String str) {
-		MessageDigest md5 = null;
+		MessageDigest md5;
 		try {
 			md5 = MessageDigest.getInstance("MD5");
 		} catch (Exception e) {

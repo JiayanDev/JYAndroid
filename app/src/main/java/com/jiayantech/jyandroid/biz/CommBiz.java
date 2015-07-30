@@ -29,7 +29,7 @@ public class CommBiz {
     public static void appInit(ResponseListener<?> l) {
         Map<String, String> params = HttpReq.getInitParams("deviceToken", UmengPushBiz.getDeviceToken());
         params.put(KEY_CONFIG_VERSION, ConfigManager.getConfig(KEY_CONFIG_VERSION, "0"));
-        HttpReq.post(ACTION_APP_INIT, params, true, true, l);
+        HttpReq.post(ACTION_APP_INIT, params, l);
     }
 
     public static AppInit appInitCache() {

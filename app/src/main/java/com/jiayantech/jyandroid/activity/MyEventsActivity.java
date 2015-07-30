@@ -25,6 +25,7 @@ public class MyEventsActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
         setTitle("我的活动");
         addBottomButton();
+
     }
 
     @Override

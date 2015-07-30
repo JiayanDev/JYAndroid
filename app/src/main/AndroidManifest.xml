@@ -19,6 +19,7 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OtherLoginActivity"
@@ -81,6 +82,7 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.MessagesActivity"
                   android:screenOrientation="portrait"/>
+
 
 
         <!--友盟推送服务相关-->

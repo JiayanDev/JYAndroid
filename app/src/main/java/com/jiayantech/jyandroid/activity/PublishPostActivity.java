@@ -28,7 +28,6 @@ import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
-import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpConfig;
@@ -119,8 +118,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_category:
-                startActivityForResult(new Intent(this, SelectCategoryActivity.class), ActivityResult.REQUEST_CODE_DEFAUTE);
-                mActivityResultHelper.addActivityResult(new ActivityResult() {
+                startActivityForResult(new Intent(this, SelectCategoryActivity.class), new ActivityResult() {
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent data) {
                         categoryList = data.getParcelableArrayListExtra(SelectCategoryActivity.KEY_categories);
@@ -224,10 +222,10 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                 dialog.dismiss();
                 switch (v.getId()) {
                     case R.id.camera_button:
-                        new PicGetter(_this(), mActivityResultHelper, _this()).startCamera();
+                        new PicGetter(_this(), getActivityResultHelper(), _this()).startCamera();
                         break;
                     case R.id.local_button:
-                        new PicGetter(_this(), mActivityResultHelper, _this()).startImage();
+                        new PicGetter(_this(), getActivityResultHelper(), _this()).startImage();
                         break;
                 }
             }
@@ -238,17 +236,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
     }
 
-    protected ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     private PublishPostActivity _this() {
         return this;
     }
-
-
 }

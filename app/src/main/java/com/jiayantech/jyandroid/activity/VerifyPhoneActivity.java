@@ -20,16 +20,23 @@ import java.util.HashMap;
  * Created by 健兴 on 2015/7/22.
  */
 public class VerifyPhoneActivity extends BaseActivity implements View.OnClickListener {
+    public static final String KEY_TYPE = "type";
+    public static final int TYPE_REGISTER = 0;
+    public static final int TYPE_FORGET_PASS = 1;
+    //private static final int TYPE_BIND_PHONE = 2;
+    private int type;
 
     private TextInputLayout input_phone;
     private TextInputLayout input_code;
     private TextView txt_send_verify_code;
     private Button btn_verify;
 
-    private String social_code_type;
+    private String social_type;
     private String social_code;
+    private String social_response;
     private String phoneCodeResponse;
     private String phoneNum;
+    private String phoneCodeConfirmResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +57,10 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     protected void setViewsContent() {
         setTitle(R.string.verify_phone);
         Intent intent = getIntent();
-        social_code_type = intent.getStringExtra(UserBiz.SOCIAL_CODE_TYPE);
+        type = intent.getIntExtra(KEY_TYPE, 0);
+        social_type = intent.getStringExtra(UserBiz.SOCIAL_TYPE);
         social_code = intent.getStringExtra(UserBiz.SOCIAL_CODE);
+        social_response = intent.getStringExtra(UserBiz.KEY_SOCIAL_RESPONSE);
     }
 
     protected void setViewsListener() {
@@ -72,6 +81,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onResponse(AppResponse<HashMap<String, String>> response) {
                         super.onResponse(response);
+                        ToastUtil.showMessage(R.string.msg_sent_phone_code);
                         phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
                     }
                 });
@@ -86,17 +96,42 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone_code);
                     return;
                 }
-                UserBiz.confirmPhoneCode(social_code_type, social_code, phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>() {
+                UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>() {
                     @Override
                     public void onResponse(AppResponse<HashMap<String, String>> response) {
                         super.onResponse(response);
-                        String phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_PHONE_CODE_CONFIRM_RESPONSE);
-                        Intent intent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
-                        intent.putExtra(UserBiz.SOCIAL_CODE_TYPE, social_code_type);
-                        intent.putExtra(UserBiz.SOCIAL_CODE, social_code);
-                        intent.putExtra(UserBiz.KEY_PHONE_CODE_CONFIRM_RESPONSE, phoneCodeConfirmResponse);
-                        intent.putExtra(UserBiz.KEY_PHONE, phoneNum);
-                        finishToStartActivity(intent);
+                        switch (type) {
+                            case TYPE_REGISTER:
+                                phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
+                                if (TextUtils.isEmpty(social_type)) {
+                                    Intent setInfoIntent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
+                                    setInfoIntent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
+                                    setInfoIntent.putExtra(UserBiz.SOCIAL_CODE, social_code);
+                                    setInfoIntent.putExtra(UserBiz.KEY_SOCIAL_RESPONSE, social_response);
+                                    setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
+                                    setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
+                                    startActivityForFinishResult(setInfoIntent);
+                                } else {
+//                                    Intent setInfoIntent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
+//                                    setInfoIntent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
+//                                    setInfoIntent.putExtra(UserBiz.SOCIAL_CODE, social_code);
+//                                    setInfoIntent.putExtra(UserBiz.KEY_SOCIAL_RESPONSE, social_response);
+//                                    setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
+//                                    setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
+//                                    startActivityForFinishResult(setInfoIntent);
+                                    UserBiz.register(phoneCodeConfirmResponse, social_type, social_response, phoneNum,
+                                            new UserBiz.RegisterResponseListener(VerifyPhoneActivity.this));
+                                }
+                                break;
+                            case TYPE_FORGET_PASS:
+                                phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
+                                Intent intent = new Intent(VerifyPhoneActivity.this, ResetPassActivity.class);
+                                intent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
+                                intent.putExtra(UserBiz.KEY_PHONE, phoneNum);
+                                startActivityForFinishResult(intent);
+                                break;
+                        }
+
                     }
                 });
                 break;

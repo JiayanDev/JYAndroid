@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,7 +18,10 @@ import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
 
@@ -82,22 +87,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_select_publish:
-//                final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
-//                dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                        startActivity(MyDiariesActivity.class);
-//                    }
-//                });
-//                dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        dialog.dismiss();
-//                        startActivity(PublishPostActivity.class);
-//                    }
-//                });
-                popStartActivity(new Intent(this, LoginActivity.class));
+                checkGotoSelectPublish();
                 return true;
             case R.id.action_diary:
                 startActivity(new Intent(this, MyDiariesActivity.class));
@@ -110,6 +100,34 @@ public class MainActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void checkGotoSelectPublish() {
+        if (AppInitManger.isRegister()) {
+            final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
+            dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    startActivity(MyDiariesActivity.class);
+                }
+            });
+            dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    startActivity(PublishPostActivity.class);
+                }
+            });
+        } else {
+            startActivityForResult(new Intent(this, LoginActivity.class), new ActivityResult() {
+                @Override
+                public void onActivityResult(Intent data) {
+                    checkGotoSelectPublish();
+                }
+            });
+        }
     }
 
     private void initViewPager() {
