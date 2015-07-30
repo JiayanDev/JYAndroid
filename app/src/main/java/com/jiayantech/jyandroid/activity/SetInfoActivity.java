@@ -90,7 +90,5 @@ public class SetInfoActivity extends ResetPassActivity {
                 break;
         }
     }
-
-
 }
 

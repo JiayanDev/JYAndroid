@@ -105,6 +105,7 @@
     <string name="title_reset_pass">重新设置密码</string>
     <string name="msg_account_not_register">该帐号未注册，请验证手机进行注册</string>
     <string name="msg_sent_phone_code">已发送验证码!</string>
+    <string name="msg_overdue_to_login">登录信息已经过期，请重新登录</string>
 
 
 </resources>
