@@ -128,7 +128,8 @@ public class UserBiz {
 //        } else {
 //            postLogin(new HashMap<String, String>(), l);
 //        }
-        postLogin(ACTION_QUICK_LOGIN, new HashMap<String, String>(), l);
+        Map<String, String> params = HttpReq.getInitParams("configVersion", ConfigManager.getConfig(KEY_CONFIG_VERSION, "0"));
+        postLogin(ACTION_QUICK_LOGIN, params, l);
     }
 
     public static void wechatLogin(final LoginResponseListener l) {
@@ -163,7 +164,6 @@ public class UserBiz {
     }
 
     private static void postLogin(String action, Map<String, String> params, ResponseListener<?> l) {
-        params.put("configVersion", ConfigManager.getConfig(KEY_CONFIG_VERSION, "0"));
         params.put("deviceToken", UmengPushBiz.getDeviceToken());
         HttpReq.post(action, params, l);
     }

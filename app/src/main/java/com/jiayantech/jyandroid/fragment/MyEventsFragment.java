@@ -1,13 +1,13 @@
 package com.jiayantech.jyandroid.fragment;
 
-import android.view.View;
-
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.adapter.EventAdapter;
+import com.jiayantech.jyandroid.adapter.MyEventAdapter;
 import com.jiayantech.jyandroid.biz.EventBiz;
 import com.jiayantech.jyandroid.model.Event;
+import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.utils.UIUtil;
 
 import java.util.List;
 
@@ -22,7 +22,12 @@ public class MyEventsFragment extends RefreshListFragment<Event, AppResponse<Lis
     @Override
     public void onInitView() {
         super.onInitView();
-        ultimateRecyclerView.setRecylerViewBackgroundColor(getResources().getColor(R.color.bg_gray));
-        setParams(new EventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
+        ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
+                .showFirstEnable(true)
+                .color(getResources().getColor(R.color.bg_gray_color))
+                .size((int) UIUtil.getDimension(R.dimen.normal_margin))
+                .build());
+        //ultimateRecyclerView.setRecylerViewBackgroundColor(getResources().getColor(R.color.bg_gray));
+        setParams(new MyEventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
     }
 }
