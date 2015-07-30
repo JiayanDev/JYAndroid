@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <com.jiayantech.library.widget.EmptyRecyclerView
-        android:id="@+id/notificationList"
+        android:id="@+id/messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

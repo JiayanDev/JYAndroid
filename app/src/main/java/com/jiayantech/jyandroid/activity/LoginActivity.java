@@ -90,11 +90,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         });
                     }
                 }));
-                //startActivity(NotificationListActivity.class);
+                //startActivity(MessagesActivity.class);
                 //finishToStartActivity(MainActivity.class);
 
 //                UploadImageBiz.uploadImage("topic", "/storage/emulated/0/DCIM/Camera/IMG_20150706_164704.jpg",
-//                        new ResponseListener<ImageUploadCallback>() {
+//                        new ResponseListener<ImageUploadResp>() {
 //                UserBiz.wechatLogin(new UserBiz.LoginResponseListener(this).setRegisterRunnable(new Runnable() {
 //                    @Override
 //                    public void run() {

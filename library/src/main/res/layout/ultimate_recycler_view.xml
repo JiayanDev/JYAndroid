@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_red_dark"
     app:recyclerviewClipToPadding="true"
-    app:recyclerviewScrollbars="vertical" />
+    app:recyclerviewScrollbars="vertical"
+    app:recyclerviewEmptyView="@layout/empty_view"
+    />

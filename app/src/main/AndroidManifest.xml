@@ -79,7 +79,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ApplyEventActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.NotificationListActivity"
+        <activity android:name=".activity.MessagesActivity"
                   android:screenOrientation="portrait"/>
 
 

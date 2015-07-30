@@ -1,15 +1,12 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
-import com.jiayantech.jyandroid.activity.NotificationListActivity;
+import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.library.base.BaseFragment;
 
 /**
@@ -48,7 +45,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 startActivity(MyEventsActivity.class);
                 break;
             case R.id.txt_notification:
-                startActivity(NotificationListActivity.class);
+                startActivity(MessagesActivity.class);
                 break;
         }
     }

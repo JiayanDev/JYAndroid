@@ -21,7 +21,7 @@ import com.jiayantech.jyandroid.adapter.ImageAdapter;
 import com.jiayantech.jyandroid.biz.TopicBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.model.ImageUploadCallback;
+import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
@@ -188,9 +188,9 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
         showProgressDialog();
         UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
-                new ResponseListener<ImageUploadCallback>() {
+                new ResponseListener<ImageUploadResp>() {
                     @Override
-                    public void onResponse(ImageUploadCallback o) {
+                    public void onResponse(ImageUploadResp o) {
                         dismissProgressDialog();
                         urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
                     }

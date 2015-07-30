@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by liangzili on 15/7/13.
  */
-public class ImageUploadCallback {
+public class ImageUploadResp {
     public int code;
     public String message;
     public String url;
