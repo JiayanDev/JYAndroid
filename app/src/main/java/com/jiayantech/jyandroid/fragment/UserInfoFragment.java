@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.BeautyWithsActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
@@ -28,6 +29,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     private TextView txt_events;
     private TextView txt_notifications;
+    private TextView txt_mine;
     private TextView txt_logout;
     private TextView txt_delete;
 
@@ -49,6 +51,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
         txt_delete = (TextView) findViewById(R.id.txt_delete);
         txt_delete.setOnClickListener(this);
+
+        txt_mine = (TextView) findViewById(R.id.txt_mime);
+        txt_mine.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +84,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                         ToastUtil.showMessage("delete");
                     }
                 });
+                break;
+            case R.id.txt_mime:
+                startActivity(BeautyWithsActivity.class);
                 break;
         }
     }

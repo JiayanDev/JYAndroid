@@ -1,7 +1,8 @@
 package com.jiayantech.jyandroid.fragment;
 
+import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
+import com.jiayantech.jyandroid.biz.EventBiz;
 import com.jiayantech.jyandroid.model.Event;
-import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
 
@@ -12,7 +13,8 @@ import java.util.List;
  */
 public class BeautyWithsFragment extends RefreshListFragment<Event, AppResponse<List<Event>>>{
     @Override
-    protected void setParams(BaseSimpleModelAdapter<Event> adapter, String action) {
-
+    public void onInitView() {
+        super.onInitView();
+        setParams(new BeautyWithAdapter(getActivity(), null), EventBiz.ACTION_LIST);
     }
 }

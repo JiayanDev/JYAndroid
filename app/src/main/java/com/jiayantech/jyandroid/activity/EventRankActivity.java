@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.os.Bundle;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseActivity;
 
 /**
@@ -11,6 +12,6 @@ public class EventRankActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_event_rank);
     }
 }

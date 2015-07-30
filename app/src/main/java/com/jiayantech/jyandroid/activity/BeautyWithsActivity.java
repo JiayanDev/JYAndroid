@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.support.v4.app.Fragment;
 
+import com.jiayantech.jyandroid.fragment.BeautyWithsFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
 
 /**
@@ -10,6 +11,6 @@ import com.jiayantech.library.base.SingleFragmentActivity;
 public class BeautyWithsActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
-        return null;
+        return new BeautyWithsFragment();
     }
 }
