@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ import java.util.ArrayList;
 public class SearchActivity extends BaseActivity implements TextWatcher {
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
-    public static final int REQUEST_CODE_SELECT = 0x100;
 
     private EditText edit_search;
     private RecyclerView mRecyclerView;
@@ -69,6 +67,8 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
 
         edit_search.addTextChangedListener(this);
         hideSoftKeyboard();
+
+        mAdapter = new SearchAdapter(null);
     }
 
     @Override
@@ -144,16 +144,15 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
     public static final String KEY_ACTION = "action";
 
     public static void start(Fragment fragment, String title, String action, ActivityResult activityResult) {
-        Intent intent = new Intent(fragment.getActivity(), SearchActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        BaseActivity activity = (BaseActivity) fragment.getActivity();
+        Intent intent = new Intent(activity, SearchActivity.class);
         intent.putExtra(KEY_TITLE, title);
         intent.putExtra(KEY_ACTION, action);
-        fragment.startActivityForResult(intent, REQUEST_CODE_SELECT);
+        activity.startActivityForResult(intent, activityResult);
     }
 
     public static void start(BaseActivity activity, String title, String action, ActivityResult activityResult) {
         Intent intent = new Intent(activity, SearchActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         intent.putExtra(KEY_TITLE, title);
         intent.putExtra(KEY_ACTION, action);
         activity.startActivityForResult(intent, activityResult);

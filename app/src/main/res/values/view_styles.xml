@@ -60,7 +60,7 @@
         <item name="android:padding">15dip</item>
     </style>
 
-    <style name="text_item_right_arrow_style" parent="text_item_style">
+    <style name="text_item_right_arrow_style" parent="text_mid_item_style">
         <item name="android:drawableRight">@drawable/img_right_arrow_selector</item>
         <item name="android:drawablePadding">5dip</item>
     </style>
@@ -80,6 +80,11 @@
 
     <style name="text_item_content_style" parent="text_item_right_arrow_style">
         <item name="android:textColor">@color/theme_color</item>
+    </style>
+
+    <style name="edit_item_style" parent="text_item_style">
+        <item name="android:layout_height">45dip</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="divider_gray_style">

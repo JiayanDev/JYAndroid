@@ -105,6 +105,19 @@ public class AppInitManger {
         }
     }
 
+    public static AppInit getAppInit() {
+        initLoad();
+        return sAppInit;
+    }
+
+    public static String getPhoneNum() {
+        initLoad();
+        if (sAppInit == null) {
+            return null;
+        }
+        return sAppInit.phoneNum;
+    }
+
     public static long getUserId() {
         initLoad();
         if (sAppInit == null) {

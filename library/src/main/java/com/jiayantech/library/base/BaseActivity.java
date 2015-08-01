@@ -41,6 +41,8 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super();
     }
 
+    protected BaseActivity _this = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,17 +295,20 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     }
 
 
-    protected abstract class SimpleResponseListener<T> extends ResponseListener<T> {
-        public SimpleResponseListener() {
-            showProgressDialog();
+    protected static abstract class SimpleResponseListener<T> extends ResponseListener<T> {
+        private BaseActivity mActivity;
+
+        public SimpleResponseListener(BaseActivity activity) {
+            mActivity = activity;
+            mActivity.showProgressDialog();
         }
 
         public void onResponse(T var1) {
-            dismissProgressDialog();
+            mActivity.dismissProgressDialog();
         }
 
         public void onErrorResponse(VolleyError error) {
-            dismissProgressDialog();
+            mActivity.dismissProgressDialog();
         }
     }
 }

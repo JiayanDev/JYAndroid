@@ -12,7 +12,7 @@
         <item>话题</item>
         <item>日志</item>
     </string-array>
-    
+
     <string name="topic">话题</string>
     <string name="diary">日记</string>
 
@@ -25,7 +25,7 @@
     <string name="post_topic">发表话题</string>
     <string name="publish">发布</string>
     <string name="beauty_with">伴美</string>
-    <string name="community">社区</string>
+    <string name="community">发现</string>
     <string name="activity">活动</string>
     <string name="userinfo">我</string>
 
@@ -106,6 +106,10 @@
     <string name="msg_account_not_register">该帐号未注册，请验证手机进行注册</string>
     <string name="msg_sent_phone_code">已发送验证码!</string>
     <string name="msg_overdue_to_login">登录信息已经过期，请重新登录</string>
+    <string name="msg_sign_up_success">报名成功，稍后由客服人员跟你确定信息</string>
+    <string name="nickname">呢称: </string>
+    <string name="phone">手机号码: </string>
+    <string name="operation_time">手术时间</string>
 
 
 </resources>

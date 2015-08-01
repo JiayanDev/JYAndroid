@@ -9,6 +9,8 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.SearchActivity;
 import com.jiayantech.jyandroid.activity.SelectProjectActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.DateTimeHelper;
@@ -26,18 +28,19 @@ import java.util.Calendar;
  * rights reserved.
  */
 public abstract class CreateEventProjectFragment extends BaseFragment implements View.OnClickListener {
-    private EditText edit_nickname;
-    private EditText edit_phone;
+    private TextView txt_nickname;
+    private TextView txt_phone;
     private TextView txt_hospital;
     private TextView txt_doctor;
     private TextView txt_project;
     private TextView txt_time;
-    private TextView btn_next;
+    private TextView btn_ok;
 
-    private double time;
+    private long time;
     private String doctorId;
     private String hospitalId;
-    private ArrayList<String> categoryIds;
+    //private ArrayList<String> categoryIds;
+    ArrayList<AppInit.Category> categoryList;
 
     @Override
     protected int getInflaterResId() {
@@ -46,43 +49,46 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
 
     @Override
     protected void onInitView() {
-        edit_nickname = (EditText) findViewById(R.id.edit_nickname);
-        edit_phone = (EditText) findViewById(R.id.edit_phone);
+        txt_nickname = (TextView) findViewById(R.id.txt_nickname);
+        txt_phone = (TextView) findViewById(R.id.txt_phone);
         txt_hospital = (TextView) findViewById(R.id.txt_hospital);
         txt_doctor = (TextView) findViewById(R.id.txt_doctor);
         txt_project = (TextView) findViewById(R.id.txt_project);
         txt_time = (TextView) findViewById(R.id.txt_time);
-        btn_next = (TextView) findViewById(R.id.btn_next);
+        btn_ok = (TextView) findViewById(R.id.btn_ok);
 
         txt_hospital.setOnClickListener(this);
         txt_doctor.setOnClickListener(this);
         txt_project.setOnClickListener(this);
         txt_time.setOnClickListener(this);
-        btn_next.setOnClickListener(this);
+        btn_ok.setOnClickListener(this);
+
+        txt_nickname.setText(getString(R.string.nickname) + AppInitManger.getUserName());
+        txt_phone.setText(getString(R.string.phone) + AppInitManger.getPhoneNum());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_hospital:
-                search(getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                search(getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
                         String hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
-                        txt_hospital.setText(hospitalName);
-                        ToastUtil.showMessage("hospitalName: " + hospitalName);
+                        txt_hospital.setText(getString(R.string.hospital) + ": " + hospitalName);
+//                        ToastUtil.showMessage("hospitalName: " + hospitalName);
                     }
                 });
                 break;
             case R.id.txt_doctor:
-                search(getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult(SearchActivity.REQUEST_CODE_SELECT) {
+                search(getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
                         doctorId = data.getStringExtra(SearchActivity.KEY_ID);
                         String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
-                        txt_doctor.setText(doctorName);
-                        ToastUtil.showMessage("doctorName: " + doctorName);
+                        txt_doctor.setText(getString(R.string.doctor) + ": " + doctorName);
+//                        ToastUtil.showMessage("doctorName: " + doctorName);
                     }
                 });
                 break;
@@ -92,7 +98,9 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-//                        categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryIds);
+                        categoryList = data.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
+                        txt_project.setText(getString(R.string.project) + ": " + AppInit.Category.toNamesString(categoryList));
+//                        categoryIds = data.getStringArrayListExtra(SelectProjectActivity.KEY_categories);
 //                        ArrayList<String> categoryNames = data.getStringArrayListExtra(SelectProjectActivity.KEY_categoryNames);
 //                        txt_project.setText(categoryNames.toString());
 //                        ToastUtil.showMessage("categoryNames: " + categoryNames);
@@ -103,17 +111,17 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 new DateTimeHelper(getActivity()).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
                     public void onSetDateTime(Calendar calendar) {
-                        txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis()));
-                        time = calendar.getTimeInMillis() / 1000d;
+                        txt_time.setText(getString(R.string.time) + ": " + TimeUtil.getStrTime(calendar.getTimeInMillis() / 1000 / 60 * 1000 * 60));
+                        time = calendar.getTimeInMillis() / 1000;
                     }
                 });
                 break;
-            case R.id.btn_next:
-                String nickname = edit_nickname.getText().toString();
-                String phone = edit_phone.getText().toString();
+            case R.id.btn_ok:
+                String nickname = AppInitManger.getUserName();
+                String phone = AppInitManger.getPhoneNum();
 
-                hospitalId = "1";
-                doctorId = "1";
+                //hospitalId = "1";
+                //doctorId = "1";
 
                 if (hospitalId == null) {
                     ToastUtil.showMessage("hospitalId==null");
@@ -123,7 +131,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                     ToastUtil.showMessage("doctorId==null");
                     return;
                 }
-                if (categoryIds == null) {
+                if (categoryList == null || categoryList.size() == 0) {
                     ToastUtil.showMessage("categoryIds==null");
                     return;
                 }
@@ -131,7 +139,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                     ToastUtil.showMessage("time==0");
                     return;
                 }
-                onNext(nickname, phone, hospitalId, doctorId, categoryIds.toString(), time);
+                onNext(nickname, phone, hospitalId, doctorId, categoryList.toString(), time);
                 break;
         }
     }
@@ -140,5 +148,5 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
         SearchActivity.start(this, title, action, activityResult);
     }
 
-    protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, double time);
+    protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, long time);
 }
