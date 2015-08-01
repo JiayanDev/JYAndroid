@@ -33,7 +33,6 @@ import java.util.List;
 public class SelectProjectActivity extends BaseActivity implements BaseSimpleModelAdapter.OnItemClickListener<AppInit.Category>, FlowLayout.OnItemClickListener {
     public static final String KEY_TO_PICK = "toPick";
     public static final String KEY_categories = "categories";
-    public static final int REQUEST_CODE_SELECT = 0x100;
 
     private FlowLayout layout_selected;
     private RecyclerView list_parents;

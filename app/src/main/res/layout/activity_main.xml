@@ -32,11 +32,18 @@
             android:paddingTop="5dip">
 
             <RadioButton
-                android:id="@+id/radio_beauty_with"
+                android:id="@+id/radio_activity"
                 style="@style/main_tab"
                 android:checked="true"
-                android:drawableTop="@drawable/tab_home_selector"
-                android:text="@string/beauty_with" />
+                android:drawableTop="@drawable/tab_event_selector"
+                android:text="@string/activity" />
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/radio_beauty_with"-->
+            <!--style="@style/main_tab"-->
+            <!--android:checked="true"-->
+            <!--android:drawableTop="@drawable/tab_home_selector"-->
+            <!--android:text="@string/beauty_with" />-->
 
             <RadioButton
                 android:id="@+id/radio_community"
@@ -44,11 +51,6 @@
                 android:drawableTop="@drawable/tab_community_selector"
                 android:text="@string/community" />
 
-            <RadioButton
-                android:id="@+id/radio_activity"
-                style="@style/main_tab"
-                android:drawableTop="@drawable/tab_event_selector"
-                android:text="@string/activity" />
 
             <RadioButton
                 android:id="@+id/radio_userinfo"

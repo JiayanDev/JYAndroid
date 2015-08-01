@@ -38,9 +38,8 @@
 
         <Button
             android:id="@+id/btn_finish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dip"
+            style="@style/btn_theme"
+            android:layout_margin="30dip"
             android:text="完成" />
 
     </LinearLayout>

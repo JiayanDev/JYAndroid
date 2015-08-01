@@ -112,7 +112,7 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                 new DateTimeHelper(this).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
                     public void onSetDateTime(Calendar calendar) {
-                        txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis()));
+                        txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis() / 1000 / 60 * 1000 * 60));
                         operationTime = calendar.getTimeInMillis() / 1000;
                     }
                 });

@@ -77,7 +77,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone);
                     return;
                 }
-                UserBiz.sendPhoneCode(phoneNum, new SimpleResponseListener<AppResponse<HashMap<String, String>>>() {
+                UserBiz.sendPhoneCode(phoneNum, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
                     @Override
                     public void onResponse(AppResponse<HashMap<String, String>> response) {
                         super.onResponse(response);
@@ -96,7 +96,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone_code);
                     return;
                 }
-                UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>() {
+                UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
                     @Override
                     public void onResponse(AppResponse<HashMap<String, String>> response) {
                         super.onResponse(response);

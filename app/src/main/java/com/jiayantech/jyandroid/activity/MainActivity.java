@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
-    private RadioButton[] mRadioButtons = new RadioButton[4];
+    private RadioButton[] mRadioButtons = new RadioButton[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +82,10 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
         //getSupportActionBar().setTitle(mTitles[0]);
-        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
+        mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_activity);
+        ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_activity);
-        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
@@ -185,12 +185,17 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
-        CommunityFragment communityFragment = CommunityFragment.newInstance(null);
-//        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
-        EventsFragment eventFragment = new EventsFragment();
-        UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
-        mFragments = new Fragment[]{beautyWithFragment, communityFragment, eventFragment, userInfoFragment};
+//        BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
+//        CommunityFragment communityFragment = CommunityFragment.newInstance(null);
+////        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
+//        EventsFragment eventFragment = new EventsFragment();
+//        UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
+//        mFragments = new Fragment[]{beautyWithFragment, communityFragment, eventFragment, userInfoFragment};
+
+        mFragments = new Fragment[]{
+                new EventsFragment(),
+                CommunityFragment.newInstance(null),
+                UserInfoFragment.newInstance(null)};
     }
 
     private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener
@@ -199,17 +204,17 @@ public class MainActivity extends BaseActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             int pageItemNum = 0;
             switch (checkedId) {
-                case R.id.radio_beauty_with:
+//                case R.id.radio_beauty_with:
+//                    pageItemNum = 0;
+//                    break;
+                case R.id.radio_activity:
                     pageItemNum = 0;
                     break;
                 case R.id.radio_community:
                     pageItemNum = 1;
                     break;
-                case R.id.radio_activity:
-                    pageItemNum = 2;
-                    break;
                 case R.id.radio_userinfo:
-                    pageItemNum = 3;
+                    pageItemNum = 2;
                     break;
             }
             mViewPager.setCurrentItem(pageItemNum, false);

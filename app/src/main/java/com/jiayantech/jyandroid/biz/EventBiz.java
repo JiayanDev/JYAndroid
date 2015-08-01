@@ -39,9 +39,11 @@ public class EventBiz {
      * addr  详细地址
      * _userId  //测试用，正常情况下不用传 从session中获取
      **/
-    public static void create(String title, String desc, double applyBeginTime, double applyEndTime, double beginTime, double endTime, String categoryIds,
+    public static void create(String name, String phone, String title, String desc, long applyBeginTime, long applyEndTime, long beginTime, long endTime, String categoryIds,
                               String hospitalId, String doctorId, String photos, String province, String city, String district, String addr, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
+        HttpReq.putParams(params, "name", name);
+        HttpReq.putParams(params, "phone", phone);
         HttpReq.putParams(params, "title", title);
         HttpReq.putParams(params, "desc", desc);
         HttpReq.putParams(params, "applyBeginTime", applyBeginTime);
@@ -87,6 +89,5 @@ public class EventBiz {
         HttpReq.putParams(params, "satisfyLevel", satisfyLevel);
         HttpReq.putParams(params, "content", content);
         HttpReq.post(ACTION_COMMENT, null, l);
-
     }
 }

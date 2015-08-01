@@ -21,8 +21,7 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
     private EditText edit_content;
     private Button btn_next;
     private String nickname, phone, hospital, doctor, project;
-    private double time;
-
+    private long time;
 
     @Override
     protected int getInflaterResId() {
@@ -42,12 +41,12 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
             case R.id.btn_next:
                 String title = null;
                 String desc = null;
-                double applyBeginTime = 0;
-                double applyEndTime = 0;
+                long applyBeginTime = 0;
+                long applyEndTime = 0;
 
-                double beginTime = time;
+                long beginTime = time;
 
-                double endTime = 0;
+                long endTime = 0;
 
                 String categoryIds = project;
                 String hospitalId = hospital;
@@ -59,7 +58,7 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
                 String district = null;
                 String addr = null;
 
-                EventBiz.create(title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId,
+                EventBiz.create(nickname, phone, title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId,
                         doctorId, photos, province, city, district, addr, new ResponseListener<AppResponse>() {
                             @Override
                             public void onResponse(AppResponse appResponse) {
@@ -73,7 +72,7 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
     public abstract void onSuccess();
 
     public CreateEventSummaryFragment setInfo(String nickname, String phone, String hospital,
-                                              String doctor, String project, double time) {
+                                              String doctor, String project, long time) {
         this.nickname = nickname;
         this.phone = phone;
         this.hospital = hospital;
