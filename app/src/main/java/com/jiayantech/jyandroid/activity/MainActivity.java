@@ -3,7 +3,6 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,7 +14,6 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
-import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
@@ -23,6 +21,7 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.utils.DialogUtils;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
@@ -33,6 +32,7 @@ import de.greenrobot.event.EventBus;
  * Created by liangzili on 15/6/24.
  */
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
 
     private String[] mTitles;
 
@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,14 @@ public class MainActivity extends BaseActivity {
         setDisplayHomeAsUpEnabled(false);
 
         EventBus.getDefault().register(this);
+
     }
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
+    public void onEvent(UmengPushCustomMessage uMessage) {
+        ToastUtil.showMessage("我收到一条自定义的友盟消息");
+        LogUtil.i(TAG, "EventBus onEvent : " + "我收到一条自定义的友盟消息");
     }
+
 
     @Override
     protected void onDestroy() {
@@ -74,9 +77,7 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    public void onEvent(UmengPushCustomMessage uMessage){
-        ToastUtil.showMessage("我收到一条自定义的友盟消息");
-    }
+
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
@@ -221,9 +222,4 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-//    private void initUmengPush() {
-//        PushAgent.getInstance(this).enable();
-//        String device_token = UmengRegistrar.getRegistrationId(this);
-//
-//    }
 }

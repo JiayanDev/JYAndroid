@@ -59,41 +59,41 @@
                 android:text="@string/userinfo" />
         </RadioGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tab_height"
-            android:layout_below="@+id/navigate_top_line"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/tab_height"-->
+            <!--android:layout_below="@+id/navigate_top_line"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
+            <!--<TextView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:visibility="invisible" />-->
 
-            <TextView
-                android:id="@+id/navigate_msg_count"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="right|top"
-                android:paddingLeft="18dp" />
+            <!--<TextView-->
+                <!--android:id="@+id/navigate_msg_count"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:gravity="right|top"-->
+                <!--android:paddingLeft="18dp" />-->
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
+            <!--<TextView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:visibility="invisible" />-->
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:gravity="center_horizontal|top"-->
+                <!--android:visibility="invisible" />-->
+        <!--</LinearLayout>-->
     </RelativeLayout>
 
 </LinearLayout>
