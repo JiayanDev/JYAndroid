@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
 import com.jiayantech.jyandroid.biz.EventBiz;
 import com.jiayantech.jyandroid.model.Event;
@@ -15,6 +16,7 @@ public class BeautyWithsFragment extends RefreshListFragment<Event, AppResponse<
     @Override
     public void onInitView() {
         super.onInitView();
+        getActivity().setTitle(R.string.title_my_beauty_with);
         setParams(new BeautyWithAdapter(getActivity(), null), EventBiz.ACTION_LIST);
     }
 }

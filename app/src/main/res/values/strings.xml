@@ -63,6 +63,7 @@
     <string name="title_hospital_info">医院信息</string>
     <string name="title_doctor_info">医生信息</string>
     <string name="title_photo_browse">图片浏览</string>
+    <string name="title_my_beauty_with">我的伴美</string>
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>

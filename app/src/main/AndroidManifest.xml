@@ -89,7 +89,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EventRankActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
 
 
         <!--友盟推送服务相关-->

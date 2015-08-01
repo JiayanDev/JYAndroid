@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.handler;
+package com.jiayantech.jyandroid.handler.umengpush;
 
 import android.content.Context;
 
