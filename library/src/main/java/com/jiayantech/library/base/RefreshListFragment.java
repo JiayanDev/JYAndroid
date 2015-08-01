@@ -107,6 +107,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             private void onFinal() {
                 ultimateRecyclerView.mPtrFrameLayout.refreshComplete();
                 mIsLoading = false;
+                //ultimateRecyclerView.requestLayout();
             }
         });
     }

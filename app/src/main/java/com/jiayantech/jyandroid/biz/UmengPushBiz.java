@@ -2,8 +2,8 @@ package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
 
-import com.jiayantech.jyandroid.handler.JYUmengMessageHandler;
-import com.jiayantech.jyandroid.handler.JYUmengNotificationClickHandler;
+import com.jiayantech.jyandroid.handler.umengpush.JYUmengMessageHandler;
+import com.jiayantech.jyandroid.handler.umengpush.JYUmengNotificationClickHandler;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -39,6 +39,7 @@ public class UmengPushBiz {
         PushAgent.getInstance(applicationContext).setNotificationClickHandler(
                 new JYUmengNotificationClickHandler());
         //重写友盟推送通知栏
-        PushAgent.getInstance(applicationContext).setMessageHandler(new JYUmengMessageHandler());
+        PushAgent.getInstance(applicationContext).setMessageHandler(
+                new JYUmengMessageHandler(applicationContext));
     }
 }
