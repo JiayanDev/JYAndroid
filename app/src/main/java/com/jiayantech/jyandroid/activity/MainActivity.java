@@ -1,7 +1,17 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,8 +28,10 @@ import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.widget.DotMarkRadioButton;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -87,6 +99,9 @@ public class MainActivity extends BaseActivity {
         ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
+
+//        mRadioButtons[2].setCompoundDrawables(null, displayUnreadDot(this, R.mipmap.icon_me, 50), null, null);
+        //((DotMarkRadioButton)mRadioButtons[2]).setContent(3);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
@@ -221,5 +236,30 @@ public class MainActivity extends BaseActivity {
             mViewPager.setCurrentItem(pageItemNum, false);
         }
     };
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtil.i(TAG, "MainActivity onNewIntent");
+    }
+
+    //    public static Drawable displayUnreadDot(Context context, int icon, int iconSize){
+//        Bitmap iconBitmap = BitmapFactory.decodeResource(context.getResources(), icon);
+//        Bitmap dotBitmap = BitmapFactory.decodeResource(context.getResources(),
+//                com.jiayantech.library.R.drawable.shape_dot);
+//        Canvas canvas = new Canvas(iconBitmap);
+//
+//        Paint iconPaint = new Paint();
+//        iconPaint.setDither(true);
+//        iconPaint.setFilterBitmap(true);
+//        iconPaint.setAntiAlias(true);
+//        Rect src = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        Rect dst = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        canvas.drawBitmap(iconBitmap, src, dst, iconPaint);
+//        iconPaint.setColor(Color.RED);
+//        canvas.drawCircle(iconSize - 13, 20, 10, iconPaint);
+//
+//        return new BitmapDrawable(context.getResources(), iconBitmap);
+//    }
 
 }
