@@ -52,7 +52,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
 
         //View headerView = setHeader(R.layout.layout_topic_category);
         //initHeaderView(headerView);
-        setHeader(R.layout.banner);
+        //setHeader(R.layout.banner);
         registerReceivers();
     }
 
