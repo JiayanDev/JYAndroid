@@ -15,7 +15,7 @@ public class Event extends BaseModel {
     public String desc;
     public double applyBeginTime;
     public double beginTime;
-    public String categoryIds;
+    public long[] categoryIds;
     public String categoryName;
     public String province;
     public String city;

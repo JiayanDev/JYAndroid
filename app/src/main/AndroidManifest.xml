@@ -59,7 +59,9 @@
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CreateEventActivity"
             android:screenOrientation="portrait"/>
@@ -87,7 +89,7 @@
             android:name=".activity.MessagesActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.BeautyWithsActivity"
+            android:name=".activity.CompanyEventActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EventRankActivity"

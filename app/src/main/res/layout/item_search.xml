@@ -9,7 +9,7 @@
         android:id="@+id/txt_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Info"
+        android:layout_marginBottom="3dip"
         android:textColor="@color/text_normal_color" />
 
     <TextView
@@ -17,9 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/normal_margin"
-        android:layout_marginTop="3dip"
-        android:text="string/cheese_ipsum"
-        android:textColor="@color/text_hint_color" />
+        android:text="string/cheese_ipsum" />
 
     <View style="@style/divider_gray_style" />
 

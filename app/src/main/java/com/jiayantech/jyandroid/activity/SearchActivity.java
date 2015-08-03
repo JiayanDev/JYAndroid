@@ -37,6 +37,8 @@ import java.util.ArrayList;
 public class SearchActivity extends BaseActivity implements TextWatcher {
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
+    public static final String KEY_HOSPITAL_ID = "hospitalId";
+    public static final String KEY_HOSPITAL_NAME = "hospitalName";
 
     private EditText edit_search;
     private RecyclerView mRecyclerView;
@@ -125,8 +127,12 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
                         @Override
                         public void onItemClick(BaseSimpleModelAdapter<Search> adapter, int position, Search search) {
                             Intent intent = new Intent();
-                            intent.putExtra(KEY_ID, search.id + "");
+                            intent.putExtra(KEY_ID, search.id);
                             intent.putExtra(KEY_NAME, search.name);
+                            if (search.hospitalId != 0) {
+                                intent.putExtra(KEY_HOSPITAL_ID, search.hospitalId);
+                                intent.putExtra(KEY_HOSPITAL_NAME, search.hospitalName);
+                            }
                             ActivityResult.onFinishResult(SearchActivity.this, intent);
                         }
                     });

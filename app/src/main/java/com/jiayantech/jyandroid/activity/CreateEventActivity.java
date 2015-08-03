@@ -53,7 +53,7 @@ public class CreateEventActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new CreateEventProjectFragment() {
             @Override
-            protected void onNext(String nickname, String phone, String hospital, String doctor, String project, long time) {
+            protected void onNext(String nickname, String phone, long hospitalId, String hospitalName, long doctorId, String doctorName, String project, long time) {
                 String title = null;
                 String desc = null;
                 long applyBeginTime = 0;
@@ -64,8 +64,6 @@ public class CreateEventActivity extends SingleFragmentActivity {
                 long endTime = 0;
 
                 String categoryIds = project;
-                String hospitalId = hospital;
-                String doctorId = doctor;
 
                 String photos = null;
                 String province = null;
@@ -74,8 +72,8 @@ public class CreateEventActivity extends SingleFragmentActivity {
                 String addr = null;
 
                 showProgressDialog();
-                EventBiz.create(nickname, phone, title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId,
-                        doctorId, photos, province, city, district, addr, new SimpleResponseListener<BaseAppResponse>(_this) {
+                EventBiz.create(nickname, phone, title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId, hospitalName,
+                        doctorId, doctorName, photos, province, city, district, addr, new SimpleResponseListener<BaseAppResponse>(_this) {
                             @Override
                             public void onResponse(BaseAppResponse appResponse) {
                                 super.onResponse(appResponse);

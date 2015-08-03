@@ -56,6 +56,11 @@ public class AppInit {
         }
 
         @Override
+        public String toString() {
+            return String.valueOf(id);
+        }
+
+        @Override
         public int describeContents() {
             return 0;
         }
@@ -66,13 +71,7 @@ public class AppInit {
             dest.writeString(name);
         }
 
-        @Override
-        public String toString() {
-            return String.valueOf(id);
-        }
-
         public static final Parcelable.Creator<Category> CREATOR = new Creator<Category>() {
-
             @Override
             public Category[] newArray(int size) {
                 return new Category[size];

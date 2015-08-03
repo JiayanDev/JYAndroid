@@ -17,15 +17,13 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
-import com.jiayantech.jyandroid.fragment.UserInfoFragment;
+import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -180,17 +178,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void initFragments() {
-//        BeautyWithFragment beautyWithFragment = BeautyWithFragment.newInstance(null);
-//        CommunityFragment communityFragment = CommunityFragment.newInstance(null);
-////        ActivityFragment activityFragment = ActivityFragment.newInstance(null);
-//        EventsFragment eventFragment = new EventsFragment();
-//        UserInfoFragment userInfoFragment = UserInfoFragment.newInstance(null);
-//        mFragments = new Fragment[]{beautyWithFragment, communityFragment, eventFragment, userInfoFragment};
-
         mFragments = new Fragment[]{
                 new HomeEventFragment(),
                 CommunityFragment.newInstance(null),
-                UserInfoFragment.newInstance(null)};
+                MineFragment.newInstance(null)};
     }
 
     @Override
@@ -212,7 +203,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     public void run() {
                         toUserInfo = false;
                         mViewPager.setCurrentItem(2, false);
-                        ((UserInfoFragment) mFragments[2]).resume();
+                        ((MineFragment) mFragments[2]).resume();
                     }
                 });
                 break;
@@ -231,6 +222,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             //mRadioGroup.check(ids[mViewPager.getCurrentItem()]);
         }
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

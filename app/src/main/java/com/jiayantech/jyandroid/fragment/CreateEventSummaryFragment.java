@@ -58,13 +58,13 @@ public abstract class CreateEventSummaryFragment extends BaseFragment implements
                 String district = null;
                 String addr = null;
 
-                EventBiz.create(nickname, phone, title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId,
-                        doctorId, photos, province, city, district, addr, new ResponseListener<AppResponse>() {
-                            @Override
-                            public void onResponse(AppResponse appResponse) {
-                                onSuccess();
-                            }
-                        });
+//                EventBiz.create(nickname, phone, title, desc, applyBeginTime, applyEndTime, beginTime, endTime, categoryIds, hospitalId,
+//                        doctorId, photos, province, city, district, addr, new ResponseListener<AppResponse>() {
+//                            @Override
+//                            public void onResponse(AppResponse appResponse) {
+//                                onSuccess();
+//                            }
+//                        });
                 break;
         }
     }
