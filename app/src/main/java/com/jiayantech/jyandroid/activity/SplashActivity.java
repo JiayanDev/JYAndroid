@@ -1,15 +1,14 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -21,6 +20,8 @@ import com.jiayantech.library.http.ResponseListener;
  * Created by liangzili on 15/6/24.
  */
 public class SplashActivity extends BaseActivity {
+    public static final String EXTRA_BUNDLE = "launchParams";
+
     private final long delayMillis = 1000;
     final long currentTimeMillis = System.currentTimeMillis();
 
@@ -30,6 +31,9 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         setSwipeBackEnable(false);
         hideActionBar();
+
+        //Debug.waitForDebugger();
+        //Intent intent = getIntent();
 
         if (AppInitManger.isRegister()) {
             quickLogin();
@@ -57,12 +61,6 @@ public class SplashActivity extends BaseActivity {
             });
         }
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                gotoMainActivity();
-//            }
-//        }, 3000);
 
     }
 
@@ -78,15 +76,21 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMainActivity() {
         long dTimeMillis = System.currentTimeMillis() - currentTimeMillis;
+        final Intent intent = new Intent(this, MainActivity.class);
+        if(getIntent().getBundleExtra(EXTRA_BUNDLE) != null){
+            intent.putExtra(EXTRA_BUNDLE, getIntent().getBundleExtra(EXTRA_BUNDLE));
+        }
+
         if (dTimeMillis < delayMillis) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    finishToStartActivity(MainActivity.class);
+                    finishToStartActivity(intent);
                 }
             }, delayMillis - dTimeMillis);
             return;
         }
-        finishToStartActivity(MainActivity.class);
+
+        finishToStartActivity(intent);
     }
 }

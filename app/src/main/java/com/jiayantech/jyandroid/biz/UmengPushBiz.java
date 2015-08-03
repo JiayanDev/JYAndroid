@@ -1,9 +1,11 @@
 package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
+import android.content.IntentFilter;
 
 import com.jiayantech.jyandroid.handler.umengpush.JYUmengMessageHandler;
 import com.jiayantech.jyandroid.handler.umengpush.JYUmengNotificationClickHandler;
+import com.jiayantech.jyandroid.handler.umengpush.PushBroadcaseReceiver;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -33,6 +35,10 @@ public class UmengPushBiz {
         return device_token;
     }
 
+    /**
+     * 初始化友盟push
+     * @param applicationContext
+     */
     public static void init(Context applicationContext) {
         appContext = applicationContext;
         //重写友盟自定义行为处理
@@ -41,5 +47,10 @@ public class UmengPushBiz {
         //重写友盟推送通知栏
         PushAgent.getInstance(applicationContext).setMessageHandler(
                 new JYUmengMessageHandler(applicationContext));
+
+        //注册广播, 处理友盟push过来的消息
+        PushBroadcaseReceiver receiver = new PushBroadcaseReceiver();
+        IntentFilter filter = new IntentFilter(PushBroadcaseReceiver.ACTION);
+        applicationContext.registerReceiver(receiver, filter);
     }
 }

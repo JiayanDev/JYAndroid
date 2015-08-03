@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
@@ -59,7 +60,30 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         setDisplayHomeAsUpEnabled(false);
 
+        //如果是从通知栏推送消息点击启动app，根据推送消息的参数跳转到对应Activity
+        if(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE) != null){
+            launchActivityFromNotification(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE));
+        }
         //EventBus.getDefault().register(this);
+    }
+
+    private void launchActivityFromNotification(Bundle bundleExtra) {
+        String type = bundleExtra.getString(WebViewFragment.EXTRA_TYPE);
+        long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
+        long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
+        String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
+        switch (type){
+            case WebViewFragment.TYPE_DIARY:
+                Intent intent = new Intent(this, PostDetailActivity.class);
+                intent.putExtra(WebViewFragment.EXTRA_ID, id);
+                intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
+                intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
+                startActivity(intent);
+                break;
+            default:
+                return;
+        }
     }
 
     @Override
@@ -256,5 +280,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //
 //        return new BitmapDrawable(context.getResources(), iconBitmap);
 //    }
+
+
 
 }
