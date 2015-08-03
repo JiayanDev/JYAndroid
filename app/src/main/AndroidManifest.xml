@@ -36,7 +36,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.MyDiariesActivity"
             android:screenOrientation="portrait"/>

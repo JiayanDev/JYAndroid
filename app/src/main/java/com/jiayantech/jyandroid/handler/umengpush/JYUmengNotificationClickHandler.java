@@ -26,16 +26,37 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
         intent.putExtra(WebViewFragment.EXTRA_TYPE, "diary");
         intent.putExtra(WebViewFragment.EXTRA_USERNAME, "liangzili");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //startActivity(context, intent);
-        context.startActivity(intent);
+        startActivity0(context, intent);
+        //context.startActivity(intent);
 
     }
 
     public void startActivity(Context context, Intent intent) {
-        Intent mainIntent = new Intent(context, MainActivity.class);
+//        Intent mainIntent = new Intent();
+//        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent mainIntent = context.getPackageManager().
+                getLaunchIntentForPackage(context.getPackageName());
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent[] intents = new Intent[2];
         intents[0] = mainIntent;
         intents[1] = intent;
         context.startActivities(intents);
+    }
+
+    public void startActivity0(Context context, Intent mainIntent) {
+//        Intent mainIntent = new Intent();
+//        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainIntent = new Intent(context, PostDetailActivity.class);
+        mainIntent.putExtra(WebViewFragment.EXTRA_ID, 49);
+        mainIntent.putExtra(WebViewFragment.EXTRA_USER_ID, 18);
+        mainIntent.putExtra(WebViewFragment.EXTRA_TYPE, "diary");
+        mainIntent.putExtra(WebViewFragment.EXTRA_USERNAME, "liangzili");
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mainIntent.setAction(Intent.ACTION_MAIN);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//        Intent[] intents = new Intent[2];
+//        intents[0] = mainIntent;
+//        intents[1] = intent;
+        context.startActivity(mainIntent);
     }
 }

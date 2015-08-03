@@ -1,17 +1,7 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,10 +18,8 @@ import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
-import com.jiayantech.jyandroid.widget.DotMarkRadioButton;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -241,6 +229,7 @@ public class MainActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         LogUtil.i(TAG, "MainActivity onNewIntent");
+        ToastUtil.showMessage("MainActivity onNewIntent");
     }
 
     //    public static Drawable displayUnreadDot(Context context, int icon, int iconSize){
