@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
@@ -48,6 +49,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.i("LifeCycle", String.format("%s is onCreate()", this.getClass().getSimpleName()));
         //开启友盟推送
         PushAgent.getInstance(this).onAppStart();
 
@@ -64,19 +66,41 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         super.onPostResume();
         //集成友盟统计
         MobclickAgent.onResume(this);
+        LogUtil.i("LifeCycle", String.format("%s is onPostResume()",
+                this.getClass().getSimpleName()));
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        LogUtil.i("LifeCycle", String.format("%s is onStart()", this.getClass().getSimpleName()));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtil.i("LifeCycle", String.format("%s is onRestart()", this.getClass().getSimpleName()));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //集成友盟统计
+        LogUtil.i("LifeCycle", String.format("%s is onPause()", this.getClass().getSimpleName()));
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.i("LifeCycle", String.format("%s is onStop()", this.getClass().getSimpleName()));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtil.i("LifeCycle", String.format("%s is onDestroy()", this.getClass().getSimpleName()));
     }
 
     protected void setTitle(String title) {

@@ -18,6 +18,7 @@ import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 /**
@@ -28,13 +29,14 @@ public class JYApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        UmengPushBiz.init(getApplicationContext());
-        ShareBiz.registerToWx(getApplicationContext());
-        PushBroadcaseReceiver receiver = new PushBroadcaseReceiver();
 
-        IntentFilter filter = new IntentFilter(PushBroadcaseReceiver.ACTION);
-        registerReceiver(receiver, filter);
+        ShareBiz.registerToWx(getApplicationContext());
+        UmengPushBiz.init(getApplicationContext());
+
+        LogUtil.i("LifeCycle", String.format("%s is onCreate()", this.getClass().getSimpleName()));
     }
+
+
 
     @Override
     public void onOverdue(final HttpReq httpReq) {

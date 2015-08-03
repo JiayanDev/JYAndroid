@@ -39,5 +39,5 @@ public class UIUtil {
 
     public static int px2dip(int pixel){
         return 0;
-    };
+    }
 }
