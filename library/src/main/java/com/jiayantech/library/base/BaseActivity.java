@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -24,6 +25,7 @@ import com.jiayantech.library.http.ResponseListener;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
+import de.greenrobot.event.EventBus;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase;
@@ -311,4 +313,5 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
             mActivity.dismissProgressDialog();
         }
     }
+
 }

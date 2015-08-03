@@ -3,7 +3,6 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,7 +14,6 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
-import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.EventsFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
@@ -23,6 +21,7 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.utils.DialogUtils;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
@@ -33,6 +32,7 @@ import de.greenrobot.event.EventBus;
  * Created by liangzili on 15/6/24.
  */
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
 
     private String[] mTitles;
 
@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,14 @@ public class MainActivity extends BaseActivity {
         setDisplayHomeAsUpEnabled(false);
 
         EventBus.getDefault().register(this);
+
     }
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
+    public void onEvent(UmengPushCustomMessage uMessage) {
+        ToastUtil.showMessage("我收到一条自定义的友盟消息");
+        LogUtil.i(TAG, "EventBus onEvent : " + "我收到一条自定义的友盟消息");
     }
+
 
     @Override
     protected void onDestroy() {
@@ -74,9 +77,7 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    public void onEvent(UmengPushCustomMessage uMessage){
-        ToastUtil.showMessage("我收到一条自定义的友盟消息");
-    }
+
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
@@ -86,6 +87,9 @@ public class MainActivity extends BaseActivity {
         ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
+
+//        mRadioButtons[2].setCompoundDrawables(null, displayUnreadDot(this, R.mipmap.icon_me, 50), null, null);
+        //((DotMarkRadioButton)mRadioButtons[2]).setContent(3);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
@@ -221,9 +225,30 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-//    private void initUmengPush() {
-//        PushAgent.getInstance(this).enable();
-//        String device_token = UmengRegistrar.getRegistrationId(this);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtil.i(TAG, "MainActivity onNewIntent");
+        ToastUtil.showMessage("MainActivity onNewIntent");
+    }
+
+    //    public static Drawable displayUnreadDot(Context context, int icon, int iconSize){
+//        Bitmap iconBitmap = BitmapFactory.decodeResource(context.getResources(), icon);
+//        Bitmap dotBitmap = BitmapFactory.decodeResource(context.getResources(),
+//                com.jiayantech.library.R.drawable.shape_dot);
+//        Canvas canvas = new Canvas(iconBitmap);
 //
+//        Paint iconPaint = new Paint();
+//        iconPaint.setDither(true);
+//        iconPaint.setFilterBitmap(true);
+//        iconPaint.setAntiAlias(true);
+//        Rect src = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        Rect dst = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        canvas.drawBitmap(iconBitmap, src, dst, iconPaint);
+//        iconPaint.setColor(Color.RED);
+//        canvas.drawCircle(iconSize - 13, 20, 10, iconPaint);
+//
+//        return new BitmapDrawable(context.getResources(), iconBitmap);
 //    }
+
 }

@@ -50,8 +50,9 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
 
         setParams(new PostAdapter(null, getActivity()), "post/list");
 
-        View headerView = setHeader(R.layout.layout_topic_category);
-        initHeaderView(headerView);
+        //View headerView = setHeader(R.layout.layout_topic_category);
+        //initHeaderView(headerView);
+        setHeader(R.layout.banner);
         registerReceivers();
     }
 

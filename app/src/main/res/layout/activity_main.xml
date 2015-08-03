@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <com.jiayantech.library.widget.UnslidableViewPager
         android:id="@+id/id_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,81 +19,89 @@
             android:id="@+id/navigate_top_line"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/theme_color" />
+            android:background="@color/theme_color"/>
 
-        <RadioGroup
-            android:id="@+id/radiogroup_tab"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/tab_height"
-            android:layout_below="@+id/navigate_top_line"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="2dip"
-            android:paddingTop="5dip">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/navigate_top_line">
 
-            <RadioButton
-                android:id="@+id/radio_activity"
-                style="@style/main_tab"
-                android:checked="true"
-                android:drawableTop="@drawable/tab_event_selector"
-                android:text="@string/activity" />
+            <RadioGroup
+                android:id="@+id/radiogroup_tab"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_height"
 
-            <!--<RadioButton-->
-            <!--android:id="@+id/radio_beauty_with"-->
-            <!--style="@style/main_tab"-->
-            <!--android:checked="true"-->
-            <!--android:drawableTop="@drawable/tab_home_selector"-->
-            <!--android:text="@string/beauty_with" />-->
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="2dip"
+                android:paddingTop="5dip">
 
-            <RadioButton
-                android:id="@+id/radio_community"
-                style="@style/main_tab"
-                android:drawableTop="@drawable/tab_community_selector"
-                android:text="@string/community" />
+                <RadioButton
+                    android:id="@+id/radio_activity"
+                    style="@style/main_tab"
+                    android:checked="true"
+                    android:drawableTop="@drawable/tab_event_selector"
+                    android:text="@string/activity"/>
+
+                <!--<RadioButton-->
+                <!--android:id="@+id/radio_beauty_with"-->
+                <!--style="@style/main_tab"-->
+                <!--android:checked="true"-->
+                <!--android:drawableTop="@drawable/tab_home_selector"-->
+                <!--android:text="@string/beauty_with" />-->
+
+                <RadioButton
+                    android:id="@+id/radio_community"
+                    style="@style/main_tab"
+                    android:drawableTop="@drawable/tab_community_selector"
+                    android:text="@string/community"/>
 
 
-            <RadioButton
-                android:id="@+id/radio_userinfo"
-                style="@style/main_tab"
-                android:drawableTop="@drawable/tab_me_selector"
-                android:text="@string/userinfo" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radio_userinfo"
+                    style="@style/main_tab"
+                    android:drawableTop="@drawable/tab_me_selector"
+                    android:text="@string/userinfo"/>
+            </RadioGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tab_height"
-            android:layout_below="@+id/navigate_top_line"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/navigate_msg_count"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="right|top"
-                android:paddingLeft="18dp" />
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/tab_height"-->
+        <!--android:layout_below="@+id/navigate_top_line"-->
+        <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
+        <!--<TextView-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_weight="1.0"-->
+        <!--android:gravity="center_horizontal|top"-->
+        <!--android:visibility="invisible" />-->
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_weight="1.0"
-                android:gravity="center_horizontal|top"
-                android:visibility="invisible" />
-        </LinearLayout>
+        <!--<TextView-->
+        <!--android:id="@+id/navigate_msg_count"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_weight="1.0"-->
+        <!--android:gravity="right|top"-->
+        <!--android:paddingLeft="18dp" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_weight="1.0"-->
+        <!--android:gravity="center_horizontal|top"-->
+        <!--android:visibility="invisible" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_weight="1.0"-->
+        <!--android:gravity="center_horizontal|top"-->
+        <!--android:visibility="invisible" />-->
+        <!--</LinearLayout>-->
     </RelativeLayout>
 
 </LinearLayout>

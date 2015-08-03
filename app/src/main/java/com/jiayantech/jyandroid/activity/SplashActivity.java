@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -7,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -27,6 +30,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         setSwipeBackEnable(false);
         hideActionBar();
+
         if (AppInitManger.isRegister()) {
             quickLogin();
         } else {
@@ -52,6 +56,14 @@ public class SplashActivity extends BaseActivity {
                 }
             });
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gotoMainActivity();
+            }
+        }, 3000);
+
     }
 
     private void quickLogin() {

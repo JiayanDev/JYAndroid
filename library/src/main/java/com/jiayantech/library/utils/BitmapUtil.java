@@ -1,13 +1,23 @@
 package com.jiayantech.library.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 
+import com.jiayantech.library.R;
 import com.jiayantech.library.comm.MD5;
 import com.jiayantech.library.http.BitmapBiz;
 
@@ -170,5 +180,7 @@ public class BitmapUtil {
         String path = cursor.getString(column_index);
         return path;
     }
+
+
 
 }
