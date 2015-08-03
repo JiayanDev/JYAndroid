@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
+import com.jiayantech.jyandroid.activity.SplashActivity;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.library.utils.LogUtil;
 import com.umeng.message.UmengNotificationClickHandler;
@@ -44,19 +45,26 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
     }
 
     public void startActivity0(Context context, Intent mainIntent) {
-//        Intent mainIntent = new Intent();
-//        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mainIntent = new Intent(context, PostDetailActivity.class);
         mainIntent.putExtra(WebViewFragment.EXTRA_ID, 49);
         mainIntent.putExtra(WebViewFragment.EXTRA_USER_ID, 18);
         mainIntent.putExtra(WebViewFragment.EXTRA_TYPE, "diary");
         mainIntent.putExtra(WebViewFragment.EXTRA_USERNAME, "liangzili");
+
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         mainIntent.setAction(Intent.ACTION_MAIN);
+        mainIntent.setClass(context, SplashActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//        Intent[] intents = new Intent[2];
-//        intents[0] = mainIntent;
-//        intents[1] = intent;
-        context.startActivity(mainIntent);
+
+        Intent intent = new Intent(context, PostDetailActivity.class);
+        intent.putExtra(WebViewFragment.EXTRA_ID, 49);
+        intent.putExtra(WebViewFragment.EXTRA_USER_ID, 18);
+        intent.putExtra(WebViewFragment.EXTRA_TYPE, "diary");
+        intent.putExtra(WebViewFragment.EXTRA_USERNAME, "liangzili");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Intent[] intents = {mainIntent, intent};
+
+        //context.startActivity(mainIntent);
+        context.startActivities(intents);
     }
 }
