@@ -38,7 +38,6 @@ public class BannerFragment extends Fragment{
         mAutoScrollViewPager = (BannerViewPager)view.findViewById(R.id.view_pager);
         mIndicator = (CirclePageIndicator)view.findViewById(R.id.indicator);
 
-
         return view;
     }
 
