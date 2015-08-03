@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,8 +38,10 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
     private TextView btn_ok;
 
     private long time;
-    private String doctorId;
-    private String hospitalId;
+    private long doctorId;
+    private String doctorName;
+    private long hospitalId;
+    private String hospitalName;
     //private ArrayList<String> categoryIds;
     ArrayList<AppInit.Category> categoryList;
 
@@ -74,10 +77,9 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 search(getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
-                        String hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
+                        hospitalId = data.getLongExtra(SearchActivity.KEY_ID, 0);
+                        hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_hospital.setText(getString(R.string.hospital) + ": " + hospitalName);
-//                        ToastUtil.showMessage("hospitalName: " + hospitalName);
                     }
                 });
                 break;
@@ -85,10 +87,14 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 search(getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        doctorId = data.getStringExtra(SearchActivity.KEY_ID);
-                        String doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
+                        doctorId = data.getLongExtra(SearchActivity.KEY_ID, 0);
+                        doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_doctor.setText(getString(R.string.doctor) + ": " + doctorName);
-//                        ToastUtil.showMessage("doctorName: " + doctorName);
+                        if (doctorId != 0) {
+                            hospitalId = data.getLongExtra(SearchActivity.KEY_HOSPITAL_ID, 0);
+                            hospitalName = data.getStringExtra(SearchActivity.KEY_HOSPITAL_NAME);
+                            txt_hospital.setText(getString(R.string.hospital) + ": " + hospitalName);
+                        }
                     }
                 });
                 break;
@@ -111,7 +117,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 new DateTimeHelper(getActivity()).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
                     public void onSetDateTime(Calendar calendar) {
-                        txt_time.setText(getString(R.string.time) + ": " + TimeUtil.getStrTime(calendar.getTimeInMillis() / 1000 / 60 * 1000 * 60));
+                        txt_time.setText(getString(R.string.operation_time) + ": " + TimeUtil.getStrTime(calendar.getTimeInMillis() / 1000 / 60 * 1000 * 60));
                         time = calendar.getTimeInMillis() / 1000;
                     }
                 });
@@ -123,11 +129,11 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                 //hospitalId = "1";
                 //doctorId = "1";
 
-                if (hospitalId == null) {
+                if (hospitalId == 0 && TextUtils.isEmpty(hospitalName)) {
                     ToastUtil.showMessage("hospitalId==null");
                     return;
                 }
-                if (doctorId == null) {
+                if (doctorId == 0 && TextUtils.isEmpty(doctorName)) {
                     ToastUtil.showMessage("doctorId==null");
                     return;
                 }
@@ -139,7 +145,7 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
                     ToastUtil.showMessage("time==0");
                     return;
                 }
-                onNext(nickname, phone, hospitalId, doctorId, categoryList.toString(), time);
+                onNext(nickname, phone, hospitalId, hospitalName, doctorId, doctorName, categoryList.toString(), time);
                 break;
         }
     }
@@ -148,5 +154,5 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
         SearchActivity.start(this, title, action, activityResult);
     }
 
-    protected abstract void onNext(String nickname, String phone, String hospital, String doctor, String project, long time);
+    protected abstract void onNext(String nickname, String phone, long hospitalId, String hospitalName, long doctorId, String doctorName, String project, long time);
 }

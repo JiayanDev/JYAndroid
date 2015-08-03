@@ -6,10 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.BeautyWithsActivity;
+import com.jiayantech.jyandroid.activity.CompanyEventActivity;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
+import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.manager.AppInitManger;
@@ -28,13 +29,14 @@ import com.jiayantech.library.utils.ToastUtil;
  *
  * @Update by janseon on 15/7/7
  */
-public class UserInfoFragment extends BaseFragment implements View.OnClickListener {
-    public static UserInfoFragment newInstance(Bundle args) {
-        UserInfoFragment fragment = new UserInfoFragment();
+public class MineFragment extends BaseFragment implements View.OnClickListener {
+    public static MineFragment newInstance(Bundle args) {
+        MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    private View layout_info;
     private ImageView img_avatar;
     private TextView txt_nickname;
     private TextView txt_info;
@@ -49,14 +51,17 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected int getInflaterResId() {
-        return R.layout.fragment_user_info;
+        return R.layout.fragment_mine;
     }
 
     @Override
     protected void onInitView() {
+        layout_info = findViewById(R.id.layout_info);
         img_avatar = (ImageView) findViewById(R.id.img_avatar);
         txt_nickname = (TextView) findViewById(R.id.txt_nickname);
         txt_info = (TextView) findViewById(R.id.txt_info);
+
+        layout_info.setOnClickListener(this);
 
         divider_home_page = findViewById(R.id.divider_home_page);
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
@@ -105,6 +110,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layout_info:
+                startActivity(UserInfoActivity.class);
+                break;
             case R.id.txt_events:
                 startActivity(MyEventsActivity.class);
                 break;
@@ -142,7 +150,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 });
                 break;
             case R.id.txt_mime:
-                startActivity(BeautyWithsActivity.class);
+                startActivity(CompanyEventActivity.class);
                 break;
         }
     }

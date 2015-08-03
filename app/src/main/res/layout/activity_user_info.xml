@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="30dip">
+
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/normal_padding"
+            android:paddingLeft="@dimen/normal_padding"
+            android:paddingRight="15dip"
+            android:paddingTop="@dimen/normal_padding">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="头像" />
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_avatar"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:layout_marginRight="@dimen/normal_margin"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img"
+                app:riv_corner_radius="40dip" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_arrow_right_normal" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider_home_page"
+            style="@style/divider_big_gray_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/normal_padding">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="头像" />
+
+            <TextView
+                android:id="@+id/txt_home_page"
+                style="@style/text_item_right_arrow_style"
+                android:layout_width="wrap_content"
+                android:text="我的主页" />
+        </LinearLayout>
+
+        <View style="@style/divider_offset_gray_style" />
+
+    </LinearLayout>
+</ScrollView>

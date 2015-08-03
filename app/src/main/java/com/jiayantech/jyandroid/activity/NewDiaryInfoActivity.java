@@ -47,9 +47,9 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
     private EditText edit_price;
     private RatingBar rating_bar;
 
-    private String doctorId;
+    private long doctorId;
     private String doctorName;
-    private String hospitalId;
+    private long hospitalId;
     private String hospitalName;
     private ArrayList<AppInit.Category> categoryList;
     private long operationTime = 0;
@@ -117,23 +117,28 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                     }
                 });
                 break;
-            case R.id.txt_doctor:
-                SearchActivity.start(this, getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult() {
-                    @Override
-                    public void onActivityResult(Intent data) {
-                        doctorId = data.getStringExtra(SearchActivity.KEY_ID);
-                        doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
-                        txt_doctor.setText(doctorName);
-                    }
-                });
-                break;
             case R.id.txt_hospital:
                 SearchActivity.start(this, getString(R.string.title_hospital_info), CommBiz.ACTION_HOSPITAL_OPTION, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        hospitalId = data.getStringExtra(SearchActivity.KEY_ID);
+                        hospitalId = data.getLongExtra(SearchActivity.KEY_ID, 0);
                         hospitalName = data.getStringExtra(SearchActivity.KEY_NAME);
                         txt_hospital.setText(hospitalName);
+                    }
+                });
+                break;
+            case R.id.txt_doctor:
+                SearchActivity.start(this, getString(R.string.title_doctor_info), CommBiz.ACTION_DOCTOR_OPTION, new ActivityResult() {
+                    @Override
+                    public void onActivityResult(Intent data) {
+                        doctorId = data.getLongExtra(SearchActivity.KEY_ID, 0);
+                        doctorName = data.getStringExtra(SearchActivity.KEY_NAME);
+                        txt_doctor.setText(doctorName);
+                        if (doctorId != 0) {
+                            hospitalId = data.getLongExtra(SearchActivity.KEY_HOSPITAL_ID, 0);
+                            hospitalName = data.getStringExtra(SearchActivity.KEY_HOSPITAL_NAME);
+                            txt_hospital.setText(hospitalName);
+                        }
                     }
                 });
                 break;
@@ -154,6 +159,16 @@ public class NewDiaryInfoActivity extends BaseActivity implements View.OnClickLi
                     ToastUtil.showMessage("select the time");
                     return true;
                 }
+
+                if (hospitalId == 0 && TextUtils.isEmpty(hospitalName)) {
+                    ToastUtil.showMessage("hospitalId==null");
+                    return true;
+                }
+                if (doctorId == 0 && TextUtils.isEmpty(doctorName)) {
+                    ToastUtil.showMessage("doctorId==null");
+                    return true;
+                }
+
                 String price = edit_price.getText().toString();
                 if (TextUtils.isEmpty(price)) {
                     ToastUtil.showMessage("input the price");

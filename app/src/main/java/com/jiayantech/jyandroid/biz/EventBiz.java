@@ -20,7 +20,6 @@ public class EventBiz {
     private static final String ACTION_APPLY = MODEL + "/apply";
     private static final String ACTION_COMMENT = MODEL + "/comment";
     public static final String ACTION_LIST = MODEL + "/list";
-    public static final String ACTION_COMPANY_LIST = "company/" + MODEL + "/list";
 
     /**
      * title  必填，标题
@@ -41,10 +40,10 @@ public class EventBiz {
      * _userId  //测试用，正常情况下不用传 从session中获取
      **/
     public static void create(String name, String phone, String title, String desc, long applyBeginTime, long applyEndTime, long beginTime, long endTime, String categoryIds,
-                              String hospitalId, String doctorId, String photos, String province, String city, String district, String addr, ResponseListener<?> l) {
+                              long hospitalId, String hospitalName, long doctorId, String doctorName, String photos, String province, String city, String district, String addr, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
         HttpReq.putParams(params, "name", name);
-        HttpReq.putParams(params, "phone", phone);
+        HttpReq.putParams(params, "phoneNum", phone);
         //HttpReq.putParams(params, "title", title);
         //HttpReq.putParams(params, "desc", desc);
         //HttpReq.putParams(params, "applyBeginTime", applyBeginTime);
@@ -52,14 +51,22 @@ public class EventBiz {
         HttpReq.putParams(params, "beginTime", beginTime);
         //HttpReq.putParams(params, "endTime", endTime);
         HttpReq.putParams(params, "categoryIds", categoryIds);
-        HttpReq.putParams(params, "hospitalId", hospitalId);
-        HttpReq.putParams(params, "doctorId", doctorId);
+        if (hospitalId == 0) {
+            HttpReq.putParams(params, "hospitalName", hospitalName);
+        } else {
+            HttpReq.putParams(params, "hospitalId", hospitalId);
+        }
+        if (doctorId == 0) {
+            HttpReq.putParams(params, "doctorName", doctorName);
+        } else {
+            HttpReq.putParams(params, "doctorId", doctorId);
+        }
         //HttpReq.putParams(params, "photos", photos);
         //HttpReq.putParams(params, "province", province);
         //HttpReq.putParams(params, "city", city);
         //HttpReq.putParams(params, "district", district);
         //HttpReq.putParams(params, "addr", addr);
-        HttpReq.get(ACTION_CREATE, params, l);
+        HttpReq.post(ACTION_CREATE, params, l);
     }
 
     /**
@@ -77,7 +84,7 @@ public class EventBiz {
         HttpReq.putParams(params, "gender", gender);
         HttpReq.putParams(params, "desc", desc);
         //HttpReq.post(ACTION_APPLY, null, l);
-        HttpReq.get(ACTION_APPLY, params, l);
+        HttpReq.post(ACTION_APPLY, params, l);
     }
 
     /**

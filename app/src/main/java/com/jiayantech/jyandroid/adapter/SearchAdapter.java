@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.adapter;
 
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -34,7 +36,6 @@ public class SearchAdapter extends BaseSimpleModelAdapter<Search> {
 
         public ViewHolder(ViewGroup parent, int layoutId) {
             this(parent, layoutId, null);
-
         }
 
         public ViewHolder(ViewGroup parent, int layoutId, SearchAdapter adapter) {
@@ -46,6 +47,12 @@ public class SearchAdapter extends BaseSimpleModelAdapter<Search> {
         @Override
         public void onBind(Search search, int position) {
             txt_content.setText(search.name);
+            if (TextUtils.isEmpty(search.hospitalName)) {
+                txt_hint.setVisibility(View.GONE);
+            } else {
+                txt_hint.setVisibility(View.VISIBLE);
+                txt_hint.setText(search.hospitalName);
+            }
         }
     }
 }
