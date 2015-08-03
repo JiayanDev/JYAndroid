@@ -180,7 +180,6 @@ public class UserBiz {
      * @param l
      */
     public static void bindAccount(String type, String name, String psw, String phoneNum, String confirmCode, String wxCode, ResponseListener<?> l) {
-        if (!ConfigManager.checkTokenWithTips()) return;
         Map<String, String> params = HttpReq.getInitParams("type", type);
         HttpReq.putParams(params, "name", name);
         HttpReq.putParams(params, "psw", MD5.encode(psw));
@@ -191,8 +190,7 @@ public class UserBiz {
     }
 
     public static void detail(ResponseListener<?> l) {
-        if (!ConfigManager.checkTokenWithTips()) return;
-        HttpReq.post(ACTION_DETAIL, null, l);
+        HttpReq.get(ACTION_DETAIL, null, l);
     }
 
     public static void update(String avatar, String name, String gender, String province, String city, String birthday, String phoneNum, ResponseListener<?> l) {
@@ -214,12 +212,10 @@ public class UserBiz {
     }
 
     public static void logout(ResponseListener<?> l) {
-        if (ConfigManager.checkTokenWithTips()) return;
         HttpReq.post(ACTION_LOGOUT, null, l);
     }
 
     public static void delete(ResponseListener<?> l) {
-        if (ConfigManager.checkTokenWithTips()) return;
         HttpReq.post(ACTION_DELETE, null, l);
     }
 
@@ -248,7 +244,7 @@ public class UserBiz {
             AppInit appInit = response.data;
             AppInitManger.save(appInit);
             String social_response = getSocialReceipt(appInit, social_type);
-            if (appInit.register && TextUtils.isEmpty(social_response) && !TextUtils.isEmpty(appInit.phoneNum)) {
+            if (appInit.register && TextUtils.isEmpty(social_response) && !TextUtils.isEmpty(AppInitManger.getPhoneNum())) {
                 BroadcastHelper.send(Broadcasts.ACTION_LOGINED);
                 if (!TextUtils.isEmpty(phoneNum)) ConfigManager.putConfig(KEY_PHONE, phoneNum);
                 onFinishResult();

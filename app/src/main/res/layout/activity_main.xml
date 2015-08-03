@@ -37,6 +37,12 @@
                 android:checked="true"
                 android:drawableTop="@drawable/tab_event_selector"
                 android:text="@string/activity" />
+            <!--<RadioButton-->
+            <!--android:id="@+id/radio_activity"-->
+            <!--style="@style/main_tab"-->
+            <!--android:checked="true"-->
+            <!--android:drawableTop="@drawable/tab_event_selector"-->
+            <!--android:text="@string/activity" />-->
 
             <!--<RadioButton-->
             <!--android:id="@+id/radio_beauty_with"-->

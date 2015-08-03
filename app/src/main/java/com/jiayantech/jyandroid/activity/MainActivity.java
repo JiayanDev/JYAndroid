@@ -15,24 +15,19 @@ import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
-import com.jiayantech.jyandroid.fragment.BeautyWithFragment;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
-import com.jiayantech.jyandroid.fragment.EventsFragment;
+import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
-import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by liangzili on 15/6/24.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private String[] mTitles;
 
@@ -60,7 +55,7 @@ public class MainActivity extends BaseActivity {
 
         setDisplayHomeAsUpEnabled(false);
 
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
     }
 
     @Override
@@ -71,10 +66,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
-    public void onEvent(UmengPushCustomMessage uMessage){
+    public void onEvent(UmengPushCustomMessage uMessage) {
         ToastUtil.showMessage("我收到一条自定义的友盟消息");
     }
 
@@ -87,7 +82,7 @@ public class MainActivity extends BaseActivity {
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        mRadioGroup.setOnCheckedChangeListener(this);
 
         setTitle(mRadioButtons[0].getText().toString());
     }
@@ -120,30 +115,26 @@ public class MainActivity extends BaseActivity {
 
 
     private void checkGotoSelectPublish() {
-        if (AppInitManger.isRegister()) {
-            final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
-            dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    startActivity(MyDiariesActivity.class);
-                }
-            });
-            dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    startActivity(PublishPostActivity.class);
-                }
-            });
-        } else {
-            startActivityForResult(new Intent(this, LoginActivity.class), new ActivityResult() {
-                @Override
-                public void onActivityResult(Intent data) {
-                    checkGotoSelectPublish();
-                }
-            });
-        }
+        LoginActivity.checkLoginToRunnable(this, new Runnable() {
+            @Override
+            public void run() {
+                final Dialog dialog = DialogUtils.showViewDialog(_this, R.layout.dialog_publish_actions, false);
+                dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(MyDiariesActivity.class);
+                    }
+                });
+                dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(PublishPostActivity.class);
+                    }
+                });
+            }
+        });
     }
 
     private void initViewPager() {
@@ -193,37 +184,47 @@ public class MainActivity extends BaseActivity {
 //        mFragments = new Fragment[]{beautyWithFragment, communityFragment, eventFragment, userInfoFragment};
 
         mFragments = new Fragment[]{
-                new EventsFragment(),
+                new HomeEventFragment(),
                 CommunityFragment.newInstance(null),
                 UserInfoFragment.newInstance(null)};
     }
 
-    private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener
-            = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            int pageItemNum = 0;
-            switch (checkedId) {
+    @Override
+    public void onCheckedChanged(RadioGroup group, final int checkedId) {
+        switch (checkedId) {
 //                case R.id.radio_beauty_with:
 //                    pageItemNum = 0;
 //                    break;
-                case R.id.radio_activity:
-                    pageItemNum = 0;
-                    break;
-                case R.id.radio_community:
-                    pageItemNum = 1;
-                    break;
-                case R.id.radio_userinfo:
-                    pageItemNum = 2;
-                    break;
-            }
-            mViewPager.setCurrentItem(pageItemNum, false);
+            case R.id.radio_activity:
+                mViewPager.setCurrentItem(0, false);
+                break;
+            case R.id.radio_community:
+                mViewPager.setCurrentItem(1, false);
+                break;
+            case R.id.radio_userinfo:
+                toUserInfo = true;
+                LoginActivity.checkLoginToRunnable(_this, new Runnable() {
+                    @Override
+                    public void run() {
+                        toUserInfo = false;
+                        mViewPager.setCurrentItem(2, false);
+                        ((UserInfoFragment) mFragments[2]).resume();
+                    }
+                });
+                break;
         }
-    };
+    }
 
-//    private void initUmengPush() {
-//        PushAgent.getInstance(this).enable();
-//        String device_token = UmengRegistrar.getRegistrationId(this);
-//
-//    }
+    private int[] ids = new int[]{R.id.radio_activity, R.id.radio_community, R.id.radio_userinfo};
+    private boolean toUserInfo = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (toUserInfo && mViewPager.getCurrentItem() != 2) {
+            toUserInfo = false;
+            ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
+            //mRadioGroup.check(ids[mViewPager.getCurrentItem()]);
+        }
+    }
 }

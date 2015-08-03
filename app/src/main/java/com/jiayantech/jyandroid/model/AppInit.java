@@ -17,6 +17,8 @@ import java.util.List;
  * rights reserved.
  */
 public class AppInit {
+    public static final String ROLE_NORMAL = "normal";
+    public static final String ROLE_ANGEL = "angel";
     public String wxReceipt;
     public boolean register;
     public String token;
@@ -26,9 +28,15 @@ public class AppInit {
     public String name;
 
     public String phoneNum;
+    public String phone;
     public boolean bindWX;
     public boolean bindWB;
     public boolean bindQQ;
+
+    /**
+     * 是否是美丽天使
+     */
+    public String role;
 
     public static class ProjectCategory {
         public int version;

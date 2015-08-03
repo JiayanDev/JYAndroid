@@ -44,9 +44,9 @@ public class ConfigManager {
     public static boolean checkTokenWithTips() {
         if (TextUtils.isEmpty(getToken())) {
             ToastUtil.showMessage("Not logined");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static boolean checkEmptyToken() {

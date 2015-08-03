@@ -2,16 +2,24 @@ package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.BeautyWithsActivity;
+import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
+import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
+import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
+import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -27,6 +35,12 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         return fragment;
     }
 
+    private ImageView img_avatar;
+    private TextView txt_nickname;
+    private TextView txt_info;
+
+    private View divider_home_page;
+    private TextView txt_home_page;
     private TextView txt_events;
     private TextView txt_notifications;
     private TextView txt_mine;
@@ -40,6 +54,13 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void onInitView() {
+        img_avatar = (ImageView) findViewById(R.id.img_avatar);
+        txt_nickname = (TextView) findViewById(R.id.txt_nickname);
+        txt_info = (TextView) findViewById(R.id.txt_info);
+
+        divider_home_page = findViewById(R.id.divider_home_page);
+        txt_home_page = (TextView) findViewById(R.id.txt_home_page);
+
         txt_events = (TextView) findViewById(R.id.txt_events);
         txt_events.setOnClickListener(this);
 
@@ -54,6 +75,31 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
         txt_mine = (TextView) findViewById(R.id.txt_mime);
         txt_mine.setOnClickListener(this);
+
+        resume();
+    }
+
+    public void resume() {
+        if (img_avatar != null && AppInitManger.isRegister()) {
+            setUserInfo();
+            UserBiz.detail(new ResponseListener<AppResponse<AppInit>>() {
+                @Override
+                public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                    appInitAppResponse.data.register = true;
+                    AppInitManger.save(appInitAppResponse.data);
+                    setUserInfo();
+                }
+            });
+        }
+    }
+
+    private void setUserInfo() {
+        AppInit appInit = AppInitManger.getAppInit();
+        BitmapBiz.display(img_avatar, appInit.avatar);
+        txt_nickname.setText(appInit.name);
+        //txt_info.setText(AppInitManger.getUserName());
+        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -67,11 +113,21 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();
-                UserBiz.logout(new ResponseListener<BaseAppResponse>() {
+//                UserBiz.logout(new ResponseListener<BaseAppResponse>() {
+//                    @Override
+//                    public void onResponse(BaseAppResponse baseAppResponse) {
+//                        ((BaseActivity) getActivity()).dismissProgressDialog();
+//                        ToastUtil.showMessage("logout");
+//                    }
+//                });
+                ConfigManager.putToken("");
+                CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
                     @Override
-                    public void onResponse(BaseAppResponse baseAppResponse) {
+                    public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                        AppInit appInit = appInitAppResponse.data;
+                        AppInitManger.save(appInit);
                         ((BaseActivity) getActivity()).dismissProgressDialog();
-                        ToastUtil.showMessage("logout");
+                        ((MainActivity) getActivity()).onCheckedChanged(null, R.id.radio_activity);
                     }
                 });
                 break;

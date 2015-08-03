@@ -15,10 +15,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.comm.DataManager;
+import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -228,7 +230,8 @@ public class HttpReq<T> extends Request<T> {
     private final ResponseListener<T> mListener;
 
     private Type mClassType;
-    private final Gson mGson = new Gson();
+    //private final Gson mGson = new Gson();
+    private static final Gson mGson = GsonUtils.build();
 
     private String mUrlKey;
     private T mCache;
@@ -253,6 +256,7 @@ public class HttpReq<T> extends Request<T> {
         LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
         LogUtil.i(TAG, mUrlKey);
 
+        //new GsonBuilder().
         if (toLoad) {
             /**
              * 加载缓存，加载后，调用http请求

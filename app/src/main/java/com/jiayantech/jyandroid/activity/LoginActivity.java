@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 
@@ -160,6 +161,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static void checkLoginToRunnable(BaseActivity activity, final Runnable runnable) {
+        if (AppInitManger.isRegister()) {
+            runnable.run();
+        } else {
+            activity.startActivityForResult(new Intent(activity, LoginActivity.class), new ActivityResult() {
+                @Override
+                public void onActivityResult(Intent data) {
+                    runnable.run();
+                }
+            });
+        }
     }
 }
 
