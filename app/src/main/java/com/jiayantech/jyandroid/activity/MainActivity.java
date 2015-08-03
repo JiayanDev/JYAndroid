@@ -20,14 +20,18 @@ import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/24.
  */
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+    private static final String TAG = "MainActivity";
 
     private String[] mTitles;
 
@@ -55,7 +59,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         setDisplayHomeAsUpEnabled(false);
 
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(UmengPushCustomMessage uMessage) {
@@ -227,4 +231,30 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             //mRadioGroup.check(ids[mViewPager.getCurrentItem()]);
         }
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogUtil.i(TAG, "MainActivity onNewIntent");
+        ToastUtil.showMessage("MainActivity onNewIntent");
+    }
+
+    //    public static Drawable displayUnreadDot(Context context, int icon, int iconSize){
+//        Bitmap iconBitmap = BitmapFactory.decodeResource(context.getResources(), icon);
+//        Bitmap dotBitmap = BitmapFactory.decodeResource(context.getResources(),
+//                com.jiayantech.library.R.drawable.shape_dot);
+//        Canvas canvas = new Canvas(iconBitmap);
+//
+//        Paint iconPaint = new Paint();
+//        iconPaint.setDither(true);
+//        iconPaint.setFilterBitmap(true);
+//        iconPaint.setAntiAlias(true);
+//        Rect src = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        Rect dst = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
+//        canvas.drawBitmap(iconBitmap, src, dst, iconPaint);
+//        iconPaint.setColor(Color.RED);
+//        canvas.drawCircle(iconSize - 13, 20, 10, iconPaint);
+//
+//        return new BitmapDrawable(context.getResources(), iconBitmap);
+//    }
+
 }
