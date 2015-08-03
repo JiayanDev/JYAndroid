@@ -14,8 +14,8 @@ public class Event extends BaseModel {
     public long userName;
     public String desc;
     public double applyBeginTime;
-    //public double beginTime;
-    public String categoryId;
+    public double beginTime;
+    public String categoryIds;
     public String categoryName;
     public String province;
     public String city;
@@ -28,4 +28,6 @@ public class Event extends BaseModel {
     public long commentCount;
     public long likeCount;
     public int hasLike;  //0表示当前用户没有对此点赞
+    public String status;
+    public String applyStatus;
 }

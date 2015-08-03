@@ -115,7 +115,7 @@ public class AppInitManger {
         if (sAppInit == null) {
             return null;
         }
-        return sAppInit.phoneNum;
+        return TextUtils.isEmpty(sAppInit.phone) ? sAppInit.phoneNum : sAppInit.phone;
     }
 
     public static long getUserId() {
@@ -124,6 +124,14 @@ public class AppInitManger {
             return 0;
         }
         return sAppInit.id;
+    }
+
+    public static String getAvatar() {
+        initLoad();
+        if (sAppInit == null) {
+            return null;
+        }
+        return sAppInit.avatar;
     }
 
     public static String getUserName() {

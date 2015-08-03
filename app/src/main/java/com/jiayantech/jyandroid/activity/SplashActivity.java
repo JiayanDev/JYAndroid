@@ -57,12 +57,12 @@ public class SplashActivity extends BaseActivity {
             });
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gotoMainActivity();
-            }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                gotoMainActivity();
+//            }
+//        }, 3000);
 
     }
 

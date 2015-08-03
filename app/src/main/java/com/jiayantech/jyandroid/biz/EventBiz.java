@@ -20,6 +20,7 @@ public class EventBiz {
     private static final String ACTION_APPLY = MODEL + "/apply";
     private static final String ACTION_COMMENT = MODEL + "/comment";
     public static final String ACTION_LIST = MODEL + "/list";
+    public static final String ACTION_COMPANY_LIST = "company/" + MODEL + "/list";
 
     /**
      * title  必填，标题
@@ -44,20 +45,20 @@ public class EventBiz {
         Map<String, String> params = new HashMap<>();
         HttpReq.putParams(params, "name", name);
         HttpReq.putParams(params, "phone", phone);
-        HttpReq.putParams(params, "title", title);
-        HttpReq.putParams(params, "desc", desc);
-        HttpReq.putParams(params, "applyBeginTime", applyBeginTime);
-        HttpReq.putParams(params, "applyEndTime", applyEndTime);
+        //HttpReq.putParams(params, "title", title);
+        //HttpReq.putParams(params, "desc", desc);
+        //HttpReq.putParams(params, "applyBeginTime", applyBeginTime);
+        //HttpReq.putParams(params, "applyEndTime", applyEndTime);
         HttpReq.putParams(params, "beginTime", beginTime);
-        HttpReq.putParams(params, "endTime", endTime);
+        //HttpReq.putParams(params, "endTime", endTime);
         HttpReq.putParams(params, "categoryIds", categoryIds);
         HttpReq.putParams(params, "hospitalId", hospitalId);
         HttpReq.putParams(params, "doctorId", doctorId);
-        HttpReq.putParams(params, "photos", photos);
-        HttpReq.putParams(params, "province", province);
-        HttpReq.putParams(params, "city", city);
-        HttpReq.putParams(params, "district", district);
-        HttpReq.putParams(params, "addr", addr);
+        //HttpReq.putParams(params, "photos", photos);
+        //HttpReq.putParams(params, "province", province);
+        //HttpReq.putParams(params, "city", city);
+        //HttpReq.putParams(params, "district", district);
+        //HttpReq.putParams(params, "addr", addr);
         HttpReq.get(ACTION_CREATE, params, l);
     }
 

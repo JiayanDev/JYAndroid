@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,11 +16,9 @@ import android.widget.RadioGroup;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
-import com.jiayantech.jyandroid.fragment.EventsFragment;
+import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.UserInfoFragment;
-import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -31,7 +30,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by liangzili on 15/6/24.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     private static final String TAG = "MainActivity";
 
     private String[] mTitles;
@@ -41,7 +40,6 @@ public class MainActivity extends BaseActivity {
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +59,23 @@ public class MainActivity extends BaseActivity {
 
         setDisplayHomeAsUpEnabled(false);
 
-        EventBus.getDefault().register(this);
-
+        //EventBus.getDefault().register(this);
     }
 
-    public void onEvent(UmengPushCustomMessage uMessage) {
-        ToastUtil.showMessage("我收到一条自定义的友盟消息");
-        LogUtil.i(TAG, "EventBus onEvent : " + "我收到一条自定义的友盟消息");
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
-
+    public void onEvent(UmengPushCustomMessage uMessage) {
+        ToastUtil.showMessage("我收到一条自定义的友盟消息");
+    }
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
@@ -87,11 +85,8 @@ public class MainActivity extends BaseActivity {
         ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
-
-//        mRadioButtons[2].setCompoundDrawables(null, displayUnreadDot(this, R.mipmap.icon_me, 50), null, null);
-        //((DotMarkRadioButton)mRadioButtons[2]).setContent(3);
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
-        mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        mRadioGroup.setOnCheckedChangeListener(this);
 
         setTitle(mRadioButtons[0].getText().toString());
     }
@@ -124,30 +119,26 @@ public class MainActivity extends BaseActivity {
 
 
     private void checkGotoSelectPublish() {
-        if (AppInitManger.isRegister()) {
-            final Dialog dialog = DialogUtils.showViewDialog(this, R.layout.dialog_publish_actions, false);
-            dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    startActivity(MyDiariesActivity.class);
-                }
-            });
-            dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    startActivity(PublishPostActivity.class);
-                }
-            });
-        } else {
-            startActivityForResult(new Intent(this, LoginActivity.class), new ActivityResult() {
-                @Override
-                public void onActivityResult(Intent data) {
-                    checkGotoSelectPublish();
-                }
-            });
-        }
+        LoginActivity.checkLoginToRunnable(this, new Runnable() {
+            @Override
+            public void run() {
+                final Dialog dialog = DialogUtils.showViewDialog(_this, R.layout.dialog_publish_actions, false);
+                dialog.findViewById(R.id.layout_share_diary).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(MyDiariesActivity.class);
+                    }
+                });
+                dialog.findViewById(R.id.layout_publish_topic).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(PublishPostActivity.class);
+                    }
+                });
+            }
+        });
     }
 
     private void initViewPager() {
@@ -197,34 +188,49 @@ public class MainActivity extends BaseActivity {
 //        mFragments = new Fragment[]{beautyWithFragment, communityFragment, eventFragment, userInfoFragment};
 
         mFragments = new Fragment[]{
-                new EventsFragment(),
+                new HomeEventFragment(),
                 CommunityFragment.newInstance(null),
                 UserInfoFragment.newInstance(null)};
     }
 
-    private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener
-            = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            int pageItemNum = 0;
-            switch (checkedId) {
+    @Override
+    public void onCheckedChanged(RadioGroup group, final int checkedId) {
+        switch (checkedId) {
 //                case R.id.radio_beauty_with:
 //                    pageItemNum = 0;
 //                    break;
-                case R.id.radio_activity:
-                    pageItemNum = 0;
-                    break;
-                case R.id.radio_community:
-                    pageItemNum = 1;
-                    break;
-                case R.id.radio_userinfo:
-                    pageItemNum = 2;
-                    break;
-            }
-            mViewPager.setCurrentItem(pageItemNum, false);
+            case R.id.radio_activity:
+                mViewPager.setCurrentItem(0, false);
+                break;
+            case R.id.radio_community:
+                mViewPager.setCurrentItem(1, false);
+                break;
+            case R.id.radio_userinfo:
+                toUserInfo = true;
+                LoginActivity.checkLoginToRunnable(_this, new Runnable() {
+                    @Override
+                    public void run() {
+                        toUserInfo = false;
+                        mViewPager.setCurrentItem(2, false);
+                        ((UserInfoFragment) mFragments[2]).resume();
+                    }
+                });
+                break;
         }
-    };
+    }
 
+    private int[] ids = new int[]{R.id.radio_activity, R.id.radio_community, R.id.radio_userinfo};
+    private boolean toUserInfo = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (toUserInfo && mViewPager.getCurrentItem() != 2) {
+            toUserInfo = false;
+            ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
+            //mRadioGroup.check(ids[mViewPager.getCurrentItem()]);
+        }
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

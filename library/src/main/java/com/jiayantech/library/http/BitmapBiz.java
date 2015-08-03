@@ -2,6 +2,7 @@ package com.jiayantech.library.http;
 
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
@@ -26,12 +27,20 @@ public class BitmapBiz {
      * @param imageUrl
      */
     public static void display(ImageView imageView, String imageUrl, int size) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
+            return;
+        }
         sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
                 //Specify width & height of the bitmap to be scaled down when the image is downloaded.
                 size, size);
     }
 
     public static void display(ImageView imageView, String imageUrl) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
+            return;
+        }
         sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
                 //Specify width & height of the bitmap to be scaled down when the image is downloaded.
                 DEFAULT_SIZE, DEFAULT_SIZE);
