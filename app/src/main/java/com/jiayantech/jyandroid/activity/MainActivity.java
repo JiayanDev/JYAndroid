@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         setDisplayHomeAsUpEnabled(false);
 
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(UmengPushCustomMessage uMessage) {

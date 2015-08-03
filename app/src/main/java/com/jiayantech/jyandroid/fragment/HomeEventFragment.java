@@ -17,6 +17,6 @@ public class HomeEventFragment extends RefreshListFragment<Event, AppResponse<Li
     public void onInitView() {
         super.onInitView();
         setParams(new HomeEventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
-        setHeader(R.layout.fragment_beauty_with);
+        setHeader(R.layout.banner);
     }
 }
