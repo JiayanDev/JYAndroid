@@ -39,6 +39,7 @@ public class DividerItemDecoration extends HorizontalDividerItemDecoration {
 
         public Builder(Context context) {
             super(context);
+            mShowFirstEnable = true;
         }
 
         public Builder showFirstEnable(boolean enable) {

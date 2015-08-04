@@ -44,6 +44,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         //Drawable divider = getResources().getDrawable(R.drawable.shape_divider);
         //ultimateRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
+                .showFirstEnable(true)
                 .color(getResources().getColor(R.color.bg_gray_color))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());

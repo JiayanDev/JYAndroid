@@ -252,7 +252,7 @@ public class HttpReq<T> extends Request<T> {
         mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
         setShouldCache(false);
 
-        mUrlKey = url + (params == null ? "" : params.toString());
+        mUrlKey = url + (params == null ? "" : params.toString()) + (page == null ? "" : page.toString());
         LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
         LogUtil.i(TAG, mUrlKey);
 
