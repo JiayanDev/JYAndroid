@@ -24,6 +24,8 @@ public class AppInitManger {
     public static AppInit sAppInit;
     private static SparseArray<AppInit.Category> sProjectCategoryData = new SparseArray<>();
 
+    public static boolean sRegisterFlag = false;
+
     static {
         initLoad();
     }
@@ -89,6 +91,8 @@ public class AppInitManger {
         ConfigManager.putToken(sAppInit.token);
         ConfigManager.putConfig(KEY_APP_INIT, new Gson().toJson(sAppInit));
         listSave(sAppInit.projectCategory.data);
+
+        sRegisterFlag = true;
     }
 
     private static void listSave(ArrayList<AppInit.Category> data) {

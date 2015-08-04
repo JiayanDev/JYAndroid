@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.SingleFragmentActivity;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/7/8.
@@ -26,5 +29,7 @@ public class PostDetailActivity extends SingleFragmentActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ToastUtil.showMessage("the app is runnnig?" + AppInitManger.sRegisterFlag);
     }
 }
