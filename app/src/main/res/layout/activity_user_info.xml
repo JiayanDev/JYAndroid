@@ -10,7 +10,7 @@
         android:paddingBottom="30dip">
 
         <LinearLayout
-            android:id="@+id/layout_info"
+            android:id="@+id/layout_avatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -19,6 +19,7 @@
             android:paddingLeft="@dimen/normal_padding"
             android:paddingRight="15dip"
             android:paddingTop="@dimen/normal_padding"
+            android:onClick="onClick"
             >
 
             <TextView
@@ -74,6 +75,7 @@
         <View style="@style/divider_offset_gray_style"/>
 
         <LinearLayout
+            android:id="@+id/layout_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -174,11 +176,14 @@
         <View style="@style/divider_big_gray_style"/>
 
         <LinearLayout
+            android:id="@+id/layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/normal_padding">
+            android:paddingLeft="@dimen/normal_padding"
+            android:onClick="onClick"
+            >
 
             <TextView
                 android:layout_width="0dip"

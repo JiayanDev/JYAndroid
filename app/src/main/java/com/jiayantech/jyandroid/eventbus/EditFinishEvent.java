@@ -10,6 +10,7 @@ public class EditFinishEvent {
     public static final int ACTION_EDIT_CITY = 3;
     public static final int ACTION_EDIT_BIRTHDAY = 4;
     public static final int ACTION_EDIT_PHONE = 5;
+    public static final int ACTION_EDIT_PASSWORD = 6;
 
     public int action;
     public String name;
@@ -19,4 +20,5 @@ public class EditFinishEvent {
     public long birthday;
 
     public String phone;
+    public String password;
 }

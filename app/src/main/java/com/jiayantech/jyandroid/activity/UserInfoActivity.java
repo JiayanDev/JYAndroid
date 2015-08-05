@@ -1,26 +1,40 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
+import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ActivityResult;
+import com.jiayantech.library.comm.PicGetter;
+import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
+import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.http.UploadReq;
 import com.jiayantech.library.utils.AssertsUtil;
+import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -30,17 +44,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by 健兴 on 2015/8/3.
  */
-public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
+public class UserInfoActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener {
 
-//    protected TextInputLayout input_pass_0;
+    //    protected TextInputLayout input_pass_0;
 //    protected TextInputLayout input_pass_1;
 //    private Button btn_reset;
 //
@@ -101,12 +117,12 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 //        input_pass_0 = (TextInputLayout) findViewById(R.id.input_pass_0);
 //        input_pass_1 = (TextInputLayout) findViewById(R.id.input_pass_1);
 //        btn_reset = (Button) findViewById(R.id.btn_reset);
-        mNameText = (TextView)findViewById(R.id.txt_name);
-        mGenderText = (TextView)findViewById(R.id.txt_gender);
-        mProvinceText = (TextView)findViewById(R.id.txt_province);
-        mCityText = (TextView)findViewById(R.id.txt_city);
-        mBirthdayText = (TextView)findViewById(R.id.txt_birthday);
-        mPhoneText = (TextView)findViewById(R.id.txt_phone);
+        mNameText = (TextView) findViewById(R.id.txt_name);
+        mGenderText = (TextView) findViewById(R.id.txt_gender);
+        mProvinceText = (TextView) findViewById(R.id.txt_province);
+        mCityText = (TextView) findViewById(R.id.txt_city);
+        mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
+        mPhoneText = (TextView) findViewById(R.id.txt_phone);
     }
 
     protected void setViewsContent() {
@@ -115,7 +131,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 //        phoneNum = intent.getStringExtra(UserBiz.KEY_PHONE);
 //        phoneCodeConfirmResponse = intent.getStringExtra(UserBiz.KEY_RESPONSE);
         mNameText.setText(AppInitManger.getUserName());
-        mGenderText.setText(AppInitManger.getUserGender() == 1? "男": "女");
+        mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
         mProvinceText.setText(AppInitManger.getProvince());
         mCityText.setText(AppInitManger.getCity());
         mBirthdayText.setText(String.valueOf(AppInitManger.getBirthday()));
@@ -123,17 +139,55 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
+            case R.id.layout_avatar:
+                showUploadDialog();
+                break;
             case R.id.layout_name:
                 startEditActivity(ACTION_EDIT_NAME, AppInitManger.getUserName());
+                break;
+            case R.id.layout_gender:
+                EditGenderFragment fragment = EditGenderFragment.
+                        createFragment(AppInitManger.getUserGender());
+                fragment.show(getSupportFragmentManager(), "EditGender");
+                break;
+            case R.id.layout_password:
+                startActivity(ResetPassActivity.class);
+                break;
         }
     }
 
-    private void startEditActivity(int action, String data){
+    private void startEditActivity(int action, String data) {
         Intent intent = new Intent(this, EditUserInfoActivity.class);
         intent.putExtra(EXTRA_ACTION, action);
         intent.putExtra(EXTRA_DATA, data);
         startActivity(intent);
+    }
+
+    private void showUploadDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
+        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                switch (v.getId()) {
+                    case R.id.camera_button:
+                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                                UserInfoActivity.this).startCamera();
+                        break;
+                    case R.id.local_button:
+                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                                UserInfoActivity.this).startImage();
+                        break;
+                }
+            }
+        };
+        view.findViewById(R.id.title_text).setVisibility(View.GONE);
+        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
+        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
+        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
     }
 
 //    @Override
@@ -181,13 +235,14 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 //        return pass_0;
 //    }
 
-    public void onEvent(EditFinishEvent event){
-        switch (event.action){
+    public void onEvent(EditFinishEvent event) {
+        switch (event.action) {
             case EditFinishEvent.ACTION_EDIT_NAME:
                 mNameText.setText(event.name);
                 break;
             case EditFinishEvent.ACTION_EDIT_GENDER:
-                mGenderText.setText(event.gender == 1? "男": "女");
+                mGenderText.setText(event.gender == 1 ? "男" : "女");
+                ToastUtil.showMessage("更新性别成功");
                 break;
             case EditFinishEvent.ACTION_EDIT_PROVINCE:
                 mProvinceText.setText(event.province);
@@ -202,5 +257,33 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 mPhoneText.setText(event.phone);
                 break;
         }
+    }
+
+    @Override
+    public void onPicGet(String path, Bitmap bitmap) {
+        showProgressDialog();
+        UploadImageBiz.uploadImage(UploadImageBiz.TYPE_AVATAR, bitmap, new File(path).getName(),
+                new ResponseListener<ImageUploadResp>() {
+
+                    @Override
+                    public void onResponse(ImageUploadResp imageUploadResp) {
+                        Map<String, String> params = new ArrayMap<String, String>();
+                        params.put("avatar", HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url);
+                        UserBiz.update(params, new ResponseListener<AppResponse>() {
+                            @Override
+                            public void onResponse(AppResponse appResponse) {
+                                dismissProgressDialog();
+                                ToastUtil.showMessage("头像上传成功成功");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        dismissProgressDialog();
+                        ToastUtil.showMessage("头像更新失败");
+                    }
+                });
     }
 }

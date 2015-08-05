@@ -178,4 +178,13 @@ public class AppInitManger {
 
         return sAppInit.birthday;
     }
+
+    public static String getReceipt(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.wxReceipt;
+    }
+
 }

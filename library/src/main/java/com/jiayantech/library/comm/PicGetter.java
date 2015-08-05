@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.FileUtil;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 /**
@@ -237,6 +238,7 @@ public class PicGetter {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     public static String getUriPath(Activity activity, Uri uri) {
+        LogUtil.i("PicGetter", "uri path:"  + uri);
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = activity.managedQuery(uri, proj, // Which
                 // columns
@@ -316,4 +318,8 @@ public class PicGetter {
     public interface PicGetListener {
         void onPicGet(String path, Bitmap bitmap);
     }
+
+//    public static void showPicSelectDialog(Context context, ActivityResultHelper, PicGetListener listener){
+//
+//    }
 }
