@@ -145,4 +145,37 @@ public class AppInitManger {
         }
         return sAppInit.name;
     }
+
+    public static int getUserGender(){
+        initLoad();
+        if(sAppInit == null){
+            return 0;
+        }
+        return sAppInit.gender;
+    }
+
+    public static String getProvince(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.province;
+    }
+
+    public static String getCity(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.city;
+    }
+
+    public static long getBirthday(){
+        initLoad();
+        if(sAppInit == null){
+            return 0;
+        }
+
+        return sAppInit.birthday;
+    }
 }

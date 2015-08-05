@@ -4,8 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.jiayantech.jyandroid.event.UmengPushCustomMessage;
-import com.jiayantech.jyandroid.model.Event;
+import com.jiayantech.jyandroid.eventbus.UmengPushCustomMessage;
 import com.jiayantech.library.utils.LogUtil;
 
 import de.greenrobot.event.EventBus;

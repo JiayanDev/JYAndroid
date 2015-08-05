@@ -8,4 +8,9 @@ public class Constants {
     public static final String QQ_appSecret = "c7394704798a158208a74ab60104f0ba";
 
     public static final String DESCRIPTOR = "com.umeng.login";
+
+    public interface Gender{
+        public static int FEMALE = 0;
+        public static int MALE = 1;
+    }
 }

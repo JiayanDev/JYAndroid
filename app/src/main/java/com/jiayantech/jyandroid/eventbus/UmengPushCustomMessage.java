@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.event;
+package com.jiayantech.jyandroid.eventbus;
 
 /**
  * Created by liangzili on 15/7/31.

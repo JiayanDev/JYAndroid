@@ -16,6 +16,9 @@
     <string name="topic">话题</string>
     <string name="diary">日记</string>
 
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+
     <string name="cheese_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
     cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
     bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
@@ -64,6 +67,7 @@
     <string name="title_doctor_info">医生信息</string>
     <string name="title_photo_browse">图片浏览</string>
     <string name="title_my_beauty_with">我的伴美</string>
+    <string name="title_edit_gender">选择性别</string>
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>
@@ -111,6 +115,5 @@
     <string name="nickname">呢称: </string>
     <string name="phone">手机号码: </string>
     <string name="operation_time">手术时间</string>
-
 
 </resources>

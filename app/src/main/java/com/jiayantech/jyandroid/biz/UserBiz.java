@@ -193,6 +193,10 @@ public class UserBiz {
         HttpReq.get(ACTION_DETAIL, null, l);
     }
 
+    public static void update(Map<String, String> params, ResponseListener<?> l){
+        HttpReq.post(ACTION_UPDATE, params, l);
+    }
+
     public static void update(String avatar, String name, String gender, String province, String city, String birthday, String phoneNum, ResponseListener<?> l) {
         Map<String, String> params = HttpReq.getInitParams("avatar", avatar);
         HttpReq.putParams(params, "name", name);
