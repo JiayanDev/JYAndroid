@@ -61,8 +61,6 @@ public class SplashActivity extends BaseActivity {
                 }
             });
         }
-
-
     }
 
     private void quickLogin() {
@@ -71,6 +69,15 @@ public class SplashActivity extends BaseActivity {
             public void onResponse(AppResponse<AppInit> appInitAppResponse) {
                 AppInitManger.save(appInitAppResponse.data);
                 gotoMainActivity();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (!(error instanceof HttpReq.MsgError)) {
+                    if (AppInitManger.getProjectCategoryData() != null) {
+                        gotoMainActivity();
+                    }
+                }
             }
         });
     }
