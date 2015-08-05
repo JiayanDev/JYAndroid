@@ -252,7 +252,7 @@ public class HttpReq<T> extends Request<T> {
         mHeaders.put(ConfigManager.KEY_TOKEN, ConfigManager.getToken());
         setShouldCache(false);
 
-        mUrlKey = url + (params == null ? "" : params.toString());
+        mUrlKey = url + (params == null ? "" : params.toString()) + (page == null ? "" : page.toString());
         LogUtil.i(TAG, ConfigManager.KEY_TOKEN + ": " + ConfigManager.getToken());
         LogUtil.i(TAG, mUrlKey);
 
@@ -264,14 +264,7 @@ public class HttpReq<T> extends Request<T> {
             new AsyncTask<Void, Void, T>() {
                 @Override
                 protected T doInBackground(Void... params) {
-                    String value = DataManager.get(mUrlKey);
-                    if (TextUtils.isEmpty(value)) return null;
-                    try {
-                        return mGson.fromJson(value, mClassType);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return null;
-                    }
+                    return loadCache();
                 }
 
                 @Override
@@ -290,6 +283,17 @@ public class HttpReq<T> extends Request<T> {
         this(httpReq.mMethod, httpReq.mUrl, httpReq.mParams, httpReq.mPage, httpReq.mToLoad, httpReq.mToSave, httpReq.mClassType, httpReq.mListener);
     }
 
+    private T loadCache() {
+        String value = DataManager.get(mUrlKey);
+        if (TextUtils.isEmpty(value)) return null;
+        try {
+            return mGson.fromJson(value, mClassType);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * 保存缓存
      *
@@ -298,7 +302,10 @@ public class HttpReq<T> extends Request<T> {
      */
     private void saveCache(String jsonString, T parsedGSON) {
         AppResponse appResponse = (AppResponse) parsedGSON;
-        if (appResponse.data instanceof ArrayList) {
+        if (!mToLoad && appResponse.data instanceof ArrayList) {
+            if (mCache == null) {
+                mCache = loadCache();
+            }
             if (mCache != null) {
                 ArrayList list = (ArrayList) appResponse.data;
                 int newSize = list.size();

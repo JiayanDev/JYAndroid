@@ -82,25 +82,24 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             page.put(REFRESH_ID, sinceId);
         }
         HttpReq.get(mAction, mParams, page, size == 0, true, mType, new ResponseListener<ResponseT>() {
+            private List<T> mCacheList;
+
             @Override
             public void onLoadResponse(ResponseT response) {
-                List<T> list = response.data;
-                mAdapter.clear();
-                mAdapter.addNew(list);
+                mCacheList = response.data;
+                //mAdapter.clear();
+                //mAdapter.addNew(list);
             }
 
             @Override
             public void onResponse(ResponseT response) {
-                List<T> list = response.data;
-                if (size == 0) {
-                    mAdapter.clear();
-                }
-                mAdapter.addNew(list);
+                mAdapter.addNew(response.data);
                 onFinal();
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (mCacheList != null) mAdapter.addNew(mCacheList);
                 onFinal();
             }
 
@@ -134,12 +133,21 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 if (list.size() > 0) {
                     mAdapter.addMore(list);
                 } else {
-                    mAdapter.setCustomLoadMoreView(null);
-                    mAdapter.notifyDataSetChanged();
 //                    if (mAdapter.getCustomLoadMoreView() != null) {
 //                        mAdapter.getCustomLoadMoreView().setVisibility(View.GONE);
 //                    }
-                    ultimateRecyclerView.disableLoadmore();
+                    if (mAdapter.getCustomLoadMoreView() != null) {
+                        //ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+                        ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+                        ultimateRecyclerView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAdapter.setCustomLoadMoreView(null);
+                                ultimateRecyclerView.disableLoadmore();
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }, 2000);
+                    }
                 }
                 onFinal();
             }
@@ -195,11 +203,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         });
         ultimateRecyclerView.displayCustomFloatingActionView(false);
 
-
         ultimateRecyclerView.setCustomSwipeToRefresh();
         refreshingString();
     }
-
 
     private void refreshingString() {
         storeHouseHeader = new StoreHouseHeader(getActivity());
