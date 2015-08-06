@@ -28,16 +28,21 @@ import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
+import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
+import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
+import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.http.UploadReq;
 import com.jiayantech.library.utils.AssertsUtil;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
+import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +52,7 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
@@ -77,6 +83,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private TextView mCityText;
     private TextView mBirthdayText;
     private TextView mPhoneText;
+    private RoundedImageView mAvatarImg;
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
@@ -123,6 +130,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mCityText = (TextView) findViewById(R.id.txt_city);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
+        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
     }
 
     protected void setViewsContent() {
@@ -134,7 +142,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
         mProvinceText.setText(AppInitManger.getProvince());
         mCityText.setText(AppInitManger.getCity());
-        mBirthdayText.setText(String.valueOf(AppInitManger.getBirthday()));
+        mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
+        BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
     }
 
     @Override
@@ -152,7 +161,27 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 fragment.show(getSupportFragmentManager(), "EditGender");
                 break;
             case R.id.layout_password:
-                startActivity(ResetPassActivity.class);
+                Intent intent = new Intent(this, VerifyPhoneActivity.class);
+                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
+                startActivity(intent);
+                break;
+            case R.id.layout_birthday:
+                new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
+                    @Override
+                    public void onSetDateTime(final Calendar calendar) {
+                        Map<String, String> params = new ArrayMap<String, String>();
+                        params.put("birthday", String.valueOf(calendar.getTimeInMillis() / 1000));
+                        UserBiz.update(params, new ResponseListener<AppResponse>() {
+                            @Override
+                            public void onResponse(AppResponse appResponse) {
+//                                AppInitManger.sAppInit.birthday =
+//                                        calendar.getTimeInMillis() / 1000;
+                                mBirthdayText.setText(TimeUtil.
+                                        stamp2YearMonthDay(calendar.getTimeInMillis()));
+                            }
+                        });
+                    }
+                }, false);
                 break;
         }
     }
@@ -239,22 +268,34 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         switch (event.action) {
             case EditFinishEvent.ACTION_EDIT_NAME:
                 mNameText.setText(event.name);
+                AppInitManger.sAppInit.name = event.name;
                 break;
             case EditFinishEvent.ACTION_EDIT_GENDER:
                 mGenderText.setText(event.gender == 1 ? "男" : "女");
+                AppInitManger.sAppInit.gender = event.gender;
                 ToastUtil.showMessage("更新性别成功");
                 break;
             case EditFinishEvent.ACTION_EDIT_PROVINCE:
                 mProvinceText.setText(event.province);
+                AppInitManger.sAppInit.province = event.province;
                 break;
             case EditFinishEvent.ACTION_EDIT_CITY:
                 mCityText.setText(event.city);
+                AppInitManger.sAppInit.city = event.city;
                 break;
             case EditFinishEvent.ACTION_EDIT_BIRTHDAY:
                 mBirthdayText.setText(String.valueOf(event.birthday));
+                AppInitManger.sAppInit.birthday = event.birthday;
                 break;
             case EditFinishEvent.ACTION_EDIT_PHONE:
                 mPhoneText.setText(event.phone);
+                AppInitManger.sAppInit.phone = event.phone;
+                AppInitManger.sAppInit.phoneNum = event.phone;
+                break;
+            case EditFinishEvent.ACTION_EDIT_AVATAR:
+                BitmapBiz.display(mAvatarImg, event.avatar);
+                ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
+                AppInitManger.sAppInit.avatar = event.avatar;
                 break;
         }
     }
@@ -264,16 +305,20 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         showProgressDialog();
         UploadImageBiz.uploadImage(UploadImageBiz.TYPE_AVATAR, bitmap, new File(path).getName(),
                 new ResponseListener<ImageUploadResp>() {
-
                     @Override
-                    public void onResponse(ImageUploadResp imageUploadResp) {
+                    public void onResponse(final ImageUploadResp imageUploadResp) {
                         Map<String, String> params = new ArrayMap<String, String>();
                         params.put("avatar", HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url);
                         UserBiz.update(params, new ResponseListener<AppResponse>() {
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
-                                ToastUtil.showMessage("头像上传成功成功");
+//                                AppInitManger.sAppInit.avatar =
+//                                        HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
+                                EditFinishEvent event = new EditFinishEvent();
+                                event.action = EditFinishEvent.ACTION_EDIT_AVATAR;
+                                event.avatar = HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
+                                EventBus.getDefault().post(event);
                             }
                         });
                     }

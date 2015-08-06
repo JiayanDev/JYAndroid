@@ -30,6 +30,6 @@ public class PostDetailActivity extends SingleFragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ToastUtil.showMessage("the app is runnnig?" + AppInitManger.sRegisterFlag);
+        ToastUtil.showMessage("the app is runnning?" + AppInitManger.sRegisterFlag);
     }
 }

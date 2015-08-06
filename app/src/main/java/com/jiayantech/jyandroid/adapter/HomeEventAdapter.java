@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.EventDetailActivity;
+import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Event;
+import com.jiayantech.jyandroid.model.HomePageEvent;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
@@ -17,21 +19,32 @@ import java.util.List;
 /**
  * Created by 健兴 on 2015/8/1.
  */
-public class HomeEventAdapter extends BaseSimpleModelAdapter<Event> {
+public class HomeEventAdapter extends BaseSimpleModelAdapter<HomePageEvent> {
     private Context mContext;
 
-    public HomeEventAdapter(Context context, List<Event> list) {
+    public HomeEventAdapter(Context context, List<HomePageEvent> list) {
         super(list);
         mContext = context;
-        setOnItemClickListener(new OnItemClickListener<Event>() {
+        setOnItemClickListener(new OnItemClickListener<HomePageEvent>() {
             @Override
-            public void onItemClick(BaseSimpleModelAdapter<Event> adapter,
-                                    int position, Event item) {
-                Intent intent = new Intent(mContext, EventDetailActivity.class);
-                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.id);
-                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
-                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
+            public void onItemClick(BaseSimpleModelAdapter<HomePageEvent> adapter,
+                                    int position, HomePageEvent item) {
+                Intent intent = null;
+                switch(item.itemType){
+                    case HomePageEvent.TYPE_EVENT:
+                        intent = new Intent(mContext, EventDetailActivity.class);
+                        intent.putExtra(WebViewFragment.EXTRA_ID, item.eventId);
+                        intent.putExtra(WebViewFragment.EXTRA_TYPE, item.itemType);
+                        intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
+                        intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
+                        break;
+                    case HomePageEvent.TYPE_TOPIC:
+                        intent = new Intent(mContext, PostDetailActivity.class);
+                        intent.putExtra(WebViewFragment.EXTRA_ID, item.topicId);
+                        intent.putExtra(WebViewFragment.EXTRA_TYPE, item.itemType);
+                        intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
+                        intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
+                    }
                 mContext.startActivity(intent);
             }
         });
@@ -42,7 +55,7 @@ public class HomeEventAdapter extends BaseSimpleModelAdapter<Event> {
         return new ViewHolder(viewGroup, R.layout.item_home_event, this);
     }
 
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Event> {
+    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<HomePageEvent> {
         public TextView txt_title;
         public TextView txt_content;
 
@@ -51,14 +64,14 @@ public class HomeEventAdapter extends BaseSimpleModelAdapter<Event> {
 
         }
 
-        public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Event> adapter) {
+        public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<HomePageEvent> adapter) {
             super(parent, layoutId, adapter);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
             txt_content = (TextView) itemView.findViewById(R.id.txt_content);
         }
 
         @Override
-        public void onBind(Event event, int position) {
+        public void onBind(HomePageEvent event, int position) {
             txt_title.setText(event.desc);
         }
     }

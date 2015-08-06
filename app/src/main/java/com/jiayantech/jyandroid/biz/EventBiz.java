@@ -20,6 +20,7 @@ public class EventBiz {
     private static final String ACTION_APPLY = MODEL + "/apply";
     private static final String ACTION_COMMENT = MODEL + "/comment";
     public static final String ACTION_LIST = MODEL + "/list";
+    public static final String ACTION_HOMEPAGE_LIST = "homepage/event/list";
 
     /**
      * title  必填，标题

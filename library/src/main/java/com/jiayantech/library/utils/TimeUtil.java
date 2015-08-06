@@ -41,6 +41,12 @@ public class TimeUtil {
 		return d;
 	}
 
+	public static String stamp2YearMonthDay(long time){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String result = format.format(time);
+		return result;
+	}
+
 	/**
 	 * 
 	 * 时间戳转化为Sting或Date

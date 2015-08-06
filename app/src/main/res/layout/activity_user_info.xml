@@ -150,6 +150,7 @@
         <View style="@style/divider_offset_gray_style"/>
 
         <LinearLayout
+            android:id="@+id/layout_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

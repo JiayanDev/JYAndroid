@@ -46,6 +46,8 @@ public class BitmapBiz {
                 DEFAULT_SIZE, DEFAULT_SIZE);
     }
 
+
+
     ///////////////////////////////////////private static class and method
     private static final int max_cache_size = 1000000;
     /**

@@ -102,7 +102,7 @@
     <string name="hint_input_nickname">请输入呢称(2-20个字符)</string>
     <string name="hint_input_set_pass">设置新密码(6-20个字符)</string>
     <string name="hint_input_set_pass_again">请再次输入新密码</string>
-    <string name="confirm_reset">确认并登录</string>
+    <string name="confirm_reset">重置密码</string>
     <string name="hint_input_phone_code">请输入短信验证码</string>
     <string name="hint_waring_send_phone_code">请点击发送验证码</string>
     <string name="title_set_info">完善帐户信息</string>

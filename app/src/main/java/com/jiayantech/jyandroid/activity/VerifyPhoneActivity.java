@@ -23,7 +23,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     public static final String KEY_TYPE = "type";
     public static final int TYPE_REGISTER = 0;
     public static final int TYPE_FORGET_PASS = 1;
-    //private static final int TYPE_BIND_PHONE = 2;
+    //private static final int TYPE_UPDATE_PHONE
     private int type;
 
     private TextInputLayout input_phone;

@@ -13,6 +13,7 @@ import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -23,6 +24,8 @@ import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/25.
@@ -84,6 +87,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         resume();
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
     public void resume() {
         if (img_avatar != null && AppInitManger.isRegister()) {
             setUserInfo();
@@ -95,6 +104,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     setUserInfo();
                 }
             });
+        }
+    }
+
+    public void onEvent(EditFinishEvent event){
+        switch (event.action){
+            case EditFinishEvent.ACTION_EDIT_AVATAR:
+                BitmapBiz.display(img_avatar, event.avatar);
+                break;
         }
     }
 
