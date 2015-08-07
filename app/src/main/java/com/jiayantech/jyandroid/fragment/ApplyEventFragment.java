@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.EventBiz;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
@@ -30,6 +32,8 @@ public class ApplyEventFragment extends BaseFragment{
     private EditText mEditPhone;
     private EditText mEditDesc;
     private RadioGroup mGender;
+    private RadioButton mMaleRadioBtn;
+    private RadioButton mFemaleRadioBtn;
 
     private Button mButtonApply;
 
@@ -52,6 +56,16 @@ public class ApplyEventFragment extends BaseFragment{
         mEditPhone = (EditText)findViewById(R.id.edit_phone);
         mEditDesc = (EditText)findViewById(R.id.edit_desc);
         mGender = (RadioGroup)findViewById(R.id.radiogroup_gender);
+        mMaleRadioBtn = (RadioButton)findViewById(R.id.radio_male);
+        mFemaleRadioBtn = (RadioButton)findViewById(R.id.radio_female);
+
+        mEditName.setText(AppInitManger.getUserName());
+        mEditPhone.setText(AppInitManger.getPhoneNum());
+        if(AppInitManger.getUserGender() == 1){
+            mMaleRadioBtn.setChecked(true);
+        }else{
+            mFemaleRadioBtn.setChecked(true);
+        }
 
         mButtonApply = (Button)findViewById(R.id.btn_apply);
         mButtonApply.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +83,7 @@ public class ApplyEventFragment extends BaseFragment{
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 ToastUtil.showMessage("报名参加成功 " + appResponse);
+                                getActivity().finish();
                             }
                         });
             }

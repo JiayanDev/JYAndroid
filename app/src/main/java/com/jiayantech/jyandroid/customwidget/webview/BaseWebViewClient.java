@@ -6,10 +6,13 @@ import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jiayantech.jyandroid.activity.ApplyEventActivity;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
+import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.JsCallScroll;
@@ -56,7 +59,6 @@ public class BaseWebViewClient extends WebViewClient {
         mWebViewFragment.finishLoading();
     }
 
-
     protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
         CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
                 call.data.subject, call.data.toUserId, call.data.toUserName);
@@ -82,6 +84,12 @@ public class BaseWebViewClient extends WebViewClient {
 
     protected void onJsCallNativeNavigateToDiaryHeader(long id) {
         navigate(id, WebViewFragment.TYPE_DIARY_HEADER, PostDetailActivity.class);
+    }
+
+    protected void onJsCallApplyEvent(long id){
+        Intent intent = new Intent(mWebViewFragment.getActivity(), ApplyEventActivity.class);
+        intent.putExtra(ApplyEventFragment.EVENT_ID, id);
+        mWebViewFragment.getActivity().startActivity(intent);
     }
 
     private void navigate(long id, String type, Class<? extends BaseActivity> clazz) {
@@ -112,6 +120,10 @@ public class BaseWebViewClient extends WebViewClient {
                 JsCallSetTitle title = JsNativeBiz.parse(url, JsCallSetTitle.class);
                 onJsCallNativeSetTitle(title.data.title);
                 break;
+            case JsNativeBiz.ACTION_APPLY_EVENT:
+                JsCallApplyEvent event = JsNativeBiz.parse(url, JsCallApplyEvent.class);
+                onJsCallApplyEvent(event.data.id);
+
         }
     }
 

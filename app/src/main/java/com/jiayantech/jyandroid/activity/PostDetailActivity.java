@@ -29,7 +29,6 @@ public class PostDetailActivity extends SingleFragmentActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ToastUtil.showMessage("the app is runnning?" + AppInitManger.sRegisterFlag);
     }
 }

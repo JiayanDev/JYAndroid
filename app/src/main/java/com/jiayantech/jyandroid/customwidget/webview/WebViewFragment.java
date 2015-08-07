@@ -20,6 +20,7 @@ import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.comm.Property;
+import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by liangzili on 15/7/7.
@@ -32,6 +33,7 @@ public abstract class WebViewFragment extends BaseFragment{
     //public static final String BASE_URL = "http://app.jiayantech.com/app/htm/";
     public static final String BASE_URL = Property.getProperty("html.url");
     public static final String ACTION_DIARY = "diary.html";
+    public static final String ACTION_EVENT = "eventdetail.html";
     public static final String ACTION_DIARY_HEADER = "diaryheader.html";
 
     /* webview显示内容的类型 */
@@ -63,7 +65,7 @@ public abstract class WebViewFragment extends BaseFragment{
     protected String mUserName;
     protected long mUserId;
 
-    protected String mUrl = "http://www.baidu.com";
+    protected String mUrl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public abstract class WebViewFragment extends BaseFragment{
                 mUrl = BASE_URL + ACTION_DIARY;
                 break;
             case TYPE_EVENT:
-                mUrl = "http://www.baidu.com";
+                mUrl = BASE_URL + ACTION_EVENT;
                 break;
             default:
                 throw new IllegalArgumentException(String.format("type %s not supported.", mType));
@@ -100,6 +102,7 @@ public abstract class WebViewFragment extends BaseFragment{
         sb.append("id=");
         sb.append(mId);
         mUrl = sb.toString();
+        LogUtil.i(TAG, "WebViewFragment loading url: " + mUrl);
     }
 
     @Nullable

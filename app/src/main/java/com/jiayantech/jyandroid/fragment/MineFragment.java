@@ -10,6 +10,7 @@ import com.jiayantech.jyandroid.activity.CompanyEventActivity;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
+import com.jiayantech.jyandroid.activity.PersonalPageActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
@@ -48,6 +49,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_home_page;
     private TextView txt_events;
     private TextView txt_notifications;
+    private TextView txt_setting;
     private TextView txt_mine;
     private TextView txt_logout;
     private TextView txt_delete;
@@ -74,6 +76,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         txt_notifications = (TextView) findViewById(R.id.txt_notification);
         txt_notifications.setOnClickListener(this);
+
+        txt_setting = (TextView)findViewById(R.id.txt_setting);
+        txt_setting.setOnClickListener(this);
 
         txt_logout = (TextView) findViewById(R.id.txt_logout);
         txt_logout.setOnClickListener(this);
@@ -135,6 +140,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.txt_notification:
                 startActivity(MessagesActivity.class);
+                break;
+            case R.id.txt_setting:
+                startActivity(PersonalPageActivity.class);
                 break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();

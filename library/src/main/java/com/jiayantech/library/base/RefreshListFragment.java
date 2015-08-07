@@ -107,7 +107,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (mCacheList != null) mAdapter.addNew(mCacheList);
+                if (mCacheList != null && enablePaging) mAdapter.addNew(mCacheList);
                 onFinal();
             }
 

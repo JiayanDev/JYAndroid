@@ -35,7 +35,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
         <activity
@@ -98,7 +98,8 @@
             />
         <activity android:name=".activity.EditUserInfoActivity"
                   android:screenOrientation="portrait"/>
-
+        <activity android:name=".activity.PersonalPageActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <!--友盟推送服务相关-->
