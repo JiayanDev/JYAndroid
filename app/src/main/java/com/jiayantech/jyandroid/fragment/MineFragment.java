@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +12,12 @@ import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -23,6 +28,8 @@ import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/25.
@@ -45,6 +52,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_home_page;
     private TextView txt_events;
     private TextView txt_notifications;
+    private TextView txt_setting;
     private TextView txt_mine;
     private TextView txt_logout;
     private TextView txt_delete;
@@ -65,12 +73,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         divider_home_page = findViewById(R.id.divider_home_page);
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
+        txt_home_page.setOnClickListener(this);
 
         txt_events = (TextView) findViewById(R.id.txt_events);
         txt_events.setOnClickListener(this);
 
         txt_notifications = (TextView) findViewById(R.id.txt_notification);
         txt_notifications.setOnClickListener(this);
+
+        txt_setting = (TextView)findViewById(R.id.txt_setting);
+        txt_setting.setOnClickListener(this);
 
         txt_logout = (TextView) findViewById(R.id.txt_logout);
         txt_logout.setOnClickListener(this);
@@ -81,7 +93,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         txt_mine = (TextView) findViewById(R.id.txt_mime);
         txt_mine.setOnClickListener(this);
 
+        //setHomePageVisible(true);
+
         resume();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     public void resume() {
@@ -96,6 +116,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
+        if(AppInitManger.getRole() == AppInit.ROLE_ANGEL){
+            setHomePageVisible(true);
+        }
+    }
+
+    public void onEvent(EditFinishEvent event){
+        switch (event.action){
+            case EditFinishEvent.ACTION_EDIT_AVATAR:
+                BitmapBiz.display(img_avatar, event.avatar);
+                break;
+        }
     }
 
     private void setUserInfo() {
@@ -103,8 +134,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         BitmapBiz.display(img_avatar, appInit.avatar);
         txt_nickname.setText(appInit.name);
         //txt_info.setText(AppInitManger.getUserName());
-        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
-        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+        setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
+
+
+    }
+
+    public void setHomePageVisible(boolean flag){
+        AppInit appInit = AppInitManger.getAppInit();
+//        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+//        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+        divider_home_page.setVisibility(View.VISIBLE);
+        txt_home_page.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -118,6 +158,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.txt_notification:
                 startActivity(MessagesActivity.class);
+                break;
+            case R.id.txt_setting:
+                Intent setting = new Intent();
+                setting.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+                setting.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+                setting.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+                startActivity(setting);
                 break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();
@@ -151,6 +198,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.txt_mime:
                 startActivity(CompanyEventActivity.class);
+                break;
+            case R.id.txt_home_page:
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+                intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+                startActivity(intent);
                 break;
         }
     }

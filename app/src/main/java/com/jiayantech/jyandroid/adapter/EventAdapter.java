@@ -2,19 +2,18 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.EventDetailActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
+import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Event;
-import com.jiayantech.jyandroid.model.User;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+
+import java.util.List;
 
 
 /**
@@ -34,12 +33,14 @@ public class EventAdapter extends BaseSimpleModelAdapter<Event> {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Event> adapter,
                                     int position, Event item) {
-                Intent intent = new Intent(mContext, EventDetailActivity.class);
-                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.id);
-                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
-                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, EventDetailActivity.class);
+//                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
+//                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.id);
+//                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
+//                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
+//                mContext.startActivity(intent);
+                WebViewActivity.lauchActivity(mContext, item.id, item.userId, item.userName,
+                        WebConstans.Type.TYPE_EVENT);
             }
         });
     }

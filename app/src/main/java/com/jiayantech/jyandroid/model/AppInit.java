@@ -27,6 +27,11 @@ public class AppInit {
     public String avatar;
     public String name;
 
+    public String province;
+    public String city;
+    public int gender;
+    public long birthday;
+
     public String phoneNum;
     public String phone;
     public boolean bindWX;

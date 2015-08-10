@@ -43,7 +43,6 @@ public class ImageUploadRequest<T> extends Request<T> {
         setShouldCache(false);
         setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
     }
 
     @Override

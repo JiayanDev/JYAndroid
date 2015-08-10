@@ -40,6 +40,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     private String mAction;
     private Type mType;
     private Map<String, String> mParams;
+    private boolean enablePaging = true;  //是否分页
+
+    public void setEnablePaging(boolean enable){
+        enablePaging = enable;
+    }
 
     protected void setParams(BaseSimpleModelAdapter<T> adapter, String action) {
         setParams(adapter, action, null);
@@ -76,7 +81,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         mIsLoading = true;
         Map<String, String> page = null;
         final int size = mAdapter.getList().size();
-        if (0 != size) {
+        if (0 != size && enablePaging) {
             String sinceId = String.valueOf(mAdapter.getList().get(0).id);
             page = new ArrayMap<>();
             page.put(REFRESH_ID, sinceId);
@@ -93,13 +98,16 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onResponse(ResponseT response) {
+                if(!enablePaging){
+                    mAdapter.clear();
+                }
                 mAdapter.addNew(response.data);
                 onFinal();
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (mCacheList != null) mAdapter.addNew(mCacheList);
+                if (mCacheList != null && enablePaging) mAdapter.addNew(mCacheList);
                 onFinal();
             }
 
@@ -116,7 +124,8 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
      * 添加到list的尾部
      */
     protected void onLoadMore() {
-        if (mIsLoading) {
+        //如果不开启分页，直接返回
+        if (mIsLoading || (!enablePaging)) {
             return;
         }
         if (0 == mAdapter.getList().size()) {

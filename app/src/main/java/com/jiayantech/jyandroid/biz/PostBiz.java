@@ -25,7 +25,11 @@ public class PostBiz {
 
     private static final String ACTION_MY_TOPIC = MODEL + "/comment";
     private static final String ACTION_VERIFY = MODEL + "/verify";
+    private static final String ACTION_TOPIC_ONE = "/recommend/topic/one";
 
+    public static void getOneTopic(ResponseListener<?> l){
+        HttpReq.get(ACTION_TOPIC_ONE, null ,l);
+    }
 
     public static void like(String id, int mode, ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();

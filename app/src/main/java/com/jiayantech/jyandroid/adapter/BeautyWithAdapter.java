@@ -54,7 +54,7 @@ public class BeautyWithAdapter extends BaseSimpleModelAdapter<Event> {
 
         @Override
         public void onBind(Event event, int position) {
-            txt_title.setText(event.desc);
+            txt_title.setText(event.userName);
             txt_info.setText(event.hospitalName + " " + event.doctorName);
             txt_time.setText(TimeUtil.getStrTime(event.beginTime));
             txt_status.setText(event.applyStatus);

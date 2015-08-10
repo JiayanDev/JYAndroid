@@ -18,6 +18,8 @@ public class JsNativeBiz {
     public static final String ACTION_SET_NAVIGATION_BAR_TITLE = "setNavigationBarTitle";
     public static final String ACTION_SCROLL_BOTTOM_TO_POS_Y = "scrollBottomToPosY";
     public static final String ACTION_TEST = "testForCallNativePleaseGiveBackWhatIHadSend";
+    public static final String ACTION_HIDE_LOADING = "hideLoading";
+    public static final String ACTION_APPLY_EVENT = "applymentEvent";
 
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
 

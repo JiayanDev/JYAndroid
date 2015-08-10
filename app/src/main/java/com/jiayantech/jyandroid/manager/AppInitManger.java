@@ -24,6 +24,8 @@ public class AppInitManger {
     public static AppInit sAppInit;
     private static SparseArray<AppInit.Category> sProjectCategoryData = new SparseArray<>();
 
+    public static boolean sRegisterFlag = false;
+
     static {
         initLoad();
     }
@@ -89,6 +91,8 @@ public class AppInitManger {
         ConfigManager.putToken(sAppInit.token);
         ConfigManager.putConfig(KEY_APP_INIT, new Gson().toJson(sAppInit));
         listSave(sAppInit.projectCategory.data);
+
+        sRegisterFlag = true;
     }
 
     private static void listSave(ArrayList<AppInit.Category> data) {
@@ -141,4 +145,55 @@ public class AppInitManger {
         }
         return sAppInit.name;
     }
+
+    public static int getUserGender(){
+        initLoad();
+        if(sAppInit == null){
+            return 0;
+        }
+        return sAppInit.gender;
+    }
+
+    public static String getProvince(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.province;
+    }
+
+    public static String getCity(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.city;
+    }
+
+    public static long getBirthday(){
+        initLoad();
+        if(sAppInit == null){
+            return 0;
+        }
+
+        return sAppInit.birthday;
+    }
+
+    public static String getReceipt(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+        return sAppInit.wxReceipt;
+    }
+
+    public static String getRole(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+
+        return sAppInit.role;
+    }
+
 }

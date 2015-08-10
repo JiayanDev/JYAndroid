@@ -1,13 +1,10 @@
 package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.EventDetailActivity;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.utils.TimeUtil;

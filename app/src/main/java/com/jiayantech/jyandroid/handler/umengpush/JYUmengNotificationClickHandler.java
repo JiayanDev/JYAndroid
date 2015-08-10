@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jiayantech.jyandroid.activity.MainActivity;
-import com.jiayantech.jyandroid.activity.PostDetailActivity;
 import com.jiayantech.jyandroid.activity.SplashActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.SystemUtils;
-import com.jiayantech.library.utils.Utils;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
@@ -25,37 +24,27 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
                 uMessage.title, uMessage.ticker));
 
         launchApplication(context, 60L, 18L, "diary", "liangzili");
-//
-//        Intent intent = new Intent(context, PostDetailActivity.class);
-//        intent.putExtra(WebViewFragment.EXTRA_ID, 60L);
-//        intent.putExtra(WebViewFragment.EXTRA_USER_ID, 18L);
-//        intent.putExtra(WebViewFragment.EXTRA_TYPE, "diary");
-//        intent.putExtra(WebViewFragment.EXTRA_USERNAME, "liangzili");
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//        Bundle args = new Bundle();
-//        args.putLong(WebViewFragment.EXTRA_ID, 60L);
-//        args.putLong(WebViewFragment.EXTRA_USER_ID, 18L);
-//        args.putString(WebViewFragment.EXTRA_TYPE, "diary");
-//        args.putString(WebViewFragment.EXTRA_USERNAME, "liangzili");
-//        intent.putExtra("launch", args);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-//        startActivity0(context, intent);
-
     }
 
     private void launchApplication(Context context, long id, long userId, String type,
                                    String userName) {
-        if(SystemUtils.isAppAlive(context, context.getPackageName())){
-            Intent intent = new Intent(context, PostDetailActivity.class);
-            intent.putExtra(WebViewFragment.EXTRA_ID, id);
-            intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
-            intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
-            intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        }else {
+        if (SystemUtils.isAppAlive(context, context.getPackageName())) {
+//            Intent intent = new Intent(context, PostDetailActivity.class);
+//            intent.putExtra(WebViewFragment.EXTRA_ID, id);
+//            intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
+//            intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
+//            intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
+            Intent intent = WebViewActivity.getLaunchIntent(context, id, userId, userName, type);
+
+            Intent mainIntent = new Intent(context, MainActivity.class);
+            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            Intent[] intents = new Intent[2];
+            intents[0] = mainIntent;
+            intents[1]= intent;
+
+            context.startActivities(intents);
+        } else {
             Intent intent = context.getPackageManager().
                     getLaunchIntentForPackage("com.jiayantech.jyandroid");
             Bundle args = new Bundle();
@@ -65,29 +54,10 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
             args.putString(WebViewFragment.EXTRA_USERNAME, userName);
             intent.putExtra(SplashActivity.EXTRA_BUNDLE, args);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
         }
     }
 
-//    public void startActivity0(Context context, Intent mainIntent) {
-//
-//        if(SystemUtils.isAppAlive(context, context.getPackageName())){
-//            context.startActivity(mainIntent);
-//        }else {
-//            Intent launchIntent = context.getPackageManager().
-//                    getLaunchIntentForPackage("com.jiayantech.jyandroid");
-//            Bundle args = new Bundle();
-//            args.putLong(WebViewFragment.EXTRA_ID, 60L);
-//            args.putLong(WebViewFragment.EXTRA_USER_ID, 18L);
-//            args.putString(WebViewFragment.EXTRA_TYPE, "diary");
-//            args.putString(WebViewFragment.EXTRA_USERNAME, "liangzili");
-//            intent.putExtra("launch", args);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            launchIntent.putExtra("launch", mainIntent.getBundleExtra("launch"));
-//            context.startActivity(launchIntent);
-//        }
-//
-//    }
 
 }

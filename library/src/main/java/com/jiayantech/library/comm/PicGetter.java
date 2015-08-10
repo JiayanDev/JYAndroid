@@ -6,19 +6,25 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 import com.jiayantech.library.helper.ActivityResultHelper;
 import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.FileUtil;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 /**
@@ -237,6 +243,18 @@ public class PicGetter {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     public static String getUriPath(Activity activity, Uri uri) {
+        LogUtil.i("PicGetter", "uri path:" + uri);
+        boolean isOverKitkat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        String path = null;
+        if(isOverKitkat){
+            path = getUriPathOverKitkat(activity, uri);
+        }else{
+            path = getUriPathUnderKitkat(activity, uri);
+        }
+        return path;
+    }
+
+    private static String getUriPathUnderKitkat(Activity activity, Uri uri){
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = activity.managedQuery(uri, proj, // Which
                 // columns
@@ -248,6 +266,102 @@ public class PicGetter {
         cursor.moveToFirst();
         String path = cursor.getString(column_index);
         return path;
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static String getUriPathOverKitkat(Activity activity, Uri uri){
+        if(DocumentsContract.isDocumentUri(activity, uri)){
+            if(isExternalStorageDocument(uri)){
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if("primary".equalsIgnoreCase(type)){
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            }else if(isDownloadsDocument(uri)){
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                return getDataColumn(activity, contentUri, null, null);
+            }
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[] {
+                        split[1]
+                };
+                return getDataColumn(activity, contentUri, selection, selectionArgs);
+            }
+        }
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+            return getDataColumn(activity, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
     /**
@@ -316,4 +430,8 @@ public class PicGetter {
     public interface PicGetListener {
         void onPicGet(String path, Bitmap bitmap);
     }
+
+//    public static void showPicSelectDialog(Context context, ActivityResultHelper, PicGetListener listener){
+//
+//    }
 }

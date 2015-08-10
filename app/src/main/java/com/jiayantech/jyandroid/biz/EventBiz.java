@@ -20,6 +20,7 @@ public class EventBiz {
     private static final String ACTION_APPLY = MODEL + "/apply";
     private static final String ACTION_COMMENT = MODEL + "/comment";
     public static final String ACTION_LIST = MODEL + "/list";
+    public static final String ACTION_HOMEPAGE_LIST = "homepage/event/list";
 
     /**
      * title  必填，标题
@@ -84,7 +85,7 @@ public class EventBiz {
         HttpReq.putParams(params, "gender", gender);
         HttpReq.putParams(params, "desc", desc);
         //HttpReq.post(ACTION_APPLY, null, l);
-        HttpReq.post(ACTION_APPLY, params, l);
+        HttpReq.get(ACTION_APPLY, params, l);
     }
 
     /**
