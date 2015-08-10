@@ -19,30 +19,31 @@ public class EventDetailFragment extends WebViewFragment{
 
     private Button mApplyButton;
 
-    public static EventDetailFragment newInstance(long id, long userId, String userName, String type){
+    public static EventDetailFragment newInstance(long id, long userId, String userName){
         EventDetailFragment fragment = new EventDetailFragment();
         Bundle args = new Bundle();
         args.putLong(WebViewFragment.EXTRA_ID, id);
         args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
         args.putString(WebViewFragment.EXTRA_USERNAME, userName);
-        args.putString(WebViewFragment.EXTRA_TYPE, type);
+        args.putString(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_EVENT);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.layout_apply_event, null);
-        mApplyButton = (Button)view.findViewById(R.id.btn_apply);
-        mApplyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
-                intent.putExtra(ApplyEventFragment.EVENT_ID, mId);
-                startActivity(intent);
-            }
-        });
-        return view;
+//        View view = inflater.inflate(R.layout.layout_apply_event, null);
+//        mApplyButton = (Button)view.findViewById(R.id.btn_apply);
+//        mApplyButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
+//                intent.putExtra(ApplyEventFragment.EVENT_ID, mId);
+//                startActivity(intent);
+//            }
+//        });
+//        return view;
+        return null;
     }
 
     @Override

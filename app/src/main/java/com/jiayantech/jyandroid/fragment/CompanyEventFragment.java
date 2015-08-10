@@ -25,6 +25,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
                 .color(getResources().getColor(R.color.bg_gray_color))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
-        setParams(new BeautyWithAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_LIST);
+        setParams(new BeautyWithAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
+        setEnablePaging(false);
     }
 }

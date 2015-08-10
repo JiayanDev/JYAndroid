@@ -110,6 +110,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
+        if(AppInitManger.getRole() == AppInit.ROLE_ANGEL){
+            setHomePageVisible(true);
+        }
     }
 
     public void onEvent(EditFinishEvent event){
@@ -125,6 +128,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         BitmapBiz.display(img_avatar, appInit.avatar);
         txt_nickname.setText(appInit.name);
         //txt_info.setText(AppInitManger.getUserName());
+        setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
+
+    }
+
+    public void setHomePageVisible(boolean flag){
+        AppInit appInit = AppInitManger.getAppInit();
         divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
         txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
     }

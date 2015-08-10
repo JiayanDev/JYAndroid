@@ -40,7 +40,7 @@ public abstract class WebViewFragment extends BaseFragment{
     public static final String TYPE_EVENT = "event";
     public static final String TYPE_TOPIC = "topic";
     public static final String TYPE_DIARY = "diary";
-    public static final String TYPE_DIARY_HEADER = "diary_header";
+    public static final String TYPE_PERSONAL_PAGE ="personal_page";
 
     /* webview显示内容的具体信息
      * EXTRA_ID 内容的ID
@@ -76,6 +76,8 @@ public abstract class WebViewFragment extends BaseFragment{
         mType = getArguments().getString(EXTRA_TYPE);
 
         setUrl();
+
+
     }
 
     private void setUrl(){
@@ -83,9 +85,9 @@ public abstract class WebViewFragment extends BaseFragment{
             case TYPE_DIARY:
                 mUrl = BASE_URL + ACTION_DIARY;
                 break;
-            case TYPE_DIARY_HEADER:
-                mUrl = BASE_URL + ACTION_DIARY_HEADER;
-                break;
+//            case TYPE_DIARY_HEADER:
+//                mUrl = BASE_URL + ACTION_DIARY_HEADER;
+//                break;
             case TYPE_TOPIC:
                 mUrl = BASE_URL + ACTION_DIARY;
                 break;
@@ -128,6 +130,7 @@ public abstract class WebViewFragment extends BaseFragment{
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
 
+        finishLoading();
         return mView;
     }
 
@@ -146,7 +149,15 @@ public abstract class WebViewFragment extends BaseFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mWebView.destroy();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mWebView != null) {
+            mWebView.destroy();
+        }
     }
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);

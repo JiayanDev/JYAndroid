@@ -1,24 +1,19 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jiayantech.jyandroid.activity.ApplyEventActivity;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
-import com.jiayantech.jyandroid.activity.PostDetailActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
-import com.jiayantech.jyandroid.model.web.JsCallScroll;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
-import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.utils.ToastUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -56,7 +51,7 @@ public class BaseWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        mWebViewFragment.finishLoading();
+//        mWebViewFragment.finishLoading();
     }
 
     protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
@@ -75,30 +70,33 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
     protected void onJsCallNativeNavigateToDiary(long id) {
-        navigate(id, WebViewFragment.TYPE_DIARY, PostDetailActivity.class);
+        navigate(id, WebViewFragment.TYPE_DIARY);
     }
 
     protected void onJsCallNativeSetTitle(String title) {
         mWebViewFragment.getActivity().setTitle(title);
     }
 
-    protected void onJsCallNativeNavigateToDiaryHeader(long id) {
-        navigate(id, WebViewFragment.TYPE_DIARY_HEADER, PostDetailActivity.class);
-    }
+//    protected void onJsCallNativeNavigateToDiaryHeader(long id) {
+//        navigate(id, WebViewFragment.TYPE_DIARY_HEADER, PostDetailActivity.class);
+//    }
 
     protected void onJsCallApplyEvent(long id){
         Intent intent = new Intent(mWebViewFragment.getActivity(), ApplyEventActivity.class);
         intent.putExtra(ApplyEventFragment.EVENT_ID, id);
         mWebViewFragment.getActivity().startActivity(intent);
+        //mWebViewFragment.getActivity().finish();
     }
 
-    private void navigate(long id, String type, Class<? extends BaseActivity> clazz) {
-        Intent intent = new Intent(mWebViewFragment.getActivity(), clazz);
-        intent.putExtra(WebViewFragment.EXTRA_ID, id);
-        intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
-        intent.putExtra(WebViewFragment.EXTRA_USER_ID, mWebViewFragment.mUserId);
-        intent.putExtra(WebViewFragment.EXTRA_USERNAME, mWebViewFragment.mUserName);
-        mWebViewFragment.getActivity().startActivity(intent);
+    private void navigate(long id, String type) {
+//        Intent intent = new Intent(mWebViewFragment.getActivity(), clazz);
+//        intent.putExtra(WebViewFragment.EXTRA_ID, id);
+//        intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
+//        intent.putExtra(WebViewFragment.EXTRA_USER_ID, mWebViewFragment.mUserId);
+//        intent.putExtra(WebViewFragment.EXTRA_USERNAME, mWebViewFragment.mUserName);
+//        mWebViewFragment.getActivity().startActivity(intent);
+        WebViewActivity.lauchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
+                mWebViewFragment.mUserName, type);
     }
 
     private void callNativeMethod(String action, String url) {
@@ -120,6 +118,11 @@ public class BaseWebViewClient extends WebViewClient {
                 JsCallSetTitle title = JsNativeBiz.parse(url, JsCallSetTitle.class);
                 onJsCallNativeSetTitle(title.data.title);
                 break;
+
+            case JsNativeBiz.ACTION_HIDE_LOADING:
+                mWebViewFragment.finishLoading();
+                break;
+
             case JsNativeBiz.ACTION_APPLY_EVENT:
                 JsCallApplyEvent event = JsNativeBiz.parse(url, JsCallApplyEvent.class);
                 onJsCallApplyEvent(event.data.id);
@@ -133,7 +136,7 @@ public class BaseWebViewClient extends WebViewClient {
             String query = uri.getQuery();
             String sub = query.substring(query.indexOf("=") + 1);
             long id = Long.valueOf(sub);
-            onJsCallNativeNavigateToDiaryHeader(id);
+            //onJsCallNativeNavigateToDiaryHeader(id);
         } else if (action.endsWith(WebViewFragment.ACTION_DIARY)) {
             String query = uri.getQuery();
             String sub = query.substring(query.indexOf("=") + 1);

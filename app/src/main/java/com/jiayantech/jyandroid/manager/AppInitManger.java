@@ -187,4 +187,13 @@ public class AppInitManger {
         return sAppInit.wxReceipt;
     }
 
+    public static String getRole(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+
+        return sAppInit.role;
+    }
+
 }

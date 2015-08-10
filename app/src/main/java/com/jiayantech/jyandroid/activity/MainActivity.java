@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -70,18 +71,19 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
         long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
         String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
-        switch (type){
-            case WebViewFragment.TYPE_DIARY:
-                Intent intent = new Intent(this, PostDetailActivity.class);
-                intent.putExtra(WebViewFragment.EXTRA_ID, id);
-                intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
-                intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
-                startActivity(intent);
-                break;
-            default:
-                return;
-        }
+//        switch (type){
+//            case WebViewFragment.TYPE_DIARY:
+//                Intent intent = new Intent(this, PostDetailActivity.class);
+//                intent.putExtra(WebViewFragment.EXTRA_ID, id);
+//                intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
+//                intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
+//                intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
+//                startActivity(intent);
+//                break;
+//            default:
+//                return;
+        Intent intent = WebViewActivity.getLaunchIntent(this, id, userId, userName, type);
+        startActivity(intent);
     }
 
     @Override

@@ -7,4 +7,5 @@ public class CompanyBiz {
     private static final String MODEL = "company";
 
     public static final String ACTION_EVENT_LIST = MODEL + "/event/list";
+    public static final String ACTION_EVENT_COMPANY_LIST = MODEL + "/event/my_list";
 }

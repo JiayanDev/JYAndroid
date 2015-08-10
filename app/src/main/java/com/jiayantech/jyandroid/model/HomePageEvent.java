@@ -13,7 +13,7 @@ public class HomePageEvent extends BaseModel{
     public long topicId;
     public long applymentCount;
     public String hospitalName;
-    public String itemType;
+    public String type;
     public String title;
     public long userId;
     public String userName;
