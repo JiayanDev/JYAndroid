@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.customwidget.webview;
 
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +13,16 @@ import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.PostComment;
+import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.jyandroid.customwidget.webview.WebConstans.*;
 
+import java.util.Map;
 
 
 /**
  * Created by liangzili on 15/7/7.
  */
 public class PostDetailFragment extends WebViewFragment {
-
 
     private View mBottomView;
     private Button mContent;
@@ -33,6 +36,35 @@ public class PostDetailFragment extends WebViewFragment {
         args.putString(WebViewFragment.EXTRA_TYPE, type);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected String onGetUrl() {
+        String url = null;
+        switch (mType) {
+            case Type.TYPE_DIARY:
+                url = WebConstans.BASE_URL + Action.ACTION_DIARY;
+                break;
+            case Type.TYPE_TOPIC:
+                url = WebConstans.BASE_URL + Action.ACTION_TOPIC;
+                break;
+            default:
+                throw new IllegalArgumentException("PostDetailFragment mType is not compatible");
+        }
+        return url;
+    }
+
+    @Override
+    protected String onGetUrlParams() {
+        Map<String, String> params = new ArrayMap<>();
+        params.put("id", String.valueOf(mId));
+        String encodeParam = HttpReq.encodeParameters(params, "utf-8");
+        return encodeParam;
+    }
+
+    @Override
+    protected String onSetTitle() {
+        return null;
     }
 
     @Override

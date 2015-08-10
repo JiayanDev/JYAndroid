@@ -70,31 +70,21 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
     protected void onJsCallNativeNavigateToDiary(long id) {
-        navigate(id, WebViewFragment.TYPE_DIARY);
+        navigate(id, WebConstans.Type.TYPE_DIARY);
     }
 
     protected void onJsCallNativeSetTitle(String title) {
         mWebViewFragment.getActivity().setTitle(title);
     }
 
-//    protected void onJsCallNativeNavigateToDiaryHeader(long id) {
-//        navigate(id, WebViewFragment.TYPE_DIARY_HEADER, PostDetailActivity.class);
-//    }
 
     protected void onJsCallApplyEvent(long id){
         Intent intent = new Intent(mWebViewFragment.getActivity(), ApplyEventActivity.class);
         intent.putExtra(ApplyEventFragment.EVENT_ID, id);
         mWebViewFragment.getActivity().startActivity(intent);
-        //mWebViewFragment.getActivity().finish();
     }
 
     private void navigate(long id, String type) {
-//        Intent intent = new Intent(mWebViewFragment.getActivity(), clazz);
-//        intent.putExtra(WebViewFragment.EXTRA_ID, id);
-//        intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
-//        intent.putExtra(WebViewFragment.EXTRA_USER_ID, mWebViewFragment.mUserId);
-//        intent.putExtra(WebViewFragment.EXTRA_USERNAME, mWebViewFragment.mUserName);
-//        mWebViewFragment.getActivity().startActivity(intent);
         WebViewActivity.lauchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
                 mWebViewFragment.mUserName, type);
     }
@@ -132,16 +122,22 @@ public class BaseWebViewClient extends WebViewClient {
 
     private void redirectUrl(String action, URI uri) {
 
-        if (action.endsWith(WebViewFragment.ACTION_DIARY_HEADER)) {
-            String query = uri.getQuery();
-            String sub = query.substring(query.indexOf("=") + 1);
-            long id = Long.valueOf(sub);
-            //onJsCallNativeNavigateToDiaryHeader(id);
-        } else if (action.endsWith(WebViewFragment.ACTION_DIARY)) {
+//        if (action.endsWith(WebViewFragment.ACTION_DIARY_HEADER)) {
+//            String query = uri.getQuery();
+//            String sub = query.substring(query.indexOf("=") + 1);
+//            long id = Long.valueOf(sub);
+//            //onJsCallNativeNavigateToDiaryHeader(id);
+//        } else if (action.endsWith(WebViewFragment.ACTION_DIARY)) {
+//            String query = uri.getQuery();
+//            String sub = query.substring(query.indexOf("=") + 1);
+//            long id = Long.valueOf(sub);
+//            onJsCallNativeNavigateToDiary(id);
+        if (action.endsWith(WebConstans.Action.ACTION_DIARY)) {
             String query = uri.getQuery();
             String sub = query.substring(query.indexOf("=") + 1);
             long id = Long.valueOf(sub);
             onJsCallNativeNavigateToDiary(id);
         }
+//        }
     }
 }

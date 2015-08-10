@@ -68,6 +68,8 @@
     <string name="title_photo_browse">图片浏览</string>
     <string name="title_my_beauty_with">我的伴美</string>
     <string name="title_edit_gender">选择性别</string>
+    <string name="title_personal_page">%s的主页</string>
+    <string name="title_my_personal_page">我的主页</string>
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>

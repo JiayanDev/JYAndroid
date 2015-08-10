@@ -7,19 +7,26 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
+import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
+import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.jyandroid.model.Topic;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.List;
@@ -44,16 +51,31 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         //Drawable divider = getResources().getDrawable(R.drawable.shape_divider);
         //ultimateRecyclerView.addItemDecoration(new DividerItemDecoration(divider));
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
-                .showFirstEnable(true)
+                .showFirstEnable(false)
                 .color(getResources().getColor(R.color.bg_gray_color))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
 
         setParams(new PostAdapter(null, getActivity()), "post/list");
+        final View header = setHeader(R.layout.layout_topic);
+        final ImageView topicImage = (ImageView)header.findViewById(R.id.recommend_topic);
+        PostBiz.getOneTopic(new ResponseListener<AppResponse<Topic>>() {
+            @Override
+            public void onResponse(final AppResponse<Topic> postAppResponse) {
+                BitmapBiz.display(topicImage, postAppResponse.data.coverImg);
+                header.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        WebViewActivity.lauchActivity(getActivity(), postAppResponse.data.topicId,
+                                postAppResponse.data.userId, postAppResponse.data.userName,
+                                WebConstans.Type.TYPE_TOPIC);
+                    }
+                });
+            }
+        });
 
         //View headerView = setHeader(R.layout.layout_topic_category);
         //initHeaderView(headerView);
-        //setHeader(R.layout.banner);
         registerReceivers();
     }
 

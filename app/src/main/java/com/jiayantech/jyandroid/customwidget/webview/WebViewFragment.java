@@ -30,18 +30,6 @@ public abstract class WebViewFragment extends BaseFragment{
 
     public static final int REQUEST_CODE_COMMENT = 1;
 
-    //public static final String BASE_URL = "http://app.jiayantech.com/app/htm/";
-    public static final String BASE_URL = Property.getProperty("html.url");
-    public static final String ACTION_DIARY = "diary.html";
-    public static final String ACTION_EVENT = "eventdetail.html";
-    public static final String ACTION_DIARY_HEADER = "diaryheader.html";
-
-    /* webview显示内容的类型 */
-    public static final String TYPE_EVENT = "event";
-    public static final String TYPE_TOPIC = "topic";
-    public static final String TYPE_DIARY = "diary";
-    public static final String TYPE_PERSONAL_PAGE ="personal_page";
-
     /* webview显示内容的具体信息
      * EXTRA_ID 内容的ID
      * EXTRA_TYPE 内容的类型
@@ -75,37 +63,14 @@ public abstract class WebViewFragment extends BaseFragment{
         mUserName = getArguments().getString(EXTRA_USERNAME);
         mType = getArguments().getString(EXTRA_TYPE);
 
-        setUrl();
+        mUrl = onGetUrl() + "?" + onGetUrlParams();
 
-
+        getActivity().setTitle(onSetTitle());
     }
 
-    private void setUrl(){
-        switch (mType.toString()){
-            case TYPE_DIARY:
-                mUrl = BASE_URL + ACTION_DIARY;
-                break;
-//            case TYPE_DIARY_HEADER:
-//                mUrl = BASE_URL + ACTION_DIARY_HEADER;
-//                break;
-            case TYPE_TOPIC:
-                mUrl = BASE_URL + ACTION_DIARY;
-                break;
-            case TYPE_EVENT:
-                mUrl = BASE_URL + ACTION_EVENT;
-                break;
-            default:
-                throw new IllegalArgumentException(String.format("type %s not supported.", mType));
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(mUrl);
-        sb.append("?");
-        sb.append("id=");
-        sb.append(mId);
-        mUrl = sb.toString();
-        LogUtil.i(TAG, "WebViewFragment loading url: " + mUrl);
-    }
+    abstract protected String onGetUrl();
+    abstract protected String onGetUrlParams();
+    abstract protected String onSetTitle();
 
     @Nullable
     @Override

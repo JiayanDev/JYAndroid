@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,10 +11,12 @@ import com.jiayantech.jyandroid.activity.CompanyEventActivity;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
-import com.jiayantech.jyandroid.activity.PersonalPageActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
+import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
@@ -70,6 +73,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         divider_home_page = findViewById(R.id.divider_home_page);
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
+        txt_home_page.setOnClickListener(this);
 
         txt_events = (TextView) findViewById(R.id.txt_events);
         txt_events.setOnClickListener(this);
@@ -88,6 +92,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         txt_mine = (TextView) findViewById(R.id.txt_mime);
         txt_mine.setOnClickListener(this);
+
+        //setHomePageVisible(true);
 
         resume();
     }
@@ -130,12 +136,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         //txt_info.setText(AppInitManger.getUserName());
         setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
 
+
     }
 
     public void setHomePageVisible(boolean flag){
         AppInit appInit = AppInitManger.getAppInit();
-        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
-        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+//        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+//        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
+        divider_home_page.setVisibility(View.VISIBLE);
+        txt_home_page.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -151,7 +160,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(MessagesActivity.class);
                 break;
             case R.id.txt_setting:
-                startActivity(PersonalPageActivity.class);
+                Intent setting = new Intent();
+                setting.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+                setting.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+                setting.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+                startActivity(setting);
                 break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();
@@ -185,6 +198,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.txt_mime:
                 startActivity(CompanyEventActivity.class);
+                break;
+            case R.id.txt_home_page:
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+                intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+                startActivity(intent);
                 break;
         }
     }

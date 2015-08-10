@@ -100,8 +100,6 @@
             />
         <activity android:name=".activity.EditUserInfoActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.PersonalPageActivity"
-                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.ApplyEventSuccessActivity"
                   android:screenOrientation="portrait"/>
 

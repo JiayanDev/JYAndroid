@@ -64,7 +64,8 @@
         <TextView
             android:id="@+id/txt_home_page"
             style="@style/text_item_right_arrow_style"
-            android:text="我的主页" />
+            android:text="我的主页"
+            />
 
         <View style="@style/divider_big_gray_style" />
 

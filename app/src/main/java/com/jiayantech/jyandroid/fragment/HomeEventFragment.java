@@ -19,7 +19,7 @@ public class HomeEventFragment extends RefreshListFragment<HomePageEvent,
     public void onInitView() {
         super.onInitView();
         setParams(new HomeEventAdapter(getActivity(), null), EventBiz.ACTION_HOMEPAGE_LIST);
-        setHeader(R.layout.banner);
+        //setHeader(R.layout.banner);
         setEnablePaging(false);
     }
 }

@@ -385,7 +385,7 @@ public class HttpReq<T> extends Request<T> {
     /**
      * Converts <code>params</code> into an application/x-www-form-urlencoded encoded string.
      */
-    private static String encodeParameters(Map<String, String> params, String paramsEncoding) {
+    public static String encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {
             for (Map.Entry<String, String> entry : params.entrySet()) {
