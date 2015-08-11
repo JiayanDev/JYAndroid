@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.webview;
+package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,8 +18,6 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.library.base.BaseFragment;
-import com.jiayantech.library.comm.Property;
-import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by liangzili on 15/7/7.

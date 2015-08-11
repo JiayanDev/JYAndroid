@@ -1,10 +1,10 @@
 package com.jiayantech.jyandroid.factory;
 
-import com.jiayantech.jyandroid.customwidget.webview.EventDetailFragment;
-import com.jiayantech.jyandroid.customwidget.webview.PersonalPageFragment;
-import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
-import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.fragment.webview.EventDetailFragment;
+import com.jiayantech.jyandroid.fragment.webview.PersonalPageFragment;
+import com.jiayantech.jyandroid.fragment.webview.PostDetailFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
+import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 
 /**
  * Created by liangzili on 15/8/10.

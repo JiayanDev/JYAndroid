@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.webview;
+package com.jiayantech.jyandroid.fragment.webview;
 
 import com.jiayantech.library.comm.Property;
 

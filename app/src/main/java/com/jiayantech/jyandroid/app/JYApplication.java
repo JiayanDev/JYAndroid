@@ -37,7 +37,6 @@ public class JYApplication extends BaseApplication {
     }
 
 
-
     @Override
     public void onOverdue(final HttpReq httpReq) {
         if (AppInitManger.isRegister()) {

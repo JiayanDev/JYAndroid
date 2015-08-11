@@ -10,12 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.jyandroid.eventbus.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;

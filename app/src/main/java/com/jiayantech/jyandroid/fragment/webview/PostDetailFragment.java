@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.webview;
+package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
@@ -14,7 +14,6 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.jyandroid.customwidget.webview.WebConstans.*;
 
 import java.util.Map;
 
@@ -30,10 +29,10 @@ public class PostDetailFragment extends WebViewFragment {
     public static PostDetailFragment newInstance(long id, long userId, String userName, String type) {
         PostDetailFragment fragment = new PostDetailFragment();
         Bundle args = new Bundle();
-        args.putLong(WebViewFragment.EXTRA_ID, id);
-        args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
-        args.putString(WebViewFragment.EXTRA_USERNAME, userName);
-        args.putString(WebViewFragment.EXTRA_TYPE, type);
+        args.putLong(EXTRA_ID, id);
+        args.putLong(EXTRA_USER_ID, userId);
+        args.putString(EXTRA_USERNAME, userName);
+        args.putString(EXTRA_TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,11 +41,11 @@ public class PostDetailFragment extends WebViewFragment {
     protected String onGetUrl() {
         String url = null;
         switch (mType) {
-            case Type.TYPE_DIARY:
-                url = WebConstans.BASE_URL + Action.ACTION_DIARY;
+            case WebConstans.Type.TYPE_DIARY:
+                url = WebConstans.BASE_URL + WebConstans.Action.ACTION_DIARY;
                 break;
-            case Type.TYPE_TOPIC:
-                url = WebConstans.BASE_URL + Action.ACTION_TOPIC;
+            case WebConstans.Type.TYPE_TOPIC:
+                url = WebConstans.BASE_URL + WebConstans.Action.ACTION_TOPIC;
                 break;
             default:
                 throw new IllegalArgumentException("PostDetailFragment mType is not compatible");

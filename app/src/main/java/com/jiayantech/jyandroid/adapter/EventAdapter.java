@@ -1,14 +1,12 @@
 package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
-import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
