@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.banner;
+package com.jiayantech.jyandroid.fragment.banner;
 
 import android.content.Context;
 import android.os.Bundle;

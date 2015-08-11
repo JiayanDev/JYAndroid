@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.SplashActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.SystemUtils;
 import com.umeng.message.UmengNotificationClickHandler;

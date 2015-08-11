@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.webview;
+package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

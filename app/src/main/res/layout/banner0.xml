@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <fragment
-        class="com.jiayantech.jyandroid.customwidget.banner.BannerFragment"
+        class="com.jiayantech.jyandroid.fragment.banner.BannerFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

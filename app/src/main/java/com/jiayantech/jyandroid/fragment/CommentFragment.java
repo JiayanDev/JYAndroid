@@ -6,21 +6,17 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.PostBiz;
-import com.jiayantech.jyandroid.customwidget.webview.PostDetailFragment;
+import com.jiayantech.jyandroid.fragment.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/7/3.

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.jiayantech.jyandroid.factory.WebViewFragmentFactory;
-import com.jiayantech.jyandroid.customwidget.webview.WebViewFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.library.base.SingleFragmentActivity;
 
 /**

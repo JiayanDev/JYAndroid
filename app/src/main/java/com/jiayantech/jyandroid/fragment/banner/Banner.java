@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.customwidget.banner;
+package com.jiayantech.jyandroid.fragment.banner;
 
 /**
  * Created by liangzili on 15/6/30.

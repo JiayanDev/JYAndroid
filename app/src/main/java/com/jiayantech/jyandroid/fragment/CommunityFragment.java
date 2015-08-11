@@ -16,7 +16,7 @@ import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.customwidget.webview.WebConstans;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.model.Topic;
