@@ -13,12 +13,13 @@ public class WebConstans {
         String TYPE_EVENT = "event";
         String TYPE_TOPIC = "topic";
         String TYPE_DIARY = "diary";
-        String TYPE_PERSONAL_PAGE ="personal_page";
+        String TYPE_PERSONAL_PAGE ="timeline";
     }
 
     public interface Action{
         String ACTION_DIARY = "diary.html";
         String ACTION_TOPIC = "topic.html";
         String ACTION_EVENT = "eventdetail.html";
+        String ACTION_PERSONAL_PAGE = "timeline.html";
     }
 }

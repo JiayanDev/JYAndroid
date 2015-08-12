@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class BeautyWithAdapter extends BaseSimpleModelAdapter<Event> {
     public BeautyWithAdapter(final Context context, List<Event> list) {
+
         super(list);
         setOnItemClickListener(new OnItemClickListener<Event>() {
             @Override

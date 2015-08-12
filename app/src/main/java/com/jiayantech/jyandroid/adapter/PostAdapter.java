@@ -32,12 +32,6 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         setOnItemClickListener(new OnItemClickListener<Post>() {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
-//                Intent intent = new Intent(mContext, PostDetailActivity.class);
-//                intent.putExtra(WebViewFragment.EXTRA_ID, item.id);
-//                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
-//                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
-//                intent.putExtra(WebViewFragment.EXTRA_TYPE, item.type);
-//                mContext.startActivity(intent);
                 WebViewActivity.lauchActivity(mContext, item.id, item.userId, item.userName,
                         item.type);
             }

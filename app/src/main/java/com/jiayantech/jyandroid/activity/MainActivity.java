@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
@@ -19,11 +20,13 @@ import com.jiayantech.jyandroid.eventbus.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
+import com.jiayantech.jyandroid.BuildConfig;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.umeng.message.PushAgent;
 
 /**
@@ -43,7 +46,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main0);
         setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
         PushAgent.getInstance(this).enable();
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             launchActivityFromNotification(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE));
         }
         //EventBus.getDefault().register(this);
+
     }
 
     private void launchActivityFromNotification(Bundle bundleExtra) {
@@ -108,10 +112,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
         mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
+
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(this);
 
         setTitle(mRadioButtons[0].getText().toString());
+
+        boolean flag = BuildConfig.DEBUG;
     }
 
     @Override
