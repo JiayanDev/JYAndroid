@@ -34,7 +34,7 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
 //            intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
 //            intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
 //            intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
-            Intent intent = WebViewActivity.getLaunchIntent(context, id, userId, userName, type);
+            Intent intent = WebViewActivity.createLaunchIntent(context, id, userId, userName, type);
 
             Intent mainIntent = new Intent(context, MainActivity.class);
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

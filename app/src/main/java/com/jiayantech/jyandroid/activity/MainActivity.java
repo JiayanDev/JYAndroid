@@ -2,7 +2,6 @@ package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
-import com.readystatesoftware.viewbadger.BadgeView;
 import com.umeng.message.PushAgent;
 
 /**
@@ -85,7 +83,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //                break;
 //            default:
 //                return;
-        Intent intent = WebViewActivity.getLaunchIntent(this, id, userId, userName, type);
+        Intent intent = WebViewActivity.createLaunchIntent(this, id, userId, userName, type);
         startActivity(intent);
     }
 

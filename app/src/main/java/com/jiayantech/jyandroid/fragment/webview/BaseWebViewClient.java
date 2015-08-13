@@ -86,7 +86,7 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
     private void navigate(long id, String type) {
-        WebViewActivity.lauchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
+        WebViewActivity.launchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
                 mWebViewFragment.mUserName, type);
     }
 
