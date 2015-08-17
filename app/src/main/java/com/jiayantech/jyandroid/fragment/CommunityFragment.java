@@ -66,7 +66,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
                 header.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        WebViewActivity.lauchActivity(getActivity(), postAppResponse.data.topicId,
+                        WebViewActivity.launchActivity(getActivity(), postAppResponse.data.topicId,
                                 postAppResponse.data.userId, postAppResponse.data.userName,
                                 WebConstans.Type.TYPE_TOPIC);
                     }

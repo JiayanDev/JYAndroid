@@ -14,6 +14,7 @@ import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
+import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
     private void navigate(long id, String type) {
-        WebViewActivity.lauchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
+        WebViewActivity.launchActivity(mWebViewFragment.getActivity(), id, mWebViewFragment.mUserId,
                 mWebViewFragment.mUserName, type);
     }
 
@@ -116,7 +117,10 @@ public class BaseWebViewClient extends WebViewClient {
             case JsNativeBiz.ACTION_APPLY_EVENT:
                 JsCallApplyEvent event = JsNativeBiz.parse(url, JsCallApplyEvent.class);
                 onJsCallApplyEvent(event.data.id);
+                break;
 
+            case JsNativeBiz.ACTION_GET_USERINFO:
+                JsCallUserInfo userInfo = JsNativeBiz.parse(url, JsCallUserInfo.class);
         }
     }
 

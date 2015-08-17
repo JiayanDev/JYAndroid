@@ -31,10 +31,9 @@ public class Property {
     }
 
     private static final Properties sProperties = new Properties();
-
     static {
         try {
-            InputStream is = BaseApplication.getContext().getAssets().open("app.properties");
+            InputStream is = BaseApplication.getContext().getAssets().open("apptest.properties");
             sProperties.load(is);
         } catch (IOException e) {
             e.printStackTrace();

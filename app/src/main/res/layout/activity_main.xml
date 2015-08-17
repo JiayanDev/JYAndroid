@@ -50,13 +50,19 @@
                 style="@style/main_tab"
                 android:drawableTop="@drawable/tab_community_selector"
                 android:text="@string/community" />
-
-
             <RadioButton
                 android:id="@+id/radio_userinfo"
                 style="@style/main_tab"
+                android:layout_centerInParent="true"
                 android:drawableTop="@drawable/tab_me_selector"
                 android:text="@string/userinfo" />
+            <!--<RelativeLayout-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content">-->
+                <!-- -->
+            <!--</RelativeLayout>-->
+
         </RadioGroup>
 
         <!--<LinearLayout-->

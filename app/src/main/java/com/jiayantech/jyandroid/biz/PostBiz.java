@@ -24,7 +24,7 @@ public class PostBiz {
     private static final String ACTION_CANCEL_LIKE = MODEL + "/cancel_like";
 
     private static final String ACTION_MY_TOPIC = MODEL + "/comment";
-    private static final String ACTION_VERIFY = MODEL + "/verify";
+    //private static final String ACTION_VERIFY = MODEL + "/verify";
     private static final String ACTION_TOPIC_ONE = "/recommend/topic/one";
 
     public static void getOneTopic(ResponseListener<?> l){
@@ -54,6 +54,5 @@ public class PostBiz {
     public static void verify(String id, String status, ResponseListener<?> l) {
         HttpReq.post(ACTION_MY_TOPIC, null, l);
     }
-
 
 }

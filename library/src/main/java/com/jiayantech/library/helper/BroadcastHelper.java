@@ -18,6 +18,7 @@ import com.jiayantech.library.base.BaseApplication;
  * @Copyright: Copyright (c) 2014 Shenzhen Inser Technology Co., Ltd. Inc. All
  * rights reserved.
  */
+
 public class BroadcastHelper {
     private static final LocalBroadcastManager sLocalBroadcastManager = LocalBroadcastManager.getInstance(BaseApplication.getContext());
 

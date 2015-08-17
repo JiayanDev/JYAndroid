@@ -18,6 +18,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.library.base.BaseFragment;
+import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by liangzili on 15/7/7.
@@ -61,6 +62,8 @@ public abstract class WebViewFragment extends BaseFragment{
         mType = getArguments().getString(EXTRA_TYPE);
 
         mUrl = onGetUrl() + "?" + onGetUrlParams();
+
+        LogUtil.i(TAG, "loading url:" + mUrl);
 
         getActivity().setTitle(onSetTitle());
     }
