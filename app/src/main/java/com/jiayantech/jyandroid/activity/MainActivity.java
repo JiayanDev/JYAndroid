@@ -2,6 +2,10 @@ package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
@@ -13,17 +17,18 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.jiayantech.jyandroid.BuildConfig;
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.jyandroid.eventbus.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
-import com.jiayantech.jyandroid.BuildConfig;
+import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.library.widget.UnreadRadioButton;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
 
@@ -228,6 +233,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
             case R.id.radio_userinfo:
                 toUserInfo = true;
+//                mRadioButtons[2].setCompoundDrawables(null,
+//                        getResources().getDrawable(R.mipmap.icon_me), null, null);
                 LoginActivity.checkLoginToRunnable(_this, new Runnable() {
                     @Override
                     public void run() {
@@ -251,6 +258,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
             //mRadioGroup.check(ids[mViewPager.getCurrentItem()]);
         }
+        //setUnreadIcon(3);
+        ((UnreadRadioButton)mRadioButtons[2]).setUnreadCount(2);
+
     }
 
     @Override
@@ -260,25 +270,33 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         ToastUtil.showMessage("MainActivity onNewIntent");
     }
 
-    //    public static Drawable displayUnreadDot(Context context, int icon, int iconSize){
-//        Bitmap iconBitmap = BitmapFactory.decodeResource(context.getResources(), icon);
-//        Bitmap dotBitmap = BitmapFactory.decodeResource(context.getResources(),
-//                com.jiayantech.library.R.drawable.shape_dot);
-//        Canvas canvas = new Canvas(iconBitmap);
+    public void setUnreadIcon(int count){
+        //Drawable icon = mRadioButtons[2].getCompoundDrawables()[1];
+        Drawable icon = getResources().getDrawable(R.mipmap.icon_me);
+        int height = icon.getIntrinsicHeight();
+        int width = icon.getIntrinsicWidth();
+        icon.setBounds(0, 0, height, width);
+
+        Bitmap bitmap = Bitmap.createBitmap(icon.getIntrinsicWidth(), icon.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        icon.draw(canvas);
+
+//        TextView textView = new TextView(this);
+//        textView.setBackgroundResource(R.drawable.unread_count_bg);
+//        textView.setText("8");
+//        ViewGroup.LayoutParams params = new  ViewGroup.LayoutParams(20,
+//                20);
+//        textView.setLayoutParams(params);
 //
-//        Paint iconPaint = new Paint();
-//        iconPaint.setDither(true);
-//        iconPaint.setFilterBitmap(true);
-//        iconPaint.setAntiAlias(true);
-//        Rect src = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
-//        Rect dst = new Rect(0, 0, iconBitmap.getWidth(), iconBitmap.getHeight());
-//        canvas.drawBitmap(iconBitmap, src, dst, iconPaint);
-//        iconPaint.setColor(Color.RED);
-//        canvas.drawCircle(iconSize - 13, 20, 10, iconPaint);
+//        RectF rect = new RectF(canvas.getWidth() - 20, 0, canvas.getWidth(), 20);
 //
-//        return new BitmapDrawable(context.getResources(), iconBitmap);
-//    }
+//        canvas.drawOval(rect, new Paint());
+//
+//        canvas.save();
+//
+        BitmapDrawable result = new BitmapDrawable(getResources(), bitmap);
 
-
-
+        mRadioButtons[2].setCompoundDrawables(null, result, null, null);
+    }
 }
