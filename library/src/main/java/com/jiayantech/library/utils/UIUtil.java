@@ -25,6 +25,20 @@ public class UIUtil {
         inputMethodManager.showSoftInput(editText, 0);
     }
 
+//    /**
+//     * 给Button设置一个DrawableLeft
+//     * @param icon  要设置的Drawable
+//     * @param button 要设置的按钮
+//     */
+//    public static void setPaddingLeft(Drawable icon, Button button){
+//        SpannableString spanText = new SpannableString(button.getText());
+//        int a = (int)button.getTextSize();
+//        icon.setBounds(0, 0, a, a);
+//        ImageSpan imageSpan = new ImageSpan(icon, ImageSpan.ALIGN_BASELINE);
+//        spanText.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        button.setText(spanText);
+//    }
+
     public static float dip2px(float dip) {
         return BaseApplication.getContext().getResources().getDisplayMetrics().density * dip;
     }

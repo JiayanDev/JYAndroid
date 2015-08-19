@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/divider_gray_color"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/normal_text_size"
+            android:text="86"
+            android:textColor="#3a3a3a"
+            />
+
+        <View
+            style="@style/divider_gray_style_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/input_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            style="@style/edit_text_style"
+            android:gravity="start"
+            android:hint="@string/hint_input_phone"
+            android:maxLines="1"
+            android:paddingLeft="0dip"
+            android:paddingRight="0dp"/>
+
+        <Button
+            android:id="@+id/btn_send_verify_code"
+            style="@style/btn_theme"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/small_text_size"
+
+            android:minHeight="0dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/send_verify_code"
+            />
+    </LinearLayout>
+
+    <View
+        style="@style/divider_gray_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        >
+
+        <EditText
+            android:id="@+id/input_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            style="@style/edit_text_style"
+            android:hint="@string/hint_input_phone_code"
+            />
+    </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/stub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/layout_set_password"
+        android:layout_marginTop="20dp"
+        >
+
+    </ViewStub>
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/btn_theme"
+        android:layout_marginTop="30dp"
+        android:text="@string/verify"/>
+
+</LinearLayout>

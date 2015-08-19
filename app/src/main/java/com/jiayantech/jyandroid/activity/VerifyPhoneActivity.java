@@ -2,11 +2,10 @@ package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UserBiz;
@@ -26,9 +25,9 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     //private static final int TYPE_UPDATE_PHONE
     private int type;
 
-    private TextInputLayout input_phone;
-    private TextInputLayout input_code;
-    private TextView txt_send_verify_code;
+    private EditText input_phone;
+    private EditText input_code;
+    private Button txt_send_verify_code;
     private Button btn_verify;
 
     private String social_type;
@@ -48,10 +47,12 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void findViews() {
-        input_phone = (TextInputLayout) findViewById(R.id.input_phone);
-        input_code = (TextInputLayout) findViewById(R.id.input_code);
-        txt_send_verify_code = (TextView) findViewById(R.id.txt_send_verify_code);
-        btn_verify = (Button) findViewById(R.id.btn_verify);
+        input_phone = (EditText) findViewById(R.id.input_phone);
+        input_code = (EditText) findViewById(R.id.input_code);
+        txt_send_verify_code = (Button) findViewById(R.id.btn_send_verify_code);
+        btn_verify = (Button) findViewById(R.id.btn_submit);
+
+        btn_verify.setText(R.string.verify);
     }
 
     protected void setViewsContent() {
@@ -71,8 +72,8 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txt_send_verify_code:
-                phoneNum = input_phone.getEditText().getText().toString();
+            case R.id.btn_send_verify_code:
+                phoneNum = input_phone.getText().toString();
                 if (TextUtils.isEmpty(phoneNum)) {
                     ToastUtil.showMessage(R.string.hint_input_phone);
                     return;
@@ -86,12 +87,12 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 break;
-            case R.id.btn_verify:
+            case R.id.btn_submit:
                 if (TextUtils.isEmpty(phoneCodeResponse)) {
                     ToastUtil.showMessage(R.string.hint_waring_send_phone_code);
                     return;
                 }
-                String code = input_code.getEditText().getText().toString();
+                String code = input_code.getText().toString();
                 if (TextUtils.isEmpty(code)) {
                     ToastUtil.showMessage(R.string.hint_input_phone_code);
                     return;

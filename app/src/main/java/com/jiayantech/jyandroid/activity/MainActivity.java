@@ -20,7 +20,6 @@ import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
-import com.jiayantech.jyandroid.widget.BadgeView;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
@@ -254,9 +253,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
         }
 
-        BadgeView badge = new BadgeView(this);
-        badge.setTargetView(mRadioButtons[2]);
-        badge.setBadgeCount(2);
+//        BadgeView badge = new BadgeView(this);
+//        badge.setTargetView(mRadioButtons[2]);
+//        badge.setBadgeCount(2);
     }
 
     @Override

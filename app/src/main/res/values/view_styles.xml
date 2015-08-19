@@ -93,6 +93,12 @@
         <item name="android:background">@color/divider_gray_color</item>
     </style>
 
+    <style name="divider_gray_style_vertical">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/divider_gray_color</item>
+    </style>
+
     <style name="divider_big_gray_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/normal_margin</item>
@@ -112,8 +118,19 @@
     <style name="btn_theme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:background">@drawable/bg_round_theme</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <!--EditText的style-->
+    <style name="edit_text_style">
+        <item name="android:textColorHint">@color/text_hint_color</item>
+        <item name="android:textColor">@color/text_normal_color</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>
