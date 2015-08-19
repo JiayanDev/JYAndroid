@@ -76,7 +76,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        >
 
         <EditText
             android:id="@+id/input_code"
@@ -95,7 +96,10 @@
     <ViewStub
         android:id="@+id/stub"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout="@layout/layout_set_password"
+        android:layout_marginTop="20dp"
+        >
 
     </ViewStub>
 

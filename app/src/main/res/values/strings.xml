@@ -54,6 +54,7 @@
     <string name="create_new_diary">创建新日记</string>
     <string name="create_diary_book">创建日记本</string>
     <string name="update_diary">更新日记本</string>
+    <string name="set_gender">性别</string>
 
 
     <!-- title -->
@@ -107,7 +108,7 @@
     <string name="confirm_reset">重置密码</string>
     <string name="hint_input_phone_code">请输入短信验证码</string>
     <string name="hint_waring_send_phone_code">请点击发送验证码</string>
-    <string name="title_set_info">完善帐户信息</string>
+    <string name="title_set_info">完善信息</string>
     <string name="waring_pass_is_not_same">再次输入的密码不一致</string>
     <string name="title_reset_pass">重新设置密码</string>
     <string name="msg_account_not_register">该帐号未注册，请验证手机进行注册</string>

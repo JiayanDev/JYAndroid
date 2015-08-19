@@ -71,9 +71,10 @@ public class OtherLoginActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_forget_pass:
-                Intent intent = new Intent(this, VerifyPhoneActivity.class);
-                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
-                startActivity(intent);
+//                Intent intent = new Intent(this, VerifyPhoneActivity.class);
+//                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
+//                startActivity(intent);
+                startActivity(ResetPassActivity.class);
                 break;
             case R.id.btn_login:
                 String phone = input_phone.getText().toString();
