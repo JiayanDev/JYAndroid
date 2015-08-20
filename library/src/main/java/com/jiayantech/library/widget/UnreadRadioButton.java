@@ -44,14 +44,21 @@ public class UnreadRadioButton extends RadioButton{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(mUnreadCount != 0){
-            int height = canvas.getHeight();
-            int width = canvas.getWidth();
+            String hello = "Hello world";
+            int height = getHeight();
+            int width = getWidth();
             mUnreadPaint.setAntiAlias(true);
 
             //mUnreadRect = new RectF((float)2.0 * width / 3, 0, width, (float)1.0 * width / 3);
             mUnreadRect.set((float)2.0 * width / 3, 0, width, (float)1.0 * width / 3);
             mUnreadPaint.setColor(Color.RED);
             canvas.drawOval(mUnreadRect, mUnreadPaint);
+
+            int strX = (int)(getWidth() - hello.getBytes().length * 5.5)/2;
+
+            canvas.drawText("Hello", strX, getHeight() + 20, mUnreadPaint);
+
+            canvas.drawLine(0, 0, getWidth(), getHeight(), mUnreadPaint);
         }
     }
 }

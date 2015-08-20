@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
@@ -25,7 +25,7 @@ import com.jiayantech.library.comm.ActivityResult;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private ImageView img_close;
-    private Button btn_wechat_login;
+    private LinearLayout btn_wechat_login;
     private TextView txt_other_login;
     private TextView txt_register;
 
@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     protected void findViews() {
         img_close = (ImageView) findViewById(R.id.img_close);
-        btn_wechat_login = (Button) findViewById(R.id.btn_wechat_login);
+        btn_wechat_login = (LinearLayout) findViewById(R.id.btn_wechat_login);
         txt_other_login = (TextView) findViewById(R.id.txt_other_login);
         txt_register = (TextView) findViewById(R.id.txt_register);
     }
@@ -54,11 +54,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setTitle(R.string.login);
         setBackgroundResource(android.R.color.white);
         mSocialLoginBiz = new SocialLoginBiz(this);
+
+//        UIUtil.setPaddingLeft(getResources().getDrawable(R.mipmap.icon_wechat_white),
+//                btn_wechat_login);
     }
 
     protected void setViewsListener() {
         img_close.setOnClickListener(this);
         btn_wechat_login.setOnClickListener(this);
+
         txt_other_login.setOnClickListener(this);
         txt_register.setOnClickListener(this);
     }

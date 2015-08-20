@@ -1,10 +1,10 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.jiayantech.jyandroid.R;
@@ -16,7 +16,7 @@ import com.jiayantech.library.utils.ToastUtil;
  */
 public class SetInfoActivity extends ResetPassActivity {
 
-    private TextInputLayout input_nickname;
+    private EditText input_nickname;
     private RadioGroup radio_group_gender;
     private Button btn_register;
 
@@ -29,14 +29,14 @@ public class SetInfoActivity extends ResetPassActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_set_info;
+        return R.layout.activity_set_info0;
     }
 
     protected void findViews() {
-        input_nickname = (TextInputLayout) findViewById(R.id.input_nickname);
+        input_nickname = (EditText) findViewById(R.id.input_nickname);
         radio_group_gender = (RadioGroup) findViewById(R.id.radio_group_gender);
-        input_pass_0 = (TextInputLayout) findViewById(R.id.input_pass_0);
-        input_pass_1 = (TextInputLayout) findViewById(R.id.input_pass_1);
+        input_pass_0 = (EditText) findViewById(R.id.input_pass_0);
+        input_pass_1 = (EditText) findViewById(R.id.input_pass_1);
         btn_register = (Button) findViewById(R.id.btn_register);
     }
 
@@ -63,7 +63,7 @@ public class SetInfoActivity extends ResetPassActivity {
         switch (v.getId()) {
             case R.id.btn_register:
                 if (TextUtils.isEmpty(social_type)) {
-                    String nickname = input_nickname.getEditText().getText().toString();
+                    String nickname = input_nickname.getText().toString();
                     if (TextUtils.isEmpty(nickname)) {
                         ToastUtil.showMessage(R.string.hint_input_nickname);
                         return;
