@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
@@ -25,7 +25,7 @@ import com.jiayantech.library.comm.ActivityResult;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private ImageView img_close;
-    private RelativeLayout btn_wechat_login;
+    private LinearLayout btn_wechat_login;
     private TextView txt_other_login;
     private TextView txt_register;
 
@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     protected void findViews() {
         img_close = (ImageView) findViewById(R.id.img_close);
-        btn_wechat_login = (RelativeLayout) findViewById(R.id.btn_wechat_login);
+        btn_wechat_login = (LinearLayout) findViewById(R.id.btn_wechat_login);
         txt_other_login = (TextView) findViewById(R.id.txt_other_login);
         txt_register = (TextView) findViewById(R.id.txt_register);
     }
