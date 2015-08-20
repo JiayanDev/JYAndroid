@@ -15,6 +15,7 @@ import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class BaseWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        LogUtil.i("WebView", "loading url: " + url);
         if (url.startsWith(JS_PREFIX)) {
             //Js调用Native
             String action = JsNativeBiz.getJsAction(url);

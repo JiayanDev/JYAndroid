@@ -51,7 +51,7 @@
                 android:drawableTop="@drawable/tab_community_selector"
                 android:text="@string/community"/>
 
-            <com.jiayantech.library.widget.UnreadRadioButton
+            <RadioButton
                 android:id="@+id/radio_userinfo"
                 style="@style/main_tab"
                 android:layout_centerInParent="true"
