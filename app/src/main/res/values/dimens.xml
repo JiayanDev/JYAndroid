@@ -16,5 +16,6 @@
     <dimen name="title_text_size">28sp</dimen>
     <dimen name="normal_text_size">15sp</dimen>
     <dimen name="small_text_size">13sp</dimen>
+    <dimen name="smallest_text_size">12sp</dimen>
     <dimen name="login_margin_top">60dip</dimen>
 </resources>

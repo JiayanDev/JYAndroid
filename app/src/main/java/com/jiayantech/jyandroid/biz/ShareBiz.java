@@ -1,9 +1,11 @@
 package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 
+import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.app.JYApplication;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -26,14 +28,16 @@ public class ShareBiz {
         sIWXAPI.registerApp(WECHAT_APP_ID);
     }
 
-    public static void shareToWechat(String text, int type){
+    public static void shareToWechat(String url, String title, int type){
 
         WXWebpageObject webpageObject = new WXWebpageObject();
-        webpageObject.webpageUrl = text;
+        webpageObject.webpageUrl = url;
 
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = webpageObject;
-        msg.description = "大家好，我是周杰伦";
+        msg.title = title;
+        msg.setThumbImage(BitmapFactory.decodeResource(JYApplication.getContext().getResources(),
+                R.mipmap.icon_wechat));
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
@@ -50,8 +54,6 @@ public class ShareBiz {
                 req.scene = SendMessageToWX.Req.WXSceneFavorite;
                 break;
         }
-        req.scene = SendMessageToWX.Req.WXSceneTimeline;
-
         sIWXAPI.sendReq(req);
     }
 }
