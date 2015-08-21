@@ -15,5 +15,5 @@
         android:id="@+id/toolbar_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/theme_color" />
+        android:background="@color/divider_gray_color" />
 </LinearLayout>
