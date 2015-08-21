@@ -78,6 +78,9 @@ public class PostDetailFragment extends WebViewFragment {
                 CommentFragment fragment = CommentFragment.newInstance(mId, mType);
                 fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
                 fragment.show(getActivity().getSupportFragmentManager(), "comment");
+//                ToastUtil.showMessage("点击分享: " + mUrl);
+//                SharePanel panel = new SharePanel(getActivity(), mUrl);
+//                panel.showAtLocation(mView, Gravity.CENTER, 100, 100);
             }
         });
 

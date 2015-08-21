@@ -11,4 +11,9 @@
     <declare-styleable name="UnslidableViewPager">
         <attr name="slidable" format="boolean" />
     </declare-styleable>
+
+    <!--ColorFilterImageView的自定义属性-->
+    <declare-styleable name="ColorFilterImageView">
+        <attr name="coverColor" format="color"/>
+    </declare-styleable>
 </resources>

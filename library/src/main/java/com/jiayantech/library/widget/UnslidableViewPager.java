@@ -8,8 +8,6 @@ import android.view.MotionEvent;
 
 import com.jiayantech.library.R;
 
-import java.lang.reflect.Type;
-
 /**
  * Created by liangzili on 15/7/17.
  */
@@ -25,6 +23,8 @@ public class UnslidableViewPager extends ViewPager{
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.UnslidableViewPager);
         slidable = array.getBoolean(R.styleable.UnslidableViewPager_slidable, false);
+
+        array.recycle();
     }
 
     @Override
