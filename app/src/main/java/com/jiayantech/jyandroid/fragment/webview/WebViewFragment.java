@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,14 +17,14 @@ import android.widget.RelativeLayout;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
-import com.jiayantech.jyandroid.biz.ShareBiz;
+import com.jiayantech.jyandroid.widget.SharePanel;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by liangzili on 15/7/7.
  */
-public abstract class WebViewFragment extends BaseFragment{
+public abstract class WebViewFragment extends BaseFragment {
     public static final String TAG = WebViewFragment.class.getSimpleName();
 
     public static final int REQUEST_CODE_COMMENT = 1;
@@ -41,6 +42,8 @@ public abstract class WebViewFragment extends BaseFragment{
 
     private LinearLayout mContentLayout;
     private RelativeLayout mLoadingLayout;
+
+    private SharePanel mSharePanel;
 
     protected View mView;
     protected FrameLayout mNativeLayout;
@@ -69,7 +72,9 @@ public abstract class WebViewFragment extends BaseFragment{
     }
 
     abstract protected String onGetUrl();
+
     abstract protected String onGetUrlParams();
+
     abstract protected String onSetTitle();
 
     @Nullable
@@ -77,13 +82,13 @@ public abstract class WebViewFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_webview, container, false);
 
-        mContentLayout = (LinearLayout)mView.findViewById(R.id.layout_content);
-        mLoadingLayout = (RelativeLayout)mView.findViewById(R.id.layout_loading);
-        mNativeLayout = (FrameLayout)mView.findViewById(R.id.layout_native);
-        mWebView = (WebView)mView.findViewById(R.id.web);
+        mContentLayout = (LinearLayout) mView.findViewById(R.id.layout_content);
+        mLoadingLayout = (RelativeLayout) mView.findViewById(R.id.layout_loading);
+        mNativeLayout = (FrameLayout) mView.findViewById(R.id.layout_native);
+        mWebView = (WebView) mView.findViewById(R.id.web);
 
         View bottomView = onBindBottomLayout(inflater);
-        if(bottomView != null){
+        if (bottomView != null) {
             mNativeLayout.addView(bottomView);
         }
 
@@ -95,7 +100,7 @@ public abstract class WebViewFragment extends BaseFragment{
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
 
-        finishLoading();
+        //finishLoading();
         return mView;
     }
 
@@ -103,6 +108,7 @@ public abstract class WebViewFragment extends BaseFragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
+//        mSharePanel = new SharePanel(getActivity(), mUrl);
     }
 
     @Override
@@ -112,21 +118,29 @@ public abstract class WebViewFragment extends BaseFragment{
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        mSharePanel = null;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mWebView != null) {
+        if (mWebView != null) {
             mWebView.destroy();
+        }
+
+        if (mSharePanel != null && mSharePanel.isShowing()) {
+            mSharePanel.dismiss();
         }
     }
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);
-
 
 
     @Override
@@ -137,31 +151,46 @@ public abstract class WebViewFragment extends BaseFragment{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_share){
-            ShareBiz.shareToWechat(mUrl, ShareBiz.WECHAT_TIMELINE);
+        if (item.getItemId() == R.id.action_share) {
+//            ToastUtil.showMessage("点击分享: " + mUrl);
+            if (mSharePanel == null) {
+                CharSequence titleChar = getActivity().getTitle();
+                String title;
+                if (titleChar != null) {
+                    title = titleChar.toString();
+                } else {
+                    title = getString(R.string.app_name);
+                }
+                mSharePanel = new SharePanel(getActivity(), mUrl, title);
+            }
+            if (!mSharePanel.isShowing()) {
+                mSharePanel.showAtLocation(mWebView, Gravity.CENTER, 0, 0);
+            }
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void callJsMethod(String method, String params){
+    public void callJsMethod(String method, String params) {
         JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 
 
-    public void finishLoading(){
+    public void finishLoading() {
         mContentLayout.setVisibility(View.VISIBLE);
         mLoadingLayout.setVisibility(View.GONE);
     }
 
-    protected BaseWebChromeClient onSetWebChromeClient(){
+    protected BaseWebChromeClient onSetWebChromeClient() {
         return new BaseWebChromeClient();
     }
 
-    protected JavascriptInterface onAddJavascriptInterface(){
+    protected JavascriptInterface onAddJavascriptInterface() {
         return new JavascriptInterface();
     }
 
-    protected BaseWebViewClient onSetWebViewClient(){
+    protected BaseWebViewClient onSetWebViewClient() {
         return new BaseWebViewClient(this);
     }
+
 }

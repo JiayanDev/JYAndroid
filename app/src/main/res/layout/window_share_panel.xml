@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#4d000000"
+        android:id="@+id/transparent"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/bg_light_gray_color"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="17dp"
+            android:gravity="center_horizontal"
+            android:text="@string/title_share_to"
+            android:textColor="@color/font_normal"
+            android:textSize="@dimen/normal_text_size"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="horizontal"
+            >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_share_wechat"
+                android:layout_weight="1"
+                >
+
+                <com.jiayantech.library.widget.ColorFilterImageView
+                    android:id="@+id/image_wechat"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_share_wechat"
+                    />
+
+                <TextView
+                    android:id="@+id/text_wechat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_below="@id/image_wechat"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/share_wechat"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_share_circle"
+                android:layout_weight="1"
+                >
+
+                <com.jiayantech.library.widget.ColorFilterImageView
+                    android:id="@+id/image_wechat_circle"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_share_wechat_circle"
+                    />
+
+                <TextView
+                    android:id="@+id/text_wechat_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_below="@id/image_wechat_circle"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/share_wechat_circle"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_share_weibo"
+                android:layout_weight="1"
+                >
+
+                <com.jiayantech.library.widget.ColorFilterImageView
+                    android:id="@+id/image_weibo"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_share_weibo"
+                    />
+
+                <TextView
+                    android:id="@+id/text_weibo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_below="@id/image_weibo"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/share_weibo"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_share_qzone"
+                android:layout_weight="1"
+                >
+
+                <com.jiayantech.library.widget.ColorFilterImageView
+                    android:id="@+id/image_qzone"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_share_qzone"
+                    />
+
+                <TextView
+                    android:id="@+id/text_qzone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_below="@id/image_qzone"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/share_qzone"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/white"
+            style="@style/btn_theme"
+            android:text="@string/btn_cancel"
+            android:textColor="@color/font_normal"
+            android:layout_marginBottom="10dp"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
