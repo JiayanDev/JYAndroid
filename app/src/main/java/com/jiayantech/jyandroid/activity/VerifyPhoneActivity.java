@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
@@ -22,6 +24,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     public static final String KEY_TYPE = "type";
     public static final int TYPE_REGISTER = 0;
     public static final int TYPE_FORGET_PASS = 1;
+    public static final int TYPE_UPDATE_PHONE = 2;
     //private static final int TYPE_UPDATE_PHONE
     private int type;
 
@@ -97,22 +100,40 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone_code);
                     return;
                 }
-                UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
-                    @Override
-                    public void onResponse(AppResponse<HashMap<String, String>> response) {
-                        super.onResponse(response);
-                        switch (type) {
-                            case TYPE_REGISTER:
-                                phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
-                                if (TextUtils.isEmpty(social_type)) {
-                                    Intent setInfoIntent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
-                                    setInfoIntent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
-                                    setInfoIntent.putExtra(UserBiz.SOCIAL_CODE, social_code);
-                                    setInfoIntent.putExtra(UserBiz.KEY_SOCIAL_RESPONSE, social_response);
-                                    setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
-                                    setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
-                                    startActivityForFinishResult(setInfoIntent);
-                                } else {
+                if(type == TYPE_UPDATE_PHONE){
+                    UserBiz.updatePhone(phoneCodeResponse, phoneNum, new SimpleResponseListener<HashMap<String, String>>(_this) {
+                        @Override
+                        public void onResponse(HashMap<String, String> response) {
+                            super.onResponse(response);
+                            Intent result = new Intent();
+                            result.putExtra("phone", phoneNum);
+                            setResult(Activity.RESULT_OK, result);
+                            finish();
+                        }
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            super.onErrorResponse(error);
+                            ToastUtil.showMessage("更新手机出错");
+                        }
+                    });
+                }else {
+                    UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
+                        @Override
+                        public void onResponse(AppResponse<HashMap<String, String>> response) {
+                            super.onResponse(response);
+                            switch (type) {
+                                case TYPE_REGISTER:
+                                    phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
+                                    if (TextUtils.isEmpty(social_type)) {
+                                        Intent setInfoIntent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
+                                        setInfoIntent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
+                                        setInfoIntent.putExtra(UserBiz.SOCIAL_CODE, social_code);
+                                        setInfoIntent.putExtra(UserBiz.KEY_SOCIAL_RESPONSE, social_response);
+                                        setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
+                                        setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
+                                        startActivityForFinishResult(setInfoIntent);
+                                    } else {
 //                                    Intent setInfoIntent = new Intent(VerifyPhoneActivity.this, SetInfoActivity.class);
 //                                    setInfoIntent.putExtra(UserBiz.SOCIAL_TYPE, social_type);
 //                                    setInfoIntent.putExtra(UserBiz.SOCIAL_CODE, social_code);
@@ -120,21 +141,21 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
 //                                    setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
 //                                    setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
 //                                    startActivityForFinishResult(setInfoIntent);
-                                    UserBiz.register(phoneCodeConfirmResponse, social_type, social_response, phoneNum,
-                                            new UserBiz.RegisterResponseListener(VerifyPhoneActivity.this));
-                                }
-                                break;
-                            case TYPE_FORGET_PASS:
-                                phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
-                                Intent intent = new Intent(VerifyPhoneActivity.this, ResetPassActivity.class);
-                                intent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
-                                intent.putExtra(UserBiz.KEY_PHONE, phoneNum);
-                                startActivityForFinishResult(intent);
-                                break;
+                                        UserBiz.register(phoneCodeConfirmResponse, social_type, social_response, phoneNum,
+                                                new UserBiz.RegisterResponseListener(VerifyPhoneActivity.this));
+                                    }
+                                    break;
+                                case TYPE_FORGET_PASS:
+                                    phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
+                                    Intent intent = new Intent(VerifyPhoneActivity.this, ResetPassActivity.class);
+                                    intent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
+                                    intent.putExtra(UserBiz.KEY_PHONE, phoneNum);
+                                    startActivityForFinishResult(intent);
+                                    break;
+                            }
                         }
-
-                    }
-                });
+                    });
+                }
                 break;
         }
     }

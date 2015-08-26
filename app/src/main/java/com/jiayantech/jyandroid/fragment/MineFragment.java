@@ -136,7 +136,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         //txt_info.setText(AppInitManger.getUserName());
         setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
 
-
     }
 
     public void setHomePageVisible(boolean flag){
@@ -160,12 +159,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(MessagesActivity.class);
                 break;
             case R.id.txt_setting:
-                Intent setting = new Intent();
-                setting.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
-                setting.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
-                setting.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
-                startActivity(setting);
-                break;
+//                Intent setting = new Intent();
+//                setting.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+//                setting.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+//                setting.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+//                startActivity(setting);
+//                break;
             case R.id.txt_logout:
                 ((BaseActivity) getActivity()).showProgressDialog();
 //                UserBiz.logout(new ResponseListener<BaseAppResponse>() {

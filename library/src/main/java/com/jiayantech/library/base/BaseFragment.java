@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.ActivityResultHelper;
+import com.jiayantech.library.utils.LogUtil;
 
 /**
  * Created by janseon on 2015/6/29.
@@ -19,6 +20,7 @@ import com.jiayantech.library.helper.ActivityResultHelper;
  * rights reserved.
  */
 public abstract class BaseFragment extends Fragment {
+    private static final String TAG = "BaseFragment";
     protected ViewGroup mRoot;
 
     protected int getInflaterResId() {
@@ -36,6 +38,18 @@ public abstract class BaseFragment extends Fragment {
             onInitView();
         }
         return mRoot;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtil.v(TAG, String.format("%s is onPause()", this.getClass().getSimpleName()));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.v(TAG, String.format("%s is onStop()", this.getClass().getSimpleName()));
     }
 
     protected View onInflateView(LayoutInflater inflater, ViewGroup container) {

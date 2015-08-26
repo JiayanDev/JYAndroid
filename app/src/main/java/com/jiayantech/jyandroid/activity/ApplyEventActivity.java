@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.appwidget.AppWidgetProvider;
 import android.support.v4.app.Fragment;
 
 import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
@@ -15,4 +14,5 @@ public class ApplyEventActivity extends SingleFragmentActivity{
         return ApplyEventFragment.
                 newInstance(getIntent().getLongExtra(ApplyEventFragment.EVENT_ID, -1));
     }
+
 }

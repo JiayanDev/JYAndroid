@@ -28,7 +28,8 @@ public class HomeEventAdapter extends BaseSimpleModelAdapter<HomePageEvent> {
                 long id = 0;
                 switch (item.type){
                     case HomePageEvent.TYPE_EVENT:
-                        id = item.eventId;
+                        //id = item.eventId;
+                        id = 927;
                         break;
                     case HomePageEvent.TYPE_TOPIC:
                         id = item.topicId;
