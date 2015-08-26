@@ -3,7 +3,6 @@ package com.jiayantech.jyandroid.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,9 +12,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.jiayantech.jyandroid.BuildConfig;
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.eventbus.UmengPushCustomMessage;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
@@ -63,7 +60,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         if(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE) != null){
             launchActivityFromNotification(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE));
         }
-        //EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this)
 
     }
 
@@ -87,20 +84,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         startActivity(intent);
     }
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //EventBus.getDefault().unregister(this);
-    }
-
-    public void onEvent(UmengPushCustomMessage uMessage) {
-        ToastUtil.showMessage("我收到一条自定义的友盟消息");
-    }
+//    //public void onEvent(UmengPushCustomMessage uMessage) {
+//        ToastUtil.showMessage("我收到一条自定义的友盟消息");
+//    }
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
@@ -116,13 +102,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         setTitle(mRadioButtons[0].getText().toString());
 
-        boolean flag = BuildConfig.DEBUG;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.post_actions, menu);
-        getMenuInflater().inflate(R.menu.select_publish_action, menu);
+        //getMenuInflater().inflate(R.menu.select_publish_action, menu);
         return true;
     }
 
@@ -217,9 +202,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void onCheckedChanged(RadioGroup group, final int checkedId) {
         switch (checkedId) {
-//                case R.id.radio_beauty_with:
-//                    pageItemNum = 0;
-//                    break;
             case R.id.radio_activity:
                 mViewPager.setCurrentItem(0, false);
                 break;
@@ -228,8 +210,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 break;
             case R.id.radio_userinfo:
                 toUserInfo = true;
-//                mRadioButtons[2].setCompoundDrawables(null,
-//                        getResources().getDrawable(R.mipmap.icon_me), null, null);
                 LoginActivity.checkLoginToRunnable(_this, new Runnable() {
                     @Override
                     public void run() {
@@ -252,10 +232,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             toUserInfo = false;
             ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
         }
-
-//        BadgeView badge = new BadgeView(this);
-//        badge.setTargetView(mRadioButtons[2]);
-//        badge.setBadgeCount(2);
     }
 
     @Override
@@ -264,5 +240,4 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         LogUtil.i(TAG, "MainActivity onNewIntent");
         ToastUtil.showMessage("MainActivity onNewIntent");
     }
-
 }

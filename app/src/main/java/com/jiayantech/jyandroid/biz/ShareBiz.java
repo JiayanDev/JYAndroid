@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.app.JYApplication;
+import com.jiayantech.library.utils.LogUtil;
+import com.jiayantech.library.utils.ToastUtil;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -29,6 +31,11 @@ public class ShareBiz {
     }
 
     public static void shareToWechat(String url, String title, int type){
+        if(!sIWXAPI.isWXAppInstalled() || !sIWXAPI.isWXAppSupportAPI()){
+            LogUtil.e("Wechat", "Wechat is not installed!");
+            ToastUtil.showMessage(R.string.toast_error_wechat_not_install);
+            return;
+        }
 
         WXWebpageObject webpageObject = new WXWebpageObject();
         webpageObject.webpageUrl = url;

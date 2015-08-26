@@ -109,6 +109,7 @@ public abstract class WebViewFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
 //        mSharePanel = new SharePanel(getActivity(), mUrl);
+
     }
 
     @Override
@@ -193,4 +194,14 @@ public abstract class WebViewFragment extends BaseFragment {
         return new BaseWebViewClient(this);
     }
 
+
+    public boolean isSharePanelShowing(){
+        return mSharePanel != null && mSharePanel.isShowing();
+    }
+
+    public void dismissSharePanel(){
+        if(mSharePanel != null && mSharePanel.isShowing()){
+            mSharePanel.dismiss();
+        }
+    }
 }

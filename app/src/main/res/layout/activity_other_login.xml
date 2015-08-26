@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@android:color/white"
         >
 
         <EditText
@@ -48,6 +49,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:background="@android:color/white"
         >
 
         <EditText
@@ -124,28 +127,92 @@
         android:layout_marginBottom="50dip"
         android:layout_marginLeft="30dip"
         android:layout_marginRight="30dip"
-        android:layout_marginTop="20dip">
+        android:layout_marginTop="40dip">
 
-        <ImageView
-            android:id="@+id/img_wechat_login"
-            android:layout_width="0dip"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_share_wechat"
+            android:layout_weight="1"
+            >
+
+            <com.jiayantech.library.widget.ColorFilterImageView
+                android:id="@+id/img_wechat_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/icon_wechat"/>
+
+            <TextView
+                android:id="@+id/text_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/img_wechat_login"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/wechat"
+                android:textSize="@dimen/normal_text_size"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/icon_wechat"/>
+            >
+            <com.jiayantech.library.widget.ColorFilterImageView
+                android:id="@+id/img_qq_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/icon_qq"/>
 
-        <ImageView
-            android:id="@+id/img_qq_login"
-            android:layout_width="0dip"
+
+            <TextView
+                android:id="@+id/text_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/img_qq_login"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/QQ"
+                android:textSize="@dimen/normal_text_size"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/icon_qq"/>
+            >
 
-        <ImageView
-            android:id="@+id/img_sina_login"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/icon_weibo"/>
+            <com.jiayantech.library.widget.ColorFilterImageView
+                android:id="@+id/img_sina_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/icon_weibo"/>
+
+            <TextView
+                android:id="@+id/text_sina"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/img_sina_login"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/weibo"
+                android:textSize="@dimen/normal_text_size"/>
+        </RelativeLayout>
+
+
+
+
+
     </LinearLayout>
 
 </LinearLayout>

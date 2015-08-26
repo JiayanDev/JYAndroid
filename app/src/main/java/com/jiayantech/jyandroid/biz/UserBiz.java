@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.biz;
 
 import android.content.Intent;
+import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
@@ -59,6 +60,8 @@ public class UserBiz {
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
     private static final String ACTION_DELETE = MODEL + "/delete";
+
+    private static final String ACTION_UPDATE_PHONE = ACTION_UPDATE + "/phone";
 
     /**
      * 注册
@@ -213,6 +216,14 @@ public class UserBiz {
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
         HttpReq.putParams(params, "psw", MD5.encode(psw));
         HttpReq.post(ACTION_UPDATE_PASS, params, l);
+    }
+
+    public static void updatePhone(String receipt, String phoneNum, ResponseListener<?> l){
+        Map<String, String> params = new ArrayMap<>();
+        params.put("phoneNum", phoneNum);
+        params.put("receipt", receipt);
+
+        HttpReq.post(ACTION_UPDATE_PHONE, params, l);
     }
 
     public static void logout(ResponseListener<?> l) {

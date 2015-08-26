@@ -4,8 +4,7 @@
     <string-array name="tab_title">
         <item>伴美</item>
         <item>话题</item>
-        <item>活动</item>
-        <item>我</item>
+        <item>我的</item>
     </string-array>
 
     <string-array name="tab_post">
@@ -55,7 +54,9 @@
     <string name="create_diary_book">创建日记本</string>
     <string name="update_diary">更新日记本</string>
     <string name="set_gender">性别</string>
-
+    <string name="wechat">微信</string>
+    <string name="QQ">QQ</string>
+    <string name="weibo">微博</string>
 
     <!-- title -->
     <string name="title_publish_topic">话题内容</string>
@@ -72,6 +73,12 @@
     <string name="title_personal_page">%s的主页</string>
     <string name="title_my_personal_page">我的主页</string>
     <string name="title_share_to">分享到</string>
+    <string name="title_mine_diary">我的日志</string>
+    <string name="title_mine_notification">我的通知</string>
+    <string name="title_mine_comment">我的评论</string>
+    <string name="title_mine_company">我的伴美</string>
+    <string name="title_mine_angel">美丽天使</string>
+    <string name="title_mine_setting">设置</string>
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>
@@ -91,8 +98,8 @@
 
     <string name="hint_reply_to">回复: %s</string>
     <string name="select_publish">选择发布</string>
-    <string name="other_login">其他登录方式</string>
-    <string name="register">立即注册</string>
+    <string name="other_login">其他方式登录</string>
+    <string name="register">手机注册</string>
     <string name="hint_input_phone">手机号</string>
     <string name="hint_input_pass">密码</string>
     <string name="login">登录</string>
@@ -126,5 +133,12 @@
     <string name="share_qzone">QQ空间</string>
 
     <string name="btn_cancel">取消</string>
+
+    <!--出错信息toast-->
+    <string name="toast_error_wechat_not_install">未安装微信应用</string>
+
+    <string name="description_company">伴美活动完全免费，报名信息提交后，工作人员会在1个工作日内与您电话确认
+    ，报名状态请在「我的」 - 「我的伴美」中查看.</string>
+    <string name="btn_confirm_applyment">确认报名</string>
 
 </resources>
