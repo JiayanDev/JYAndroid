@@ -56,7 +56,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
 
-        setParams(new PostAdapter(null, getActivity()), "post/list");
+        setParams(new PostAdapter(null, getActivity()), PostBiz.ACTION_LIST);
         final View header = setHeader(R.layout.layout_topic);
         final ImageView topicImage = (ImageView)header.findViewById(R.id.recommend_topic);
         PostBiz.getOneTopic(new ResponseListener<AppResponse<Topic>>() {

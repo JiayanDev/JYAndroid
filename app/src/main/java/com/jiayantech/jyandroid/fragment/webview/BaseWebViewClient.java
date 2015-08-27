@@ -46,7 +46,6 @@ public class BaseWebViewClient extends WebViewClient {
             URI uri = URI.create(url);
             String action = uri.getPath();
             redirectUrl(action, uri);
-
             return true;
         }
     }

@@ -2,7 +2,6 @@ package com.jiayantech.jyandroid.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.LoginActivity;
@@ -10,7 +9,6 @@ import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.jyandroid.biz.UmengPushBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
-import com.jiayantech.jyandroid.handler.umengpush.PushBroadcaseReceiver;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseApplication;
@@ -25,13 +23,14 @@ import com.jiayantech.library.utils.ToastUtil;
  * Created by liangzili on 15/6/24.
  */
 public class JYApplication extends BaseApplication {
-
     @Override
     public void onCreate() {
+
         super.onCreate();
 
         ShareBiz.registerToWx(getApplicationContext());
         UmengPushBiz.init(getApplicationContext());
+
 
         LogUtil.i("LifeCycle", String.format("%s is onCreate()", this.getClass().getSimpleName()));
     }

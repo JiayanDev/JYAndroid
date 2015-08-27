@@ -1,8 +1,12 @@
 package com.jiayantech.jyandroid.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +28,8 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
     private ImageView mShareToCircleImage;
     private ImageView mShareToWeiboImage;
     private ImageView mShareToQZoneImage;
+    private ViewGroup mShareLayout;
+    private View mBackground;
 
     private View mTransparentView;
 
@@ -38,6 +44,9 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
 
     private void initView(){
         View view = LayoutInflater.from(mContext).inflate(R.layout.window_share_panel, null);
+        mShareLayout = (ViewGroup)view.findViewById(R.id.layout_share);
+        mBackground = (View)view.findViewById(R.id.transparent);
+
         mShareToWechatImage = (ImageView)view.findViewById(R.id.image_wechat);
         mShareToWechatImage.setOnClickListener(this);
 
@@ -59,10 +68,48 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
         setContentView(view);
         setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        //setAnimationStyle(R.style.share_panel_anim);
+    }
+
+    @Override
+    public void dismiss() {
+        //super.dismiss();
+        Animator anim = AnimatorInflater.loadAnimator(mContext, R.animator.share_panel_hide);
+        anim.setTarget(mShareLayout);
+        final Drawable backgroundColor = mBackground.getBackground();
+        final float translationY = mShareLayout.getTranslationY();
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mBackground.setBackgroundResource(android.R.color.transparent);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                SharePanel.super.dismiss();
+                mBackground.setBackgroundDrawable(backgroundColor);
+                mShareLayout.setTranslationY(translationY);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
     }
 
 
+
     @Override
+
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.transparent:
