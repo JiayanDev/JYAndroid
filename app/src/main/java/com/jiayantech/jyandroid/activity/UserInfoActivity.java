@@ -204,11 +204,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 switch (v.getId()) {
                     case R.id.camera_button:
                         new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCamera();
+                                UserInfoActivity.this).startCropCamera();
                         break;
                     case R.id.local_button:
                         new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startImage();
+                                UserInfoActivity.this).startCropImage();
                         break;
                 }
             }
@@ -293,9 +293,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 AppInitManger.sAppInit.phoneNum = event.phone;
                 break;
             case EditFinishEvent.ACTION_EDIT_AVATAR:
-                BitmapBiz.display(mAvatarImg, event.avatar);
-                ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
                 AppInitManger.sAppInit.avatar = event.avatar;
+                AppInitManger.save(AppInitManger.sAppInit);
+                BitmapBiz.display(mAvatarImg, event.avatar);
+                //ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
                 break;
         }
     }
@@ -313,6 +314,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
+                                BitmapBiz.clear(AppInitManger.sAppInit.avatar);
 //                                AppInitManger.sAppInit.avatar =
 //                                        HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
                                 EditFinishEvent event = new EditFinishEvent();

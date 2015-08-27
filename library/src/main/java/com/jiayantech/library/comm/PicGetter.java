@@ -117,11 +117,7 @@ public class PicGetter {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     public void startImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-        mContext.startActivityForResult(intent, REQUEST_CODE_LOCAL_IMG);
-        addActivityResult(new ActivityResult(REQUEST_CODE_LOCAL_IMG) {
+        startImage(new ActivityResult(REQUEST_CODE_LOCAL_IMG) {
             @Override
             public void onActivityResult(Intent data) {
                 if (mPicGetListener != null) {
@@ -132,6 +128,24 @@ public class PicGetter {
                 }
             }
         });
+    }
+
+    /**
+     * 描述：从相册选择照片
+     *
+     * @version 1.0
+     * @createTime 2014-7-4 下午2:28:52
+     * @createAuthor 健兴
+     * @updateTime 2014-7-4 下午2:28:52
+     * @updateAuthor 健兴
+     * @updateInfo (此处输入修改内容, 若无修改可不写.)
+     */
+    public void startImage(ActivityResult activityResult) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        mContext.startActivityForResult(intent, REQUEST_CODE_LOCAL_IMG);
+        addActivityResult(activityResult);
     }
 
     private Bitmap decodeBitmapFromPath(String path) {
@@ -173,26 +187,37 @@ public class PicGetter {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     public void startCropImage() {
-        final File tempFile = new File(FileUtil.getCachePath("upload", getTimeMillisName()));
-        Intent intent = new Intent("android.intent.action.PICK");
-        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
-        intent.putExtra("output", Uri.fromFile(tempFile));
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);// 裁剪框比例
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 150);// 输出图片大小
-        intent.putExtra("outputY", 150);
-        mContext.startActivityForResult(intent, REQUEST_CODE_CROP_LOCAL_IMG);
-        addActivityResult(new ActivityResult(REQUEST_CODE_CROP_LOCAL_IMG) {
+//        final File tempFile = new File(FileUtil.getCachePath("upload", getTimeMillisName()));
+//        Intent intent = new Intent("android.intent.action.PICK");
+//        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+//        intent.putExtra("output", Uri.fromFile(tempFile));
+//        intent.putExtra("crop", "true");
+//        intent.putExtra("aspectX", 1);// 裁剪框比例
+//        intent.putExtra("aspectY", 1);
+//        intent.putExtra("outputX", 150);// 输出图片大小
+//        intent.putExtra("outputY", 150);
+//        mContext.startActivityForResult(intent, REQUEST_CODE_CROP_LOCAL_IMG);
+//        addActivityResult(new ActivityResult(REQUEST_CODE_CROP_LOCAL_IMG) {
+//            @Override
+//            public void onActivityResult(Intent data) {
+//                if (mPicGetListener != null) {
+//                    if (tempFile.exists()) {// 如果图片存在
+//                        String path = tempFile.getAbsolutePath();
+//                        Bitmap bitmap = decodeBitmapFromPath(path);
+//                        // Bitmap bitmap = BitmapFactory.decodeFile(path);
+//                        mPicGetListener.onPicGet(path, bitmap);
+//                    }
+//                }
+//            }
+//        });
+        startImage(new ActivityResult(REQUEST_CODE_LOCAL_IMG) {
             @Override
             public void onActivityResult(Intent data) {
                 if (mPicGetListener != null) {
-                    if (tempFile.exists()) {// 如果图片存在
-                        String path = tempFile.getAbsolutePath();
-                        Bitmap bitmap = decodeBitmapFromPath(path);
-                        // Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        mPicGetListener.onPicGet(path, bitmap);
-                    }
+                    String path = getUriPath(mContext, data.getData());
+                    Bitmap bitmap = decodeBitmapFromPath(path);
+                    // Bitmap bitmap = BitmapFactory.decodeFile(path);
+                    mPicGetListener.onPicGet(path, bitmap);
                 }
             }
         });
