@@ -27,7 +27,10 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -133,7 +136,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         AppInit appInit = AppInitManger.getAppInit();
         BitmapBiz.display(img_avatar, appInit.avatar);
         txt_nickname.setText(appInit.name);
-        //txt_info.setText(AppInitManger.getUserName());
+        String info = null;
+        if(AppInitManger.getBirthday() != 0){
+            try {
+                int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));
+                info = AppInitManger.getProvince() + " " + AppInitManger.getCity() +
+                        " | " + age + "岁";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            info  = AppInitManger.getProvince() + " " + AppInitManger.getCity();
+        }
+        txt_info.setText(info);
         setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
 
     }

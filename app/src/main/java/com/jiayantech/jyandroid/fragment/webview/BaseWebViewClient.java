@@ -18,7 +18,10 @@ import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
 import com.jiayantech.library.utils.LogUtil;
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by liangzili on 15/7/16.
@@ -80,9 +83,15 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
 
-    protected void onJsCallApplyEvent(long id){
+    protected void onJsCallApplyEvent(long id, String angelAvatar, String angelName,
+                                      String project, String hospitalAndDoctor, String time){
         Intent intent = new Intent(mWebViewFragment.getActivity(), ApplyEventActivity.class);
         intent.putExtra(ApplyEventFragment.EVENT_ID, id);
+        intent.putExtra(ApplyEventFragment.ANGEL_AVATAR, angelAvatar);
+        intent.putExtra(ApplyEventFragment.ANGEL_NAME, angelName);
+        intent.putExtra(ApplyEventFragment.PROJECT_NAME, project);
+        intent.putExtra(ApplyEventFragment.HOSPITAL_AND_DOCTOR,hospitalAndDoctor);
+        intent.putExtra(ApplyEventFragment.EVENT_TIME, time);
         mWebViewFragment.getActivity().startActivity(intent);
     }
 
@@ -117,7 +126,22 @@ public class BaseWebViewClient extends WebViewClient {
 
             case JsNativeBiz.ACTION_APPLY_EVENT:
                 JsCallApplyEvent event = JsNativeBiz.parse(url, JsCallApplyEvent.class);
-                onJsCallApplyEvent(event.data.id);
+
+                long id = event.data.id;
+                StringBuilder sb = new StringBuilder();
+                for(JsCallApplyEvent.CategoryId category: event.data.eventInfo.categoryIds){
+                    sb.append(category.name);
+                    sb.append(" ");
+                }
+                String project = sb.toString().trim();
+                String hospitalAndDoctor = event.data.eventInfo.hospitalName + " " +
+                        event.data.eventInfo.doctorName;
+                String angelAvatar = event.data.eventInfo.angelUserInfo.avatar;
+                String angelName = event.data.eventInfo.angelUserInfo.name;
+                DateFormat df = new SimpleDateFormat("MM.dd E a HH:mm");
+                String time = df.format(new Date(event.data.eventInfo.beginTime * 1000));
+
+                onJsCallApplyEvent(id, angelAvatar, angelName, project, hospitalAndDoctor, time);
                 break;
 
             case JsNativeBiz.ACTION_GET_USERINFO:
