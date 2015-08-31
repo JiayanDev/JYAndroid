@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment;
 
 import com.jiayantech.jyandroid.adapter.MessageAdapter;
+import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.model.Message;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
@@ -14,6 +15,6 @@ public class MessagesFragment extends RefreshListFragment<Message, AppResponse<L
     @Override
     public void onInitView() {
         super.onInitView();
-        setParams(new MessageAdapter(null), "action");
+        setParams(new MessageAdapter(null), UserBiz.ACTION_MSG_LIST);
     }
 }

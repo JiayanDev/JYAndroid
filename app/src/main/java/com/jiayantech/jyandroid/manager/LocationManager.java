@@ -1,15 +1,14 @@
 package com.jiayantech.jyandroid.manager;
 
-import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.jiayantech.jyandroid.model.location.City;
 import com.jiayantech.jyandroid.model.location.Province;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.utils.GsonUtils;
-import com.jiayantech.library.utils.LogUtil;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,20 +29,32 @@ public class LocationManager {
         return sLocationManager;
     }
 
-    public List<Province> getLocationList() {
+    public List<Province> getProvinceList() {
         if(mLocationList == null) {
-            long startTime = System.currentTimeMillis();
             parse();
-            long stopTime = System.currentTimeMillis();
-            LogUtil.i("LocationManager", "parse json costs " + (stopTime - startTime));
         }
         return mLocationList;
+    }
+
+    public List<City> getCityList(String province){
+        if(mLocationList == null){
+            parse();
+        }
+        for(Province p: mLocationList){
+            if(p.name.equals(province)){
+                return p.children;
+            }
+        }
+        return null;
     }
 
     private void parse() {
         try {
             Reader jsonReader = new InputStreamReader(BaseApplication.getContext().getAssets().open("area.json"));
-            mLocationList = GsonUtils.build().fromJson(jsonReader, new ArrayList<Province>().getClass());
+//            mLocationList = GsonUtils.build().fromJson(jsonReader,
+//                    new ArrayList<Province>().getClass());
+            mLocationList = GsonUtils.build().fromJson(jsonReader,
+                    new TypeToken<List<Province>>(){}.getType());
         } catch (IOException e) {
             e.printStackTrace();
         }

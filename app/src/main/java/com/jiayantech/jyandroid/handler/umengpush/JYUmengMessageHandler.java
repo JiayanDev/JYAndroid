@@ -23,8 +23,8 @@ public class JYUmengMessageHandler extends UmengMessageHandler{
         ToastUtil.showMessage(uMessage.custom);
         LogUtil.i("UmengPushMessage", String.format("Message custom: %s",
                 uMessage.custom));
-        Intent intent = new Intent(PushBroadcaseReceiver.ACTION);
-        intent.putExtra(PushBroadcaseReceiver.EXTRA_UMESSAGE, uMessage.custom);
+        Intent intent = new Intent(PushBroadcastReceiver.ACTION);
+        intent.putExtra(PushBroadcastReceiver.EXTRA_UMESSAGE, uMessage.custom);
         mContext.sendBroadcast(intent);
     }
 }

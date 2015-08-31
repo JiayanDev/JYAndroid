@@ -30,7 +30,7 @@ public class DateTimeHelper {
     }
 
     public Dialog showDateDialog(final OnSetDateTimeListener l, final boolean pickTime) {
-        Dialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 mCalendar.set(Calendar.YEAR, year);
@@ -46,6 +46,9 @@ public class DateTimeHelper {
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
+        dialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+
+//        dialog.getDatePicker().set
         return dialog;
     }
 

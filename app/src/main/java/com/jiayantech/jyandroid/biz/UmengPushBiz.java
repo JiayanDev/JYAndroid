@@ -5,7 +5,7 @@ import android.content.IntentFilter;
 
 import com.jiayantech.jyandroid.handler.umengpush.JYUmengMessageHandler;
 import com.jiayantech.jyandroid.handler.umengpush.JYUmengNotificationClickHandler;
-import com.jiayantech.jyandroid.handler.umengpush.PushBroadcaseReceiver;
+import com.jiayantech.jyandroid.handler.umengpush.PushBroadcastReceiver;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -49,8 +49,8 @@ public class UmengPushBiz {
                 new JYUmengMessageHandler(applicationContext));
 
         //注册广播, 处理友盟push过来的消息
-        PushBroadcaseReceiver receiver = new PushBroadcaseReceiver();
-        IntentFilter filter = new IntentFilter(PushBroadcaseReceiver.ACTION);
+        PushBroadcastReceiver receiver = new PushBroadcastReceiver();
+        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
         applicationContext.registerReceiver(receiver, filter);
     }
 }
