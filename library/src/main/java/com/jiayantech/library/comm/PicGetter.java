@@ -188,14 +188,21 @@ public class PicGetter {
      */
     public void startCropImage() {
 //        final File tempFile = new File(FileUtil.getCachePath("upload", getTimeMillisName()));
-//        Intent intent = new Intent("android.intent.action.PICK");
+////        Intent intent = new Intent("android.intent.action.PICK");
+////        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        //intent.setType("image/*");
 //        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+//
 //        intent.putExtra("output", Uri.fromFile(tempFile));
 //        intent.putExtra("crop", "true");
 //        intent.putExtra("aspectX", 1);// 裁剪框比例
 //        intent.putExtra("aspectY", 1);
 //        intent.putExtra("outputX", 150);// 输出图片大小
 //        intent.putExtra("outputY", 150);
+//
+//
 //        mContext.startActivityForResult(intent, REQUEST_CODE_CROP_LOCAL_IMG);
 //        addActivityResult(new ActivityResult(REQUEST_CODE_CROP_LOCAL_IMG) {
 //            @Override
@@ -215,9 +222,11 @@ public class PicGetter {
             public void onActivityResult(Intent data) {
                 if (mPicGetListener != null) {
                     String path = getUriPath(mContext, data.getData());
-                    Bitmap bitmap = decodeBitmapFromPath(path);
-                    // Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    mPicGetListener.onPicGet(path, bitmap);
+                    final Uri uri = Uri.fromFile(new File(path));
+//                    Bitmap bitmap = decodeBitmapFromPath(path);
+//                    // Bitmap bitmap = BitmapFactory.decodeFile(path);
+//                    mPicGetListener.onPicGet(path, bitmap);
+                    startPhotoZoom(uri);
                 }
             }
         });
@@ -231,12 +240,15 @@ public class PicGetter {
     public void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
+        //intent.putExtra("output", this.getUploadTempFile(data));
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         intent.putExtra("outputX", 150);
         intent.putExtra("outputY", 150);
         intent.putExtra("return-data", true);
+        intent.putExtra("scale", true);// 去黑边
+        intent.putExtra("scaleUpIfNeeded", true);// 去黑边
         mContext.startActivityForResult(intent, REQUEST_CODE_CROP_IMG);
         addActivityResult(new ActivityResult(REQUEST_CODE_CROP_IMG) {
             @SuppressLint("SimpleDateFormat")
@@ -271,15 +283,15 @@ public class PicGetter {
         LogUtil.i("PicGetter", "uri path:" + uri);
         boolean isOverKitkat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         String path = null;
-        if(isOverKitkat){
+        if (isOverKitkat) {
             path = getUriPathOverKitkat(activity, uri);
-        }else{
+        } else {
             path = getUriPathUnderKitkat(activity, uri);
         }
         return path;
     }
 
-    private static String getUriPathUnderKitkat(Activity activity, Uri uri){
+    private static String getUriPathUnderKitkat(Activity activity, Uri uri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = activity.managedQuery(uri, proj, // Which
                 // columns
@@ -294,22 +306,21 @@ public class PicGetter {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static String getUriPathOverKitkat(Activity activity, Uri uri){
-        if(DocumentsContract.isDocumentUri(activity, uri)){
-            if(isExternalStorageDocument(uri)){
+    private static String getUriPathOverKitkat(Activity activity, Uri uri) {
+        if (DocumentsContract.isDocumentUri(activity, uri)) {
+            if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-                if("primary".equalsIgnoreCase(type)){
+                if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-            }else if(isDownloadsDocument(uri)){
+            } else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
                 return getDataColumn(activity, contentUri, null, null);
-            }
-            else if (isMediaDocument(uri)) {
+            } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -322,13 +333,12 @@ public class PicGetter {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
                 return getDataColumn(activity, contentUri, selection, selectionArgs);
             }
-        }
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
             // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
@@ -377,6 +387,7 @@ public class PicGetter {
     private static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
+
     /**
      * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.

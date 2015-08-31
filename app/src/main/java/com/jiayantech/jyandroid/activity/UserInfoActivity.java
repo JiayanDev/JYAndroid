@@ -24,6 +24,7 @@ import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
+import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ActivityResult;
@@ -194,29 +195,57 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void showUploadDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
-        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+//        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
+//        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+//
+//        View.OnClickListener onClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                switch (v.getId()) {
+//                    case R.id.camera_button:
+//                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+//                                UserInfoActivity.this).startCropCamera();
+//                        break;
+//                    case R.id.local_button:
+//                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+//                                UserInfoActivity.this).startCropImage();
+//                        break;
+//                }
+//            }
+//        };
+//        view.findViewById(R.id.title_text).setVisibility(View.GONE);
+//        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
+//        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
+//        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+        View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_menus, null);
+        ItemsLayout itemsLayout = (ItemsLayout) view.findViewById(R.id.layout_items);
+        itemsLayout.setDriver();
+        itemsLayout.setDriverLeftMargin(0);
+        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+        itemsLayout.addMenuItem(getString(R.string.take_camera)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                switch (v.getId()) {
-                    case R.id.camera_button:
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCropCamera();
-                        break;
-                    case R.id.local_button:
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCropImage();
-                        break;
-                }
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                        UserInfoActivity.this).startCropCamera();
             }
-        };
-        view.findViewById(R.id.title_text).setVisibility(View.GONE);
-        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
+        });
+        itemsLayout.addMenuItem(getString(R.string.take_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                                UserInfoActivity.this).startCropImage();
+            }
+        });
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 //    @Override
