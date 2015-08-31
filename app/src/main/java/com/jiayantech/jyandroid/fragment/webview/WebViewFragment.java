@@ -16,7 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.model.web.BaseJsCall;
+import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
+import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
+import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
 import com.jiayantech.jyandroid.widget.SharePanel;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.LogUtil;
@@ -100,7 +105,7 @@ public abstract class WebViewFragment extends BaseFragment {
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
 
-        //finishLoading();
+        finishLoading();
         return mView;
     }
 
@@ -176,6 +181,43 @@ public abstract class WebViewFragment extends BaseFragment {
         JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 
+    public void onAddWebActionListener(BaseWebViewClient client){
+        //监听页面加载完成的回调
+        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_HIDE_LOADING, null) {
+            @Override
+            public void execute(BaseJsCall data) {
+                finishLoading();
+            }
+        });
+
+        //监听web页面设置title的回调
+        client.addActionListener(new WebActionListener<JsCallSetTitle>
+                (JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE, JsCallSetTitle.class) {
+            @Override
+            public void execute(JsCallSetTitle data) {
+                getActivity().setTitle(data.data.title);
+            }
+        });
+
+        //监听web页面查看图片的回调
+        client.addActionListener(new WebActionListener<JsCallPlayImage>(
+                JsNativeBiz.ACTION_PLAY_IMAGE, JsCallPlayImage.class) {
+            @Override
+            public void execute(JsCallPlayImage data) {
+                PhotosActivity.start(getActivity(), "", data.data.imgList, data.data.defaultIndex);
+            }
+        });
+
+        //监听web页面获取用户信息
+        client.addActionListener(new WebActionListener<JsCallUserInfo>(
+                JsNativeBiz.ACTION_GET_USERINFO, JsCallUserInfo.class){
+            @Override
+            public void execute(JsCallUserInfo data) {
+
+            }
+        });
+    }
+
 
     public void finishLoading() {
         mContentLayout.setVisibility(View.VISIBLE);
@@ -191,7 +233,9 @@ public abstract class WebViewFragment extends BaseFragment {
     }
 
     protected BaseWebViewClient onSetWebViewClient() {
-        return new BaseWebViewClient(this);
+        BaseWebViewClient client = new BaseWebViewClient(this);
+        onAddWebActionListener(client);
+        return client;
     }
 
 

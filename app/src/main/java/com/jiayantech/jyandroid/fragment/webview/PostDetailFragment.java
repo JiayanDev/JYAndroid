@@ -12,6 +12,7 @@ import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
+import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.http.HttpReq;
 
@@ -78,9 +79,6 @@ public class PostDetailFragment extends WebViewFragment {
                 CommentFragment fragment = CommentFragment.newInstance(mId, mType);
                 fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
                 fragment.show(getActivity().getSupportFragmentManager(), "comment");
-//                ToastUtil.showMessage("点击分享: " + mUrl);
-//                SharePanel panel = new SharePanel(getActivity(), mUrl);
-//                panel.showAtLocation(mView, Gravity.CENTER, 100, 100);
             }
         });
 
@@ -90,6 +88,23 @@ public class PostDetailFragment extends WebViewFragment {
     @Override
     protected BaseWebChromeClient onSetWebChromeClient() {
         return new BaseWebChromeClient();
+    }
+
+    @Override
+    public void onAddWebActionListener(BaseWebViewClient client) {
+        super.onAddWebActionListener(client);
+        //Js调用本地评论
+        client.addActionListener(new WebActionListener<JsCallReply>(JsNativeBiz.ACTION_OPEN_COMMENT_PANEL,
+                JsCallReply.class) {
+            @Override
+            public void execute(JsCallReply d) {
+                JsCallReply data = (JsCallReply) d;
+                CommentFragment fragment = CommentFragment.newInstance(data.data.subjectId,
+                        data.data.subject, data.data.toUserId, data.data.toUserName);
+                fragment.setTargetFragment(PostDetailFragment.this, WebViewFragment.REQUEST_CODE_COMMENT);
+                fragment.show(PostDetailFragment.this.getActivity().getSupportFragmentManager(), "comment");
+            }
+        });
     }
 
     /**
