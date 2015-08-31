@@ -49,6 +49,7 @@ public class UserBiz {
 
     private static final String ACTION_PHONE_SEND_CODE = MODEL + "/confirm_code/code";
     private static final String ACTION_PHONE_CONFIRM_CODE = MODEL + "/confirm_code/confirm";
+    public static final String ACTION_MSG_LIST = MODEL + "/msg/list";
 
     private static final String ACTION_REGISTER = MODEL + "/register";
     private static final String ACTION_QUICK_LOGIN = MODEL + "/quick_login";

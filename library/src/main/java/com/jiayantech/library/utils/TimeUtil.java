@@ -326,4 +326,43 @@ public class TimeUtil {
 		long timeInMillis = calendar.getTimeInMillis();
 		return timeInMillis;
 	}
+
+	/**
+	 * 根据出生日期计算年龄
+	 *
+	 * @param birthDay
+	 * @return 未来日期返回0
+	 * @throws Exception
+	 */
+	public static int getAge(Date birthDay) throws Exception {
+
+		Calendar cal = Calendar.getInstance();
+
+		if (cal.before(birthDay)) {
+			return 0;
+		}
+
+		int yearNow = cal.get(Calendar.YEAR);
+		int monthNow = cal.get(Calendar.MONTH);
+		int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+		cal.setTime(birthDay);
+
+		int yearBirth = cal.get(Calendar.YEAR);
+		int monthBirth = cal.get(Calendar.MONTH);
+		int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+		int age = yearNow - yearBirth;
+
+		if (monthNow <= monthBirth) {
+			if (monthNow == monthBirth) {
+				if (dayOfMonthNow < dayOfMonthBirth) {
+					age--;
+				}
+			} else {
+				age--;
+			}
+		}
+
+		return age;
+	}
 }

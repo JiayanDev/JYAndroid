@@ -8,23 +8,33 @@
 
     <RadioGroup
         android:id="@+id/radio_group_gender"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <RadioButton
             android:id="@+id/radio_button_male"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableRight="@drawable/selector_gender"
             android:text="@string/gender_male"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/text_normal_color"
+            android:button="@null"
             />
 
 
         <RadioButton
             android:id="@+id/radio_button_female"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gender_female"
+            android:button="@null"
+            android:gravity="center_horizontal"
+            android:drawableRight="@drawable/selector_gender"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/text_normal_color"
             />
     </RadioGroup>
 

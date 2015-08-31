@@ -12,7 +12,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by liangzili on 15/7/31.
  */
-public class PushBroadcaseReceiver extends BroadcastReceiver{
+public class PushBroadcastReceiver extends BroadcastReceiver{
     public static final String EXTRA_UMESSAGE = "custom";
     public static final String ACTION = "com.jiayantech.jyandroid.PushBroadcastReceiver";
 

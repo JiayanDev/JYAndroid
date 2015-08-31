@@ -69,41 +69,44 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
         setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
-        //setAnimationStyle(R.style.share_panel_anim);
+        setAnimationStyle(R.style.share_panel_anim);
     }
 
     @Override
     public void dismiss() {
-        //super.dismiss();
-        Animator anim = AnimatorInflater.loadAnimator(mContext, R.animator.share_panel_hide);
-        anim.setTarget(mShareLayout);
-        final Drawable backgroundColor = mBackground.getBackground();
-        final float translationY = mShareLayout.getTranslationY();
-
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mBackground.setBackgroundResource(android.R.color.transparent);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                SharePanel.super.dismiss();
-                mBackground.setBackgroundDrawable(backgroundColor);
-                mShareLayout.setTranslationY(translationY);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        anim.start();
+        super.dismiss();
+//        if(!isShowing()){
+//            return;
+//        }
+//        Animator anim = AnimatorInflater.loadAnimator(mContext, R.animator.share_panel_hide);
+//        anim.setTarget(mShareLayout);
+//        final Drawable backgroundColor = mBackground.getBackground();
+//        final float translationY = mShareLayout.getTranslationY();
+//
+//        anim.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//                mBackground.setBackgroundResource(android.R.color.transparent);
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                SharePanel.super.dismiss();
+//                mBackground.setBackgroundDrawable(backgroundColor);
+//                mShareLayout.setTranslationY(translationY);
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//            }
+//        });
+//        anim.start();
     }
 
 

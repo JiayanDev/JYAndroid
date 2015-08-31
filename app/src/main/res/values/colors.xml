@@ -24,7 +24,7 @@
 
     <!--各种字体的颜色-->
     <color name="text_normal_color">#3a3a3a</color>
-    <color name="text_light_color">#878787</color>
+    <color name="text_light_color">#8a8a8a</color>
     <color name="text_hint_color">#BDBDBD</color>
 
     <!--不同背景的颜色-->

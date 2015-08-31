@@ -77,13 +77,12 @@ public class EventBiz {
      * gender：可选
      * desc：描述
      **/
-    public static void apply(String eventId, String phone, String name, String gender, String desc, ResponseListener<?> l) {
+    public static void apply(String eventId, String phone, String name, String gender, ResponseListener<?> l) {
         Map<String, String> params = new HashMap<>();
         HttpReq.putParams(params, "eventId", eventId);
         HttpReq.putParams(params, "phone", phone);
         HttpReq.putParams(params, "name", name);
         HttpReq.putParams(params, "gender", gender);
-        HttpReq.putParams(params, "desc", desc);
         //HttpReq.post(ACTION_APPLY, null, l);
         HttpReq.get(ACTION_APPLY, params, l);
     }
