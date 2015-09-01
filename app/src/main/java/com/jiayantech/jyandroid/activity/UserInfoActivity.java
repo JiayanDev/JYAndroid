@@ -80,8 +80,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
     private TextView mNameText;
     private TextView mGenderText;
-    private TextView mProvinceText;
-    private TextView mCityText;
+    private TextView mAreaText;
     private TextView mBirthdayText;
     private TextView mPhoneText;
     private RoundedImageView mAvatarImg;
@@ -122,16 +121,12 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     protected void findViews() {
-//        input_pass_0 = (TextInputLayout) findViewById(R.id.input_pass_0);
-//        input_pass_1 = (TextInputLayout) findViewById(R.id.input_pass_1);
-//        btn_reset = (Button) findViewById(R.id.btn_reset);
         mNameText = (TextView) findViewById(R.id.txt_name);
         mGenderText = (TextView) findViewById(R.id.txt_gender);
-        mProvinceText = (TextView) findViewById(R.id.txt_province);
-        mCityText = (TextView) findViewById(R.id.txt_city);
+        mAreaText = (TextView) findViewById(R.id.txt_area);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
+        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
     }
 
     protected void setViewsContent() {
@@ -141,8 +136,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 //        phoneCodeConfirmResponse = intent.getStringExtra(UserBiz.KEY_RESPONSE);
         mNameText.setText(AppInitManger.getUserName());
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
-        mProvinceText.setText(AppInitManger.getProvince());
-        mCityText.setText(AppInitManger.getCity());
+        //mProvinceText.setText(AppInitManger.getProvince());
+        //mCityText.setText(AppInitManger.getCity());
+        mAreaText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
     }
@@ -161,7 +157,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         createFragment(AppInitManger.getUserGender());
                 fragment.show(getSupportFragmentManager(), "EditGender");
                 break;
-            case R.id.layout_password:
+            case R.id.layout_area:
                 Intent intent = new Intent(this, VerifyPhoneActivity.class);
                 intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
                 startActivity(intent);
@@ -183,6 +179,33 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         });
                     }
                 }, false);
+                break;
+            case R.id.layout_phone:
+                new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
+                    @Override
+                    public void onSetDateTime(final Calendar calendar) {
+                        Map<String, String> params = new ArrayMap<String, String>();
+                        params.put("birthday", String.valueOf(calendar.getTimeInMillis() / 1000));
+                        UserBiz.update(params, new ResponseListener<AppResponse>() {
+                            @Override
+                            public void onResponse(AppResponse appResponse) {
+//                                AppInitManger.sAppInit.birthday =
+//                                        calendar.getTimeInMillis() / 1000;
+                                mBirthdayText.setText(TimeUtil.
+                                        stamp2YearMonthDay(calendar.getTimeInMillis()));
+                            }
+                        });
+                    }
+                }, false);
+                break;
+            case R.id.layout_wechat:
+
+                break;
+            case R.id.layout_qq:
+
+                break;
+            case R.id.layout_weibo:
+
                 break;
         }
     }
@@ -237,7 +260,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             public void onClick(View v) {
                 dialog.dismiss();
                 new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCropImage();
+                        UserInfoActivity.this).startCropImage();
             }
         });
         view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
@@ -305,11 +328,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 ToastUtil.showMessage("更新性别成功");
                 break;
             case EditFinishEvent.ACTION_EDIT_PROVINCE:
-                mProvinceText.setText(event.province);
+                //mProvinceText.setText(event.province);
                 AppInitManger.sAppInit.province = event.province;
                 break;
             case EditFinishEvent.ACTION_EDIT_CITY:
-                mCityText.setText(event.city);
+                //mCityText.setText(event.city);
                 AppInitManger.sAppInit.city = event.city;
                 break;
             case EditFinishEvent.ACTION_EDIT_BIRTHDAY:

@@ -66,8 +66,8 @@ public abstract class CreateEventProjectFragment extends BaseFragment implements
         txt_time.setOnClickListener(this);
         btn_ok.setOnClickListener(this);
 
-        txt_nickname.setText(getString(R.string.nickname) + AppInitManger.getUserName());
-        txt_phone.setText(getString(R.string.phone) + AppInitManger.getPhoneNum());
+        txt_nickname.setText(getString(R.string.nickname) + ":" + AppInitManger.getUserName());
+        txt_phone.setText(getString(R.string.phone)+ ":" + AppInitManger.getPhoneNum());
     }
 
     @Override
