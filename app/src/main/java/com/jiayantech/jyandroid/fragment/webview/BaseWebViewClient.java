@@ -1,24 +1,18 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.jiayantech.jyandroid.activity.ApplyEventActivity;
-import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
-import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
-import com.jiayantech.jyandroid.fragment.CommentFragment;
-import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
-import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
-import com.jiayantech.jyandroid.model.web.JsCallReply;
-import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
-import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
+import com.jiayantech.jyandroid.model.web.BaseJsCall;
+import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liangzili on 15/7/16.
@@ -28,6 +22,7 @@ public class BaseWebViewClient extends WebViewClient {
     private static final String JS_PREFIX = "jiayan://js_call_native?";
 
     private WebViewFragment mWebViewFragment;
+    private List<WebActionListener> mWebActionList = new ArrayList<>();
 
     public BaseWebViewClient(WebViewFragment fragment) {
         mWebViewFragment = fragment;
@@ -35,11 +30,13 @@ public class BaseWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        url = Uri.decode(url);
         LogUtil.i("WebView", "loading url: " + url);
         if (url.startsWith(JS_PREFIX)) {
             //Js调用Native
             String action = JsNativeBiz.getJsAction(url);
-            callNativeMethod(action, url);
+            String jsonString = url.substring(url.indexOf("{"), url.lastIndexOf("}") + 1);
+            callMethod(action, jsonString);
             return super.shouldOverrideUrlLoading(view, url);
         } else {
             //URL监听跳转
@@ -50,40 +47,27 @@ public class BaseWebViewClient extends WebViewClient {
         }
     }
 
+    public void addActionListener(WebActionListener listener){
+        mWebActionList.add(listener);
+    }
+
+    public void callMethod(String action, String jsonString){
+        BaseJsCall params = null;
+
+        for(WebActionListener listener: mWebActionList){
+            if(listener != null && listener.getAction().equals(action)){
+                if(listener.getDataType() != null) {
+                    params = GsonUtils.build().fromJson(jsonString, listener.getDataType());
+                }
+                listener.execute(params);
+            }
+        }
+    }
+
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
 //        mWebViewFragment.finishLoading();
-    }
-
-    protected void onJsCallNativeOpenCommentPanel(JsCallReply call) {
-        CommentFragment fragment = CommentFragment.newInstance(call.data.subjectId,
-                call.data.subject, call.data.toUserId, call.data.toUserName);
-        fragment.setTargetFragment(mWebViewFragment, WebViewFragment.REQUEST_CODE_COMMENT);
-        fragment.show(mWebViewFragment.getActivity().getSupportFragmentManager(), "comment");
-    }
-
-    protected void onJsCallNativeTest(JsCallReply call) {
-    }
-
-
-    protected void onJsCallNativePlayImage(int index, ArrayList<String> images) {
-        PhotosActivity.start(mWebViewFragment.getActivity(), "", images, index);
-    }
-
-    protected void onJsCallNativeNavigateToDiary(long id) {
-        navigate(id, WebConstans.Type.TYPE_DIARY);
-    }
-
-    protected void onJsCallNativeSetTitle(String title) {
-        mWebViewFragment.getActivity().setTitle(title);
-    }
-
-
-    protected void onJsCallApplyEvent(long id){
-        Intent intent = new Intent(mWebViewFragment.getActivity(), ApplyEventActivity.class);
-        intent.putExtra(ApplyEventFragment.EVENT_ID, id);
-        mWebViewFragment.getActivity().startActivity(intent);
     }
 
     private void navigate(long id, String type) {
@@ -91,58 +75,14 @@ public class BaseWebViewClient extends WebViewClient {
                 mWebViewFragment.mUserName, type);
     }
 
-    private void callNativeMethod(String action, String url) {
-        switch (action) {
-            case JsNativeBiz.ACTION_TEST:
-                JsCallReply test = JsNativeBiz.parse(url, JsCallReply.class);
-                onJsCallNativeTest(test);
-                break;
-            case JsNativeBiz.ACTION_OPEN_COMMENT_PANEL:
-                JsCallReply call = JsNativeBiz.parse(url, JsCallReply.class);
-                onJsCallNativeOpenCommentPanel(call);
-                break;
-            case JsNativeBiz.ACTION_PLAY_IMAGE:
-                JsCallPlayImage playImage = JsNativeBiz.parse(url, JsCallPlayImage.class);
-                onJsCallNativePlayImage(playImage.data.defaultIndex,
-                        playImage.data.imgList);
-                break;
-            case JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE:
-                JsCallSetTitle title = JsNativeBiz.parse(url, JsCallSetTitle.class);
-                onJsCallNativeSetTitle(title.data.title);
-                break;
 
-            case JsNativeBiz.ACTION_HIDE_LOADING:
-                mWebViewFragment.finishLoading();
-                break;
-
-            case JsNativeBiz.ACTION_APPLY_EVENT:
-                JsCallApplyEvent event = JsNativeBiz.parse(url, JsCallApplyEvent.class);
-                onJsCallApplyEvent(event.data.id);
-                break;
-
-            case JsNativeBiz.ACTION_GET_USERINFO:
-                JsCallUserInfo userInfo = JsNativeBiz.parse(url, JsCallUserInfo.class);
-        }
-    }
 
     private void redirectUrl(String action, URI uri) {
-
-//        if (action.endsWith(WebViewFragment.ACTION_DIARY_HEADER)) {
-//            String query = uri.getQuery();
-//            String sub = query.substring(query.indexOf("=") + 1);
-//            long id = Long.valueOf(sub);
-//            //onJsCallNativeNavigateToDiaryHeader(id);
-//        } else if (action.endsWith(WebViewFragment.ACTION_DIARY)) {
-//            String query = uri.getQuery();
-//            String sub = query.substring(query.indexOf("=") + 1);
-//            long id = Long.valueOf(sub);
-//            onJsCallNativeNavigateToDiary(id);
         if (action.endsWith(WebConstans.Action.ACTION_DIARY)) {
             String query = uri.getQuery();
             String sub = query.substring(query.indexOf("=") + 1);
             long id = Long.valueOf(sub);
-            onJsCallNativeNavigateToDiary(id);
+            navigate(id, "diary");
         }
-//        }
     }
 }

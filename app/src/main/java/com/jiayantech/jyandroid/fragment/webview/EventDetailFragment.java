@@ -1,14 +1,21 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
+import com.jiayantech.jyandroid.activity.ApplyEventActivity;
+import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
+import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.utils.ToastUtil;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -16,7 +23,7 @@ import java.util.Map;
  */
 public class EventDetailFragment extends WebViewFragment{
 
-    private Button mApplyButton;
+//    private Button mApplyButton;
 
     public static EventDetailFragment newInstance(long id, long userId, String userName){
         EventDetailFragment fragment = new EventDetailFragment();
@@ -28,9 +35,6 @@ public class EventDetailFragment extends WebViewFragment{
         fragment.setArguments(args);
         return fragment;
     }
-
-
-
 
     @Override
     protected String onGetUrl() {
@@ -69,5 +73,46 @@ public class EventDetailFragment extends WebViewFragment{
     public void onResume() {
         super.onResume();
         ToastUtil.showMessage(String.format("eventId is %d", mId));
+    }
+
+    @Override
+    public void onAddWebActionListener(BaseWebViewClient client) {
+        super.onAddWebActionListener(client);
+
+        //监听web页面报名参加活动的回调
+        client.addActionListener(new WebActionListener<JsCallApplyEvent>(
+                JsNativeBiz.ACTION_APPLY_EVENT, JsCallApplyEvent.class) {
+            @Override
+            public void execute(JsCallApplyEvent data) {
+                if(data == null){
+                    return;
+                }
+                long id = data.data.id;
+                StringBuilder sb = new StringBuilder();
+
+                for(JsCallApplyEvent.CategoryId category: data.data.eventInfo.categoryIds){
+                    sb.append(category.name);
+                    sb.append(" ");
+                }
+                String project = sb.toString().trim();
+                String hospitalAndDoctor = data.data.eventInfo.hospitalName + " " +
+                        data.data.eventInfo.doctorName;
+                String angelAvatar = data.data.eventInfo.angelUserInfo.avatar;
+                String angelName = data.data.eventInfo.angelUserInfo.name;
+                DateFormat df = new SimpleDateFormat("MM.dd E a HH:mm");
+                String time = df.format(new Date(data.data.eventInfo.beginTime * 1000));
+
+                Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
+                intent.putExtra(ApplyEventFragment.EVENT_ID, id);
+                intent.putExtra(ApplyEventFragment.ANGEL_AVATAR, angelAvatar);
+                intent.putExtra(ApplyEventFragment.ANGEL_NAME, angelName);
+                intent.putExtra(ApplyEventFragment.PROJECT_NAME, project);
+                intent.putExtra(ApplyEventFragment.HOSPITAL_AND_DOCTOR,hospitalAndDoctor);
+                intent.putExtra(ApplyEventFragment.EVENT_TIME, time);
+                getActivity().startActivity(intent);
+
+                //onJsCallApplyEvent(id, angelAvatar, angelName, project, hospitalAndDoctor, time);
+            }
+        });
     }
 }

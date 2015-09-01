@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,4 +242,55 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         LogUtil.i(TAG, "MainActivity onNewIntent");
         ToastUtil.showMessage("MainActivity onNewIntent");
     }
+
+//    public void showLocation(){
+//        double latitude = 0;
+//        double longitude = 0;
+//        mLocationManager =
+//                (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+//
+//        Criteria criteria = new Criteria();
+//        criteria.setAccuracy(Criteria.ACCURACY_LOW);
+//        criteria.setAltitudeRequired(false);
+//        criteria.setCostAllowed(true);
+//        criteria.setPowerRequirement(Criteria.POWER_LOW);
+//
+//        String provider = mLocationManager.getBestProvider(criteria, false);
+//        LogUtil.i("Location", "the best provider is " + provider);
+//
+//        final LocationListener listener = new LocationListener() {
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                LogUtil.i("Location", "onLocationChanged, latitude is " + location.getLatitude() +
+//                    " longitude is " + location.getLongitude());
+//                //mLocationManager.removeUpdates(this);
+//            }
+//
+//            @Override
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//                LogUtil.i("Location", "onStatusChanged()");
+//            }
+//
+//            @Override
+//            public void onProviderEnabled(String provider) {
+//                LogUtil.i("Location", "onProviderEnabled()");
+//            }
+//
+//            @Override
+//            public void onProviderDisabled(String provider) {
+//                LogUtil.i("Location", "onProviderDisabled()");
+//            }
+//        };
+//        if(mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+//            LogUtil.i("Location", "NetworkProvider is enabled");
+//        }
+//        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+//        Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//        if(location != null){
+//            LogUtil.i("Location", "getLastKnownLocation, latitude is " + location.getLatitude() +
+//                    " longitude is " + location.getLongitude());
+//        }
+//
+//        //GeoBiz.getLocationName(22.541842292994257, 113.94652764312923);
+//    }
 }

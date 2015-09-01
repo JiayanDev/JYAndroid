@@ -102,6 +102,9 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.ApplyEventSuccessActivity"
                   android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.LocationSelectActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"/>
 

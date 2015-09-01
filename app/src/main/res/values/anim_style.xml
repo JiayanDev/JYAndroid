@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<style name="share_panel_anim">-->
-        <!--<item name="android:windowEnterAnimation">@anim/share_panel_show</item>-->
-        <!--<item name="android:windowExitAnimation">@anim/share_panel_hide</item>-->
-    <!--</style>-->
+    <style name="share_panel_anim">
+        <item name="android:windowEnterAnimation">@anim/share_panel_show</item>
+        <item name="android:windowExitAnimation">@anim/share_panel_hide</item>
+    </style>
 </resources>

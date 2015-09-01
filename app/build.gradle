@@ -42,7 +42,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDirs = ['src/main/libs/jniLibs']
         }
     }
     repositories {
@@ -68,4 +68,5 @@ dependencies {
     compile files('src/main/libs/SocialSDK_WeiXin_2.jar')
     compile files('src/main/libs/umeng_social_sdk.jar')
     compile files('src/main/libs/android-viewbadger.jar')
+    compile files('src/main/libs/BaiduLBS_Android.jar')
 }

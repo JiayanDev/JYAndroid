@@ -72,9 +72,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     public static final String EXTRA_DATA = "extra_data";
     public static final String EXTRA_ACTION = "action";
     public static final String EXTRA_GENDER = "gender";
-    public static final String EXTRA_PROVINCE = "province";
-    public static final String EXTRA_CITY = "city";
-    public static final String EXTRA_BIRTHDAY = "birthday";
+//    public static final String EXTRA_PROVINCE = "province";
+//    public static final String EXTRA_CITY = "city";
+//    public static final String EXTRA_BIRTHDAY = "birthday";
 
     public static final int ACTION_EDIT_NAME = 0;
 
@@ -92,26 +92,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         findViews();
         setViewsContent();
         EventBus.getDefault().register(this);
-//        findViews();
-//        setViewsContent();
-//        setViewsListener();
-//        final long currentTimeMillis = System.currentTimeMillis();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                LogUtil.i("time", "timeMillis start = " + (System.currentTimeMillis() - currentTimeMillis));
-//                String str = AssertsUtil.getAssertsFileString("area.json");
-//                LogUtil.i("time", "timeMillis read = " + (System.currentTimeMillis() - currentTimeMillis));
-//                try {
-//                    Object object = new Gson().fromJson(str, Object.class);
-//                    LogUtil.i("time", "timeMillis Gson parse = " + (System.currentTimeMillis() - currentTimeMillis));
-//                    JSONArray jsonArray = new JSONArray(str);
-//                    LogUtil.i("time", "timeMillis json parse = " + (System.currentTimeMillis() - currentTimeMillis));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
     }
 
     @Override
@@ -126,14 +106,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mAreaText = (TextView) findViewById(R.id.txt_area);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
+        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
     }
 
     protected void setViewsContent() {
-//        setTitle(R.string.title_reset_pass);
-//        Intent intent = getIntent();
-//        phoneNum = intent.getStringExtra(UserBiz.KEY_PHONE);
-//        phoneCodeConfirmResponse = intent.getStringExtra(UserBiz.KEY_RESPONSE);
         mNameText.setText(AppInitManger.getUserName());
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
         //mProvinceText.setText(AppInitManger.getProvince());
@@ -157,6 +133,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         createFragment(AppInitManger.getUserGender());
                 fragment.show(getSupportFragmentManager(), "EditGender");
                 break;
+            case R.id.layout_location:
+                Intent intent = new Intent(this, LocationSelectActivity.class);
+                startActivityForResult(intent, 0);
             case R.id.layout_area:
                 Intent intent = new Intent(this, VerifyPhoneActivity.class);
                 intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
@@ -171,8 +150,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         UserBiz.update(params, new ResponseListener<AppResponse>() {
                             @Override
                             public void onResponse(AppResponse appResponse) {
-//                                AppInitManger.sAppInit.birthday =
-//                                        calendar.getTimeInMillis() / 1000;
                                 mBirthdayText.setText(TimeUtil.
                                         stamp2YearMonthDay(calendar.getTimeInMillis()));
                             }
@@ -271,50 +248,26 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
 
-//    protected void setViewsListener() {
-//        btn_reset.setOnClickListener(this);
-//    }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_reset:
-//                String pass = checkPass();
-//                if (TextUtils.isEmpty(pass)) {
-//                    return;
-//                }
-//                UserBiz.update(phoneCodeConfirmResponse, phoneNum, pass, new ResponseListener<BaseAppResponse>() {
-//                    @Override
-//                    public void onResponse(BaseAppResponse baseAppResponse) {
-//                        ActivityResult.onFinishResult(UserInfoActivity.this);
-//                    }
-//                });
-//                break;
-//        }
-//    }
-
-//    protected String checkPass() {
-//        String pass_0 = input_pass_0.getEditText().getText().toString();
-//        if (TextUtils.isEmpty(pass_0)) {
-//            ToastUtil.showMessage(R.string.hint_input_set_pass);
-//            return null;
-//        }
-//        String pass_1 = input_pass_1.getEditText().getText().toString();
-//        if (TextUtils.isEmpty(pass_1)) {
-//            ToastUtil.showMessage(R.string.hint_input_set_pass_again);
-//            return null;
-//        }
-//        if (!pass_0.equals(pass_1)) {
-//            ToastUtil.showMessage(R.string.waring_pass_is_not_same);
-//            return null;
-//        }
-//        return pass_0;
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 0){
+            if(resultCode == Activity.RESULT_OK){
+                final String province = data.getStringExtra("province");
+                final String city = data.getStringExtra("city");
+                Map<String, String> params = new ArrayMap<>();
+                params.put("province", province);
+                params.put("city", city);
+                UserBiz.update(params, new ResponseListener<AppResponse>() {
+                    @Override
+                    public void onResponse(AppResponse appResponse) {
+                        ToastUtil.showMessage("更新成功" + province + "" + city);
+                        mLocationText.setText(province + " " + city);
+                    }
+                });
+            }
+        }
+    }
 
     public void onEvent(EditFinishEvent event) {
         switch (event.action) {
@@ -326,14 +279,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 mGenderText.setText(event.gender == 1 ? "男" : "女");
                 AppInitManger.sAppInit.gender = event.gender;
                 ToastUtil.showMessage("更新性别成功");
-                break;
-            case EditFinishEvent.ACTION_EDIT_PROVINCE:
-                //mProvinceText.setText(event.province);
-                AppInitManger.sAppInit.province = event.province;
-                break;
-            case EditFinishEvent.ACTION_EDIT_CITY:
-                //mCityText.setText(event.city);
-                AppInitManger.sAppInit.city = event.city;
                 break;
             case EditFinishEvent.ACTION_EDIT_BIRTHDAY:
                 mBirthdayText.setText(String.valueOf(event.birthday));
@@ -352,6 +297,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
+
 
     @Override
     public void onPicGet(String path, Bitmap bitmap) {

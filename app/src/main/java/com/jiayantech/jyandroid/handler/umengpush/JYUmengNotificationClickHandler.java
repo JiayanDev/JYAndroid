@@ -22,7 +22,6 @@ public class JYUmengNotificationClickHandler extends UmengNotificationClickHandl
         super.dealWithCustomAction(context, uMessage);
         LogUtil.i("UmengPushAction", String.format("Message title: %s , ticker: %s",
                 uMessage.title, uMessage.ticker));
-
         launchApplication(context, 60L, 18L, "diary", "liangzili");
     }
 
