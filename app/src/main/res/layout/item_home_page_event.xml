@@ -1,40 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="2dip"
-    android:layout_marginLeft="4dip"
-    android:layout_marginRight="4dip"
-    android:layout_marginTop="2dip">
+    android:layout_height="180dip">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/img_cover"
         android:layout_width="match_parent"
-        android:layout_height="150dip">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img" />
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="14dip"
+        android:layout_marginTop="16dip"
+        android:alpha="0.9"
+        android:text="科技园白领求美记"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_text_size" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/normal_padding">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_title"
+        android:layout_below="@id/txt_title"
+        android:layout_marginTop="13dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        <View
+            android:layout_width="5dip"
+            android:layout_height="5dip"
+            android:background="@color/theme_color" />
 
-            <TextView
-                android:id="@+id/txt_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科技园白领求美记\n科技园白领求美记"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </FrameLayout>
-</android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/txt_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:text="科技园白领求美记, 科技园白领求美记"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/smallest_text_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_beginTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_hospital"
+        android:layout_alignLeft="@id/txt_title"
+        android:text="科技园白领求美记, 科技园白领求美记"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/smallest_text_size" />
+
+    <TextView
+        android:id="@+id/txt_hospital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_title"
+        android:layout_alignParentBottom="true"
+        android:text="科技园白领求美记, 科技园白领求美记"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/smallest_text_size" />
+</RelativeLayout>

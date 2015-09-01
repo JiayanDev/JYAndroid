@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="2dip"
-    android:layout_marginLeft="4dip"
-    android:layout_marginRight="4dip"
-    android:layout_marginTop="2dip">
+    android:layout_height="180dip">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/img_cover"
         android:layout_width="match_parent"
-        android:layout_height="150dip">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/normal_padding">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/normal_padding">
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="科技园白领求美记"
+            android:textColor="@android:color/white"
+            android:alpha="0.9"
+            android:textSize="@dimen/title_text_size" />
 
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <TextView
-                android:id="@+id/txt_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科技园白领求美记\n科技园白领求美记"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </FrameLayout>
-</android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/txt_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="13dip"
+            android:text="科技园白领求美记, 科技园白领求美记"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/smallest_text_size" />
+    </LinearLayout>
+</FrameLayout>

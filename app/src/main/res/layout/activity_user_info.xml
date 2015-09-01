@@ -100,7 +100,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/layout_area"
+                android:id="@+id/layout_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -113,7 +113,7 @@
                     android:text="@string/area" />
 
                 <TextView
-                    android:id="@+id/txt_area"
+                    android:id="@+id/txt_location"
                     style="@style/text_item_right_arrow_style"
                     android:layout_width="wrap_content"
                     android:text="广东省" />

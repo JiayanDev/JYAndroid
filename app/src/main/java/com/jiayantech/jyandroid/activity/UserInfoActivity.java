@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -63,24 +64,15 @@ import de.greenrobot.event.EventBus;
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener {
 
-    //    protected TextInputLayout input_pass_0;
-//    protected TextInputLayout input_pass_1;
-//    private Button btn_reset;
-//
-//    private String phoneNum;
-//    private String phoneCodeConfirmResponse;
     public static final String EXTRA_DATA = "extra_data";
     public static final String EXTRA_ACTION = "action";
     public static final String EXTRA_GENDER = "gender";
-//    public static final String EXTRA_PROVINCE = "province";
-//    public static final String EXTRA_CITY = "city";
-//    public static final String EXTRA_BIRTHDAY = "birthday";
 
     public static final int ACTION_EDIT_NAME = 0;
 
     private TextView mNameText;
     private TextView mGenderText;
-    private TextView mAreaText;
+    private TextView mLocationText;
     private TextView mBirthdayText;
     private TextView mPhoneText;
     private RoundedImageView mAvatarImg;
@@ -103,10 +95,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     protected void findViews() {
         mNameText = (TextView) findViewById(R.id.txt_name);
         mGenderText = (TextView) findViewById(R.id.txt_gender);
-        mAreaText = (TextView) findViewById(R.id.txt_area);
+        mLocationText = (TextView) findViewById(R.id.txt_location);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
+        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
     }
 
     protected void setViewsContent() {
@@ -114,7 +106,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
         //mProvinceText.setText(AppInitManger.getProvince());
         //mCityText.setText(AppInitManger.getCity());
-        mAreaText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
+        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
     }
@@ -136,10 +128,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_location:
                 Intent intent = new Intent(this, LocationSelectActivity.class);
                 startActivityForResult(intent, 0);
-            case R.id.layout_area:
-                Intent intent = new Intent(this, VerifyPhoneActivity.class);
-                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
-                startActivity(intent);
                 break;
             case R.id.layout_birthday:
                 new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
@@ -251,8 +239,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 0){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
                 final String province = data.getStringExtra("province");
                 final String city = data.getStringExtra("city");
                 Map<String, String> params = new ArrayMap<>();
