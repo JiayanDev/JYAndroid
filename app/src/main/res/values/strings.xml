@@ -149,5 +149,6 @@
     <string name="header_image">头像</string>
     <string name="area">地区</string>
     <string name="birthday">生日</string>
+    <string name="user_info">个人信息</string>
 
 </resources>

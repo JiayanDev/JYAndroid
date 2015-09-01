@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:orientation="vertical"
-    >
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radio_group_gender"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="30dip">
 
-    <RadioGroup
-        android:id="@+id/radio_group_gender"
-        android:layout_width="match_parent"
+    <RadioButton
+        android:id="@+id/radio_male"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <RadioButton
-            android:id="@+id/radio_button_male"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/selector_gender"
-            android:text="@string/gender_male"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/normal_text_size"
-            android:textColor="@color/text_normal_color"
-            android:button="@null"
-            />
+        android:button="@null"
+        android:checked="true"
+        android:drawableLeft="@drawable/selector_gender"
+        android:drawablePadding="@dimen/normal_padding"
+        android:text="@string/gender_male"
+        android:textSize="@dimen/normal_text_size" />
 
+    <RadioButton
+        android:id="@+id/radio_female"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:button="@null"
+        android:drawableLeft="@drawable/selector_gender"
+        android:drawablePadding="@dimen/normal_padding"
+        android:text="@string/gender_female"
+        android:textSize="@dimen/normal_text_size" />
 
-        <RadioButton
-            android:id="@+id/radio_button_female"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/gender_female"
-            android:button="@null"
-            android:gravity="center_horizontal"
-            android:drawableRight="@drawable/selector_gender"
-            android:textSize="@dimen/normal_text_size"
-            android:textColor="@color/text_normal_color"
-            />
-    </RadioGroup>
-
-</LinearLayout>
+</RadioGroup>

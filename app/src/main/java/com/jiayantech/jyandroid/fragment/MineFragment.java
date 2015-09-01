@@ -50,6 +50,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_info;
 
     private TextView txt_home_page;
+    private View divider_home_page;
 
     @Override
     protected int getInflaterResId() {
@@ -64,6 +65,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         txt_info = (TextView) findViewById(R.id.txt_info);
 
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
+        divider_home_page = findViewById(R.id.divider_home_page);
 
         findViewById(R.id.layout_info).setOnClickListener(this);
         findViewById(R.id.txt_home_page).setOnClickListener(this);
@@ -94,9 +96,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
-        if (AppInitManger.getRole() == AppInit.ROLE_ANGEL) {
-            setHomePageVisible(true);
-        }
+        setHomePageVisible(AppInitManger.getRole());
     }
 
     public void onEvent(EditFinishEvent event) {
@@ -111,28 +111,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         AppInit appInit = AppInitManger.getAppInit();
         BitmapBiz.display(img_avatar, appInit.avatar);
         txt_nickname.setText(appInit.name);
-        String info = null;
-        if(AppInitManger.getBirthday() != 0){
+        String info = appInit.gender == 0 ? getString(R.string.gender_female) : getString(R.string.gender_male)
+                + "  " + AppInitManger.getProvince() + AppInitManger.getCity();
+        if (AppInitManger.getBirthday() != 0) {
             try {
                 int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));
-                info = AppInitManger.getProvince() + " " + AppInitManger.getCity() +
-                        " | " + age + "岁";
+                info += "  " + age + "岁";
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            info  = AppInitManger.getProvince() + " " + AppInitManger.getCity();
         }
         txt_info.setText(info);
-        setHomePageVisible(appInit.role == AppInit.ROLE_ANGEL);
+        setHomePageVisible(appInit.role);
 
     }
 
-    public void setHomePageVisible(boolean flag) {
-        AppInit appInit = AppInitManger.getAppInit();
-//        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
-//        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(appInit.role) ? View.VISIBLE : View.GONE);
-        txt_home_page.setVisibility(View.VISIBLE);
+    public void setHomePageVisible(String role) {
+        divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
+        txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
     }
 
     @Override

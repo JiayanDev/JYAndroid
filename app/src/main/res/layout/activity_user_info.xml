@@ -20,7 +20,9 @@
                 android:id="@+id/layout_avatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/normal_padding"
                 android:paddingRight="15dip"
@@ -53,7 +55,9 @@
                 android:id="@+id/layout_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -75,7 +79,9 @@
                 android:id="@+id/layout_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -103,7 +109,9 @@
                 android:id="@+id/layout_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -125,7 +133,9 @@
                 android:id="@+id/layout_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -148,7 +158,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_margin"
             android:background="@android:color/white"
+            android:clickable="true"
             android:gravity="center_vertical"
+            android:onClick="onClick"
             android:orientation="horizontal">
 
             <TextView
@@ -175,7 +187,9 @@
                 android:id="@+id/layout_wechat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -197,7 +211,9 @@
                 android:id="@+id/layout_qq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView
@@ -219,7 +235,9 @@
                 android:id="@+id/layout_weibo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:orientation="horizontal">
 
                 <TextView

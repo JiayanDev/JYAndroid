@@ -8,7 +8,6 @@ import com.jiayantech.library.base.BaseModel;
 public class HomePagePost extends BaseModel {
     public static final String TYPE_EVENT = "event";
     public static final String TYPE_TOPIC = "topic";
-    public static final String ROLE_ANGEL = "angel";
 
     public long userId;
     public String userName;
@@ -26,4 +25,5 @@ public class HomePagePost extends BaseModel {
     public long beginTime;
     public long applymentCount;
     public int[] categoryIds;
+    public String status;
 }

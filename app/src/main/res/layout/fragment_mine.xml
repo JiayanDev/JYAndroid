@@ -75,9 +75,9 @@
                 android:text="@string/my_home_page" />
 
             <View
+                android:id="@+id/divider_home_page"
                 style="@style/divider_gray_style"
                 android:layout_marginLeft="10dip" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"

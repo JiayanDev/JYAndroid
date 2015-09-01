@@ -64,38 +64,46 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
     }
 
     public static class TopicHolder extends BaseSimpleModelAdapter.ViewHolder<HomePagePost> {
-        public TextView txt_title;
-        public TextView txt_desc;
         public ImageView img_cover;
 
         public TopicHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<HomePagePost> adapter) {
             super(parent, layoutId, adapter);
-            txt_title = (TextView) itemView.findViewById(R.id.txt_title);
-            txt_desc = (TextView) itemView.findViewById(R.id.txt_desc);
             img_cover = (ImageView) itemView.findViewById(R.id.img_cover);
         }
 
         @Override
         public void onBind(HomePagePost item, int position) {
-            txt_title.setText(item.title);
-            txt_title.setText(item.desc);
             BitmapBiz.display(img_cover, item.coverImg);
         }
     }
 
     public static class EventHolder extends TopicHolder {
-        public TextView txt_title;
-        public TextView txt_content;
+        public TextView txt_status;
+        public ImageView img_doctor;
+        public TextView txt_doctor;
+        public TextView txt_doctorDesc;
 
         public EventHolder(ViewGroup parent, BaseSimpleModelAdapter<HomePagePost> adapter) {
             super(parent, R.layout.item_home_page_event, adapter);
-            txt_title = (TextView) itemView.findViewById(R.id.txt_title);
-            txt_content = (TextView) itemView.findViewById(R.id.txt_content);
+            txt_status = (TextView) itemView.findViewById(R.id.txt_status);
+            img_doctor = (ImageView) itemView.findViewById(R.id.img_doctor);
+            txt_doctor = (TextView) itemView.findViewById(R.id.txt_doctor);
+            txt_doctorDesc = (TextView) itemView.findViewById(R.id.txt_doctorDesc);
         }
 
         @Override
-        public void onBind(HomePagePost event, int position) {
-            txt_title.setText("Event" + event.desc);
+        public void onBind(HomePagePost item, int position) {
+            super.onBind(item, position);
+            if (position % 2 == 0) {
+                txt_status.setText("招募中");
+                txt_status.setBackgroundResource(R.drawable.bg_event_status_going);
+            } else {
+                txt_status.setText("活动结束");
+                txt_status.setBackgroundResource(R.drawable.bg_event_status_finish);
+            }
+            BitmapBiz.display(img_doctor, item.userAvatar);
+            txt_doctor.setText(item.userName);
+            txt_doctorDesc.setText(item.hospitalName);
         }
     }
 }

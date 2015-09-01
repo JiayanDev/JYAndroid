@@ -2,6 +2,7 @@ package com.jiayantech.library.base;
 
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.jiayantech.library.R;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
@@ -42,7 +44,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     private Map<String, String> mParams;
     private boolean enablePaging = true;  //是否分页
 
-    public void setEnablePaging(boolean enable){
+    public void setEnablePaging(boolean enable) {
         enablePaging = enable;
     }
 
@@ -72,6 +74,10 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         return header;
     }
 
+    protected void addItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
+        ultimateRecyclerView.addItemDecoration(itemDecoration);
+    }
+
     private boolean mIsLoading = false;
 
     protected void onRefresh() {
@@ -98,7 +104,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onResponse(ResponseT response) {
-                if(!enablePaging){
+                if (!enablePaging) {
                     mAdapter.clear();
                 }
                 mAdapter.addNew(response.data);

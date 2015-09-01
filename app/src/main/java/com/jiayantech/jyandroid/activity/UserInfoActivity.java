@@ -75,6 +75,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private TextView mLocationText;
     private TextView mBirthdayText;
     private TextView mPhoneText;
+    private TextView txt_wechat;
+    private TextView txt_qq;
+    private TextView txt_weibo;
     private RoundedImageView mAvatarImg;
 
     @Override
@@ -99,16 +102,24 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
         mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
+        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
+        txt_qq = (TextView) findViewById(R.id.txt_qq);
+        txt_weibo = (TextView) findViewById(R.id.txt_weibo);
     }
 
     protected void setViewsContent() {
+        setTitle(R.string.user_info);
         mNameText.setText(AppInitManger.getUserName());
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
-        //mProvinceText.setText(AppInitManger.getProvince());
-        //mCityText.setText(AppInitManger.getCity());
+        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
+        mPhoneText.setText(AppInitManger.getPhoneNum());
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
+        AppInit appInit = AppInitManger.getAppInit();
+        txt_wechat.setText(appInit.bindWX ? "已绑定" : "未绑定");
+        txt_qq.setText(appInit.bindQQ ? "已绑定" : "未绑定");
+        txt_weibo.setText(appInit.bindWB ? "已绑定" : "未绑定");
     }
 
     @Override
@@ -146,22 +157,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 }, false);
                 break;
             case R.id.layout_phone:
-                new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
-                    @Override
-                    public void onSetDateTime(final Calendar calendar) {
-                        Map<String, String> params = new ArrayMap<String, String>();
-                        params.put("birthday", String.valueOf(calendar.getTimeInMillis() / 1000));
-                        UserBiz.update(params, new ResponseListener<AppResponse>() {
-                            @Override
-                            public void onResponse(AppResponse appResponse) {
-//                                AppInitManger.sAppInit.birthday =
-//                                        calendar.getTimeInMillis() / 1000;
-                                mBirthdayText.setText(TimeUtil.
-                                        stamp2YearMonthDay(calendar.getTimeInMillis()));
-                            }
-                        });
-                    }
-                }, false);
+
                 break;
             case R.id.layout_wechat:
 
@@ -183,30 +179,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void showUploadDialog() {
-//        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
-//        final Dialog dialog = DialogUtils.showViewDialog(view, true);
-//
-//        View.OnClickListener onClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//                switch (v.getId()) {
-//                    case R.id.camera_button:
-//                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-//                                UserInfoActivity.this).startCropCamera();
-//                        break;
-//                    case R.id.local_button:
-//                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-//                                UserInfoActivity.this).startCropImage();
-//                        break;
-//                }
-//            }
-//        };
-//        view.findViewById(R.id.title_text).setVisibility(View.GONE);
-//        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
-//        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
-//        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
-
         View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_menus, null);
         ItemsLayout itemsLayout = (ItemsLayout) view.findViewById(R.id.layout_items);
         itemsLayout.setDriver();

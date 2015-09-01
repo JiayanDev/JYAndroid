@@ -45,6 +45,13 @@
         <item name="android:textColor">@color/font_blue</item>
     </style>
 
+    <style name="text_normal_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textColor">@color/text_normal_color</item>
+    </style>
+
     <style name="text_item_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
