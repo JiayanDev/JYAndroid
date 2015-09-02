@@ -31,7 +31,7 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
             public void onItemClick(BaseSimpleModelAdapter<HomePagePost> adapter,
                                     int position, HomePagePost item) {
                 long id = HomePagePost.TYPE_EVENT.equals(item.type) ? item.eventId : item.topicId;
-                WebViewActivity.launchActivity(mContext, id, item.userId, item.userName, item.type);
+                WebViewActivity.launchActivity(mContext, id, item.type);
             }
         });
     }

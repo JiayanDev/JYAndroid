@@ -164,9 +164,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_phone:
 
                 break;
-            case R.id.layout_wechat:
-
-                break;
+//            case R.id.layout_wechat:
+//
+//                break;
 //            case R.id.layout_qq:
 //
 //                break;
