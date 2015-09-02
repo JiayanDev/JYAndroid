@@ -169,29 +169,29 @@
         <View style="@style/divider_big_gray_style"/>
 
         <!--<LinearLayout-->
-            <!--android:id="@+id/layout_password"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/normal_padding"-->
-            <!--android:onClick="onClick"-->
-            <!-->-->
+        <!--android:id="@+id/layout_password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingLeft="@dimen/normal_padding"-->
+        <!--android:onClick="onClick"-->
+        <!-->-->
 
-            <!--<TextView-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="修改密码"-->
-                <!--android:onClick="onClick"-->
-                <!--/>-->
+        <!--<TextView-->
+        <!--android:layout_width="0dip"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="修改密码"-->
+        <!--android:onClick="onClick"-->
+        <!--/>-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/edit_password"-->
-                <!--style="@style/text_item_right_arrow_style"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:text=""-->
-                <!--/>-->
+        <!--<TextView-->
+        <!--android:id="@+id/edit_password"-->
+        <!--style="@style/text_item_right_arrow_style"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text=""-->
+        <!--/>-->
         <!--</LinearLayout>-->
 
         <View style="@style/divider_offset_gray_style"/>

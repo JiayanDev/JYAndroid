@@ -27,14 +27,14 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by liangzili on 15/8/4.
  */
-public class EditGenderFragment extends DialogFragment{
+public class EditGenderFragment extends DialogFragment {
     private int mGender;
     private LinearLayout mDialogLayout;
     private RadioGroup mGenderRadioGroup;
     private RadioButton mMaleRadioBtn;
     private RadioButton mFemaleRadioBtn;
 
-    public static EditGenderFragment createFragment(int gender){
+    public static EditGenderFragment createFragment(int gender) {
         EditGenderFragment fragment = new EditGenderFragment();
         Bundle args = new Bundle();
         args.putInt(UserInfoActivity.EXTRA_GENDER, gender);
@@ -59,11 +59,7 @@ public class EditGenderFragment extends DialogFragment{
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(mGenderRadioGroup.getCheckedRadioButtonId() == R.id.radio_button_male){
-                            mGender = 1;
-                        }else{
-                            mGender = 0;
-                        }
+                        mGender = mGenderRadioGroup.getCheckedRadioButtonId() == R.id.radio_male ? 1 : 0;
                         Map<String, String> params = new ArrayMap<String, String>();
                         params.put("gender", String.valueOf(mGender));
                         UserBiz.update(params, new ResponseListener<AppResponse>() {
@@ -81,15 +77,15 @@ public class EditGenderFragment extends DialogFragment{
         return dialog;
     }
 
-    private void setUpViews(){
-        mDialogLayout = (LinearLayout)LayoutInflater.from(getActivity()).
+    private void setUpViews() {
+        mDialogLayout = (LinearLayout) LayoutInflater.from(getActivity()).
                 inflate(R.layout.dialog_edit_gender, null);
-        mGenderRadioGroup = (RadioGroup)mDialogLayout.findViewById(R.id.radio_group_gender);
-        mMaleRadioBtn = (RadioButton)mGenderRadioGroup.findViewById(R.id.radio_button_male);
-        mFemaleRadioBtn = (RadioButton)mGenderRadioGroup.findViewById(R.id.radio_button_female);
-        if(mGender == Constants.Gender.MALE){
+        mGenderRadioGroup = (RadioGroup) mDialogLayout.findViewById(R.id.radio_group_gender);
+        mMaleRadioBtn = (RadioButton) mGenderRadioGroup.findViewById(R.id.radio_male);
+        mFemaleRadioBtn = (RadioButton) mGenderRadioGroup.findViewById(R.id.radio_female);
+        if (mGender == Constants.Gender.MALE) {
             mMaleRadioBtn.setChecked(true);
-        }else{
+        } else {
             mFemaleRadioBtn.setChecked(true);
         }
     }

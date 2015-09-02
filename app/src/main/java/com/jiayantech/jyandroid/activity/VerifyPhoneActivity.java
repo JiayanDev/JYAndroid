@@ -100,7 +100,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone_code);
                     return;
                 }
-                if(type == TYPE_UPDATE_PHONE){
+                if (type == TYPE_UPDATE_PHONE) {
                     UserBiz.updatePhone(phoneCodeResponse, phoneNum, new SimpleResponseListener<HashMap<String, String>>(_this) {
                         @Override
                         public void onResponse(HashMap<String, String> response) {
@@ -117,7 +117,7 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                             ToastUtil.showMessage("更新手机出错");
                         }
                     });
-                }else {
+                } else {
                     UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
                         @Override
                         public void onResponse(AppResponse<HashMap<String, String>> response) {
@@ -141,8 +141,10 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
 //                                    setInfoIntent.putExtra(UserBiz.KEY_RESPONSE, phoneCodeConfirmResponse);
 //                                    setInfoIntent.putExtra(UserBiz.KEY_PHONE, phoneNum);
 //                                    startActivityForFinishResult(setInfoIntent);
+//                                        UserBiz.register(phoneCodeConfirmResponse, social_type, social_response, phoneNum,
+//                                                new UserBiz.RegisterResponseListener(VerifyPhoneActivity.this));
                                         UserBiz.register(phoneCodeConfirmResponse, social_type, social_response, phoneNum,
-                                                new UserBiz.RegisterResponseListener(VerifyPhoneActivity.this));
+                                                new UserBiz.LoginResponseListener(VerifyPhoneActivity.this, phoneNum));
                                     }
                                     break;
                                 case TYPE_FORGET_PASS:

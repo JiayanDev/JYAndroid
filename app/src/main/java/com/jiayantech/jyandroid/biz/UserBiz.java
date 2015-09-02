@@ -80,13 +80,13 @@ public class UserBiz {
      * @param phoneNum
      * @param l
      */
-    public static void register(String receipt, String social_type, String social_response, String phoneNum, RegisterResponseListener l) {
+    public static void register(String receipt, String social_type, String social_response, String phoneNum, LoginResponseListener l) {
         Map<String, String> params = HttpReq.getInitParams(KEY_RESPONSE, receipt);
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
         //HttpReq.putParams(params, social_type, social_code);
         //HttpReq.putParams(params, "psw", MD5.encode(psw));
         HttpReq.putParams(params, social_type + "Receipt", social_response);
-        l.phoneNum = phoneNum;
+        //l.phoneNum = phoneNum;
         HttpReq.post(ACTION_REGISTER, params, l);
     }
 

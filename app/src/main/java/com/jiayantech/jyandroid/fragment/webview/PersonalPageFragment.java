@@ -9,16 +9,17 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.MyDiariesActivity;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/8/10.
  */
-public class PersonalPageFragment extends WebViewFragment{
+public class PersonalPageFragment extends WebViewFragment {
     Button mPostButton;
     private long mUserId;
     private String mUserName;
 
-    public static PersonalPageFragment newInstance(long userId, String userName){
+    public static PersonalPageFragment newInstance(long userId, String userName) {
         PersonalPageFragment fragment = new PersonalPageFragment();
         Bundle args = new Bundle();
         //args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
@@ -41,11 +42,11 @@ public class PersonalPageFragment extends WebViewFragment{
 
     @Override
     protected String onSetTitle() {
-        if(AppInitManger.getUserId() == mUserId &&
-                AppInitManger.getRole().equals(AppInit.ROLE_ANGEL)){
+        if (AppInitManger.getUserId() == mUserId &&
+                AppInitManger.getRole().equals(AppInit.ROLE_ANGEL)) {
 
             return getString(R.string.title_my_personal_page);
-        }else{
+        } else {
             return getString(R.string.title_personal_page, new Object[]{mUserName});
         }
     }
@@ -55,9 +56,9 @@ public class PersonalPageFragment extends WebViewFragment{
 //        if(AppInitManger.getUserId() == mUserId &&
 //                AppInitManger.getRole().equals(AppInit.ROLE_ANGEL)){
         long id = AppInitManger.getUserId();
-        if(id == mUserId){
+        if (id == mUserId) {
             View bottom = inflater.inflate(R.layout.layout_personal_page_bottom, null);
-            mPostButton = (Button)bottom.findViewById(R.id.publish_diary);
+            mPostButton = (Button) bottom.findViewById(R.id.publish_diary);
             mPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,5 +68,11 @@ public class PersonalPageFragment extends WebViewFragment{
             return bottom;
         }
         return null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ToastUtil.showMessage(String.format("PersonalPage Id is %d", mId));
     }
 }

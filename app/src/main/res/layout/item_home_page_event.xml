@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_cover"
+        android:layout_width="match_parent"
+        android:layout_height="180dip"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        style="@style/text_normal_style"
+        android:layout_height="26dip"
+        android:layout_alignRight="@id/img_cover"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:background="@drawable/bg_event_status_going"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:text="胡汉灵"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dip"
+        android:layout_below="@id/img_cover"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dip"
+        android:paddingRight="14dip">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_doctor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img"
+            app:riv_corner_radius="15dip" />
+
+        <TextView
+            android:id="@+id/txt_doctor"
+            style="@style/text_normal_style"
+            android:layout_marginLeft="8dip"
+            android:text="胡汉灵" />
+
+        <TextView
+            android:id="@+id/txt_doctorDesc"
+            style="@style/text_normal_style"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="科技园白领求美记"
+            android:textColor="@color/text_light_color" />
+    </LinearLayout>
+
+</RelativeLayout>

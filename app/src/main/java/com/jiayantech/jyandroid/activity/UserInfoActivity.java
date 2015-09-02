@@ -18,6 +18,7 @@ import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
+import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.DateTimeHelper;
@@ -40,12 +41,10 @@ import de.greenrobot.event.EventBus;
  * Created by 健兴 on 2015/8/3.
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener {
+
     public static final String EXTRA_DATA = "extra_data";
     public static final String EXTRA_ACTION = "action";
     public static final String EXTRA_GENDER = "gender";
-//    public static final String EXTRA_PROVINCE = "province";
-//    public static final String EXTRA_CITY = "city";
-//    public static final String EXTRA_BIRTHDAY = "birthday";
 
     public static final int ACTION_EDIT_NAME = 0;
 
@@ -54,6 +53,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private TextView mLocationText;
     private TextView mBirthdayText;
     private TextView mPhoneText;
+    private TextView txt_wechat;
+    private TextView txt_qq;
+    private TextView txt_weibo;
     private RoundedImageView mAvatarImg;
 
     private TextView mTxtWechatAccount;
@@ -86,13 +88,22 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mTxtWechatAccount = (TextView)findViewById(R.id.txt_wechat_username);
         mTxtQQAccount = (TextView)findViewById(R.id.txt_qq_username);
         mTxtWeiboAccount = (TextView)findViewById(R.id.txt_weibo_username);
+//=======
+//        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
+//        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
+//        txt_qq = (TextView) findViewById(R.id.txt_qq);
+//        txt_weibo = (TextView) findViewById(R.id.txt_weibo);
+//>>>>>>> upstream/master
     }
 
     protected void setViewsContent() {
+        setTitle(R.string.user_info);
         mNameText.setText(AppInitManger.getUserName());
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
-        mLocationText.setText(AppInitManger.getProvince() + " " + AppInitManger.getCity());
+        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
+        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
+        mPhoneText.setText(AppInitManger.getPhoneNum());
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
         mPhoneText.setText(AppInitManger.getPhoneNum());
 
@@ -108,6 +119,12 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             mTxtWeiboAccount.setText(R.string.account_status_bind);
             mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
+//=======
+//        AppInit appInit = AppInitManger.getAppInit();
+//        txt_wechat.setText(appInit.bindWX ? "已绑定" : "未绑定");
+//        txt_qq.setText(appInit.bindQQ ? "已绑定" : "未绑定");
+//        txt_weibo.setText(appInit.bindWB ? "已绑定" : "未绑定");
+//>>>>>>> upstream/master
     }
 
     @Override
@@ -132,7 +149,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
                     public void onSetDateTime(final Calendar calendar) {
-                        Map<String, String> params = new ArrayMap<>();
+                        Map<String, String> params = new ArrayMap<String, String>();
                         params.put("birthday", String.valueOf(calendar.getTimeInMillis() / 1000));
                         UserBiz.update(params, new ResponseListener<AppResponse>() {
                             @Override
@@ -144,6 +161,18 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                     }
                 }, false);
                 break;
+            case R.id.layout_phone:
+
+                break;
+            case R.id.layout_wechat:
+
+                break;
+//            case R.id.layout_qq:
+//
+//                break;
+//            case R.id.layout_weibo:
+//
+//                break;
         }
     }
 
@@ -155,36 +184,40 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void showUploadDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_menus, null);
+        ItemsLayout itemsLayout = (ItemsLayout) view.findViewById(R.id.layout_items);
+        itemsLayout.setDriver();
+        itemsLayout.setDriverLeftMargin(0);
         final Dialog dialog = DialogUtils.showViewDialog(view, true);
-
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+        itemsLayout.addMenuItem(getString(R.string.take_camera)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                switch (v.getId()) {
-                    case R.id.camera_button:
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCamera();
-                        break;
-                    case R.id.local_button:
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startImage();
-                        break;
-                }
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                        UserInfoActivity.this).startCropCamera();
             }
-        };
-        view.findViewById(R.id.title_text).setVisibility(View.GONE);
-        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
+        });
+        itemsLayout.addMenuItem(getString(R.string.take_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                        UserInfoActivity.this).startCropImage();
+            }
+        });
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 0){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
                 final String province = data.getStringExtra("province");
                 final String city = data.getStringExtra("city");
                 Map<String, String> params = new ArrayMap<>();
@@ -222,9 +255,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 AppInitManger.sAppInit.phoneNum = event.phone;
                 break;
             case EditFinishEvent.ACTION_EDIT_AVATAR:
-                BitmapBiz.display(mAvatarImg, event.avatar);
-                ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
                 AppInitManger.sAppInit.avatar = event.avatar;
+                AppInitManger.save(AppInitManger.sAppInit);
+                BitmapBiz.display(mAvatarImg, event.avatar);
+                //ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
                 break;
         }
     }
@@ -243,6 +277,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
+                                BitmapBiz.clear(AppInitManger.sAppInit.avatar);
+//                                AppInitManger.sAppInit.avatar =
+//                                        HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
                                 EditFinishEvent event = new EditFinishEvent();
                                 event.action = EditFinishEvent.ACTION_EDIT_AVATAR;
                                 event.avatar = HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;

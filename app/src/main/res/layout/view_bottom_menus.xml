@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip">
+
+    <com.jiayantech.jyandroid.widget.ItemsLayout
+        android:id="@+id/layout_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/bg_item_round_white"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/bg_item_round_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            style="@style/btn_bottom_menu_item_style"
+            android:text="取消" />
+    </LinearLayout>
+
+</LinearLayout>

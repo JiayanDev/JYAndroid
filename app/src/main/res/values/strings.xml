@@ -15,6 +15,7 @@
     <string name="topic">话题</string>
     <string name="diary">日记</string>
 
+    <string name="gender">性别</string>
     <string name="gender_male">男</string>
     <string name="gender_female">女</string>
 
@@ -123,8 +124,8 @@
     <string name="msg_sent_phone_code">已发送验证码!</string>
     <string name="msg_overdue_to_login">登录信息已经过期，请重新登录</string>
     <string name="msg_sign_up_success">报名成功，稍后由客服人员跟你确定信息</string>
-    <string name="nickname">呢称: </string>
-    <string name="phone">手机号码: </string>
+    <string name="nickname">呢称</string>
+    <string name="phone">手机</string>
     <string name="operation_time">手术时间</string>
 
     <string name="share_wechat">微信好友</string>
@@ -142,5 +143,14 @@
     <string name="description_company">伴美活动完全免费，报名信息提交后，工作人员会在1个工作日内与您电话确认
     ，报名状态请在「我的」 - 「我的伴美」中查看.</string>
     <string name="btn_confirm_applyment">确认报名</string>
+    <string name="take_camera">拍照</string>
+    <string name="take_photo">手机相册</string>
+    <string name="exit">退出</string>
+    <string name="my_company">我的伴美</string>
+    <string name="my_home_page">我的主页</string>
+    <string name="header_image">头像</string>
+    <string name="area">地区</string>
+    <string name="birthday">生日</string>
+    <string name="user_info">个人信息</string>
 
 </resources>

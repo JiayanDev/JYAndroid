@@ -15,6 +15,7 @@ import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.PostComment;
 import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.Map;
 
@@ -131,4 +132,9 @@ public class PostDetailFragment extends WebViewFragment {
         callJsMethod(JsNativeBiz.JS_METHOD_G_renderPostComment, result);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ToastUtil.showMessage(String.format("PostDetail Id is %d", mId));
+    }
 }

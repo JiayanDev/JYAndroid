@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.eventbus.UnreadMessageEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
-import com.jiayantech.jyandroid.fragment.HomeEventFragment;
+import com.jiayantech.jyandroid.fragment.HomePagePostFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
@@ -252,7 +252,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     private void initFragments() {
         mFragments = new Fragment[]{
-                new HomeEventFragment(),
+                new HomePagePostFragment(),
                 CommunityFragment.newInstance(null),
                 MineFragment.newInstance(null)};
     }

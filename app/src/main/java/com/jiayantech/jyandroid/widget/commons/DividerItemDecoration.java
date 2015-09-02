@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.jiayantech.jyandroid.R;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.divideritemdecoration.HorizontalDividerItemDecoration;
 
 /**
@@ -38,8 +40,14 @@ public class DividerItemDecoration extends HorizontalDividerItemDecoration {
         private boolean mShowFirstEnable;
 
         public Builder(Context context) {
+            this(context, true);
+        }
+
+        public Builder(Context context, boolean showFirstEnable) {
             super(context);
-            mShowFirstEnable = true;
+            mShowFirstEnable = showFirstEnable;
+            color(context.getResources().getColor(R.color.bg_gray_color));
+            size((int) UIUtil.getDimension(R.dimen.normal_margin));
         }
 
         public Builder showFirstEnable(boolean enable) {

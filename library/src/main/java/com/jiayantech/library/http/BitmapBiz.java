@@ -26,16 +26,6 @@ public class BitmapBiz {
      * @param imageView
      * @param imageUrl
      */
-    public static void display(ImageView imageView, String imageUrl, int size) {
-        if (TextUtils.isEmpty(imageUrl)) {
-            imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
-            return;
-        }
-        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
-                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
-                size, size);
-    }
-
     public static void display(ImageView imageView, String imageUrl) {
         if (TextUtils.isEmpty(imageUrl)) {
             imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
@@ -46,7 +36,37 @@ public class BitmapBiz {
                 DEFAULT_SIZE, DEFAULT_SIZE);
     }
 
+    /**
+     * @param imageView
+     * @param imageUrl
+     * @param size
+     */
+    public static void display(ImageView imageView, String imageUrl, int size) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
+            return;
+        }
+        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
+                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
+                size, size);
+    }
 
+    public static void clear(String imageUrl) {
+        clear(imageUrl, DEFAULT_SIZE);
+    }
+
+    public static void clear(String imageUrl, int size) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            return;
+        }
+        final String cacheKey = getCacheKey(imageUrl, size, size);
+        sBitmapLruCache.remove(cacheKey);
+        sVolleyQueue.getCache().remove(imageUrl);
+    }
+
+    private static String getCacheKey(String url, int maxWidth, int maxHeight) {
+        return (new StringBuilder(url.length() + 12)).append("#W").append(maxWidth).append("#H").append(maxHeight).append(url).toString();
+    }
 
     ///////////////////////////////////////private static class and method
     private static final int max_cache_size = 1000000;
@@ -54,7 +74,8 @@ public class BitmapBiz {
      * Initialise Volley Request Queue. *
      */
     private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
-    private static final ImageLoader sImageLoader = new ImageLoader(sVolleyQueue, new BitmapLruCache(max_cache_size));
+    private static final BitmapLruCache sBitmapLruCache = new BitmapLruCache(max_cache_size);
+    private static final ImageLoader sImageLoader = new ImageLoader(sVolleyQueue, sBitmapLruCache);
 
     private static class BitmapLruCache extends LruCache<String, Bitmap> implements ImageLoader.ImageCache {
         public BitmapLruCache(int maxSize) {

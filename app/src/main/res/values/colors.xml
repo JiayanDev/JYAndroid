@@ -21,6 +21,7 @@
     <color name="theme_color">#ff5a60</color>
     <color name="button_color_pressed">#fdb4b7</color>
     <color name="button_color_gray">#d9d9d9</color>
+    <color name="bg_transparent_red_press">#33f479b1</color>
 
     <!--各种字体的颜色-->
     <color name="text_normal_color">#3a3a3a</color>
