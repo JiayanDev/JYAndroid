@@ -5,55 +5,33 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.util.ArrayMap;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
-import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseApplication;
-import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
-import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.http.UploadReq;
-import com.jiayantech.library.utils.AssertsUtil;
 import com.jiayantech.library.utils.DialogUtils;
-import com.jiayantech.library.utils.GsonUtils;
-import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -80,6 +58,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private TextView txt_weibo;
     private RoundedImageView mAvatarImg;
 
+    private TextView mTxtWechatAccount;
+    private TextView mTxtQQAccount;
+    private TextView mTxtWeiboAccount;
+
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,10 +83,17 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mLocationText = (TextView) findViewById(R.id.txt_location);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
-        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
-        txt_qq = (TextView) findViewById(R.id.txt_qq);
-        txt_weibo = (TextView) findViewById(R.id.txt_weibo);
+        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
+
+        mTxtWechatAccount = (TextView)findViewById(R.id.txt_wechat_username);
+        mTxtQQAccount = (TextView)findViewById(R.id.txt_qq_username);
+        mTxtWeiboAccount = (TextView)findViewById(R.id.txt_weibo_username);
+//=======
+//        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
+//        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
+//        txt_qq = (TextView) findViewById(R.id.txt_qq);
+//        txt_weibo = (TextView) findViewById(R.id.txt_weibo);
+//>>>>>>> upstream/master
     }
 
     protected void setViewsContent() {
@@ -116,10 +105,26 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         mPhoneText.setText(AppInitManger.getPhoneNum());
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
-        AppInit appInit = AppInitManger.getAppInit();
-        txt_wechat.setText(appInit.bindWX ? "已绑定" : "未绑定");
-        txt_qq.setText(appInit.bindQQ ? "已绑定" : "未绑定");
-        txt_weibo.setText(appInit.bindWB ? "已绑定" : "未绑定");
+        mPhoneText.setText(AppInitManger.getPhoneNum());
+
+        if(AppInitManger.sAppInit.bindWX){
+            mTxtWechatAccount.setText(R.string.account_status_bind);
+            mTxtWechatAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
+        if(AppInitManger.sAppInit.bindQQ){
+            mTxtQQAccount.setText(R.string.account_status_bind);
+            mTxtQQAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
+        if(AppInitManger.sAppInit.bindWB){
+            mTxtWeiboAccount.setText(R.string.account_status_bind);
+            mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
+//=======
+//        AppInit appInit = AppInitManger.getAppInit();
+//        txt_wechat.setText(appInit.bindWX ? "已绑定" : "未绑定");
+//        txt_qq.setText(appInit.bindQQ ? "已绑定" : "未绑定");
+//        txt_weibo.setText(appInit.bindWB ? "已绑定" : "未绑定");
+//>>>>>>> upstream/master
     }
 
     @Override
@@ -159,15 +164,15 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_phone:
 
                 break;
-            case R.id.layout_wechat:
-
-                break;
-            case R.id.layout_qq:
-
-                break;
-            case R.id.layout_weibo:
-
-                break;
+//            case R.id.layout_wechat:
+//
+//                break;
+//            case R.id.layout_qq:
+//
+//                break;
+//            case R.id.layout_weibo:
+//
+//                break;
         }
     }
 

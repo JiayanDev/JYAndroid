@@ -32,8 +32,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         setOnItemClickListener(new OnItemClickListener<Post>() {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
-                WebViewActivity.launchActivity(mContext, item.id, item.userId, item.userName,
-                        item.type);
+                WebViewActivity.launchActivity(mContext, item.id, item.type);
             }
         });
     }

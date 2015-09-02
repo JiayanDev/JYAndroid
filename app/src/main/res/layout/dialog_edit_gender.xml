@@ -3,7 +3,7 @@
     android:id="@+id/radio_group_gender"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="30dip">
 
     <RadioButton
@@ -21,7 +21,6 @@
         android:id="@+id/radio_female"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:button="@null"
         android:drawableLeft="@drawable/selector_gender"
         android:drawablePadding="@dimen/normal_padding"

@@ -16,12 +16,14 @@ import com.jiayantech.library.utils.ToastUtil;
  */
 public class PersonalPageFragment extends WebViewFragment {
     Button mPostButton;
+    private long mUserId;
+    private String mUserName;
 
     public static PersonalPageFragment newInstance(long userId, String userName) {
         PersonalPageFragment fragment = new PersonalPageFragment();
         Bundle args = new Bundle();
-        args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
-        args.putString(WebViewFragment.EXTRA_USERNAME, userName);
+        //args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
+        //args.putString(WebViewFragment.EXTRA_USERNAME, userName);
         args.putString(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
         fragment.setArguments(args);
         return fragment;

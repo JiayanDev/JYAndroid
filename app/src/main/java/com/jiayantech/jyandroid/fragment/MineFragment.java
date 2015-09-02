@@ -15,8 +15,10 @@ import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.eventbus.UnreadMessageEvent;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
+import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -25,6 +27,7 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -38,6 +41,8 @@ import de.greenrobot.event.EventBus;
  * @Update by janseon on 15/7/7
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
+    private static final String TAG = "MineFragment";
+
     public static MineFragment newInstance(Bundle args) {
         MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
@@ -52,6 +57,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_home_page;
     private View divider_home_page;
 
+    private TextView mTxtUnreadNotification;
+    private ImageView mImageUnreadCompany;
+    private ImageView mImageUnreadAngel;
+
     @Override
     protected int getInflaterResId() {
         return R.layout.fragment_mine;
@@ -65,16 +74,46 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         txt_info = (TextView) findViewById(R.id.txt_info);
 
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
+//<<<<<<< HEAD
+        //txt_home_page.setOnClickListener(this);
+
+//        txt_events = (TextView) findViewById(R.id.txt_angel);
+//        txt_events.setOnClickListener(this);
+//
+//        txt_notifications = (TextView) findViewById(R.id.txt_notification);
+//        txt_notifications.setOnClickListener(this);
+//
+//        txt_setting = (TextView)findViewById(R.id.txt_setting);
+//        txt_setting.setOnClickListener(this);
+//
+//        txt_logout = (TextView) findViewById(R.id.txt_logout);
+//        txt_logout.setOnClickListener(this);
+//
+//        txt_delete = (TextView) findViewById(R.id.txt_delete);
+//        txt_delete.setOnClickListener(this);
+//
+//        txt_mine = (TextView) findViewById(R.id.txt_my_company);
+//        txt_mine.setOnClickListener(this);
+
+        mTxtUnreadNotification = (TextView)findViewById(R.id.txt_unread_notification);
+        mImageUnreadCompany = (ImageView)findViewById(R.id.image_unread_company);
+        mImageUnreadAngel = (ImageView)findViewById(R.id.image_unread_angel);
         divider_home_page = findViewById(R.id.divider_home_page);
 
         findViewById(R.id.layout_info).setOnClickListener(this);
         findViewById(R.id.txt_home_page).setOnClickListener(this);
-        findViewById(R.id.txt_events).setOnClickListener(this);
+        findViewById(R.id.txt_angel).setOnClickListener(this);
         findViewById(R.id.txt_notification).setOnClickListener(this);
-        findViewById(R.id.txt_company).setOnClickListener(this);
+        findViewById(R.id.txt_my_company).setOnClickListener(this);
         findViewById(R.id.txt_setting).setOnClickListener(this);
         findViewById(R.id.txt_delete).setOnClickListener(this);
 
+        int unreadNotificationCount = UmengPushManager.getInstance().getUnreadNotificationCount();
+        boolean unreadCompany = UmengPushManager.getInstance().getUnreadCompanyCount();
+        boolean unreadAngel = UmengPushManager.getInstance().getUnreadAngelCount();
+        UnreadMessageEvent event = new UnreadMessageEvent(unreadNotificationCount,
+                unreadCompany, unreadAngel);
+        onEvent(event);
         resume();
     }
 
@@ -82,6 +121,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+
+
+//        EventBus.getDefault().post(event);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void resume() {
@@ -104,6 +152,28 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case EditFinishEvent.ACTION_EDIT_AVATAR:
                 BitmapBiz.display(img_avatar, event.avatar);
                 break;
+        }
+    }
+
+    public void onEvent(UnreadMessageEvent event){
+        LogUtil.i(TAG, "handling UnreadMessageEvent");
+        if(event.unreadNotificaition > 0){
+            mTxtUnreadNotification.setVisibility(View.VISIBLE);
+            mTxtUnreadNotification.setText(String.valueOf(event.unreadNotificaition));
+        }else{
+            mTxtUnreadNotification.setVisibility(View.INVISIBLE);
+        }
+        //setHomePageVisible(true);
+        if(event.unreadCompany){
+            mImageUnreadCompany.setVisibility(View.VISIBLE);
+        }else{
+            mImageUnreadCompany.setVisibility(View.INVISIBLE);
+        }
+
+        if(event.unreadAngel){
+            mImageUnreadAngel.setVisibility(View.VISIBLE);
+        }else{
+            mImageUnreadAngel.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -137,22 +207,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.layout_info:
                 startActivity(UserInfoActivity.class);
                 break;
-            case R.id.txt_home_page:
-                Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
-                intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
-                startActivity(intent);
-                break;
-            case R.id.txt_events:
+//            case R.id.txt_home_page:
+//                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+//                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+//                startActivity(intent);
+//                break;
+            case R.id.txt_angel:
                 startActivity(MyEventsActivity.class);
                 break;
             case R.id.txt_notification:
                 startActivity(MessagesActivity.class);
                 break;
-            case R.id.txt_company:
-                startActivity(CompanyEventActivity.class);
-                break;
+//            case R.id.txt_my_company:
+//                startActivity(CompanyEventActivity.class);
+//                break;
             case R.id.txt_setting:
                 startActivity(SettingActivity.class);
                 break;
@@ -165,6 +233,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         ToastUtil.showMessage("delete");
                     }
                 });
+                break;
+            case R.id.txt_my_company:
+                startActivity(CompanyEventActivity.class);
+                break;
+            case R.id.txt_home_page:
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                //intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+                //intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+                startActivity(intent);
                 break;
         }
     }

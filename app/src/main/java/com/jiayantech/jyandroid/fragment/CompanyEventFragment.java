@@ -1,9 +1,11 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.os.Bundle;
+
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
 import com.jiayantech.jyandroid.biz.CompanyBiz;
-import com.jiayantech.jyandroid.biz.EventBiz;
+import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.RefreshListFragment;
@@ -27,5 +29,11 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
                 .build());
         setParams(new BeautyWithAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
         setEnablePaging(false);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        UmengPushManager.getInstance().setUnreadCompanyCount(false);
     }
 }
