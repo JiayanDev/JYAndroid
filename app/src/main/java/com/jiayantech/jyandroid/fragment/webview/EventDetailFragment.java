@@ -25,12 +25,12 @@ public class EventDetailFragment extends WebViewFragment{
 
 //    private Button mApplyButton;
 
-    public static EventDetailFragment newInstance(long id, long userId, String userName){
+    public static EventDetailFragment newInstance(long id){
         EventDetailFragment fragment = new EventDetailFragment();
         Bundle args = new Bundle();
         args.putLong(WebViewFragment.EXTRA_ID, id);
-        args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
-        args.putString(WebViewFragment.EXTRA_USERNAME, userName);
+        //args.putLong(WebViewFragment.EXTRA_USER_ID, userId);
+        //args.putString(WebViewFragment.EXTRA_USERNAME, userName);
         args.putString(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_EVENT);
         fragment.setArguments(args);
         return fragment;

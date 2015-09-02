@@ -35,8 +35,7 @@ public class HomeEventAdapter extends BaseSimpleModelAdapter<HomePageEvent> {
                         id = item.topicId;
                         break;
                 }
-                WebViewActivity.launchActivity(mContext, id, item.userId, item.userName,
-                        item.type);
+                WebViewActivity.launchActivity(mContext, id, item.type);
             }
         });
     }

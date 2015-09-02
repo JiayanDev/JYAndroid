@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.eventbus.ShareFinishEvent;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
@@ -26,11 +27,13 @@ import com.jiayantech.jyandroid.widget.SharePanel;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.LogUtil;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by liangzili on 15/7/7.
  */
 public abstract class WebViewFragment extends BaseFragment {
-    public static final String TAG = WebViewFragment.class.getSimpleName();
+    public static final String TAG = "WebViewFragment";
 
     public static final int REQUEST_CODE_COMMENT = 1;
 
@@ -42,8 +45,8 @@ public abstract class WebViewFragment extends BaseFragment {
      * */
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_TYPE = "type";
-    public static final String EXTRA_USERNAME = "username";
-    public static final String EXTRA_USER_ID = "user_id";
+    //public static final String EXTRA_USERNAME = "username";
+    //public static final String EXTRA_USER_ID = "user_id";
 
     private LinearLayout mContentLayout;
     private RelativeLayout mLoadingLayout;
@@ -56,8 +59,8 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected String mType;
     protected long mId;
-    protected String mUserName;
-    protected long mUserId;
+    //protected String mUserName;
+    //protected long mUserId;
 
     protected String mUrl;
 
@@ -65,8 +68,8 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mId = getArguments().getLong(EXTRA_ID);
-        mUserId = getArguments().getLong(EXTRA_USER_ID);
-        mUserName = getArguments().getString(EXTRA_USERNAME);
+        //mUserId = getArguments().getLong(EXTRA_USER_ID);
+        //mUserName = getArguments().getString(EXTRA_USERNAME);
         mType = getArguments().getString(EXTRA_TYPE);
 
         mUrl = onGetUrl() + "?" + onGetUrlParams();
@@ -74,6 +77,8 @@ public abstract class WebViewFragment extends BaseFragment {
         LogUtil.i(TAG, "loading url:" + mUrl);
 
         getActivity().setTitle(onSetTitle());
+
+        EventBus.getDefault().register(this);
     }
 
     abstract protected String onGetUrl();
@@ -126,7 +131,9 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        mSharePanel = null;
+        if(mSharePanel != null && mSharePanel.isShowing()){
+            mSharePanel.dismiss();
+        }
     }
 
     @Override
@@ -137,6 +144,7 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (mWebView != null) {
             mWebView.destroy();
         }
@@ -210,7 +218,7 @@ public abstract class WebViewFragment extends BaseFragment {
 
         //监听web页面获取用户信息
         client.addActionListener(new WebActionListener<JsCallUserInfo>(
-                JsNativeBiz.ACTION_GET_USERINFO, JsCallUserInfo.class){
+                JsNativeBiz.ACTION_GET_USERINFO, JsCallUserInfo.class) {
             @Override
             public void execute(JsCallUserInfo data) {
 
@@ -247,5 +255,11 @@ public abstract class WebViewFragment extends BaseFragment {
         if(mSharePanel != null && mSharePanel.isShowing()){
             mSharePanel.dismiss();
         }
+    }
+
+    public void onEvent(ShareFinishEvent event){
+//       if(mSharePanel != null && mSharePanel.isShowing()){
+//           mSharePanel.dismiss();
+//       }
     }
 }

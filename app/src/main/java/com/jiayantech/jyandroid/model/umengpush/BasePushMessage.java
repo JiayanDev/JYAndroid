@@ -9,5 +9,5 @@ public class BasePushMessage<T> {
     public String action;
     public int code;
     public String msg;
-    T data;
+    public T data;
 }

@@ -10,20 +10,27 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.eventbus.UnreadMessageEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomeEventFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
+import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.umeng.message.PushAgent;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -39,6 +46,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
     private LocationManager mLocationManager;
+
+    private ImageView mImageUnreadDot;
+    private TextView mTextUnreadCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +67,34 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         initViewPager();
 
         setDisplayHomeAsUpEnabled(false);
+        mImageUnreadDot = (ImageView)findViewById(R.id.img_unread_dot);
+        mTextUnreadCount = (TextView)findViewById(R.id.txt_unread_count);
+
+        int unreadNotificationCount = UmengPushManager.getInstance().getUnreadNotificationCount();
+        boolean unreadCompany = UmengPushManager.getInstance().getUnreadCompanyCount();
+        boolean unreadAngel = UmengPushManager.getInstance().getUnreadAngelCount();
+        UnreadMessageEvent event = new UnreadMessageEvent(unreadNotificationCount,
+                unreadCompany, unreadAngel);
+        onEvent(event);
 
         //如果是从通知栏推送消息点击启动app，根据推送消息的参数跳转到对应Activity
         if(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE) != null){
             launchActivityFromNotification(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE));
         }
-        //EventBus.getDefault().register(this)
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void launchActivityFromNotification(Bundle bundleExtra) {
         String type = bundleExtra.getString(WebViewFragment.EXTRA_TYPE);
         long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
-        long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
-        String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
+        //long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
+        //String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
 //        switch (type){
 //            case WebViewFragment.TYPE_DIARY:
 //                Intent intent = new Intent(this, PostDetailActivity.class);
@@ -82,13 +106,45 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //                break;
 //            default:
 //                return;
-        Intent intent = WebViewActivity.createLaunchIntent(this, id, userId, userName, type);
+        Intent intent = null;
+        switch (type){
+            case WebConstans.Type.TYPE_DIARY:
+            case WebConstans.Type.TYPE_TOPIC:
+            case WebConstans.Type.TYPE_EVENT:
+            case WebConstans.Type.TYPE_PERSONAL_PAGE:
+                intent = WebViewActivity.createLaunchIntent(this, id, type);
+                break;
+            case "my_angel":
+                intent = new Intent(this, MyEventsActivity.class);
+                break;
+            case "my_company":
+                intent = new Intent(this, CompanyEventActivity.class);
+                break;
+        }
+        //Intent intent = WebViewActivity.createLaunchIntent(this, id, type);
         startActivity(intent);
     }
 
 //    //public void onEvent(UmengPushCustomMessage uMessage) {
 //        ToastUtil.showMessage("我收到一条自定义的友盟消息");
 //    }
+
+    public void onEvent(UnreadMessageEvent event){
+        LogUtil.i(TAG, "handling UnreadMessageEvent");
+        if(event.unreadNotificaition > 0){
+            mTextUnreadCount.setVisibility(View.VISIBLE);
+            mImageUnreadDot.setVisibility(View.INVISIBLE);
+            mTextUnreadCount.setText(String.valueOf(event.unreadNotificaition));
+        }else{
+            if(event.unreadCompany || event.unreadAngel){
+                mTextUnreadCount.setVisibility(View.INVISIBLE);
+                mImageUnreadDot.setVisibility(View.VISIBLE);
+            }else{
+                mTextUnreadCount.setVisibility(View.INVISIBLE);
+                mImageUnreadDot.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
 
     private void initView() {
         getSupportActionBar().setTitle(mTitles[0]);
@@ -242,55 +298,4 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         LogUtil.i(TAG, "MainActivity onNewIntent");
         ToastUtil.showMessage("MainActivity onNewIntent");
     }
-
-//    public void showLocation(){
-//        double latitude = 0;
-//        double longitude = 0;
-//        mLocationManager =
-//                (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-//
-//        Criteria criteria = new Criteria();
-//        criteria.setAccuracy(Criteria.ACCURACY_LOW);
-//        criteria.setAltitudeRequired(false);
-//        criteria.setCostAllowed(true);
-//        criteria.setPowerRequirement(Criteria.POWER_LOW);
-//
-//        String provider = mLocationManager.getBestProvider(criteria, false);
-//        LogUtil.i("Location", "the best provider is " + provider);
-//
-//        final LocationListener listener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                LogUtil.i("Location", "onLocationChanged, latitude is " + location.getLatitude() +
-//                    " longitude is " + location.getLongitude());
-//                //mLocationManager.removeUpdates(this);
-//            }
-//
-//            @Override
-//            public void onStatusChanged(String provider, int status, Bundle extras) {
-//                LogUtil.i("Location", "onStatusChanged()");
-//            }
-//
-//            @Override
-//            public void onProviderEnabled(String provider) {
-//                LogUtil.i("Location", "onProviderEnabled()");
-//            }
-//
-//            @Override
-//            public void onProviderDisabled(String provider) {
-//                LogUtil.i("Location", "onProviderDisabled()");
-//            }
-//        };
-//        if(mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-//            LogUtil.i("Location", "NetworkProvider is enabled");
-//        }
-//        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
-//        Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//        if(location != null){
-//            LogUtil.i("Location", "getLastKnownLocation, latitude is " + location.getLatitude() +
-//                    " longitude is " + location.getLongitude());
-//        }
-//
-//        //GeoBiz.getLocationName(22.541842292994257, 113.94652764312923);
-//    }
 }

@@ -19,25 +19,23 @@ public class WebViewActivity extends SingleFragmentActivity{
     @Override
     protected Fragment createFragment() {
         long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
-        long userId = getIntent().getLongExtra(WebViewFragment.EXTRA_USER_ID, -1);
-        String userName = getIntent().getStringExtra(WebViewFragment.EXTRA_USERNAME);
+        //long userId = getIntent().getLongExtra(WebViewFragment.EXTRA_USER_ID, -1);
+        //String userName = getIntent().getStringExtra(WebViewFragment.EXTRA_USERNAME);
         String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
 
-        mFragment = WebViewFragmentFactory.createFragment(type, id, userId, userName);
+        mFragment = WebViewFragmentFactory.createFragment(type, id);
         return mFragment;
     }
 
-    public static void launchActivity(Context context, long id, long userId,
-                                      String userName, String type){
-        context.startActivity(createLaunchIntent(context, id, userId, userName, type));
+    public static void launchActivity(Context context, long id, String type){
+        context.startActivity(createLaunchIntent(context, id, type));
     }
 
-    public static Intent createLaunchIntent(Context context, long id, long userId,
-                                            String userName, String type){
+    public static Intent createLaunchIntent(Context context, long id, String type){
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(WebViewFragment.EXTRA_ID, id);
-        intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
-        intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
+        //intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
+        //intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
         intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
         return intent;
     }

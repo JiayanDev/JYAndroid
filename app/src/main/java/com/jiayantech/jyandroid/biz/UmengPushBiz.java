@@ -13,6 +13,25 @@ import com.umeng.message.UmengRegistrar;
  * Created by liangzili on 15/7/6.
  */
 public class UmengPushBiz {
+    public static final int CODE_DIARY_COMMENTED = 1; //用户日记被评论
+    public static final int CODE_COMMENT_COMMENTED = 2; // 用户评论被评论
+
+    public static final int CODE_ANGEL_APPLY_ACCEPT = 10; // 美丽天使申请通过
+    public static final int CODE_ANGEL_APPLY_DENY  = 11; // 美丽天使申请不通过
+
+    public static final int CODE_COMPANY_APPLY_ACCEPT = 20; // 伴美申请通过
+    public static final int CODE_COMPANY_APPLY_DENY = 21; // 伴美申请不通过
+
+    public static final int CDOE_PUSH_AD = 50; //推送广告
+
+    public static final String JUMP_TO_PAGE_DIARY = "diary_detail";
+    public static final String JUMP_TO_PAGE_TOPIC = "topic_detail";
+    public static final String JUMP_TO_PAGE_MY_ANGEL = "my_angel";
+    public static final String JUMP_TO_PAGE_MY_COMPANY = "my_company";
+
+    public static final String ACTION_JUMP_TO_PAGE = "jump_to_page";
+    public static final String ACTION_JUMP_TO_WEB = "jump_to_web";
+
     private static Context appContext;
     /**
      * enable or disable umeng push notification service

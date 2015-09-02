@@ -133,6 +133,8 @@
     <string name="share_qzone">QQ空间</string>
 
     <string name="btn_cancel">取消</string>
+    <string name="account_status_unbind">未绑定</string>
+    <string name="account_status_bind">已绑定</string>
 
     <!--出错信息toast-->
     <string name="toast_error_wechat_not_install">未安装微信应用</string>

@@ -56,6 +56,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private TextView mPhoneText;
     private RoundedImageView mAvatarImg;
 
+    private TextView mTxtWechatAccount;
+    private TextView mTxtQQAccount;
+    private TextView mTxtWeiboAccount;
+
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
         mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
+
+        mTxtWechatAccount = (TextView)findViewById(R.id.txt_wechat_username);
+        mTxtQQAccount = (TextView)findViewById(R.id.txt_qq_username);
+        mTxtWeiboAccount = (TextView)findViewById(R.id.txt_weibo_username);
     }
 
     protected void setViewsContent() {
@@ -86,6 +94,20 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mLocationText.setText(AppInitManger.getProvince() + " " + AppInitManger.getCity());
         mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
+        mPhoneText.setText(AppInitManger.getPhoneNum());
+
+        if(AppInitManger.sAppInit.bindWX){
+            mTxtWechatAccount.setText(R.string.account_status_bind);
+            mTxtWechatAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
+        if(AppInitManger.sAppInit.bindQQ){
+            mTxtQQAccount.setText(R.string.account_status_bind);
+            mTxtQQAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
+        if(AppInitManger.sAppInit.bindWB){
+            mTxtWeiboAccount.setText(R.string.account_status_bind);
+            mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }
     }
 
     @Override

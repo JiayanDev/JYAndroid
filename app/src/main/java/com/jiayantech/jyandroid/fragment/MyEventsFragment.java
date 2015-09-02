@@ -1,8 +1,11 @@
 package com.jiayantech.jyandroid.fragment;
 
+import android.os.Bundle;
+
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.MyEventAdapter;
 import com.jiayantech.jyandroid.biz.EventBiz;
+import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.RefreshListFragment;
@@ -28,5 +31,11 @@ public class MyEventsFragment extends RefreshListFragment<Event, AppResponse<Lis
                 .build());
         //ultimateRecyclerView.setRecylerViewBackgroundColor(getResources().getColor(R.color.bg_gray));
         setParams(new MyEventAdapter(getActivity(), null), EventBiz.ACTION_LIST);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        UmengPushManager.getInstance().setUnreadAngelCount(false);
     }
 }
