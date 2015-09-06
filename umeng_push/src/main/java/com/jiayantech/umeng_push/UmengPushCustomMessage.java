@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.eventbus;
+package com.jiayantech.umeng_push;
 
 /**
  * Created by liangzili on 15/7/31.

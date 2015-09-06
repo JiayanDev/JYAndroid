@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:support-v13:22.2.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.1'
@@ -54,4 +54,5 @@ dependencies {
         exclude module: 'support-v4'
     }
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
+    compile files('libs/com.umeng.message.lib_v2.3.0.jar')
 }
