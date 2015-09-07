@@ -4,6 +4,7 @@ import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.umeng_push.UmengPushManager;
 
 import java.util.Map;
 
@@ -27,13 +28,13 @@ public class CommBiz {
     public static final String ACTION_DOCTOR_OPTION = DOCTOR_MODEL + "/option";
 
     public static void appInit(ResponseListener<?> l) {
-        Map<String, String> params = HttpReq.getInitParams("deviceToken", UmengPushBiz.getDeviceToken());
+        Map<String, String> params = HttpReq.getInitParams("deviceToken", UmengPushManager.getDeviceToken());
         params.put(KEY_CONFIG_VERSION, ConfigManager.getConfig(KEY_CONFIG_VERSION, "0"));
         HttpReq.post(ACTION_APP_INIT, params, l);
     }
 
     public static AppInit appInitCache() {
-        Map<String, String> params = HttpReq.getInitParams("deviceToken", UmengPushBiz.getDeviceToken());
+        Map<String, String> params = HttpReq.getInitParams("deviceToken", UmengPushManager.getDeviceToken());
         params.put(KEY_CONFIG_VERSION, ConfigManager.getConfig(KEY_CONFIG_VERSION, "0"));
         return HttpReq.getCache(ACTION_APP_INIT, params, AppInit.class);
     }

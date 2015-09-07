@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.model.umengpush;
+package com.jiayantech.umeng_push.model;
 
 /**
  * Created by liangzili on 15/7/29.

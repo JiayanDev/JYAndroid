@@ -2,7 +2,6 @@ package com.jiayantech.jyandroid.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,19 +15,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.eventbus.UnreadMessageEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomePagePostFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
-import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
-import com.umeng.message.PushAgent;
+import com.jiayantech.umeng_push.UmengPushManager;
+import com.jiayantech.umeng_push.UnreadMessageEvent;
 
 import de.greenrobot.event.EventBus;
 
@@ -45,7 +43,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
     private RadioButton[] mRadioButtons = new RadioButton[3];
-    private LocationManager mLocationManager;
 
     private ImageView mImageUnreadDot;
     private TextView mTextUnreadCount;
@@ -56,7 +53,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         setContentView(R.layout.activity_main0);
         setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
-        PushAgent.getInstance(this).enable();
+        //PushAgent.getInstance(this).enable();
+        UmengPushManager.getInstance().enablePush(true);
 
         mTitles = getResources().getStringArray(R.array.tab_title);
 
@@ -78,8 +76,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         onEvent(event);
 
         //如果是从通知栏推送消息点击启动app，根据推送消息的参数跳转到对应Activity
-        if(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE) != null){
-            launchActivityFromNotification(getIntent().getBundleExtra(SplashActivity.EXTRA_BUNDLE));
+        if(getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE) != null){
+            long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
+            String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
+            launchActivityFromNotification(id, type);
         }
         EventBus.getDefault().register(this);
     }
@@ -90,9 +90,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         EventBus.getDefault().unregister(this);
     }
 
-    private void launchActivityFromNotification(Bundle bundleExtra) {
-        String type = bundleExtra.getString(WebViewFragment.EXTRA_TYPE);
-        long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
+    private void launchActivityFromNotification(long id, String type) {
+//        String type = bundleExtra.getString(WebViewFragment.EXTRA_TYPE);
+//        long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
         //long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
         //String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
 //        switch (type){

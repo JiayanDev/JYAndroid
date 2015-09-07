@@ -1,9 +1,7 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
-
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 
 import com.android.volley.VolleyError;
@@ -86,7 +84,7 @@ public class SplashActivity extends BaseActivity {
         long dTimeMillis = System.currentTimeMillis() - currentTimeMillis;
         final Intent intent = new Intent(this, MainActivity.class);
         if(getIntent().getBundleExtra(EXTRA_BUNDLE) != null){
-            intent.putExtra(EXTRA_BUNDLE, getIntent().getBundleExtra(EXTRA_BUNDLE));
+            intent.putExtras(getIntent().getBundleExtra(EXTRA_BUNDLE));
         }
 
         if (dTimeMillis < delayMillis) {

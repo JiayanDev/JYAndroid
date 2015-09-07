@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
 import com.jiayantech.jyandroid.biz.CompanyBiz;
-import com.jiayantech.jyandroid.handler.umengpush.UmengPushManager;
+import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
 import com.jiayantech.library.base.RefreshListFragment;

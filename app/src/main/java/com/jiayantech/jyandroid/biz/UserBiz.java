@@ -20,6 +20,7 @@ import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.umeng_push.UmengPushManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -169,7 +170,7 @@ public class UserBiz {
     }
 
     private static void postLogin(String action, Map<String, String> params, ResponseListener<?> l) {
-        params.put("deviceToken", UmengPushBiz.getDeviceToken());
+        params.put("deviceToken", UmengPushManager.getDeviceToken());
         HttpReq.post(action, params, l);
     }
 

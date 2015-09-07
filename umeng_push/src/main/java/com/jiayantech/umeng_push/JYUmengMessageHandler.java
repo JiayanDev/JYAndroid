@@ -1,10 +1,9 @@
-package com.jiayantech.jyandroid.handler.umengpush;
+package com.jiayantech.umeng_push;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.jiayantech.library.utils.LogUtil;
-import com.jiayantech.library.utils.ToastUtil;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 
@@ -20,11 +19,22 @@ public class JYUmengMessageHandler extends UmengMessageHandler{
 
     @Override
     public void dealWithCustomMessage(Context context, UMessage uMessage) {
-        ToastUtil.showMessage(uMessage.custom);
         LogUtil.i("UmengPushMessage", String.format("Message custom: %s",
                 uMessage.custom));
+        sendBroadcast(uMessage);
+    }
+
+    @Override
+    public void dealWithNotificationMessage(Context context, UMessage uMessage) {
+        super.dealWithNotificationMessage(context, uMessage);
+        LogUtil.i("UmengPushMessage", String.format("Notification Message custom: %s",
+                uMessage.custom));
+        sendBroadcast(uMessage);
+    }
+
+    private void sendBroadcast(UMessage msg){
         Intent intent = new Intent(PushBroadcastReceiver.ACTION);
-        intent.putExtra(PushBroadcastReceiver.EXTRA_UMESSAGE, uMessage.custom);
+        intent.putExtra(PushBroadcastReceiver.EXTRA_UMESSAGE, msg.custom);
         mContext.sendBroadcast(intent);
     }
 }
