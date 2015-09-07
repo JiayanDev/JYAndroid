@@ -3,7 +3,7 @@ package com.jiayantech.jyandroid.fragment;
 import android.os.Bundle;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
+import com.jiayantech.jyandroid.adapter.CompanyAdapter;
 import com.jiayantech.jyandroid.biz.CompanyBiz;
 import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.jyandroid.model.Event;
@@ -27,7 +27,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
                 .color(getResources().getColor(R.color.bg_gray_color))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
-        setParams(new BeautyWithAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
+        setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
         setEnablePaging(false);
     }
 

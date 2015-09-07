@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Created by liangzili on 15/7/30.
  */
-public class BeautyWithAdapter extends BaseSimpleModelAdapter<Event> {
-    public BeautyWithAdapter(final Context context, List<Event> list) {
+public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
+    public CompanyAdapter(final Context context, List<Event> list) {
 
         super(list);
         setOnItemClickListener(new OnItemClickListener<Event>() {
@@ -32,14 +32,15 @@ public class BeautyWithAdapter extends BaseSimpleModelAdapter<Event> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(viewGroup, R.layout.item_event_company, this);
+        return new ViewHolder(viewGroup, R.layout.item_company, this);
     }
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Event> {
         public TextView txt_title;
-        public TextView txt_info;
+        public TextView txt_project;
         public TextView txt_time;
         public TextView txt_status;
+        public TextView txt_status_comment;
 
         public ViewHolder(ViewGroup parent, int layoutId) {
             this(parent, layoutId, null);
@@ -48,15 +49,16 @@ public class BeautyWithAdapter extends BaseSimpleModelAdapter<Event> {
         public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Event> adapter) {
             super(parent, layoutId, adapter);
             txt_title = (TextView) itemView.findViewById(R.id.txt_title);
-            txt_info = (TextView) itemView.findViewById(R.id.txt_info);
+            txt_project = (TextView) itemView.findViewById(R.id.txt_project);
             txt_time = (TextView) itemView.findViewById(R.id.txt_time);
             txt_status = (TextView) itemView.findViewById(R.id.txt_status);
+            txt_status_comment = (TextView)itemView.findViewById(R.id.txt_status_comment);
         }
 
         @Override
         public void onBind(Event event, int position) {
             txt_title.setText(event.userName);
-            txt_info.setText(event.hospitalName + " " + event.doctorName);
+            txt_project.setText(event.categoryName);
             txt_time.setText(TimeUtil.getStrTime(event.beginTime));
             txt_status.setText(event.applyStatus);
         }

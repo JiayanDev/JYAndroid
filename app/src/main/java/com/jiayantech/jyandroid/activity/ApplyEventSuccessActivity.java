@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +15,6 @@ public class ApplyEventSuccessActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_event_success);
-
     }
 
     @Override

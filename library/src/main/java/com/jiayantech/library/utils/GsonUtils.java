@@ -16,13 +16,22 @@ import java.lang.reflect.Type;
  * Created by 健兴 on 2015/8/2.
  */
 public class GsonUtils {
+    private static Gson sGson;
+
     public static Gson build() {
-        GsonBuilder gb = new GsonBuilder();
-        gb.registerTypeAdapter(String.class, new StringConverter());
-        gb.registerTypeAdapter(Double.class, new DoubleConverter());
-        gb.registerTypeAdapter(Integer.class, new IntegerConverter());
-        gb.registerTypeAdapter(Boolean.class, new BooleanConverter());
-        return gb.create();
+        if(sGson == null){
+            synchronized (GsonUtils.class){
+                if(sGson == null){
+                    GsonBuilder gb = new GsonBuilder();
+                    gb.registerTypeAdapter(String.class, new StringConverter());
+                    gb.registerTypeAdapter(Double.class, new DoubleConverter());
+                    gb.registerTypeAdapter(Integer.class, new IntegerConverter());
+                    gb.registerTypeAdapter(Boolean.class, new BooleanConverter());
+                    sGson = gb.create();
+                }
+            }
+        }
+        return sGson;
     }
 }
 
@@ -31,9 +40,22 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
         return new JsonPrimitive(src == null ? "" : src);
     }
 
-    public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException {
-        return json.getAsJsonPrimitive().getAsString();
+    //    public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+//            throws JsonParseException {
+//
+//        return json.getAsJsonPrimitive().getAsString();
+//    }
+    public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+        //作容错
+        String result = "";
+        try {
+            result = json.getAsJsonPrimitive().getAsString();
+        }catch (JsonParseException e){
+            e.printStackTrace();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }
 
