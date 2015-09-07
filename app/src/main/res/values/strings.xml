@@ -114,12 +114,14 @@
     <string name="hint_input_nickname">请输入呢称(2-20个字符)</string>
     <string name="hint_input_set_pass">设置新密码(6-20个字符)</string>
     <string name="hint_input_set_pass_again">请再次输入新密码</string>
+    <string name="hint_input_cur_pass">请输入当前密码</string>
     <string name="confirm_reset">重置密码</string>
     <string name="hint_input_phone_code">请输入短信验证码</string>
     <string name="hint_waring_send_phone_code">请点击发送验证码</string>
     <string name="title_set_info">完善信息</string>
     <string name="waring_pass_is_not_same">再次输入的密码不一致</string>
     <string name="title_reset_pass">重新设置密码</string>
+    <string name="title_update_pass">修改密码</string>
     <string name="msg_account_not_register">该帐号未注册，请验证手机进行注册</string>
     <string name="msg_sent_phone_code">已发送验证码!</string>
     <string name="msg_overdue_to_login">登录信息已经过期，请重新登录</string>
@@ -152,5 +154,7 @@
     <string name="area">地区</string>
     <string name="birthday">生日</string>
     <string name="user_info">个人信息</string>
+    <string name="event_recruit">招募中</string>
+    <string name="event_finish">已结束</string>
 
 </resources>

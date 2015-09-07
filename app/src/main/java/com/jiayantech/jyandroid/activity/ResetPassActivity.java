@@ -46,7 +46,7 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
     }
 
     protected void findViews() {
-        ViewStub stub = (ViewStub)findViewById(R.id.stub);
+        ViewStub stub = (ViewStub) findViewById(R.id.stub);
         stub.inflate();
 
         input_pass_0 = (EditText) findViewById(R.id.input_pass_0);
@@ -85,11 +85,11 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
 
                 UserBiz.update(phoneCodeConfirmResponse, phoneNum, pass,
                         new ResponseListener<BaseAppResponse>() {
-                    @Override
-                    public void onResponse(BaseAppResponse baseAppResponse) {
-                        ActivityResult.onFinishResult(ResetPassActivity.this);
-                    }
-                });
+                            @Override
+                            public void onResponse(BaseAppResponse baseAppResponse) {
+                                ActivityResult.onFinishResult(ResetPassActivity.this);
+                            }
+                        });
                 break;
             case R.id.btn_send_verify_code:
                 phoneNum = input_phone.getText().toString();
@@ -99,19 +99,23 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
                 }
                 UserBiz.sendPhoneCode(phoneNum,
                         new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
-                    @Override
-                    public void onResponse(AppResponse<HashMap<String, String>> response) {
-                        super.onResponse(response);
-                        ToastUtil.showMessage(R.string.msg_sent_phone_code);
-                        //phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
-                    }
-                });
+                            @Override
+                            public void onResponse(AppResponse<HashMap<String, String>> response) {
+                                super.onResponse(response);
+                                ToastUtil.showMessage(R.string.msg_sent_phone_code);
+                                //phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
+                            }
+                        });
                 break;
 
         }
     }
 
     protected String checkPass() {
+        return checkPass(input_pass_0, input_pass_1);
+    }
+
+    public static String checkPass(EditText input_pass_0, EditText input_pass_1) {
         String pass_0 = input_pass_0.getText().toString();
         if (TextUtils.isEmpty(pass_0)) {
             ToastUtil.showMessage(R.string.hint_input_set_pass);

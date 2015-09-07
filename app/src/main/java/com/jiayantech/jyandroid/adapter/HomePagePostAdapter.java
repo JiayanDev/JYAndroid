@@ -94,16 +94,16 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
         @Override
         public void onBind(HomePagePost item, int position) {
             super.onBind(item, position);
-            if (position % 2 == 0) {
-                txt_status.setText("招募中");
+            if (item.status.equals(txt_status.getContext().getString(R.string.publish))) {
                 txt_status.setBackgroundResource(R.drawable.bg_event_status_going);
+                txt_status.setText(R.string.event_recruit);
             } else {
-                txt_status.setText("活动结束");
                 txt_status.setBackgroundResource(R.drawable.bg_event_status_finish);
+                txt_status.setText(R.string.event_finish);
             }
-            BitmapBiz.display(img_doctor, item.userAvatar);
-            txt_doctor.setText(item.userName);
-            txt_doctorDesc.setText(item.hospitalName);
+            BitmapBiz.display(img_doctor, item.doctorAvatar);
+            txt_doctor.setText(item.doctorName + " " + item.doctorTitle);
+            txt_doctorDesc.setText(item.doctorDesc);
         }
     }
 }

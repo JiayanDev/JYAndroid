@@ -46,6 +46,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     public void setEnablePaging(boolean enable) {
         enablePaging = enable;
+        if (!enablePaging) setNoMore();
     }
 
     protected void setParams(BaseSimpleModelAdapter<T> adapter, String action) {
@@ -151,18 +152,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //                    if (mAdapter.getCustomLoadMoreView() != null) {
 //                        mAdapter.getCustomLoadMoreView().setVisibility(View.GONE);
 //                    }
-                    if (mAdapter.getCustomLoadMoreView() != null) {
-                        //ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-                        ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-                        ultimateRecyclerView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAdapter.setCustomLoadMoreView(null);
-                                ultimateRecyclerView.disableLoadmore();
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        }, 2000);
-                    }
+                    setNoMore();
                 }
                 onFinal();
             }
@@ -177,6 +167,22 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 //mAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+
+    protected void setNoMore() {
+        if (mAdapter != null && mAdapter.getCustomLoadMoreView() != null) {
+            //ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+            ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+            ultimateRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setCustomLoadMoreView(null);
+                    ultimateRecyclerView.disableLoadmore();
+                    mAdapter.notifyDataSetChanged();
+                }
+            }, 2000);
+        }
     }
 
 
@@ -199,6 +205,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         linearLayoutManager = new LinearLayoutManager(getActivity());
         ultimateRecyclerView.setLayoutManager(linearLayoutManager);
         ultimateRecyclerView.enableLoadmore();
+        if (!enablePaging) setNoMore();
 
 //        ultimateRecyclerView.setParallaxHeader(getActivity().getLayoutInflater().inflate(R.layout.parallax_recyclerview_header, ultimateRecyclerView.mRecyclerView, false));
 //        ultimateRecyclerView.setOnParallaxScroll(new UltimateRecyclerView.OnParallaxScroll() {

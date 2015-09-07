@@ -107,7 +107,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".activity.UpdatePassActivity"
+            android:screenOrientation="portrait"/>
         <!--友盟推送服务相关-->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

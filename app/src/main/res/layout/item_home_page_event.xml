@@ -21,7 +21,6 @@
         android:gravity="center_vertical"
         android:paddingLeft="20dip"
         android:paddingRight="20dip"
-        android:text="胡汉灵"
         android:textColor="@android:color/white" />
 
     <LinearLayout

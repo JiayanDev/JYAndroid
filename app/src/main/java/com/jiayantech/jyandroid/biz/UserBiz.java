@@ -58,6 +58,7 @@ public class UserBiz {
     private static final String ACTION_LOGOUT = MODEL + "/logout";
     private static final String ACTION_DETAIL = MODEL + "/detail";
     private static final String ACTION_UPDATE = MODEL + "/update";
+    private static final String ACTION_HAS_PSW = MODEL + "/has/psw";
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
     private static final String ACTION_DELETE = MODEL + "/delete";
@@ -197,7 +198,7 @@ public class UserBiz {
         HttpReq.get(ACTION_DETAIL, null, l);
     }
 
-    public static void update(Map<String, String> params, ResponseListener<?> l){
+    public static void update(Map<String, String> params, ResponseListener<?> l) {
         HttpReq.post(ACTION_UPDATE, params, l);
     }
 
@@ -219,7 +220,17 @@ public class UserBiz {
         HttpReq.post(ACTION_UPDATE_PASS, params, l);
     }
 
-    public static void updatePhone(String receipt, String phoneNum, ResponseListener<?> l){
+    public static void update(String currPsw, String newPsw, ResponseListener<?> l) {
+        Map<String, String> params = HttpReq.getInitParams("newPsw", MD5.encode(newPsw));
+        HttpReq.putParams(params, "currPsw", MD5.encode(currPsw));
+        HttpReq.post(ACTION_UPDATE_PASS, params, l);
+    }
+
+    public static void hasPsw(ResponseListener<?> l) {
+        HttpReq.get(ACTION_HAS_PSW, null, l);
+    }
+
+    public static void updatePhone(String receipt, String phoneNum, ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();
         params.put("phoneNum", phoneNum);
         params.put("receipt", receipt);

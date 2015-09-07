@@ -26,4 +26,10 @@ public class HomePagePost extends BaseModel {
     public long applymentCount;
     public int[] categoryIds;
     public String status;
+
+    public String doctorId;
+    public String doctorName;
+    public String doctorAvatar;
+    public String doctorTitle;
+    public String doctorDesc;
 }

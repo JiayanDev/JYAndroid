@@ -329,7 +329,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
             mActivity.showProgressDialog();
         }
 
-        public void onResponse(T var1) {
+        public void onResponse(T t) {
             mActivity.dismissProgressDialog();
         }
 

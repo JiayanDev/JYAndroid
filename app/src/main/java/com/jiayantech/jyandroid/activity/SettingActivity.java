@@ -38,9 +38,7 @@ public class SettingActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_password:
-                Intent intent = new Intent(this, VerifyPhoneActivity.class);
-                intent.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_FORGET_PASS);
-                startActivity(intent);
+                startActivity(UpdatePassActivity.class);
                 break;
             case R.id.txt_help:
 
