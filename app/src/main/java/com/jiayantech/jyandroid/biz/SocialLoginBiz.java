@@ -39,8 +39,12 @@ public class SocialLoginBiz {
 
     //////////////////原生sdk 登录
     public static void wechatLogin(final GetCodeListener getCodeListener) {
-        WXEntryActivity.setGetCodeListener(getCodeListener);
         IWXAPI api = WXAPIFactory.createWXAPI(BaseApplication.getContext(), Constants.WECHAT_appId);
+        if (!api.isWXAppInstalled()) {
+            getCodeListener.onUninstalled();
+            return;
+        }
+        WXEntryActivity.setGetCodeListener(getCodeListener);
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "jiayantech";
@@ -67,6 +71,8 @@ public class SocialLoginBiz {
 
     public interface GetCodeListener {
         void onGetCode(String code);
+
+        void onUninstalled();
     }
 
     //////////////////友盟

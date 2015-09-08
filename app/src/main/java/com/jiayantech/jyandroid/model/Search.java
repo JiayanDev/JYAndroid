@@ -2,7 +2,9 @@ package com.jiayantech.jyandroid.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.SpannableString;
 
+import com.google.gson.annotations.Expose;
 import com.jiayantech.library.base.BaseModel;
 
 /**
@@ -16,6 +18,8 @@ public class Search extends BaseModel implements Parcelable {
     public String name;
     public long hospitalId;
     public String hospitalName;
+    @Expose
+    public SpannableString spannableName;
 
     public Search() {
     }

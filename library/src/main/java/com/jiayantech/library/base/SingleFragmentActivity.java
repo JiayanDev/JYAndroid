@@ -13,16 +13,18 @@ import com.jiayantech.library.R;
 public abstract class SingleFragmentActivity extends BaseActivity {
     protected abstract Fragment createFragment();
 
+    protected Fragment mFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-        if (fragment == null) {
-            fragment = createFragment();
+        mFragment = fm.findFragmentById(R.id.fragment_container);
+        if (mFragment == null) {
+            mFragment = createFragment();
             fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
+                    .add(R.id.fragment_container, mFragment)
                     .commit();
         }
     }

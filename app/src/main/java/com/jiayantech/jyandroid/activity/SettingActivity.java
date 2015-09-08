@@ -7,9 +7,11 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
+import com.jiayantech.jyandroid.commons.AppDialogUtils;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
@@ -52,7 +54,10 @@ public class SettingActivity extends BaseActivity {
 
                 break;
             case R.id.btn_exit:
-                showProgressDialog();
+                AppDialogUtils.showBottomDialog(this, "确定退出", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showProgressDialog();
 //                UserBiz.logout(new ResponseListener<BaseAppResponse>() {
 //                    @Override
 //                    public void onResponse(BaseAppResponse baseAppResponse) {
@@ -60,14 +65,17 @@ public class SettingActivity extends BaseActivity {
 //                        ToastUtil.showMessage("logout");
 //                    }
 //                });
-                ConfigManager.putToken("");
-                CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
-                    @Override
-                    public void onResponse(AppResponse<AppInit> appInitAppResponse) {
-                        AppInit appInit = appInitAppResponse.data;
-                        AppInitManger.save(appInit);
-                        dismissProgressDialog();
-                        //((MainActivity) getActivity()).onCheckedChanged(null, R.id.radio_activity);
+                        ConfigManager.putToken("");
+                        CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
+                            @Override
+                            public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                                AppInit appInit = appInitAppResponse.data;
+                                AppInitManger.save(appInit);
+                                dismissProgressDialog();
+                                //((MainActivity) getActivity()).onCheckedChanged(null, R.id.radio_activity);
+                                ActivityResult.onFinishResult(SettingActivity.this);
+                            }
+                        });
                     }
                 });
                 break;

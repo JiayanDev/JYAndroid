@@ -26,10 +26,24 @@ public class DateTimeHelper {
     }
 
     public Dialog showDateTimeDialog(final OnSetDateTimeListener l) {
-        return showDateDialog(l, true);
+        return showDateDialog(l, true, false);
     }
 
-    public Dialog showDateDialog(final OnSetDateTimeListener l, final boolean pickTime) {
+    public Dialog showDateTimeDialog(final OnSetDateTimeListener l, boolean curMax) {
+        return showDateDialog(l, true, curMax);
+    }
+
+    public Dialog showDateDialog(final OnSetDateTimeListener l, boolean curMax) {
+        return showDateDialog(l, false, curMax);
+    }
+
+    /**
+     * @param l
+     * @param pickTime
+     * @param curMax   当前时间为最大时间
+     * @return
+     */
+    public Dialog showDateDialog(final OnSetDateTimeListener l, final boolean pickTime, boolean curMax) {
         DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -46,7 +60,7 @@ public class DateTimeHelper {
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
-        dialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+        if (curMax) dialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
 
 //        dialog.getDatePicker().set
         return dialog;

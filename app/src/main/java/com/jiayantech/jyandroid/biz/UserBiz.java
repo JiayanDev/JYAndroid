@@ -139,6 +139,7 @@ public class UserBiz {
     }
 
     public static void wechatLogin(final LoginResponseListener l) {
+        if (l.mActivity != null) l.mActivity.dismissProgressDialog();
         SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
             @Override
             public void onGetCode(String code) {
@@ -146,6 +147,12 @@ public class UserBiz {
                 l.social_code = code;
                 LogUtil.i(SOCIAL_TYPE_WECHAT, code);
                 socialLogin(SOCIAL_TYPE_WECHAT, code, l);
+                if (l.mActivity != null) l.mActivity.showProgressDialog();
+            }
+
+            @Override
+            public void onUninstalled() {
+                ToastUtil.showMessage("未安装微信！");
             }
         });
     }

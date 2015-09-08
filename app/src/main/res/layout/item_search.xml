@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/normal_padding">
+    android:layout_height="50dip"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <View style="@style/divider_gray_style" />
 
     <TextView
         android:id="@+id/txt_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dip"
-        android:textColor="@color/text_normal_color" />
+        style="@style/text_item_style" />
 
     <TextView
         android:id="@+id/txt_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/normal_margin"
-        android:text="string/cheese_ipsum" />
-
-    <View style="@style/divider_gray_style" />
+        android:layout_marginTop="3dip"
+        android:text="string/cheese_ipsum"
+        android:visibility="gone" />
 
 </LinearLayout>

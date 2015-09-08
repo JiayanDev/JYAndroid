@@ -70,7 +70,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         edit_search.addTextChangedListener(this);
         hideSoftKeyboard();
 
-        mAdapter = new SearchAdapter(null);
+        mAdapter = new SearchAdapter(null, null);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
                     if (!blurName.equals(mCurBlurName)) {
                         return;
                     }
-                    mAdapter = new SearchAdapter(appResponse.data);
+                    mAdapter = new SearchAdapter(appResponse.data, blurName);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Search>() {
                         @Override

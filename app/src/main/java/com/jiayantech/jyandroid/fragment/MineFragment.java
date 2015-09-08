@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.AboutAngelActivity;
 import com.jiayantech.jyandroid.activity.CompanyEventActivity;
+import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
 import com.jiayantech.jyandroid.activity.SettingActivity;
@@ -15,6 +17,7 @@ import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.umeng_push.UnreadMessageEvent;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
@@ -95,9 +98,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //        txt_mine = (TextView) findViewById(R.id.txt_my_company);
 //        txt_mine.setOnClickListener(this);
 
-        mTxtUnreadNotification = (TextView)findViewById(R.id.txt_unread_notification);
-        mImageUnreadCompany = (ImageView)findViewById(R.id.image_unread_company);
-        mImageUnreadAngel = (ImageView)findViewById(R.id.image_unread_angel);
+        mTxtUnreadNotification = (TextView) findViewById(R.id.txt_unread_notification);
+        mImageUnreadCompany = (ImageView) findViewById(R.id.image_unread_company);
+        mImageUnreadAngel = (ImageView) findViewById(R.id.image_unread_angel);
         divider_home_page = findViewById(R.id.divider_home_page);
 
         findViewById(R.id.layout_info).setOnClickListener(this);
@@ -155,24 +158,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    public void onEvent(UnreadMessageEvent event){
+    public void onEvent(UnreadMessageEvent event) {
         LogUtil.i(TAG, "handling UnreadMessageEvent");
-        if(event.unreadNotificaition > 0){
+        if (event.unreadNotificaition > 0) {
             mTxtUnreadNotification.setVisibility(View.VISIBLE);
             mTxtUnreadNotification.setText(String.valueOf(event.unreadNotificaition));
-        }else{
+        } else {
             mTxtUnreadNotification.setVisibility(View.INVISIBLE);
         }
         //setHomePageVisible(true);
-        if(event.unreadCompany){
+        if (event.unreadCompany) {
             mImageUnreadCompany.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImageUnreadCompany.setVisibility(View.INVISIBLE);
         }
 
-        if(event.unreadAngel){
+        if (event.unreadAngel) {
             mImageUnreadAngel.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImageUnreadAngel.setVisibility(View.INVISIBLE);
         }
     }
@@ -214,6 +217,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                break;
             case R.id.txt_angel:
                 startActivity(MyEventsActivity.class);
+//                if (AppInit.ROLE_ANGEL.equals(AppInitManger.getAppInit().role)) {
+//                    startActivity(MyEventsActivity.class);
+//                } else {
+//                    startActivity(AboutAngelActivity.class);
+//                }
                 break;
             case R.id.txt_notification:
                 startActivity(MessagesActivity.class);
@@ -222,7 +230,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                startActivity(CompanyEventActivity.class);
 //                break;
             case R.id.txt_setting:
-                startActivity(SettingActivity.class);
+                startActivityForResult(SettingActivity.class, new ActivityResult() {
+                    @Override
+                    public void onActivityResult(Intent data) {
+                        ((MainActivity) getActivity()).resetCheck();
+                    }
+                });
+                //startActivity(SettingActivity.class);
                 break;
             case R.id.txt_delete:
                 ((BaseActivity) getActivity()).showProgressDialog();

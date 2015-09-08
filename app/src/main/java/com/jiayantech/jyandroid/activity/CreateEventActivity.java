@@ -35,7 +35,7 @@ public class CreateEventActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("创建活动");
+        setTitle(R.string.become_angel);
 //        LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_parent);
 //        View header = getLayoutInflater().inflate(R.layout.layout_create_event_header, layout_parent, false);
 //        layout_parent.addView(header, 0);

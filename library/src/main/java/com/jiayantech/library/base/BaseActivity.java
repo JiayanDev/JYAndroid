@@ -270,11 +270,15 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
 
     public void startActivityForResult(Intent intent, int requestCode, ActivityResult activityResult) {
         startActivityForResult(intent, requestCode);
-        mActivityResultHelper.addActivityResult(activityResult);
+        if (activityResult != null) mActivityResultHelper.addActivityResult(activityResult);
     }
 
     public void startActivityForResult(Intent intent, ActivityResult activityResult) {
         startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
+    }
+
+    public void startActivityForResult(Class<?> cls, ActivityResult activityResult) {
+        startActivityForResult(new Intent(this, cls), ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
     }
 
     private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();

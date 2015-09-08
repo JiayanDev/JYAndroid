@@ -1,5 +1,6 @@
 package com.jiayantech.library.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,6 +77,10 @@ public abstract class BaseFragment extends Fragment {
 
     public void startActivityForResult(Intent intent, ActivityResult activityResult) {
         startActivityForResult(intent, ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
+    }
+
+    public void startActivityForResult(Class<?> cls, ActivityResult activityResult) {
+        startActivityForResult(new Intent(getActivity(), cls), ActivityResult.REQUEST_CODE_DEFAUTE, activityResult);
     }
 
     private ActivityResultHelper mActivityResultHelper = new ActivityResultHelper();

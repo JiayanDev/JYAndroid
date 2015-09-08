@@ -110,6 +110,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 }
                 mAdapter.addNew(response.data);
                 onFinal();
+                onRefreshResponse(mAdapter);
             }
 
             @Override
@@ -124,6 +125,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 //ultimateRecyclerView.requestLayout();
             }
         });
+    }
+
+    protected void onRefreshResponse(BaseSimpleModelAdapter<T> adapter) {
     }
 
     /**
@@ -247,6 +251,10 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 onRefresh();
             }
         });
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        ultimateRecyclerView.setRefreshing(refreshing);
     }
 
 }
