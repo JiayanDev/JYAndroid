@@ -21,7 +21,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
     @Override
     public void onInitView() {
         super.onInitView();
-        getActivity().setTitle(R.string.title_my_beauty_with);
+        getActivity().setTitle(R.string.title_my_company);
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
                 .showFirstEnable(true)
                 .color(getResources().getColor(R.color.bg_gray_color))

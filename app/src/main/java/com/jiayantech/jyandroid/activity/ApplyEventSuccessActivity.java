@@ -10,7 +10,7 @@ import com.jiayantech.library.base.BaseActivity;
 /**
  * Created by liangzili on 15/8/7.
  */
-public class ApplyEventSuccessActivity extends BaseActivity{
+public class ApplyEventSuccessActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class ApplyEventSuccessActivity extends BaseActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_finish:
                 finish();
                 return true;

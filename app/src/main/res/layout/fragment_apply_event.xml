@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fillViewport="false">
 
     <LinearLayout
@@ -16,18 +16,18 @@
             android:background="@color/bg_gray"
             android:padding="15dip"
             android:text="个人信息"
-            android:textSize="18dip" />
+            android:textSize="18dip"/>
 
         <EditText
             android:id="@+id/edit_nickname"
             style="@style/text_item_style"
             android:drawableRight="@null"
-            android:hint="昵称" />
+            android:hint="昵称"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/font_gray" />
+            android:background="@color/font_gray"/>
 
         <RadioGroup
             android:id="@+id/radiogroup_gender"
@@ -35,46 +35,51 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
+
             <RadioButton
                 android:id="@+id/radio_male"
-                android:text="男"
                 style="@style/text_item_style"
-                android:drawableRight="@null"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:drawableRight="@null"
+                android:text="男"/>
+
             <RadioButton
                 android:id="@+id/radio_female"
-                android:text="女"
                 style="@style/text_item_style"
-                android:drawableRight="@null"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:drawableRight="@null"
+                android:text="女"/>
 
         </RadioGroup>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/font_gray" />
+            android:background="@color/font_gray"/>
 
         <EditText
             android:id="@+id/edit_desc"
             style="@style/text_item_style"
             android:drawableRight="@null"
-            android:hint="描述" />
+            android:hint="描述"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/font_gray" />
+            android:background="@color/font_gray"/>
 
         <EditText
             android:id="@+id/edit_phone"
             style="@style/text_item_style"
             android:drawableRight="@null"
-            android:hint="手机号码" />
+            android:hint="手机号码"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/font_gray" />
+            android:background="@color/font_gray"/>
 
 
         <Button
@@ -82,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dip"
-            android:text="@string/btn_confirm_applyment" />
+            android:text="@string/btn_confirm_applyment"/>
 
     </LinearLayout>
 </ScrollView>

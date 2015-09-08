@@ -56,7 +56,7 @@ public class EditUserInfoActivity extends BaseActivity {
 
         mEditName = (EditText) findViewById(R.id.edit_nickname);
         mEditName.setText(mUsername);
-        mImageDelete = (ImageView)findViewById(R.id.img_delete);
+        mImageDelete = (ImageView) findViewById(R.id.img_delete);
         mImageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

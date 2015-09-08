@@ -11,6 +11,14 @@ import com.jiayantech.library.base.BaseModel;
  * rights reserved.
  */
 public class Event extends BaseModel {
+    //伴美apply status
+    public static final String STATUS_PENDING = "待审核";
+    public static final String STATUS_PASS = "审核通过";
+    public static final String STATUS_FAIL = "审核不通过";
+    public static final String STATUS_NOT_COMMENTED = "待评论";
+    public static final String STATUS_COMMENTED = "已评论";
+    public static final String STATUS_NOT_CHECK_IN = "未签到";
+
     public long eventId;
     public long userId;
     public String userName;
