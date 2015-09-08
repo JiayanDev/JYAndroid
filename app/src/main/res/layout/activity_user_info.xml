@@ -47,8 +47,10 @@
                 android:layout_gravity="right|center_vertical"
                 android:src="@mipmap/icon_arrow_right_normal"/>
         </LinearLayout>
+
         <View
             style="@style/divider_offset_gray_style"/>
+
         <LinearLayout
             android:id="@+id/layout_name"
             android:layout_width="match_parent"
@@ -222,8 +224,10 @@
                 android:text="18681192051"
                 />
         </LinearLayout>
+
         <View
             style="@style/divider_big_gray_style"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -250,8 +254,10 @@
                 android:text="@string/account_status_unbind"
                 />
         </LinearLayout>
+
         <View
             style="@style/divider_offset_gray_style"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -278,8 +284,10 @@
                 android:text="@string/account_status_unbind"
                 />
         </LinearLayout>
+
         <View
             style="@style/divider_offset_gray_style"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

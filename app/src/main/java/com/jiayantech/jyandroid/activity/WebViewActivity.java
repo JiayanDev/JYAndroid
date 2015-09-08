@@ -34,8 +34,6 @@ public class WebViewActivity extends SingleFragmentActivity{
     public static Intent createLaunchIntent(Context context, long id, String type){
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(WebViewFragment.EXTRA_ID, id);
-        //intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
-        //intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
         intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
         return intent;
     }

@@ -65,7 +65,9 @@ public class EventAdapter extends BaseSimpleModelAdapter<Event> {
 
         @Override
         public void onBind(Event event, int position) {
-            txt_title.setText(event.desc);
+            if(event.desc instanceof String) {
+                txt_title.setText((String) event.desc);
+            }
         }
     }
 }

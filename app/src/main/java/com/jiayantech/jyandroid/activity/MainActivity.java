@@ -91,21 +91,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void launchActivityFromNotification(long id, String type) {
-//        String type = bundleExtra.getString(WebViewFragment.EXTRA_TYPE);
-//        long id = bundleExtra.getLong(WebViewFragment.EXTRA_ID, -1);
-        //long userId = bundleExtra.getLong(WebViewFragment.EXTRA_USER_ID);
-        //String userName = bundleExtra.getString(WebViewFragment.EXTRA_USERNAME);
-//        switch (type){
-//            case WebViewFragment.TYPE_DIARY:
-//                Intent intent = new Intent(this, PostDetailActivity.class);
-//                intent.putExtra(WebViewFragment.EXTRA_ID, id);
-//                intent.putExtra(WebViewFragment.EXTRA_USER_ID, userId);
-//                intent.putExtra(WebViewFragment.EXTRA_USERNAME, userName);
-//                intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
-//                startActivity(intent);
-//                break;
-//            default:
-//                return;
         Intent intent = null;
         switch (type){
             case WebConstans.Type.TYPE_DIARY:
@@ -121,13 +106,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 intent = new Intent(this, CompanyEventActivity.class);
                 break;
         }
-        //Intent intent = WebViewActivity.createLaunchIntent(this, id, type);
         startActivity(intent);
     }
-
-//    //public void onEvent(UmengPushCustomMessage uMessage) {
-//        ToastUtil.showMessage("我收到一条自定义的友盟消息");
-//    }
 
     public void onEvent(UnreadMessageEvent event){
         LogUtil.i(TAG, "handling UnreadMessageEvent");

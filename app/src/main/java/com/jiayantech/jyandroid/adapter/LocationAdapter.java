@@ -66,7 +66,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         }
     }
 
-    public static interface LocationClickListener {
+    public interface LocationClickListener {
         void onLocationClick(String name);
     }
 }

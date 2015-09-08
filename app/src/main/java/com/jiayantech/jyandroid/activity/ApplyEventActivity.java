@@ -9,7 +9,7 @@ import com.jiayantech.library.base.SingleFragmentActivity;
 /**
  * Created by liangzili on 15/7/9.
  */
-public class ApplyEventActivity extends SingleFragmentActivity{
+public class ApplyEventActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         Intent intent = getIntent();

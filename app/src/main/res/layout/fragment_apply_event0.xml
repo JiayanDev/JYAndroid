@@ -5,12 +5,14 @@
               android:background="@color/bg_gray"
               android:orientation="vertical"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,6 +148,7 @@
             android:paddingLeft="16dp"
             android:background="@android:color/white"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,8 +168,10 @@
                 />
 
         </LinearLayout>
+
         <View
             style="@style/divider_offset_gray_style"/>
+
         <LinearLayout
             android:id="@+id/layout_phone"
             android:layout_width="match_parent"
@@ -175,6 +180,7 @@
             android:layout_gravity="center_vertical"
             android:paddingLeft="16dp"
             android:layout_height="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -193,6 +199,7 @@
                 android:textColor="@color/text_normal_color"
                 android:textSize="@dimen/normal_text_size"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,6 +220,7 @@
 
 
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -224,6 +232,7 @@
         android:layout_marginBottom="17dp"
 
         />
+
     <Button
         android:id="@+id/btn_apply"
         android:layout_width="match_parent"
