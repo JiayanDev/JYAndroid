@@ -47,6 +47,7 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //    }
     public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         //作容错
+<<<<<<< HEAD
 //        String result = "";
 //        try {
 //            result = json.getAsJsonPrimitive().getAsString();
@@ -59,6 +60,15 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //        return result;
         return json.isJsonPrimitive() ? json.getAsJsonPrimitive().getAsString() : json.toString();
 
+=======
+        String result = null;
+        try {
+            result = json.getAsJsonPrimitive().getAsString();
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+        return result;
+>>>>>>> origin/master
     }
 }
 

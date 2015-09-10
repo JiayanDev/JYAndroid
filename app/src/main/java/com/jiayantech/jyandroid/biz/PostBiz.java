@@ -27,9 +27,14 @@ public class PostBiz {
     //private static final String ACTION_VERIFY = MODEL + "/verify";
     public static final String ACTION_LIST = MODEL + "/list";
     private static final String ACTION_TOPIC_ONE = "recommend/topic/one";
+    private static final String ACTION_TOPIC_LIST = "recommend/topic/list";
 
     public static void getOneTopic(ResponseListener<?> l){
         HttpReq.get(ACTION_TOPIC_ONE, null ,l);
+    }
+
+    public static void getTopicList(ResponseListener<?> l){
+        HttpReq.get(ACTION_TOPIC_LIST, null, l);
     }
 
     public static void like(String id, int mode, ResponseListener<?> l) {

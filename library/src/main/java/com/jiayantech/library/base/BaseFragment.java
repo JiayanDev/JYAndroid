@@ -90,4 +90,5 @@ public abstract class BaseFragment extends Fragment {
         mActivityResultHelper.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

@@ -118,7 +118,6 @@ public class UserBiz {
 
     public static void confirmPhoneCode(String phoneCodeResponse, String code, ResponseListener<?> l) {
         Map<String, String> params = HttpReq.getInitParams("code", code);
-        //HttpReq.putParams(params, social_type, social_code);
         HttpReq.putParams(params, KEY_PHONE_CODE_RESPONSE, phoneCodeResponse);
         HttpReq.post(ACTION_PHONE_CONFIRM_CODE, params, l);
     }
@@ -199,6 +198,11 @@ public class UserBiz {
         HttpReq.putParams(params, KEY_PHONE, phoneNum);
         HttpReq.putParams(params, "confirmCode", confirmCode);
         HttpReq.putParams(params, "wxCode", wxCode);
+        HttpReq.post(ACTION_BIND_ACCOUNT, params, l);
+    }
+
+    public static void bindWechat(String wxCode, ResponseListener l){
+        Map<String, String> params = HttpReq.getInitParams("wxCode", wxCode);
         HttpReq.post(ACTION_BIND_ACCOUNT, params, l);
     }
 

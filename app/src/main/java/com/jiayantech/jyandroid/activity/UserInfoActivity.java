@@ -1,10 +1,12 @@
 package com.jiayantech.jyandroid.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,11 +14,11 @@ import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
-import com.jiayantech.jyandroid.commons.AppDialogUtils;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
+import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.DateTimeHelper;
@@ -24,6 +26,7 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -39,6 +42,7 @@ import de.greenrobot.event.EventBus;
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener {
 
+    public static final String EXTRA_DATA = "extra_data";
     public static final String EXTRA_ACTION = "action";
     public static final String EXTRA_GENDER = "gender";
 
@@ -79,11 +83,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mLocationText = (TextView) findViewById(R.id.txt_location);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
+        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
 
-        mTxtWechatAccount = (TextView) findViewById(R.id.txt_wechat_username);
-        mTxtQQAccount = (TextView) findViewById(R.id.txt_qq_username);
-        mTxtWeiboAccount = (TextView) findViewById(R.id.txt_weibo_username);
+        mTxtWechatAccount = (TextView)findViewById(R.id.txt_wechat_username);
+        mTxtQQAccount = (TextView)findViewById(R.id.txt_qq_username);
+        mTxtWeiboAccount = (TextView)findViewById(R.id.txt_weibo_username);
 //=======
 //        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
 //        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
@@ -103,15 +107,15 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
         mPhoneText.setText(AppInitManger.getPhoneNum());
 
-        if (AppInitManger.sAppInit.bindWX) {
+        if(AppInitManger.sAppInit.bindWX){
             mTxtWechatAccount.setText(R.string.account_status_bind);
             mTxtWechatAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
-        if (AppInitManger.sAppInit.bindQQ) {
+        if(AppInitManger.sAppInit.bindQQ){
             mTxtQQAccount.setText(R.string.account_status_bind);
             mTxtQQAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
-        if (AppInitManger.sAppInit.bindWB) {
+        if(AppInitManger.sAppInit.bindWB){
             mTxtWeiboAccount.setText(R.string.account_status_bind);
             mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
@@ -130,8 +134,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 showUploadDialog();
                 break;
             case R.id.layout_name:
-                EditActivity.start(this, getString(R.string.nickname), AppInitManger.getUserName(), EditUserInfoActivity.class, null);
-                //startEditActivity(ACTION_EDIT_NAME, AppInitManger.getUserName());
+                startEditActivity(ACTION_EDIT_NAME, AppInitManger.getUserName());
                 break;
             case R.id.layout_gender:
                 EditGenderFragment fragment = EditGenderFragment.
@@ -156,7 +159,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             }
                         });
                     }
-                }, true);
+                }, false);
                 break;
             case R.id.layout_phone:
 
@@ -173,24 +176,41 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private void startEditActivity(int action, String data) {
+        Intent intent = new Intent(this, EditUserInfoActivity.class);
+        intent.putExtra(EXTRA_ACTION, action);
+        intent.putExtra(EXTRA_DATA, data);
+        startActivity(intent);
+    }
+
     private void showUploadDialog() {
-        String[] texts = new String[]{getString(R.string.take_camera), getString(R.string.take_photo)};
-        View.OnClickListener[] listeners = new View.OnClickListener[]{
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCropCamera();
-                    }
-                },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
-                                UserInfoActivity.this).startCropImage();
-                    }
-                }};
-        AppDialogUtils.showBottomDialog(this, texts, listeners);
+        View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_menus, null);
+        ItemsLayout itemsLayout = (ItemsLayout) view.findViewById(R.id.layout_items);
+        itemsLayout.setDriver();
+        itemsLayout.setDriverLeftMargin(0);
+        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+        itemsLayout.addMenuItem(getString(R.string.take_camera)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                        UserInfoActivity.this).startCropCamera();
+            }
+        });
+        itemsLayout.addMenuItem(getString(R.string.take_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new PicGetter(UserInfoActivity.this, getActivityResultHelper(),
+                        UserInfoActivity.this).startCropImage();
+            }
+        });
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

@@ -55,4 +55,5 @@ dependencies {
     }
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
     compile files('libs/com.umeng.message.lib_v2.3.0.jar')
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
 }

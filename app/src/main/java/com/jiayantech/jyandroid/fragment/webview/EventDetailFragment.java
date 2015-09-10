@@ -87,13 +87,16 @@ public class EventDetailFragment extends WebViewFragment{
                 if(data == null){
                     return;
                 }
-                long id = data.data.id;
                 StringBuilder sb = new StringBuilder();
-
-                for(JsCallApplyEvent.CategoryId category: data.data.eventInfo.categoryIds){
-                    sb.append(category.name);
-                    sb.append(" ");
+                if(data.data.eventInfo.categoryIds != null) {
+                    for (JsCallApplyEvent.CategoryId category : data.data.eventInfo.categoryIds) {
+                        sb.append(category.name);
+                        sb.append(" ");
+                    }
+                }else{
+                    return;
                 }
+                long id = data.data.id;
                 String project = sb.toString().trim();
                 String hospitalAndDoctor = data.data.eventInfo.hospitalName + " " +
                         data.data.eventInfo.doctorName;
