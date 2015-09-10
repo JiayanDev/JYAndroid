@@ -12,7 +12,7 @@ import com.jiayantech.library.base.SingleFragmentActivity;
 /**
  * Created by liangzili on 15/8/10.
  */
-public class WebViewActivity extends SingleFragmentActivity{
+public class WebViewActivity extends SingleFragmentActivity {
 
     WebViewFragment mFragment;
 
@@ -27,11 +27,11 @@ public class WebViewActivity extends SingleFragmentActivity{
         return mFragment;
     }
 
-    public static void launchActivity(Context context, long id, String type){
+    public static void launchActivity(Context context, long id, String type) {
         context.startActivity(createLaunchIntent(context, id, type));
     }
 
-    public static Intent createLaunchIntent(Context context, long id, String type){
+    public static Intent createLaunchIntent(Context context, long id, String type) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(WebViewFragment.EXTRA_ID, id);
         intent.putExtra(WebViewFragment.EXTRA_TYPE, type);
@@ -40,8 +40,8 @@ public class WebViewActivity extends SingleFragmentActivity{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(mFragment.isSharePanelShowing()){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mFragment.isSharePanelShowing()) {
                 mFragment.dismissSharePanel();
                 return true;
             }

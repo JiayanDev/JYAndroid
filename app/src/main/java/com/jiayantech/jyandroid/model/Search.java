@@ -24,6 +24,11 @@ public class Search extends BaseModel implements Parcelable {
     public Search() {
     }
 
+    public Search(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Search(Parcel source) {
         id = source.readLong();
         name = source.readString();

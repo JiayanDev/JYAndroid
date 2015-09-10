@@ -55,6 +55,9 @@ public class AppInit {
         public Integer resId;
         public ArrayList<Category> sub;
 
+        public Category() {
+        }
+
         public Category(Parcel source) {
             id = source.readInt();
             name = source.readString();

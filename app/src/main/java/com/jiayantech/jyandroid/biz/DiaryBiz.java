@@ -50,8 +50,11 @@ public class DiaryBiz {
         HttpReq.post(ACTION_VERIFY, null, l);
     }
 
-    public static void post(String headerId, String content, String photoes, ResponseListener<?> l) {
-        HttpReq.post(ACTION_POST, null, l);
+    public static void post(String content, String photoes, ResponseListener<?> l) {
+        Map<String, String> params = new HashMap<>();
+        HttpReq.putParams(params, "content", content);
+        HttpReq.putParams(params, "photoes", photoes);
+        HttpReq.post(ACTION_POST, params, l);
     }
 
     public static void myHeader(String sinceId, String maxId, ResponseListener<?> l) {

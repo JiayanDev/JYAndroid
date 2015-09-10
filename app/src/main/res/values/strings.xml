@@ -166,4 +166,10 @@
     <string name="hint_input_null">输入信息不能为空！</string>
     <string name="hint_input_error">输入格式不正确！</string>
     <string name="edit">编辑</string>
+    <string name="text_about_angel">美丽天使是sb美丽天使是sb美丽天使是sb美丽天使是sb美丽天使是sb，美丽天使是sb美丽天使是sb美丽天使是sb。</string>
+    <string name="hint_input_hospital">请选择医院！</string>
+    <string name="hint_input_project">请选择项目！</string>
+    <string name="hint_input_time">请选择时间！</string>
+    <string name="title_search_category">项目名称</string>
+    <string name="hint_select_pic">请选择图片！</string>
 </resources>

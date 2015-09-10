@@ -41,7 +41,7 @@ public class BecomeAngelActivity extends BaseActivity {
     private long hospitalId;
     private String hospitalName;
     //private ArrayList<String> categoryIds;
-    ArrayList<AppInit.Category> categoryList;
+    private final ArrayList<AppInit.Category> categoryList = new ArrayList<AppInit.Category>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,12 +86,24 @@ public class BecomeAngelActivity extends BaseActivity {
                 });
                 break;
             case R.id.layout_project:
-                Intent intent = new Intent(this, SelectProjectActivity.class);
-                intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
+//                Intent intent = new Intent(this, SelectProjectActivity.class);
+//                intent.putExtra(SelectProjectActivity.KEY_TO_PICK, true);
+//                startActivityForResult(intent, new ActivityResult() {
+//                    @Override
+//                    public void onActivityResult(Intent data) {
+//                        categoryList = data.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
+//                        txt_project.setText(AppInit.Category.toNamesString(categoryList));
+//                    }
+//                });
+                Intent intent = new Intent(this, SearchCategoryActivity.class);
                 startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
-                        categoryList = data.getParcelableArrayListExtra(SelectProjectActivity.KEY_categories);
+                        AppInit.Category category = new AppInit.Category();
+                        category.id = (int) data.getLongExtra(SearchActivity.KEY_ID, 0);
+                        category.name = data.getStringExtra(SearchActivity.KEY_NAME);
+                        categoryList.clear();
+                        categoryList.add(category);
                         txt_project.setText(AppInit.Category.toNamesString(categoryList));
                     }
                 });
@@ -100,8 +112,8 @@ public class BecomeAngelActivity extends BaseActivity {
                 new DateTimeHelper(this).showDateTimeDialog(new DateTimeHelper.OnSetDateTimeListener() {
                     @Override
                     public void onSetDateTime(Calendar calendar) {
-                        txt_time.setText(TimeUtil.getStrTime(calendar.getTimeInMillis() / 1000 / 60 * 1000 * 60));
-                        time = calendar.getTimeInMillis() / 1000;
+                        time = calendar.getTimeInMillis() / 1000 / 60 * 60;
+                        txt_time.setText(TimeUtil.getStrTimeBySecond(time));
                     }
                 });
                 break;
@@ -110,15 +122,15 @@ public class BecomeAngelActivity extends BaseActivity {
                 String phone = AppInitManger.getPhoneNum();
 
                 if (hospitalId == 0 && TextUtils.isEmpty(hospitalName)) {
-                    ToastUtil.showMessage("hospitalId==null");
+                    ToastUtil.showMessage(R.string.hint_input_hospital);
                     return;
                 }
                 if (categoryList == null || categoryList.size() == 0) {
-                    ToastUtil.showMessage("categoryIds==null");
+                    ToastUtil.showMessage(R.string.hint_input_project);
                     return;
                 }
                 if (time == 0) {
-                    ToastUtil.showMessage("time==0");
+                    ToastUtil.showMessage(R.string.hint_input_time);
                     return;
                 }
 

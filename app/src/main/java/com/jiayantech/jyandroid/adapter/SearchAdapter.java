@@ -32,16 +32,15 @@ public class SearchAdapter extends BaseSimpleModelAdapter<Search> {
     }
 
     private static List<Search> toSpanList(List<Search> list, String spanStr) {
-        if (!TextUtils.isEmpty(spanStr)) {
-            for (Search search : list)
-                search.spannableName = getForegroundColorSpan(search.name, spanStr);
-        }
+        if (list != null) for (Search search : list)
+            search.spannableName = getForegroundColorSpan(search.name, spanStr);
         return list;
     }
 
     public static SpannableString getForegroundColorSpan(String str, String spanStr) {
         SpannableString spannableString = new SpannableString(str);
-        int start = 0;
+        if (TextUtils.isEmpty(spanStr)) return spannableString;
+        int start;
         int end = 0;
         while ((start = str.indexOf(spanStr, end)) >= 0) {
             end = start + spanStr.length();

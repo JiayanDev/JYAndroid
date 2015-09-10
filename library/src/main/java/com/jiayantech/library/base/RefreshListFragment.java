@@ -12,7 +12,6 @@ import com.jiayantech.library.R;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
@@ -176,8 +175,21 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     protected void setNoMore() {
         if (mAdapter != null && mAdapter.getCustomLoadMoreView() != null) {
-            //ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+//            ValueAnimator animator = new ValueAnimator().ofFloat(1);
+//            animator.setDuration(1000);
+//            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator animation) {
+//                    float value = (float) animation.getAnimatedValue();
+//                    int offset = mAdapter.getCustomLoadMoreView().getTop() - ultimateRecyclerView.mRecyclerView.getBottom();
+//                    int scrollBy = (int) ((1 - value) * offset);
+//                    ultimateRecyclerView.mRecyclerView.scrollBy(0, -scrollBy);
+//                }
+//            });
+//            animator.start();
+            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
             ultimateRecyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -185,7 +197,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                     ultimateRecyclerView.disableLoadmore();
                     mAdapter.notifyDataSetChanged();
                 }
-            }, 2000);
+            }, 100);
         }
     }
 

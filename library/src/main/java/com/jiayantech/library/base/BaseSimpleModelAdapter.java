@@ -31,7 +31,6 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
             if (holder instanceof ViewHolder) {
                 position = customHeaderView != null ? position - 1 : position;
                 ViewHolder viewHolder = (ViewHolder) holder;
-                viewHolder.mPosition = position;
                 viewHolder.mItem = mList.get(position);
                 onBind(viewHolder, mList.get(position), position);
             }
@@ -63,7 +62,6 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
 
         protected BaseSimpleModelAdapter<T> mAdapter;
         protected T mItem;
-        protected int mPosition;
 
         private View.OnClickListener mItemClickListener = new View.OnClickListener() {
             @Override
@@ -71,6 +69,8 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 if (mAdapter == null) {
                     return;
                 }
+                int mPosition = getAdapterPosition();
+                mPosition = mAdapter.customHeaderView != null ? mPosition - 1 : mPosition;
                 if (mAdapter.mOnItemClickListener != null) {
                     mAdapter.mOnItemClickListener.onItemClick(mAdapter, mPosition, mAdapter.mList.get(mPosition));
                 }

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -58,19 +59,28 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         Intent intent = getIntent();
         title = intent.getStringExtra(KEY_TITLE);
         action = intent.getStringExtra(KEY_ACTION);
-        setTitle(title);
         setDisplayHomeAsUpEnabled();
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         edit_search = (EditText) findViewById(R.id.edit_search);
 
+        setTitle(title);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        edit_search.setHint(getString(R.string.hint_search_input, title));
 
         edit_search.addTextChangedListener(this);
         hideSoftKeyboard();
 
         mAdapter = new SearchAdapter(null, null);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        edit_search.setHint(getString(R.string.hint_search_input, title));
+    }
+
+    public void onClick(View v) {
+        edit_search.setText("");
     }
 
     @Override
@@ -110,36 +120,44 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
         edit_search.postDelayed(mSearchRunnable, 200);
     }
 
-    private String mCurBlurName;
+    protected String mCurBlurName;
     private Runnable mSearchRunnable = new Runnable() {
         @Override
         public void run() {
-            final String blurName = mCurBlurName;
-            CommBiz.option(action, blurName, new ResponseListener<AppResponse<ArrayList<Search>>>() {
-                @Override
-                public void onResponse(AppResponse<ArrayList<Search>> appResponse) {
-                    if (!blurName.equals(mCurBlurName)) {
-                        return;
-                    }
-                    mAdapter = new SearchAdapter(appResponse.data, blurName);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Search>() {
-                        @Override
-                        public void onItemClick(BaseSimpleModelAdapter<Search> adapter, int position, Search search) {
-                            Intent intent = new Intent();
-                            intent.putExtra(KEY_ID, search.id);
-                            intent.putExtra(KEY_NAME, search.name);
-                            if (search.hospitalId != 0) {
-                                intent.putExtra(KEY_HOSPITAL_ID, search.hospitalId);
-                                intent.putExtra(KEY_HOSPITAL_NAME, search.hospitalName);
-                            }
-                            ActivityResult.onFinishResult(SearchActivity.this, intent);
-                        }
-                    });
-                }
-            });
+            option(mCurBlurName);
         }
     };
+
+    protected void option(final String blurName) {
+        CommBiz.option(action, blurName, new ResponseListener<AppResponse<ArrayList<Search>>>() {
+            @Override
+            public void onResponse(AppResponse<ArrayList<Search>> appResponse) {
+                optionResponse(blurName, appResponse.data);
+            }
+        });
+    }
+
+    protected final void optionResponse(final String blurName, ArrayList<Search> data) {
+        if (!blurName.equals(mCurBlurName)) {
+            return;
+        }
+        mAdapter = new SearchAdapter(data, blurName);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new BaseSimpleModelAdapter.OnItemClickListener<Search>() {
+            @Override
+            public void onItemClick(BaseSimpleModelAdapter<Search> adapter, int position, Search search) {
+                Intent intent = new Intent();
+                intent.putExtra(KEY_ID, search.id);
+                intent.putExtra(KEY_NAME, search.name);
+                if (search.hospitalId != 0) {
+                    intent.putExtra(KEY_HOSPITAL_ID, search.hospitalId);
+                    intent.putExtra(KEY_HOSPITAL_NAME, search.hospitalName);
+                }
+                ActivityResult.onFinishResult(SearchActivity.this, intent);
+            }
+        });
+    }
+
 
     private void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

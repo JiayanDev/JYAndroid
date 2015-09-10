@@ -47,9 +47,9 @@ public class MyEventAdapter extends EventAdapter {
 
         @Override
         public void onBind(Event event, int position) {
-            txt_title.setText(event.desc);
+            txt_title.setText(event.title);
             txt_info.setText(event.hospitalName + " " + event.doctorName);
-            txt_time.setText(TimeUtil.getStrTime(event.beginTime));
+            txt_time.setText(TimeUtil.getStrDateBySecond(event.beginTime));
             txt_status.setText(event.status);
         }
     }

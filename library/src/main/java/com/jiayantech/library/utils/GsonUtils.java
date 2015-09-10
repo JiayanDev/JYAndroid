@@ -19,9 +19,9 @@ public class GsonUtils {
     private static Gson sGson;
 
     public static Gson build() {
-        if(sGson == null){
-            synchronized (GsonUtils.class){
-                if(sGson == null){
+        if (sGson == null) {
+            synchronized (GsonUtils.class) {
+                if (sGson == null) {
                     GsonBuilder gb = new GsonBuilder();
                     gb.registerTypeAdapter(String.class, new StringConverter());
                     gb.registerTypeAdapter(Double.class, new DoubleConverter());
@@ -47,15 +47,18 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //    }
     public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         //作容错
-        String result = "";
-        try {
-            result = json.getAsJsonPrimitive().getAsString();
-        }catch (JsonParseException e){
-            e.printStackTrace();
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-        }
-        return result;
+//        String result = "";
+//        try {
+//            result = json.getAsJsonPrimitive().getAsString();
+//        }catch (JsonParseException e){
+//
+//            e.printStackTrace();
+//        }catch (IllegalStateException e){
+//            e.printStackTrace();
+//        }
+//        return result;
+        return json.isJsonPrimitive() ? json.getAsJsonPrimitive().getAsString() : json.toString();
+
     }
 }
 

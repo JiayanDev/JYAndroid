@@ -7,25 +7,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.AboutAngelActivity;
 import com.jiayantech.jyandroid.activity.CompanyEventActivity;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
+import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.activity.SettingActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
-import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
-import com.jiayantech.library.comm.ActivityResult;
-import com.jiayantech.umeng_push.UnreadMessageEvent;
-import com.jiayantech.jyandroid.fragment.webview.WebConstans;
-import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
-import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseFragment;
+import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
@@ -33,6 +28,8 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
+import com.jiayantech.umeng_push.UmengPushManager;
+import com.jiayantech.umeng_push.UnreadMessageEvent;
 
 import java.util.Date;
 
@@ -200,6 +197,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void setHomePageVisible(String role) {
+        role = AppInit.ROLE_ANGEL;
         divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
         txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
     }
@@ -252,11 +250,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(CompanyEventActivity.class);
                 break;
             case R.id.txt_home_page:
-                Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                //intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
-                //intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
-                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+//                //intent.putExtra(WebViewFragment.EXTRA_USER_ID, AppInitManger.getUserId());
+//                //intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
+//                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
+//                startActivity(intent);
+
+                startActivity(PublishDiaryActivity.class);
                 break;
         }
     }

@@ -1,1 +1,1 @@
-include ':app', ':library', ':umeng_push'
+include ':app', ':library', ':umeng_push', ':multi-image-selector'

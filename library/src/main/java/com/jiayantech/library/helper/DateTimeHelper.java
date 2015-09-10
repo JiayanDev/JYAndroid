@@ -44,9 +44,18 @@ public class DateTimeHelper {
      * @return
      */
     public Dialog showDateDialog(final OnSetDateTimeListener l, final boolean pickTime, boolean curMax) {
-        DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog dialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
+            boolean hasShowTime = false;
+
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                if (hasShowTime) return;
+                hasShowTime = true;
+                Object mCanceled = view.getTag();
+                if (mCanceled != null && mCanceled instanceof Boolean && (Boolean) mCanceled) {
+                    view.setTag(null);
+                    return;
+                }
                 mCalendar.set(Calendar.YEAR, year);
                 mCalendar.set(Calendar.MONTH, monthOfYear);
                 mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -57,7 +66,13 @@ public class DateTimeHelper {
                 }
 
             }
-        }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+        }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)) {
+            @Override
+            public void cancel() {
+                getDatePicker().setTag(true);
+                super.cancel();
+            }
+        };
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
         if (curMax) dialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());

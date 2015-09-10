@@ -62,7 +62,6 @@ public class ProjectChildCategoryAdapter extends BaseSimpleModelAdapter<String> 
         }
 
         public void onBind(String item, boolean selected, int position) {
-            mPosition = position;
             itemView.setSelected(selected);
             txt_category.setText(mData.get(item));
         }

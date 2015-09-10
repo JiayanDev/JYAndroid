@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bg_gray">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,15 +22,15 @@
             android:paddingTop="@dimen/normal_padding">
 
             <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                             android:id="@+id/img_avatar"
-                                                             android:layout_width="50dp"
-                                                             android:layout_height="50dp"
-                                                             android:layout_alignParentLeft="true"
-                                                             android:layout_centerVertical="true"
-                                                             android:layout_marginLeft="16dp"
-                                                             android:scaleType="centerCrop"
-                                                             android:src="@drawable/img"
-                                                             app:riv_corner_radius="40dip"/>
+                android:id="@+id/img_avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img"
+                app:riv_corner_radius="40dip" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,13 +41,13 @@
 
                 <TextView
                     android:id="@+id/txt_nickname"
-                    style="@style/text_item_style"/>
+                    style="@style/text_item_style" />
 
                 <TextView
                     android:id="@+id/txt_info"
                     style="@style/text_item_hint_style"
                     android:paddingLeft="10dp"
-                    android:textSize="@dimen/small_text_size"/>
+                    android:textSize="@dimen/small_text_size" />
             </LinearLayout>
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_arrow_right_normal"/>
+                android:src="@mipmap/icon_arrow_right_normal" />
         </RelativeLayout>
 
         <LinearLayout
@@ -68,17 +68,16 @@
             <TextView
                 android:id="@+id/txt_home_page"
                 style="@style/text_item_right_arrow_style"
-                android:layout_marginTop="10dp"
                 android:background="@android:color/white"
                 android:drawableLeft="@mipmap/icon_mine_diary"
                 android:onClick="onClick"
-                android:textSize="15dp"
-                android:text="@string/my_home_page"/>
+                android:text="@string/my_home_page"
+                android:textSize="15dp" />
 
             <View
                 android:id="@+id/divider_home_page"
                 style="@style/divider_gray_style"
-                android:layout_marginLeft="10dip"/>
+                android:layout_marginLeft="10dip" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,8 +97,8 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:text="@string/title_mine_notification"
-                    android:textSize="15dp"
-                    android:textColor="@color/text_normal_color"/>
+                    android:textColor="@color/text_normal_color"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/txt_unread_notification"
@@ -110,18 +109,18 @@
                     android:gravity="center"
                     android:text="20"
                     android:textColor="@android:color/white"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
-                    android:src="@mipmap/icon_arrow_right_normal"/>
+                    android:src="@mipmap/icon_arrow_right_normal" />
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/divider_big_gray_style"/>
+        <View style="@style/divider_big_gray_style" />
 
         <!--<TextView-->
         <!--android:id="@+id/txt_mime"-->
@@ -147,7 +146,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/title_mine_company"
                 android:textColor="@color/text_normal_color"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
             <!--<TextView-->
             <!--android:id="@+id/txt_company"-->
             <!--style="@style/text_item_right_arrow_style"-->
@@ -161,27 +160,25 @@
                 android:id="@+id/image_unread_company"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="13dp"
                 android:background="@drawable/shape_unread"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:text="20"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"
-                />
+                android:textSize="10sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/icon_arrow_right_normal"
-                />
+                android:src="@mipmap/icon_arrow_right_normal" />
         </LinearLayout>
 
         <View
             style="@style/divider_gray_style"
-            android:layout_marginLeft="10dip"/>
+            android:layout_marginLeft="10dip" />
 
         <!--<TextView-->
         <!--android:id="@+id/txt_events"-->
@@ -208,28 +205,26 @@
                 android:gravity="center_vertical"
                 android:text="@string/title_mine_angel"
                 android:textColor="@color/text_normal_color"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
 
             <ImageView
                 android:id="@+id/image_unread_angel"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="13dp"
                 android:background="@drawable/shape_unread"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:text="20"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"
-                />
+                android:textSize="10sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/icon_arrow_right_normal"
-                />
+                android:src="@mipmap/icon_arrow_right_normal" />
         </LinearLayout>
         <!--=======-->
         <!--android:drawableLeft="@mipmap/icon_mine_angel"-->
@@ -237,7 +232,7 @@
         <!--android:text="@string/title_mine_angel" />-->
         <!--&gt;>>>>>> upstream/master-->
 
-        <View style="@style/divider_big_gray_style"/>
+        <View style="@style/divider_big_gray_style" />
 
         <TextView
             android:id="@+id/txt_setting"
@@ -245,19 +240,19 @@
             android:background="@android:color/white"
             android:drawableLeft="@mipmap/icon_mine_setting"
             android:onClick="onClick"
-            android:text="@string/title_mine_setting"/>
+            android:text="@string/title_mine_setting" />
 
         <View
             style="@style/divider_gray_style"
             android:layout_marginLeft="10dip"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_delete"
             style="@style/text_item_right_arrow_style"
             android:onClick="onClick"
             android:text="删除用户"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>

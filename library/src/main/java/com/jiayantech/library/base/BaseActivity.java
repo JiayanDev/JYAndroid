@@ -103,6 +103,10 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
         LogUtil.i("LifeCycle", String.format("%s is onDestroy()", this.getClass().getSimpleName()));
     }
 
+    public void setTitle(int titleId) {
+        getSupportActionBar().setTitle(titleId);
+    }
+
     protected void setTitle(String title) {
         getSupportActionBar().setTitle(title);
     }

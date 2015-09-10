@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 /**
  * Created by janseon on 2015/6/30.
  *
@@ -48,7 +49,7 @@ import java.util.List;
  * rights reserved.
  */
 public class PublishPostActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener, BaseSimpleModelAdapter.OnItemClickListener<Bitmap> {
-    private final int spanCount = 3;
+    private final int spanCount = 4;
     private final String UPLOAD_TYPE_TOPIC = "topic";
     protected String UPLOAD_TYPE = UPLOAD_TYPE_TOPIC;
 
@@ -57,8 +58,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     protected EditText edit_content;
     protected TextView txt_category;
 
-    private ImageAdapter mImageAdapter;
-    protected List<String> urlList = new ArrayList<>();
+    protected ImageAdapter mImageAdapter;
     private List<AppInit.Category> categoryList;
 
     @Override
@@ -136,7 +136,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         }
         showProgressDialog();
         String categoryIds = categoryList.toString();
-        String photoUrls = toString(urlList);
+        String photoUrls = toString(mImageAdapter.urlList);
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override
             public void onResponse(AppResponse<BaseModel> response) {
@@ -190,7 +190,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onResponse(ImageUploadResp o) {
                         dismissProgressDialog();
-                        urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
+                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
                     }
 
                     @Override
@@ -201,12 +201,13 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                 });
     }
 
+
     @Override
     public void onItemClick(BaseSimpleModelAdapter<Bitmap> adapter, int position, Bitmap item) {
         if (position == mImageAdapter.getItemCount() - 1) {
             showUploadDialog();
         } else {
-            urlList.remove(position);
+            mImageAdapter.urlList.remove(position);
             mImageAdapter.remove(position);
             mImageAdapter.resetViewHeight(recycler_view, spanCount);
         }
@@ -220,12 +221,18 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                int maxNum = mImageAdapter.getCurMaxCount();
+                if (maxNum <= 0) {
+                    ToastUtil.showMessage(R.string.msg_amount_limit);
+                    return;
+                }
                 switch (v.getId()) {
                     case R.id.camera_button:
                         new PicGetter(_this(), getActivityResultHelper(), _this()).startCamera();
                         break;
                     case R.id.local_button:
-                        new PicGetter(_this(), getActivityResultHelper(), _this()).startImage();
+                        //new PicGetter(_this(), getActivityResultHelper(), _this()).startImage();
+                        selectMultiImage(maxNum);
                         break;
                 }
             }
@@ -238,5 +245,71 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
     private PublishPostActivity _this() {
         return this;
+    }
+
+    private ArrayList<String> mSelectPath;
+
+    private void selectMultiImage(int maxNum) {
+        int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+        boolean showCamera = false;
+
+        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+        // 最大可选择图片数量
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+        // 选择模式
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+        }
+        startActivityForResult(intent, new ActivityResult() {
+            @Override
+            public void onActivityResult(Intent data) {
+                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                onPicGets();
+            }
+        });
+    }
+
+    /**
+     * 选择照片后的回调接口的实现
+     */
+    public void onPicGets() {
+        ArrayList<Bitmap> mSelectBitmap = new ArrayList<>();
+        for (String p : mSelectPath) {
+            Bitmap bitmap = PicGetter.decodeBitmapFromPath(p);
+            mSelectBitmap.add(bitmap);
+            mImageAdapter.addImage(bitmap);
+        }
+        mImageAdapter.resetViewHeight(recycler_view, spanCount);
+        showProgressDialog();
+        uploadImage(0);
+    }
+
+    public void uploadImage(final int index) {
+        if (mSelectPath.size() <= 0) {
+            dismissProgressDialog();
+            ToastUtil.showMessage(mImageAdapter.urlList.toString());
+            return;
+        }
+        Bitmap bitmap = mImageAdapter.getItem(index);
+        String path = mSelectPath.get(0);
+        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
+                new ResponseListener<ImageUploadResp>() {
+                    @Override
+                    public void onResponse(ImageUploadResp o) {
+                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
+                        mSelectPath.remove(0);
+                        uploadImage(index + 1);
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        dismissProgressDialog();
+                        super.onErrorResponse(error);
+                    }
+                });
     }
 }

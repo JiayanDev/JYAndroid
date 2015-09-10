@@ -14,8 +14,8 @@
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -61,6 +61,9 @@
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.SearchCategoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.UserInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -98,21 +101,13 @@
         <activity
             android:name=".activity.EventRankActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".activity.EditUserInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ApplyEventSuccessActivity"
             android:screenOrientation="portrait"/>
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.EditUserInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.ApplyEventSuccessActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.LocationSelectActivity"
@@ -124,23 +119,18 @@
             android:name=".activity.UpdatePassActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.LocationSelectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.SettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.UpdatePassActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.AboutAngelActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.BecomeAngelActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EditActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.MultiImageSelectorActivity"
+            android:screenOrientation="portrait"/>
+
         <!--友盟推送服务相关-->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

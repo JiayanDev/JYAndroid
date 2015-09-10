@@ -23,7 +23,8 @@ public class Event extends BaseModel {
     public long userId;
     public String userName;
 
-    @Expose
+    //@Expose
+    public String title;
     public String desc;
     public long beginTime;
     public long[] categoryIds;

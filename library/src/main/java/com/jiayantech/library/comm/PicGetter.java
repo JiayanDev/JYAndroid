@@ -60,7 +60,7 @@ public class PicGetter {
     private final Activity mContext;
     private final ActivityResultHelper mHelper;
 
-    private final int reqWidth = 480;
+    private static final int reqWidth = 480;
 
     public PicGetter(Context context, ActivityResultHelper helper, PicGetListener l) {
         mContext = (Activity) context;
@@ -148,7 +148,7 @@ public class PicGetter {
         addActivityResult(activityResult);
     }
 
-    private Bitmap decodeBitmapFromPath(String path) {
+    public static  Bitmap decodeBitmapFromPath(String path) {
         return BitmapUtil.decodeSampledBitmapFromFilePath(path, reqWidth);
     }
 
