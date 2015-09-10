@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
@@ -110,7 +112,27 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         if(AppInitManger.sAppInit.bindWX){
             mTxtWechatAccount.setText(R.string.account_status_bind);
             mTxtWechatAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        }else{
+            mTxtWechatAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
+                        @Override
+                        public void onGetCode(String code) {
+                            UserBiz.bindWechat(code, new ResponseListener<AppInit>() {
+                                @Override
+                                public void onResponse(AppInit response) {
+                                    mTxtWechatAccount.setText(R.string.account_status_bind);
+                                    mTxtWechatAccount.setTextColor(getResources().
+                                            getColor(R.color.text_normal_color));
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         }
+
         if(AppInitManger.sAppInit.bindQQ){
             mTxtQQAccount.setText(R.string.account_status_bind);
             mTxtQQAccount.setTextColor(getResources().getColor(R.color.text_normal_color));

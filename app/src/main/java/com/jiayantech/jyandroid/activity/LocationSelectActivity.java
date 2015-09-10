@@ -32,10 +32,16 @@ public class LocationSelectActivity extends BaseActivity{
             mProvinceSelectFragment = LocationSelectFragment.
                     newInstance(LocationSelectFragment.TYPE_PROVINCE, null);
             mFragmentManager.beginTransaction().add(R.id.fragment_container,
-                    mProvinceSelectFragment, "province").addToBackStack("province").commit();
+                    mProvinceSelectFragment, "province").commit();
         }
 
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(ProvinceSelectEvent event){

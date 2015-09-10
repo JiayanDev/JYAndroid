@@ -5,6 +5,7 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
+import com.jiayantech.library.utils.LogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +80,8 @@ public class JsNativeBiz {
         sb.append("(");
         sb.append(params);
         sb.append(")");
-
-        webView.loadUrl("javascript:" + sb.toString());
+        String result = "javascript:" + sb.toString();
+        LogUtil.i("JsNativieBiz", "call js method: " + result);
+        webView.loadUrl(result);
     }
 }

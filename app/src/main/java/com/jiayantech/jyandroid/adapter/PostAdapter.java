@@ -2,23 +2,26 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.jyandroid.widget.AdaptiveGridView;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
+import com.jiayantech.library.utils.TimeUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by liangzili on 15/7/2.
@@ -39,19 +42,20 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ViewHolder(mContext, viewGroup, R.layout.item_post, this);
+        return new ViewHolder(mContext, viewGroup, R.layout.item_diary, this);
     }
 
     public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
         public Context mContext;
         public ImageView mAvatar;
         public TextView mUsername;
-        public LinearLayout mPhotoLayout;
+        public TextView mDate;
+        public AdaptiveGridView mPhotoLayout;
         public TextView mContent;
         public TextView mThumbsUpCount;
         public TextView mCommentCount;
         public ImageView mType;
-        public TextView txt_category;
+        public TagGroup mTagGroupCategory;
 
         public ViewHolder(Context context, ViewGroup parent, int layoutId) {
             this(context, parent, layoutId, null);
@@ -62,13 +66,13 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mContext = context;
             mAvatar = (ImageView) itemView.findViewById(R.id.avatar);
             mUsername = (TextView) itemView.findViewById(R.id.username);
-            mPhotoLayout = (LinearLayout) itemView.findViewById(R.id.layout_photos);
+            mPhotoLayout = (AdaptiveGridView) itemView.findViewById(R.id.layout_photos);
             mContent = (TextView) itemView.findViewById(R.id.content);
             mThumbsUpCount = (TextView) itemView.findViewById(R.id.thumbs_up);
             mCommentCount = (TextView) itemView.findViewById(R.id.comment);
             mType = (ImageView) itemView.findViewById(R.id.ic_type);
-            txt_category = (TextView) itemView.findViewById(R.id.txt_category);
-            //mPhotoLayout.setOnClickListener(mImageClickListener);
+            mTagGroupCategory = (TagGroup) itemView.findViewById(R.id.tag_group_category);
+            mDate = (TextView) itemView.findViewById(R.id.txt_date);
         }
 
         @Override
@@ -84,23 +88,16 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                     (R.string.thumbs_up_count, new Object[]{String.valueOf(item.likeCount)}));
             mCommentCount.setText(mContext.getResources().getString
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
-            mPhotoLayout.removeAllViews();
-            if (item.photoes != null) {
-                for (int i = 0; i < item.photoes.size() && i < 3; i++) {
-                    final ImageView image = (ImageView) LayoutInflater.
-                            from(mContext).inflate(R.layout.layout_photo, mPhotoLayout, false);
-                    image.setTag(i);
-                    image.setOnClickListener(mImageClickListener);
-                    mPhotoLayout.addView(image);
-                    BitmapBiz.display(image, item.photoes.get(i), 150);
-                }
-            }
-            if (Post.POST_TYPE_DIARY.equals(item.type)) {
-                mType.setImageResource(R.drawable.ic_post_type_diary);
-            } else {
-                mType.setImageResource(R.drawable.ic_post_type_topic);
-            }
-            txt_category.setText(item.getCategoryNames());
+
+            mTagGroupCategory.setTags(new String[]{"双眼皮", "单眼皮", "隆胸"});
+
+            mPhotoLayout.setAdapter(new PhotoAdapter(mContext));
+            ((PhotoAdapter)mPhotoLayout.getAdapter()).setPhotoList(
+                    item.photoes == null ? new ArrayList<String>() : item.photoes);
+
+//            mTagGroupCategory.setText(item.getCategoryNames());
+            mDate.setText(TimeUtil.stamp2Date((long
+                    ) item.createTime * 1000));
         }
 
         private View.OnClickListener mImageClickListener = new View.OnClickListener() {

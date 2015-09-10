@@ -47,11 +47,9 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //    }
     public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         //作容错
-        String result = "";
+        String result = null;
         try {
             result = json.getAsJsonPrimitive().getAsString();
-        }catch (JsonParseException e){
-            e.printStackTrace();
         }catch (IllegalStateException e){
             e.printStackTrace();
         }
