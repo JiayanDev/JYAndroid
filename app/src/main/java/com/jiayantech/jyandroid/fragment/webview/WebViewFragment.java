@@ -40,13 +40,9 @@ public abstract class WebViewFragment extends BaseFragment {
     /* webview显示内容的具体信息
      * EXTRA_ID 内容的ID
      * EXTRA_TYPE 内容的类型
-     * EXTRA_USERNAME 内容作者的用户名
-     * EXTRA_USER_ID 内容作者的ID
      * */
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_TYPE = "type";
-    //public static final String EXTRA_USERNAME = "username";
-    //public static final String EXTRA_USER_ID = "user_id";
 
     private LinearLayout mContentLayout;
     private RelativeLayout mLoadingLayout;
@@ -59,8 +55,6 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected String mType;
     protected long mId;
-    //protected String mUserName;
-    //protected long mUserId;
 
     protected String mUrl;
 
@@ -68,8 +62,6 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mId = getArguments().getLong(EXTRA_ID);
-        //mUserId = getArguments().getLong(EXTRA_USER_ID);
-        //mUserName = getArguments().getString(EXTRA_USERNAME);
         mType = getArguments().getString(EXTRA_TYPE);
 
         mUrl = onGetUrl() + "?" + onGetUrlParams();
@@ -110,7 +102,6 @@ public abstract class WebViewFragment extends BaseFragment {
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
 
-        //finishLoading();
         return mView;
     }
 
@@ -118,7 +109,6 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
-//        mSharePanel = new SharePanel(getActivity(), mUrl);
 
     }
 

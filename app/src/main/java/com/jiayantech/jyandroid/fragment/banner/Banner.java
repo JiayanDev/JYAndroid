@@ -5,5 +5,5 @@ package com.jiayantech.jyandroid.fragment.banner;
  */
 public class Banner {
     public String imageUrl;
-    public String action;
+    public BannerOnClickListener listener;
 }

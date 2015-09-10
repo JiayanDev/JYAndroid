@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.viewpagerindicator.CirclePageIndicator;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.PostBiz;
+import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.library.http.ResponseListener;
+import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
@@ -47,12 +50,7 @@ public class BannerFragment extends Fragment{
         mContext = getActivity();
         initBannerList();
 
-        mAutoScrollViewPager.setAdapter(new BannerPagerAdapter(mContext, mBannerList));
-        mIndicator.setViewPager(mAutoScrollViewPager);
 
-        mAutoScrollViewPager.setInterval(BANNER_SCROLL_INTERVAL);
-        mAutoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
-        mAutoScrollViewPager.startAutoScroll();
     }
 
     public void setBannerList(List<Banner> list){
@@ -60,12 +58,24 @@ public class BannerFragment extends Fragment{
     }
 
     private void initBannerList(){
-        mBannerList = new ArrayList<>();
-        for(int i = 0; i < BannerUrl.BannerUrls.length; i++){
-            Banner banner = new Banner();
-            banner.imageUrl = BannerUrl.BannerUrls[i];
-            mBannerList.add(banner);
-        }
+//        mBannerList = new ArrayList<>();
+//        for(int i = 0; i < BannerUrl.BannerUrls.length; i++){
+//            Banner banner = new Banner();
+//            banner.imageUrl = BannerUrl.BannerUrls[i];
+//            mBannerList.add(banner);
+//        }
+        PostBiz.getTopicList(new ResponseListener<AppResponse<List<Post>>>() {
+            @Override
+            public void onResponse(AppResponse<List<Post>> response) {
+                
+            }
+        });
+        mAutoScrollViewPager.setAdapter(new BannerPagerAdapter(mContext, mBannerList));
+        mIndicator.setViewPager(mAutoScrollViewPager);
+
+        mAutoScrollViewPager.setInterval(BANNER_SCROLL_INTERVAL);
+        mAutoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
+        mAutoScrollViewPager.startAutoScroll();
     }
 
 
