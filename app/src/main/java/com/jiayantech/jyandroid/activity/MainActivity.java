@@ -65,8 +65,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         initViewPager();
 
         setDisplayHomeAsUpEnabled(false);
-        mImageUnreadDot = (ImageView) findViewById(R.id.img_unread_dot);
-        mTextUnreadCount = (TextView) findViewById(R.id.txt_unread_count);
+        mImageUnreadDot = (ImageView)findViewById(R.id.img_unread_dot);
+        mTextUnreadCount = (TextView)findViewById(R.id.txt_unread_count);
 
         int unreadNotificationCount = UmengPushManager.getInstance().getUnreadNotificationCount();
         boolean unreadCompany = UmengPushManager.getInstance().getUnreadCompanyCount();
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         onEvent(event);
 
         //如果是从通知栏推送消息点击启动app，根据推送消息的参数跳转到对应Activity
-        if (getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE) != null) {
+        if(getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE) != null){
             long id = getIntent().getLongExtra(WebViewFragment.EXTRA_ID, -1);
             String type = getIntent().getStringExtra(WebViewFragment.EXTRA_TYPE);
             launchActivityFromNotification(id, type);
@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //            default:
 //                return;
         Intent intent = null;
-        switch (type) {
+        switch (type){
             case WebConstans.Type.TYPE_DIARY:
             case WebConstans.Type.TYPE_TOPIC:
             case WebConstans.Type.TYPE_EVENT:
@@ -129,17 +129,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 //        ToastUtil.showMessage("我收到一条自定义的友盟消息");
 //    }
 
-    public void onEvent(UnreadMessageEvent event) {
+    public void onEvent(UnreadMessageEvent event){
         LogUtil.i(TAG, "handling UnreadMessageEvent");
-        if (event.unreadNotificaition > 0) {
+        if(event.unreadNotificaition > 0){
             mTextUnreadCount.setVisibility(View.VISIBLE);
             mImageUnreadDot.setVisibility(View.INVISIBLE);
             mTextUnreadCount.setText(String.valueOf(event.unreadNotificaition));
-        } else {
-            if (event.unreadCompany || event.unreadAngel) {
+        }else{
+            if(event.unreadCompany || event.unreadAngel){
                 mTextUnreadCount.setVisibility(View.INVISIBLE);
                 mImageUnreadDot.setVisibility(View.VISIBLE);
-            } else {
+            }else{
                 mTextUnreadCount.setVisibility(View.INVISIBLE);
                 mImageUnreadDot.setVisibility(View.INVISIBLE);
             }
@@ -290,10 +290,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             toUserInfo = false;
             ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
         }
-    }
-
-    public void resetCheck() {
-        ((RadioButton) mRadioGroup.findViewById(ids[0])).setChecked(true);
     }
 
     @Override

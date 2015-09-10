@@ -8,7 +8,7 @@ import com.jiayantech.library.base.SingleFragmentActivity;
 /**
  * Created by liangzili on 15/7/30.
  */
-public class CompanyEventActivity extends SingleFragmentActivity{
+public class CompanyEventActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         return new CompanyEventFragment();

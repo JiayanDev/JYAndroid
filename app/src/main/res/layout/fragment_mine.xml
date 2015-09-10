@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,15 +22,15 @@
             android:paddingTop="@dimen/normal_padding">
 
             <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/img_avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img"
-                app:riv_corner_radius="40dip" />
+                                                             android:id="@+id/img_avatar"
+                                                             android:layout_width="50dp"
+                                                             android:layout_height="50dp"
+                                                             android:layout_alignParentLeft="true"
+                                                             android:layout_centerVertical="true"
+                                                             android:layout_marginLeft="16dp"
+                                                             android:scaleType="centerCrop"
+                                                             android:src="@drawable/img"
+                                                             app:riv_corner_radius="40dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,13 +41,13 @@
 
                 <TextView
                     android:id="@+id/txt_nickname"
-                    style="@style/text_item_style" />
+                    style="@style/text_item_style"/>
 
                 <TextView
                     android:id="@+id/txt_info"
                     style="@style/text_item_hint_style"
                     android:paddingLeft="10dp"
-                    android:textSize="@dimen/small_text_size" />
+                    android:textSize="@dimen/small_text_size"/>
             </LinearLayout>
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_arrow_right_normal" />
+                android:src="@mipmap/icon_arrow_right_normal"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -72,12 +72,13 @@
                 android:background="@android:color/white"
                 android:drawableLeft="@mipmap/icon_mine_diary"
                 android:onClick="onClick"
-                android:text="@string/my_home_page" />
+                android:textSize="15dp"
+                android:text="@string/my_home_page"/>
 
             <View
                 android:id="@+id/divider_home_page"
                 style="@style/divider_gray_style"
-                android:layout_marginLeft="10dip" />
+                android:layout_marginLeft="10dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,7 +98,8 @@
                     android:drawablePadding="15dp"
                     android:gravity="center_vertical"
                     android:text="@string/title_mine_notification"
-                    android:textColor="@color/text_normal_color" />
+                    android:textSize="15dp"
+                    android:textColor="@color/text_normal_color"/>
 
                 <TextView
                     android:id="@+id/txt_unread_notification"
@@ -108,25 +110,25 @@
                     android:gravity="center"
                     android:text="20"
                     android:textColor="@android:color/white"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
-                    android:src="@mipmap/icon_arrow_right_normal" />
+                    android:src="@mipmap/icon_arrow_right_normal"/>
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/divider_big_gray_style" />
+        <View style="@style/divider_big_gray_style"/>
 
         <!--<TextView-->
-            <!--android:id="@+id/txt_mime"-->
-            <!--style="@style/text_item_right_arrow_style"-->
-            <!--android:textSize="15dp"-->
-            <!--android:drawableLeft="@mipmap/icon_mine_company"-->
-            <!--android:text="我的伴美"/>-->
+        <!--android:id="@+id/txt_mime"-->
+        <!--style="@style/text_item_right_arrow_style"-->
+        <!--android:textSize="15dp"-->
+        <!--android:drawableLeft="@mipmap/icon_mine_company"-->
+        <!--android:text="我的伴美"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -146,14 +148,14 @@
                 android:text="@string/title_mine_company"
                 android:textColor="@color/text_normal_color"
                 android:textSize="15dp"/>
-        <!--<TextView-->
+            <!--<TextView-->
             <!--android:id="@+id/txt_company"-->
             <!--style="@style/text_item_right_arrow_style"-->
             <!--android:background="@android:color/white"-->
             <!--android:drawableLeft="@mipmap/icon_mine_company"-->
             <!--android:onClick="onClick"-->
             <!--android:text="@string/my_company" />-->
-<!--&gt;>>>>>> upstream/master-->
+            <!--&gt;>>>>>> upstream/master-->
 
             <ImageView
                 android:id="@+id/image_unread_company"
@@ -176,17 +178,18 @@
                 android:src="@mipmap/icon_arrow_right_normal"
                 />
         </LinearLayout>
+
         <View
             style="@style/divider_gray_style"
-            android:layout_marginLeft="10dip" />
+            android:layout_marginLeft="10dip"/>
 
         <!--<TextView-->
-            <!--android:id="@+id/txt_events"-->
-            <!--style="@style/text_item_right_arrow_style"-->
-            <!--android:background="@android:color/white"-->
-            <!--android:drawableLeft="@mipmap/icon_mine_angel"-->
-            <!--android:textSize="15dp"-->
-            <!--android:text="@string/title_mine_angel"/>-->
+        <!--android:id="@+id/txt_events"-->
+        <!--style="@style/text_item_right_arrow_style"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:drawableLeft="@mipmap/icon_mine_angel"-->
+        <!--android:textSize="15dp"-->
+        <!--android:text="@string/title_mine_angel"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -228,13 +231,13 @@
                 android:src="@mipmap/icon_arrow_right_normal"
                 />
         </LinearLayout>
-<!--=======-->
-            <!--android:drawableLeft="@mipmap/icon_mine_angel"-->
-            <!--android:onClick="onClick"-->
-            <!--android:text="@string/title_mine_angel" />-->
-<!--&gt;>>>>>> upstream/master-->
+        <!--=======-->
+        <!--android:drawableLeft="@mipmap/icon_mine_angel"-->
+        <!--android:onClick="onClick"-->
+        <!--android:text="@string/title_mine_angel" />-->
+        <!--&gt;>>>>>> upstream/master-->
 
-        <View style="@style/divider_big_gray_style" />
+        <View style="@style/divider_big_gray_style"/>
 
         <TextView
             android:id="@+id/txt_setting"
@@ -242,19 +245,19 @@
             android:background="@android:color/white"
             android:drawableLeft="@mipmap/icon_mine_setting"
             android:onClick="onClick"
-            android:text="@string/title_mine_setting" />
+            android:text="@string/title_mine_setting"/>
 
         <View
             style="@style/divider_gray_style"
             android:layout_marginLeft="10dip"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/txt_delete"
             style="@style/text_item_right_arrow_style"
             android:onClick="onClick"
             android:text="删除用户"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 </ScrollView>

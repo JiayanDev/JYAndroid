@@ -30,7 +30,7 @@
 
     <!--不同背景的颜色-->
     <!--灰色背景-->
-    <color name="bg_gray_color">#BDBDBD</color>
+    <color name="bg_gray_color">#F6F6F6</color>
     <color name="bg_light_gray_color">#F6F6F6</color>
 
     <!--文本框背景-->

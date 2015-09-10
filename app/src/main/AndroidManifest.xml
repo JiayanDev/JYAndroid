@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jiayantech.jyandroid">
+<manifest
+    package="com.jiayantech.jyandroid"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".app.JYApplication"
@@ -20,82 +21,91 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.OtherLoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.VerifyPhoneActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SetInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ResetPassActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.MyDiariesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SelectProjectActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.NewDiaryInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PublishDiaryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PublishPostActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SelectCategoryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.UserInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CreateEventActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MyEventsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <!--<activity-->
         <!--android:name=".activity.PostDetailActivity"-->
         <!--android:screenOrientation="portrait"/>-->
 
         <activity
             android:name=".activity.PostActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PhotosActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <!--<activity-->
         <!--android:name=".activity.EventDetailActivity"-->
         <!--android:screenOrientation="portrait"/>-->
         <activity
             android:name=".activity.ApplyEventActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MessagesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CompanyEventActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EventRankActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
+        <activity
+            android:name=".activity.EditUserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ApplyEventSuccessActivity"
+            android:screenOrientation="portrait"/>
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.EditUserInfoActivity"
@@ -104,6 +114,15 @@
             android:name=".activity.ApplyEventSuccessActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.LocationSelectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.UpdatePassActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.LocationSelectActivity"
             android:screenOrientation="portrait" />
@@ -126,46 +145,46 @@
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
             android:exported="false"
-            android:process=":push" />
+            android:process=":push"/>
         <receiver
             android:name="com.umeng.message.SystemReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.MessageReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
-                <category android:name="umeng" />
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4"/>
+                <category android:name="umeng"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.jiayantech.jyandroid.intent.action.COMMAND" />
+                <action android:name="com.jiayantech.jyandroid.intent.action.COMMAND"/>
             </intent-filter>
         </receiver>
         <receiver android:name="com.umeng.message.UmengMessageBootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
@@ -175,39 +194,39 @@
             android:label="PushService"
             android:process=":push">
             <intent-filter>
-                <action android:name="com.jiayantech.jyandroid.intent.action.START" />
+                <action android:name="com.jiayantech.jyandroid.intent.action.START"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.jiayantech.jyandroid.intent.action.COCKROACH" />
+                <action android:name="com.jiayantech.jyandroid.intent.action.COCKROACH"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
-                <category android:name="umeng" />
+                <action android:name="org.agoo.android.intent.action.PING_V4"/>
+                <category android:name="umeng"/>
             </intent-filter>
         </service>
         <service
             android:name="com.umeng.message.UmengIntentService"
-            android:process=":push" />
+            android:process=":push"/>
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
             android:exported="true"
             android:process=":push">
             <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
+                <action android:name="org.android.agoo.client.MessageReceiverService"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+                <action android:name="org.android.agoo.client.ElectionReceiverService"/>
             </intent-filter>
         </service>
         <!-- V1.3.0添加的service，负责下载通知的资源 -->
-        <service android:name="com.umeng.message.UmengDownloadResourceService" />
+        <service android:name="com.umeng.message.UmengDownloadResourceService"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="558bd48d67e58ee244002b45" />
+            android:value="558bd48d67e58ee244002b45"/>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="02e32eef3772738285c0128bff0e09e1" />
+            android:value="02e32eef3772738285c0128bff0e09e1"/>
         <!--友盟推送服务相关-->
 
         <!--友盟社会化分享相关-->
@@ -216,7 +235,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <!-- ###################注册SDK使用的Activity###################### -->
         <!--分享编辑页-->
@@ -226,7 +245,7 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
 
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
@@ -235,45 +254,45 @@
             android:noHistory="true"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
                 <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent100424468"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!--友盟社会化分享相关-->
 
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <!-- 友盟权限-->
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <!--【可选】如果需要设置前台是否显示通知，需要设置这个权限-->
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <!-- 可选 -->
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />;
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>;
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

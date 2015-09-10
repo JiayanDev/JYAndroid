@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,12 +10,11 @@ import com.jiayantech.library.base.BaseActivity;
 /**
  * Created by liangzili on 15/8/7.
  */
-public class ApplyEventSuccessActivity extends BaseActivity{
+public class ApplyEventSuccessActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_event_success);
-
     }
 
     @Override
@@ -27,7 +25,7 @@ public class ApplyEventSuccessActivity extends BaseActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_finish:
                 finish();
                 return true;

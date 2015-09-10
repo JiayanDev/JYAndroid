@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="30dip"
-    android:layout_marginRight="30dip"
-    android:layout_marginTop="@dimen/login_margin_top"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="30dip"
+              android:layout_marginRight="30dip"
+              android:layout_marginTop="@dimen/login_margin_top"
+              android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_nickname"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_input_nickname"
-            android:maxLines="1" />
+            android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
 
     <RadioGroup
@@ -32,14 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/normal_padding"
             android:checked="true"
-            android:text="@string/female" />
+            android:text="@string/female"/>
 
         <RadioButton
             android:id="@+id/radio_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/normal_padding"
-            android:text="@string/male" />
+            android:text="@string/male"/>
     </RadioGroup>
 
     <android.support.design.widget.TextInputLayout
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_input_set_pass"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -67,13 +67,13 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_input_set_pass_again"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/btn_register"
         style="@style/btn_theme"
         android:layout_marginTop="30dip"
-        android:text="@string/register" />
+        android:text="@string/register"/>
 
 </LinearLayout>

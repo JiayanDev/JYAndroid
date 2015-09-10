@@ -14,15 +14,15 @@
   ~ limitations under the License.
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_diary"
         android:title="@string/post_daily"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
     <item
         android:id="@+id/action_topic"
         android:title="@string/post_topic"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_share"

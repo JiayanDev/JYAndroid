@@ -3,7 +3,7 @@ package com.jiayantech.jyandroid.fragment;
 import android.os.Bundle;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.adapter.BeautyWithAdapter;
+import com.jiayantech.jyandroid.adapter.CompanyAdapter;
 import com.jiayantech.jyandroid.biz.CompanyBiz;
 import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.jyandroid.model.Event;
@@ -21,13 +21,13 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
     @Override
     public void onInitView() {
         super.onInitView();
-        getActivity().setTitle(R.string.title_my_beauty_with);
+        getActivity().setTitle(R.string.title_my_company);
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
                 .showFirstEnable(true)
                 .color(getResources().getColor(R.color.bg_gray_color))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
-        setParams(new BeautyWithAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
+        setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
         setEnablePaging(false);
     }
 

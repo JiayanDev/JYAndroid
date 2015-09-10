@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_close"
@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
         android:padding="@dimen/normal_margin"
-        android:src="@mipmap/icon_x" />
+        android:src="@mipmap/icon_x"/>
 
     <ImageView
         android:id="@+id/img_app"
@@ -18,7 +18,7 @@
         android:layout_below="@id/img_close"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dip"
-        android:src="@mipmap/icon_logo" />
+        android:src="@mipmap/icon_logo"/>
 
     <!--<TextView-->
     <!--android:layout_width="wrap_content"-->
@@ -38,38 +38,40 @@
         android:layout_marginRight="0dip">
 
         <!--<RelativeLayout-->
-            <!--android:id="@+id/btn_wechat_login"-->
-            <!--style="@style/btn_theme"-->
-            <!--android:layout_height="45dp"-->
-            <!--android:layout_marginBottom="@dimen/normal_margin"-->
-            <!--android:text="@string/wechat_login"-->
-            <!--android:minWidth="0dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentEnd="true">-->
-            <LinearLayout
-                android:id="@+id/btn_wechat_login"
-                android:layout_width="match_parent"
-                style="@style/btn_theme"
-                android:layout_height="45dp"
-                android:layout_marginBottom="@dimen/normal_margin"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
-                <ImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:src="@mipmap/icon_wechat_white"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/wechat_login"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:layout_gravity="center_vertical"
-                    />
-            </LinearLayout>
+        <!--android:id="@+id/btn_wechat_login"-->
+        <!--style="@style/btn_theme"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_marginBottom="@dimen/normal_margin"-->
+        <!--android:text="@string/wechat_login"-->
+        <!--android:minWidth="0dp"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true">-->
+        <LinearLayout
+            android:id="@+id/btn_wechat_login"
+            android:layout_width="match_parent"
+            style="@style/btn_theme"
+            android:layout_height="45dp"
+            android:layout_marginBottom="@dimen/normal_margin"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@mipmap/icon_wechat_white"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/wechat_login"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
         <!--</RelativeLayout>-->
 
         <TextView
@@ -78,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_wechat_login"
             android:layout_marginLeft="15dp"
-            android:text="@string/other_login" />
+            android:text="@string/other_login"/>
 
         <TextView
             android:id="@+id/txt_register"
@@ -87,7 +89,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/btn_wechat_login"
             android:layout_marginRight="15dp"
-            android:text="@string/register" />
+            android:text="@string/register"/>
     </RelativeLayout>
 
 </RelativeLayout>

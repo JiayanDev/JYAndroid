@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <com.jiayantech.library.widget.UnslidableViewPager
         android:id="@+id/id_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/navigate_top_line"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/theme_color" />
+            android:background="@color/theme_color"/>
 
         <RadioGroup
             android:id="@+id/radiogroup_tab"
@@ -36,7 +36,7 @@
                 style="@style/main_tab"
                 android:checked="true"
                 android:drawableTop="@drawable/tab_event_selector"
-                android:text="@string/activity" />
+                android:text="@string/activity"/>
 
             <!--<RadioButton-->
             <!--android:id="@+id/radio_beauty_with"-->
@@ -49,18 +49,19 @@
                 android:id="@+id/radio_community"
                 style="@style/main_tab"
                 android:drawableTop="@drawable/tab_community_selector"
-                android:text="@string/community" />
+                android:text="@string/community"/>
+
             <RadioButton
                 android:id="@+id/radio_userinfo"
                 style="@style/main_tab"
                 android:layout_centerInParent="true"
                 android:drawableTop="@drawable/tab_me_selector"
-                android:text="@string/userinfo" />
+                android:text="@string/userinfo"/>
             <!--<RelativeLayout-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content">-->
-                <!-- -->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content">-->
+            <!-- -->
             <!--</RelativeLayout>-->
 
         </RadioGroup>
