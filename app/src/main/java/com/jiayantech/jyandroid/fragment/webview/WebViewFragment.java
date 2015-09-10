@@ -110,7 +110,7 @@ public abstract class WebViewFragment extends BaseFragment {
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
 
-        finishLoading();
+        //finishLoading();
         return mView;
     }
 
