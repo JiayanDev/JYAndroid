@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.SocialLoginBiz;
 import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
 import com.jiayantech.jyandroid.fragment.EditGenderFragment;
 import com.jiayantech.jyandroid.manager.AppInitManger;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
@@ -83,11 +85,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mLocationText = (TextView) findViewById(R.id.txt_location);
         mBirthdayText = (TextView) findViewById(R.id.txt_birthday);
         mPhoneText = (TextView) findViewById(R.id.txt_phone);
-        mAvatarImg = (RoundedImageView)findViewById(R.id.img_avatar);
+        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
 
-        mTxtWechatAccount = (TextView)findViewById(R.id.txt_wechat_username);
-        mTxtQQAccount = (TextView)findViewById(R.id.txt_qq_username);
-        mTxtWeiboAccount = (TextView)findViewById(R.id.txt_weibo_username);
+        mTxtWechatAccount = (TextView) findViewById(R.id.txt_wechat_username);
+        mTxtQQAccount = (TextView) findViewById(R.id.txt_qq_username);
+        mTxtWeiboAccount = (TextView) findViewById(R.id.txt_weibo_username);
 //=======
 //        mAvatarImg = (RoundedImageView) findViewById(R.id.img_avatar);
 //        txt_wechat = (TextView) findViewById(R.id.txt_wechat);
@@ -107,15 +109,39 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
         mPhoneText.setText(AppInitManger.getPhoneNum());
 
-        if(AppInitManger.sAppInit.bindWX){
+        if (AppInitManger.sAppInit.bindWX) {
             mTxtWechatAccount.setText(R.string.account_status_bind);
             mTxtWechatAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
+        } else {
+            mTxtWechatAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SocialLoginBiz.wechatLogin(new SocialLoginBiz.GetCodeListener() {
+                        @Override
+                        public void onGetCode(String code) {
+                            UserBiz.bindWechat(code, new ResponseListener<AppInit>() {
+                                @Override
+                                public void onResponse(AppInit response) {
+                                    mTxtWechatAccount.setText(R.string.account_status_bind);
+                                    mTxtWechatAccount.setTextColor(getResources().
+                                            getColor(R.color.text_normal_color));
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onUninstalled() {
+                            ToastUtil.showMessage("未安装微信！");
+                        }
+                    });
+                }
+            });
         }
-        if(AppInitManger.sAppInit.bindQQ){
+        if (AppInitManger.sAppInit.bindQQ) {
             mTxtQQAccount.setText(R.string.account_status_bind);
             mTxtQQAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
-        if(AppInitManger.sAppInit.bindWB){
+        if (AppInitManger.sAppInit.bindWB) {
             mTxtWeiboAccount.setText(R.string.account_status_bind);
             mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
