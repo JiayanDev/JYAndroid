@@ -1,143 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:orientation="vertical"
-    >
-
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/content_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="为伴美活动打分"
-            />
-
-        <TextView
-            android:id="@+id/event_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="林汉彬全切双眼皮"
-            />
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_event_info"
+            android:id="@+id/layout_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingBottom="17dp"
+            android:paddingLeft="@dimen/normal_margin"
+            android:paddingRight="@dimen/normal_margin"
+            android:paddingTop="17dp"
+            >
 
-            <TextView
-                android:id="@+id/txt_hospital"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="鹏爱医疗美容医院"
+                >
+
+                <ImageView
+                    android:id="@+id/img_avatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/img_avatar"
+                    android:padding="0dp"
+                    android:text="让眼睛更有魅力"
+                    android:textColor="@color/text_normal_color"
+                    android:textSize="@dimen/normal_text_size"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/txt_title"
+                    android:layout_below="@id/txt_title"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/img_avatar"
+                    android:layout_weight="1"
+                    android:text="韩国进口水光针美容"
+                    android:textColor="@color/text_light_color"
+                    android:textSize="@dimen/smallest_text_size"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/img_avatar"
+                    android:layout_alignLeft="@+id/txt_project"
+                    android:layout_alignStart="@+id/txt_project"
+                    android:drawableLeft="@mipmap/icon_clear"
+                    android:drawablePadding="10dp"
+                    android:text="2015.10.28"
+                    android:textColor="@color/text_light_color"
+                    android:textSize="@dimen/smallest_text_size"/>
+            </RelativeLayout>
+
+            <View
+                style="@style/divider_offset_gray_style"
+                android:layout_marginTop="10dp"
                 />
-
-            <TextView
-                android:id="@+id/txt_doctor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="李罡 主任医师"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="美丽天使配合度"/>
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="美丽天使配合度"/>
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="美丽天使配合度"/>
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                />
-        </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="对这次伴美活动评价如何？"
+                    android:text="给活动评分"
+                    android:textColor="@color/text_normal_color"
+                    android:textSize="@dimen/normal_text_size"
                     />
 
-                <include layout="@layout/layout_edit_content"/>
-
-
-                <Button
-                    android:id="@+id/commit"
-                    style="@style/btn_theme"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="提交"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="美丽天使配合度"/>
+
+                    <RatingBar
+                        android:id="@+id/rank_angel_satisfaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="主治医生推荐度"/>
+
+                    <RatingBar
+                        android:id="@+id/rank_doctor_satisfaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
 
+        <View
+            android:id="@+id/divider"
+            style="@style/divider_big_gray_style"
+            android:layout_below="@id/layout_info"
+            />
+
+        <include layout="@layout/layout_edit_content"
+            />
+
+        <TextView
+            android:id="@+id/txt_word_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="还需要输入10字"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_publish_comment"
+                style="@style/btn_theme"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:text="@string/btn_publish_comment"/>
+        </RelativeLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

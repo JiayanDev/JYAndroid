@@ -76,7 +76,7 @@ public class EventDetailFragment extends WebViewFragment{
     }
 
     @Override
-    public void onAddWebActionListener(BaseWebViewClient client) {
+    protected void onAddWebActionListener(BaseWebViewClient client) {
         super.onAddWebActionListener(client);
 
         //监听web页面报名参加活动的回调

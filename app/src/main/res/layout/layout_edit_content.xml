@@ -7,12 +7,13 @@
         android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
+        android:background="@android:color/white"
         android:gravity="left|top"
         android:lineSpacingExtra="5dip"
         android:textColor="@color/text_normal_color"
         android:minHeight="150dip"
         android:padding="@dimen/normal_padding"
+        android:hint="请写下对伴美活动的感受吧，对他人帮助很大哦"
         android:textSize="@dimen/normal_text_size" />
 
     <!--<TextView-->

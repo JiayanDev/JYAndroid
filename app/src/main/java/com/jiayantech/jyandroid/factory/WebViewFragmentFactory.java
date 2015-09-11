@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.factory;
 
 import com.jiayantech.jyandroid.fragment.webview.EventDetailFragment;
+import com.jiayantech.jyandroid.fragment.webview.EventIntroFragment;
 import com.jiayantech.jyandroid.fragment.webview.HelpFragment;
 import com.jiayantech.jyandroid.fragment.webview.PostDetailFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
@@ -17,13 +18,15 @@ public class WebViewFragmentFactory {
             case WebConstans.Type.TYPE_TOPIC:
             case WebConstans.Type.TYPE_DIARY:
                 return PostDetailFragment.newInstance(id, type);
+            case WebConstans.Type.TYPE_EVENT_INTRO:
+                return EventIntroFragment.newInstance(id);
             case WebConstans.Type.TYPE_HELP:
                 return HelpFragment.newInstance();
             case WebConstans.Type.TYPE_PERSONAL_PAGE:
                 //return PersonalPageFragment.newInstance(userId, userName);
             default:
                 throw new IllegalArgumentException("WebViewFragmentFactory createFragment invalid" +
-                        "type");
+                        type);
         }
     }
 }

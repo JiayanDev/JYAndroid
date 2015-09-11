@@ -10,7 +10,6 @@ import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class BaseWebViewClient extends WebViewClient {
 
     private WebViewFragment mWebViewFragment;
     private List<WebActionListener> mWebActionList = new ArrayList<>();
+    private List<WebRedirectListener> mWebRedirectList = new ArrayList<>();
 
     public BaseWebViewClient(WebViewFragment fragment) {
         mWebViewFragment = fragment;
@@ -37,18 +37,25 @@ public class BaseWebViewClient extends WebViewClient {
             String action = JsNativeBiz.getJsAction(url);
             String jsonString = url.substring(url.indexOf("{"), url.lastIndexOf("}") + 1);
             callMethod(action, jsonString);
-            return super.shouldOverrideUrlLoading(view, url);
+            return true;
         } else {
             //URL监听跳转
-            URI uri = URI.create(url);
-            String action = uri.getPath();
-            redirectUrl(action, uri);
-            return true;
+            Uri uri = Uri.parse(url);
+            if(uri.getHost().equals(Uri.parse(WebConstans.BASE_URL).getHost())) {
+                String action = uri.getPath();
+                return redirectUrl(action, uri);
+            }
+            return false;
+
         }
     }
 
     public void addActionListener(WebActionListener listener){
         mWebActionList.add(listener);
+    }
+
+    public void addRedirectListener(WebRedirectListener listener){
+        mWebRedirectList.add(listener);
     }
 
     public void callMethod(String action, String jsonString){
@@ -76,12 +83,40 @@ public class BaseWebViewClient extends WebViewClient {
 
 
 
-    private void redirectUrl(String action, URI uri) {
-        if (action.endsWith(WebConstans.Action.ACTION_DIARY)) {
-            String query = uri.getQuery();
-            String sub = query.substring(query.indexOf("=") + 1);
-            long id = Long.valueOf(sub);
-            navigate(id, "diary");
+    private boolean redirectUrl(String action, Uri uri) {
+        long id;
+        try {
+            id = Long.valueOf(uri.getQueryParameter("id"));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            id = 0;
+        }catch (UnsupportedOperationException e){
+            e.printStackTrace();
+            id = 0;
+        }
+        String type = null;
+        switch (uri.getPath()){
+            case WebConstans.Action.ACTION_DIARY:
+                type = WebConstans.Type.TYPE_DIARY;
+                break;
+            case WebConstans.Action.ACTION_TOPIC:
+                type = WebConstans.Type.TYPE_TOPIC;
+                break;
+            case WebConstans.Action.ACTION_EVENT:
+                type = WebConstans.Type.TYPE_EVENT;
+                break;
+            case WebConstans.Action.ACTION_PERSONAL_PAGE:
+                type = WebConstans.Type.TYPE_PERSONAL_PAGE;
+                break;
+            case WebConstans.Action.ACTION_EVENT_INTRO:
+                type = WebConstans.Type.TYPE_EVENT_INTRO;
+                break;
+        }
+        if(type != null){
+            navigate(id, type);
+            return true;
+        }else{
+            return false;
         }
     }
 }
