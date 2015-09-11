@@ -60,11 +60,14 @@ public class UserBiz {
     private static final String ACTION_DETAIL = MODEL + "/detail";
     private static final String ACTION_UPDATE = MODEL + "/update";
     private static final String ACTION_HAS_PSW = MODEL + "/has/psw";
+    private static final String ACTION_FEEDBACK = MODEL + "/feedback";
+
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
     private static final String ACTION_DELETE = MODEL + "/delete";
 
     private static final String ACTION_UPDATE_PHONE = ACTION_UPDATE + "/phone";
+
 
     /**
      * 注册
@@ -201,7 +204,7 @@ public class UserBiz {
         HttpReq.post(ACTION_BIND_ACCOUNT, params, l);
     }
 
-    public static void bindWechat(String wxCode, ResponseListener l){
+    public static void bindWechat(String wxCode, ResponseListener l) {
         Map<String, String> params = HttpReq.getInitParams("wxCode", wxCode);
         HttpReq.post(ACTION_BIND_ACCOUNT, params, l);
     }
@@ -256,6 +259,12 @@ public class UserBiz {
 
     public static void delete(ResponseListener<?> l) {
         HttpReq.post(ACTION_DELETE, null, l);
+    }
+
+    public static void feedback(String content, String contact, ResponseListener<?> l) {
+        Map<String, String> params = HttpReq.getInitParams("content", content);
+        HttpReq.putParams(params, "contact", contact, "");
+        HttpReq.post(ACTION_FEEDBACK, params, l);
     }
 
     /**

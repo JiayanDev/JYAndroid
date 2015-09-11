@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.library.base.BaseGridAdapter;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class ImageAdapter extends BaseGridAdapter<Bitmap> {
         return new ViewHolder(viewGroup, R.layout.item_image, this);
     }
 
+    private static final int pad = UIUtil.dip2px(20);
 
     private static class ViewHolder extends BaseGridAdapter.ViewHolder<Bitmap> implements View.OnClickListener {
         private ImageView img_photo;
@@ -77,10 +79,16 @@ public class ImageAdapter extends BaseGridAdapter<Bitmap> {
         public void onBind(Bitmap bitmap, int position) {
             if (position == getCount() - 1) {
                 img_delete.setVisibility(View.GONE);
+                img_photo.setPadding(pad, pad, pad, pad);
+                img_photo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                img_photo.setBackgroundResource(R.color.divider_gray_color);
                 img_photo.setImageResource(R.mipmap.icon_add_photo);
                 return;
             }
+            img_photo.setPadding(0, 0, 0, 0);
+            img_photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
             img_delete.setVisibility(View.VISIBLE);
+            img_photo.setBackgroundDrawable(null);
             img_photo.setImageBitmap(bitmap);
         }
 

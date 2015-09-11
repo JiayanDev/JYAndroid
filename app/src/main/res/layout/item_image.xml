@@ -11,7 +11,8 @@
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:layout_marginTop="5dip"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/icon_add_photo"/>
 
     <ImageView
         android:id="@+id/img_delete"

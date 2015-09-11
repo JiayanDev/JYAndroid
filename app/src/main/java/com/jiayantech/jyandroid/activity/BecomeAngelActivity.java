@@ -96,6 +96,7 @@ public class BecomeAngelActivity extends BaseActivity {
 //                    }
 //                });
                 Intent intent = new Intent(this, SearchCategoryActivity.class);
+                intent.putExtra(SearchCategoryActivity.KEY_TITLE,"");
                 startActivityForResult(intent, new ActivityResult() {
                     @Override
                     public void onActivityResult(Intent data) {
@@ -121,18 +122,18 @@ public class BecomeAngelActivity extends BaseActivity {
                 String nickname = AppInitManger.getUserName();
                 String phone = AppInitManger.getPhoneNum();
 
-                if (hospitalId == 0 && TextUtils.isEmpty(hospitalName)) {
-                    ToastUtil.showMessage(R.string.hint_input_hospital);
-                    return;
-                }
+//                if (hospitalId == 0 && TextUtils.isEmpty(hospitalName)) {
+//                    ToastUtil.showMessage(R.string.hint_input_hospital);
+//                    return;
+//                }
                 if (categoryList == null || categoryList.size() == 0) {
                     ToastUtil.showMessage(R.string.hint_input_project);
                     return;
                 }
-                if (time == 0) {
-                    ToastUtil.showMessage(R.string.hint_input_time);
-                    return;
-                }
+//                if (time == 0) {
+//                    ToastUtil.showMessage(R.string.hint_input_time);
+//                    return;
+//                }
 
                 String title = null;
                 String desc = null;

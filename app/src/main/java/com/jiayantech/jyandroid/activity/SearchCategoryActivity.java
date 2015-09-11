@@ -37,7 +37,8 @@ public class SearchCategoryActivity extends SearchActivity {
 
     @Override
     public void setTitle(int titleId) {
-        super.setTitle(getString(R.string.title_search_category));
+        title = getString(R.string.title_search_category);
+        super.setTitle(title);
     }
 
     @Override

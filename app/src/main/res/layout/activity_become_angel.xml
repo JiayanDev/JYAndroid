@@ -86,11 +86,14 @@
                 android:textColor="@color/text_light_color" />
         </LinearLayout>
 
-        <View style="@style/divider_offset_gray_style" />
+        <View
+            style="@style/divider_offset_gray_style"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layout_hospital"
-            style="@style/layout_click_item_style">
+            style="@style/layout_click_item_style"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dip"
@@ -108,11 +111,14 @@
                 android:textColor="@color/text_light_color" />
         </LinearLayout>
 
-        <View style="@style/divider_offset_gray_style" />
+        <View
+            style="@style/divider_offset_gray_style"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layout_time"
-            style="@style/layout_click_item_style">
+            style="@style/layout_click_item_style"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dip"

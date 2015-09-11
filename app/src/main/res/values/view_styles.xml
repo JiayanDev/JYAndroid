@@ -67,6 +67,10 @@
         <item name="android:padding">15dip</item>
     </style>
 
+    <style name="text_drawable_left_style" parent="text_normal_style">
+        <item name="android:drawablePadding">10dip</item>
+    </style>
+
     <style name="text_item_right_arrow_style" parent="text_mid_item_style">
         <item name="android:drawableRight">@drawable/img_right_arrow_selector</item>
         <!--<item name="android:drawablePadding">5dip</item>-->

@@ -57,13 +57,7 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //            e.printStackTrace();
 //        }
 //        return result;
-        String result = null;
-        try {
-            result = json.getAsJsonPrimitive().getAsString();
-        }catch (IllegalStateException e){
-            e.printStackTrace();
-        }
-        return result;
+        return json.isJsonPrimitive() ? json.getAsJsonPrimitive().getAsString() : json.toString();
     }
 }
 

@@ -87,6 +87,12 @@ public class HttpReq<T> extends Request<T> {
         }
     }
 
+    public static void putParams(Map<String, String> params, String key, Object value, Object error) {
+        if (value != null && !error.equals(value)) {
+            params.put(key, value.toString());
+        }
+    }
+
     public static Map<String, String> putParams(Map<String, String> params, Map<String, String> other) {
         if (params == null) {
             return other;
