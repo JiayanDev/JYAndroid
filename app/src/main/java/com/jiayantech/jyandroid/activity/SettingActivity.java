@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.commons.AppDialogUtils;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -43,12 +44,13 @@ public class SettingActivity extends BaseActivity {
                 startActivity(UpdatePassActivity.class);
                 break;
             case R.id.txt_help:
-
+                WebViewActivity.launchActivity(this, 0, WebConstans.Type.TYPE_HELP);
                 break;
             case R.id.txt_about:
-
+                startActivity(AboutUsActivity.class);
                 break;
             case R.id.txt_feedback:
+                startActivity(FeedbackActivity.class);
                 break;
             case R.id.layout_service:
 

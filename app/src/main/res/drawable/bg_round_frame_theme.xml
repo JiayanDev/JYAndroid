@@ -6,8 +6,8 @@
         android:width="1dip"
         android:color="@color/theme_color" />
     <corners
-        android:bottomLeftRadius="2dip"
-        android:bottomRightRadius="2dip"
-        android:topLeftRadius="2dip"
-        android:topRightRadius="2dip" />
+        android:bottomLeftRadius="4dip"
+        android:bottomRightRadius="4dip"
+        android:topLeftRadius="4dip"
+        android:topRightRadius="4dip" />
 </shape>

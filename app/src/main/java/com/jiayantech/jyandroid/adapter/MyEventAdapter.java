@@ -34,7 +34,6 @@ public class MyEventAdapter extends EventAdapter {
 
         public ViewHolder(ViewGroup parent, int layoutId) {
             this(parent, layoutId, null);
-
         }
 
         public ViewHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<Event> adapter) {

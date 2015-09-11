@@ -291,7 +291,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     public void uploadImage(final int index) {
         if (mSelectPath.size() <= 0) {
             dismissProgressDialog();
-            ToastUtil.showMessage(mImageAdapter.urlList.toString());
+            //ToastUtil.showMessage(mImageAdapter.urlList.toString());
             return;
         }
         Bitmap bitmap = mImageAdapter.getItem(index);

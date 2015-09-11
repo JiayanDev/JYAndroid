@@ -45,7 +45,7 @@ public class SearchActivity extends BaseActivity implements TextWatcher {
     private RecyclerView mRecyclerView;
     private SearchAdapter mAdapter;
 
-    private String title;
+    protected String title;
     private String action;
 
     @Override

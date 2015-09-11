@@ -39,7 +39,7 @@
                 style="@style/text_item_right_arrow_style"
                 android:clickable="true"
                 android:onClick="onClick"
-                android:text="关于我们"/>
+                android:text="@string/about_us"/>
 
             <View style="@style/divider_offset_gray_style"/>
 
@@ -48,7 +48,7 @@
                 style="@style/text_item_right_arrow_style"
                 android:clickable="true"
                 android:onClick="onClick"
-                android:text="意见反馈"/>
+                android:text="@string/feedback"/>
 
             <View style="@style/divider_offset_gray_style"/>
 
