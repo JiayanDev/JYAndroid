@@ -102,6 +102,7 @@ public class PostDetailFragment extends WebViewFragment {
 //            }
 //        });
 
+
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

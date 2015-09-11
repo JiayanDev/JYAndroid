@@ -6,7 +6,7 @@
     <com.jiayantech.jyandroid.fragment.banner.BannerViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/banner_height"
+        android:layout_height="match_parent"
         >
 
     </com.jiayantech.jyandroid.fragment.banner.BannerViewPager>

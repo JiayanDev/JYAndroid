@@ -73,10 +73,22 @@ public abstract class WebViewFragment extends BaseFragment {
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * 抽象方法，返回Url
+     * @return
+     */
     abstract protected String onGetUrl();
 
+    /**
+     * 抽象方法，返回url的query参数
+     * @return
+     */
     abstract protected String onGetUrlParams();
 
+    /**
+     * 抽象方法，返回标题
+     * @return
+     */
     abstract protected String onSetTitle();
 
     @Nullable
@@ -109,6 +121,7 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
+        finishLoading();
 
     }
 
@@ -121,7 +134,7 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(mSharePanel != null && mSharePanel.isShowing()){
+        if (mSharePanel != null && mSharePanel.isShowing()) {
             mSharePanel.dismiss();
         }
     }
@@ -179,7 +192,7 @@ public abstract class WebViewFragment extends BaseFragment {
         JsNativeBiz.callJsMethod(method, params, mWebView);
     }
 
-    public void onAddWebActionListener(BaseWebViewClient client){
+    protected void onAddWebActionListener(BaseWebViewClient client) {
         //监听页面加载完成的回调
         client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_HIDE_LOADING, null) {
             @Override
@@ -216,6 +229,10 @@ public abstract class WebViewFragment extends BaseFragment {
         });
     }
 
+    protected void onAddWebRedirectListener(BaseWebViewClient client) {
+
+    }
+
 
     public void finishLoading() {
         mContentLayout.setVisibility(View.VISIBLE);
@@ -237,17 +254,17 @@ public abstract class WebViewFragment extends BaseFragment {
     }
 
 
-    public boolean isSharePanelShowing(){
+    public boolean isSharePanelShowing() {
         return mSharePanel != null && mSharePanel.isShowing();
     }
 
-    public void dismissSharePanel(){
-        if(mSharePanel != null && mSharePanel.isShowing()){
+    public void dismissSharePanel() {
+        if (mSharePanel != null && mSharePanel.isShowing()) {
             mSharePanel.dismiss();
         }
     }
 
-    public void onEvent(ShareFinishEvent event){
+    public void onEvent(ShareFinishEvent event) {
 //       if(mSharePanel != null && mSharePanel.isShowing()){
 //           mSharePanel.dismiss();
 //       }

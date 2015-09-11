@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.PostBiz;
-import com.jiayantech.jyandroid.model.Post;
+import com.jiayantech.jyandroid.model.Topic;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -35,7 +35,6 @@ public class BannerFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         View view = inflater.inflate(R.layout.fragment_banner, container, false);
         mAutoScrollViewPager = (BannerViewPager)view.findViewById(R.id.view_pager);
@@ -64,19 +63,17 @@ public class BannerFragment extends Fragment{
 //            banner.imageUrl = BannerUrl.BannerUrls[i];
 //            mBannerList.add(banner);
 //        }
-        PostBiz.getTopicList(new ResponseListener<AppResponse<List<Post>>>() {
+        PostBiz.getTopicList(new ResponseListener<AppResponse<List<Topic>>>() {
             @Override
-            public void onResponse(AppResponse<List<Post>> response) {
-                
+            public void onResponse(AppResponse<List<Topic>> response) {
+                mBannerList = Banner.createBannerList(response.data);
+                mAutoScrollViewPager.setAdapter(new BannerPagerAdapter(mContext, mBannerList));
+                mIndicator.setViewPager(mAutoScrollViewPager);
+
+                mAutoScrollViewPager.setInterval(BANNER_SCROLL_INTERVAL);
+                mAutoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
+                mAutoScrollViewPager.startAutoScroll();
             }
         });
-        mAutoScrollViewPager.setAdapter(new BannerPagerAdapter(mContext, mBannerList));
-        mIndicator.setViewPager(mAutoScrollViewPager);
-
-        mAutoScrollViewPager.setInterval(BANNER_SCROLL_INTERVAL);
-        mAutoScrollViewPager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_TO_PARENT);
-        mAutoScrollViewPager.startAutoScroll();
     }
-
-
 }

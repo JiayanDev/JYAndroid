@@ -4,10 +4,14 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/recommend_topic"
+    <!--<ImageView-->
+        <!--android:id="@+id/recommend_topic"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="190dp"-->
+        <!--android:scaleType="center"/>-->
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:scaleType="center"/>
+        android:name="com.jiayantech.jyandroid.fragment.banner.BannerFragment"/>
 
 </LinearLayout>

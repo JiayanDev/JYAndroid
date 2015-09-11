@@ -29,7 +29,7 @@ public class EventRankActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_rank);
+        setContentView(R.layout.activity_event_rank0);
         mComment = (EditText) findViewById(R.id.edit_content);
         mScrollView = (ScrollView) findViewById(R.id.scroll);
         mRank = (LinearLayout) findViewById(R.id.rank);
@@ -53,6 +53,7 @@ public class EventRankActivity extends BaseActivity {
             }
         });
         ToastUtil.showMessage("eventId is " + mEventId);
+        setTitle(R.string.title_comment_company);
 
 //        mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 //            @Override
