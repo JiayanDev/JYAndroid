@@ -1,45 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<com.jiayantech.jyandroid.widget.NotifyingScrollView
+    android:id="@+id/layout_scroll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layout_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
 
-        <WebView
-            android:id="@+id/web"
+        <LinearLayout
+            android:id="@+id/layout_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        </WebView>
+            <FrameLayout
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/layout_native"
+            </FrameLayout>
+
+            <WebView
+                android:id="@+id/web"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </WebView>
+
+            <FrameLayout
+                android:id="@+id/layout_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout_loading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </FrameLayout>
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在加载..."/>
+        </RelativeLayout>
+
     </LinearLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/layout_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正在加载..."
-            />
-    </RelativeLayout>
-
-</LinearLayout>
+</com.jiayantech.jyandroid.widget.NotifyingScrollView>

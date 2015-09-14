@@ -11,11 +11,12 @@ import com.jiayantech.jyandroid.activity.CompanyEventActivity;
 import com.jiayantech.jyandroid.activity.MainActivity;
 import com.jiayantech.jyandroid.activity.MessagesActivity;
 import com.jiayantech.jyandroid.activity.MyEventsActivity;
-import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.activity.SettingActivity;
 import com.jiayantech.jyandroid.activity.UserInfoActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -255,8 +256,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //                //intent.putExtra(WebViewFragment.EXTRA_USERNAME, AppInitManger.getUserName());
 //                intent.putExtra(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_PERSONAL_PAGE);
 //                startActivity(intent);
-
-                startActivity(PublishDiaryActivity.class);
+                WebViewActivity.launchActivity(getActivity(), AppInitManger.getUserId(),
+                        WebConstans.Type.TYPE_PERSONAL_PAGE);
+                //startActivity(PublishDiaryActivity.class);
                 break;
         }
     }

@@ -50,4 +50,9 @@ public class EventIntroFragment extends WebViewFragment{
     protected View onBindBottomLayout(LayoutInflater inflater) {
         return null;
     }
+
+    @Override
+    protected View onBindHeaderLayout(LayoutInflater inflater) {
+        return null;
+    }
 }

@@ -70,6 +70,11 @@ public class EventDetailFragment extends WebViewFragment{
     }
 
     @Override
+    protected View onBindHeaderLayout(LayoutInflater inflater) {
+        return null;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ToastUtil.showMessage(String.format("eventId is %d", mId));

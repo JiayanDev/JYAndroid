@@ -149,6 +149,11 @@ public class PostDetailFragment extends WebViewFragment {
         return mBottomView;
     }
 
+    @Override
+    protected View onBindHeaderLayout(LayoutInflater inflater) {
+        return null;
+    }
+
     private void onLoseFocus(){
         LogUtil.i(TAG, "EditText lost focus");
         mSendBtn.setVisibility(View.GONE);
