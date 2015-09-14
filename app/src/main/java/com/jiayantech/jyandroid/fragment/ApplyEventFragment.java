@@ -130,6 +130,8 @@ public class ApplyEventFragment extends BaseFragment{
                         });
             }
         });
+
+        getActivity().setTitle("报名伴美");
     }
 
     @Override
@@ -144,4 +146,6 @@ public class ApplyEventFragment extends BaseFragment{
             mTextPhone.setText(phoneNum);
         }
     }
+
+
 }

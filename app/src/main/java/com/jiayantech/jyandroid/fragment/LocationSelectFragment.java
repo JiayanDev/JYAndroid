@@ -1,4 +1,4 @@
-package com.jiayantech.jyandroid.fragment.webview;
+package com.jiayantech.jyandroid.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

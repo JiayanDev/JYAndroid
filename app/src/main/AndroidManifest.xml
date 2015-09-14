@@ -109,8 +109,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.EventRankActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.EditUserInfoActivity"
             android:screenOrientation="portrait" />

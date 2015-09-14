@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.eventbus.CitySelectEvent;
 import com.jiayantech.jyandroid.eventbus.ProvinceSelectEvent;
-import com.jiayantech.jyandroid.fragment.webview.LocationSelectFragment;
+import com.jiayantech.jyandroid.fragment.LocationSelectFragment;
 import com.jiayantech.library.base.BaseActivity;
 
 import de.greenrobot.event.EventBus;

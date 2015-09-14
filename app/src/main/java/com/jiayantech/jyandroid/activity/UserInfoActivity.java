@@ -44,7 +44,7 @@ import de.greenrobot.event.EventBus;
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener, PicGetter.PicGetListener {
 
-    public static final String EXTRA_DATA = "extra_data";
+    public static final String EXTRA_TEXT = "extra_text";
     public static final String EXTRA_ACTION = "action";
     public static final String EXTRA_GENDER = "gender";
 
@@ -145,12 +145,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             mTxtWeiboAccount.setText(R.string.account_status_bind);
             mTxtWeiboAccount.setTextColor(getResources().getColor(R.color.text_normal_color));
         }
-//=======
-//        AppInit appInit = AppInitManger.getAppInit();
-//        txt_wechat.setText(appInit.bindWX ? "已绑定" : "未绑定");
-//        txt_qq.setText(appInit.bindQQ ? "已绑定" : "未绑定");
-//        txt_weibo.setText(appInit.bindWB ? "已绑定" : "未绑定");
-//>>>>>>> upstream/master
     }
 
     @Override
@@ -188,7 +182,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 }, false);
                 break;
             case R.id.layout_phone:
-
+                Intent intent1 = new Intent(this, VerifyPhoneActivity.class);
+                intent1.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_UPDATE_PHONE);
+                startActivityForResult(intent1, 1);
                 break;
 //            case R.id.layout_wechat:
 //
@@ -205,7 +201,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private void startEditActivity(int action, String data) {
         Intent intent = new Intent(this, EditUserInfoActivity.class);
         intent.putExtra(EXTRA_ACTION, action);
-        intent.putExtra(EXTRA_DATA, data);
+        intent.putExtra(EXTRA_TEXT, data);
         startActivity(intent);
     }
 
@@ -257,6 +253,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                     }
                 });
             }
+        }else if(requestCode == 1){
+            mPhoneText.setText(data.getStringExtra("phone"));
         }
     }
 

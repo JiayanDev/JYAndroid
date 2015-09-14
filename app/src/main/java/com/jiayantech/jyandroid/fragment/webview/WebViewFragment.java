@@ -58,6 +58,8 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected String mUrl;
 
+    private boolean bEnableShare = true;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,6 +161,12 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_share);
+        item.setVisible(bEnableShare);
+        super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -268,5 +276,10 @@ public abstract class WebViewFragment extends BaseFragment {
 //       if(mSharePanel != null && mSharePanel.isShowing()){
 //           mSharePanel.dismiss();
 //       }
+    }
+
+    public void enableShare(boolean flag){
+        bEnableShare = flag;
+        getActivity().invalidateOptionsMenu();
     }
 }

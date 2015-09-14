@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,12 @@ public class EventIntroFragment extends WebViewFragment{
         args.putString(WebViewFragment.EXTRA_TYPE, WebConstans.Type.TYPE_EVENT_INTRO);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        enableShare(false);
     }
 
     @Override

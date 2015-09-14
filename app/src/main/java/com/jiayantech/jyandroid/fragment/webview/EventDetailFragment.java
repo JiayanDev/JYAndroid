@@ -50,7 +50,7 @@ public class EventDetailFragment extends WebViewFragment{
 
     @Override
     protected String onSetTitle() {
-        return null;
+        return "活动详情";
     }
 
     @Override

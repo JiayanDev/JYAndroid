@@ -51,7 +51,7 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         public TextView txt_status;
         public TextView txt_status_comment;
 
-        private long id;
+        private Event event;
 
         public ViewHolder(ViewGroup parent, int layoutId) {
             this(parent, layoutId, null);
@@ -70,8 +70,8 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         public void onBind(Event event, int position) {
             txt_title.setText(event.userName);
             txt_project.setText(event.categoryName);
-            txt_time.setText(TimeUtil.getStrTime(event.beginTime));
-            id = event.eventId;
+            txt_time.setText(TimeUtil.getStrTime(event.beginTime * 1000));
+            this.event = event;
 
             if (event.applyStatus.equals(Event.STATUS_NOT_COMMENTED)) {
                 txt_status_comment.setVisibility(View.VISIBLE);
@@ -90,13 +90,13 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, EventRankActivity.class);
-            intent.putExtra(EventRankActivity.EXTRA_ID, id);
+            intent.putExtra(EventRankActivity.EXTRA_ID, event.id);
+            intent.putExtra(EventRankActivity.EXTRA_TITLE, event.title);
+            intent.putExtra(EventRankActivity.EXTRA_PROJECT, event.categoryName);
+            intent.putExtra(EventRankActivity.EXTRA_DATE, event.beginTime);
+            intent.putExtra(EventRankActivity.EXTRA_COVER_IMG, event.coverImg);
             mContext.startActivity(intent);
         }
-    }
-
-    interface RankListener{
-        void onRankClick(long id);
     }
 
 }

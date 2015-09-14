@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.biz;
 
+import android.support.v4.util.ArrayMap;
+
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 
@@ -21,6 +23,7 @@ public class EventBiz {
     private static final String ACTION_COMMENT = MODEL + "/comment";
     public static final String ACTION_LIST = MODEL + "/list";
     public static final String ACTION_HOMEPAGE_LIST = "homepage/event/list";
+    public static final String ACTION_EVENT_DETAIL = MODEL + "/detail";
 
     /**
      * title  必填，标题
@@ -97,5 +100,11 @@ public class EventBiz {
         HttpReq.putParams(params, "satisfyLevel", satisfyLevel);
         HttpReq.putParams(params, "content", content);
         HttpReq.post(ACTION_COMMENT, null, l);
+    }
+
+    public static void detail(Long id, ResponseListener<?> l){
+        Map<String, String> params = new ArrayMap<>();
+        HttpReq.putParams(params, "id", id);
+        HttpReq.get(ACTION_EVENT_DETAIL, params, l);
     }
 }

@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import me.gujun.android.taggroup.TagGroup;
  */
 public class PostAdapter extends BaseSimpleModelAdapter<Post> {
     Context mContext;
+    Drawable mFemaleIcon;
+    Drawable mMaleIcon;
 
     public PostAdapter(List<Post> list, Context context) {
         super(list);
@@ -38,6 +41,11 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                 WebViewActivity.launchActivity(mContext, item.id, item.type);
             }
         });
+
+        mFemaleIcon = mContext.getResources().getDrawable(R.mipmap.icon_female);
+        mFemaleIcon.setBounds(0, 0, 48, 48);
+        mMaleIcon = mContext.getResources().getDrawable(R.mipmap.icon_male);
+        mMaleIcon.setBounds(0, 0, 48, 48);
     }
 
     @Override
@@ -45,7 +53,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         return new ViewHolder(mContext, viewGroup, R.layout.item_diary, this);
     }
 
-    public static class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
+    public class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
         public Context mContext;
         public ImageView mAvatar;
         public TextView mUsername;
@@ -98,6 +106,11 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 //            mTagGroupCategory.setText(item.getCategoryNames());
             mDate.setText(TimeUtil.stamp2Date((long
                     ) item.createTime * 1000));
+            if(item.gender == 0){
+                mUsername.setCompoundDrawables(null, null, mFemaleIcon, null);
+            }else{
+                mUsername.setCompoundDrawables(null, null, mMaleIcon ,null);
+            }
         }
 
         private View.OnClickListener mImageClickListener = new View.OnClickListener() {
