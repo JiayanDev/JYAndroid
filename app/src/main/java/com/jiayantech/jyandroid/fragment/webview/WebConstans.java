@@ -25,7 +25,7 @@ public class WebConstans {
         String ACTION_EVENT = PREFIX + "/eventdetail.html";
         String ACTION_PERSONAL_PAGE = PREFIX + "/timeline.html";
         String ACTION_EVENT_INTRO = PREFIX + "/eventintro.html";
-        String ACTION_HELP = PREFIX + "aboutmlts.html";
+        String ACTION_HELP = PREFIX + "/help.html";
     }
 
     public interface Path {
