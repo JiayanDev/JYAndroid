@@ -180,4 +180,5 @@
     <string name="hint_feedback_contact">请留下你的手机号/QQ号(选填)</string>
     <string name="submit">提交</string>
     <string name="feedback">意见反馈</string>
+    <string name="hint_publish_diary">记录一下你的美丽故事</string>
 </resources>

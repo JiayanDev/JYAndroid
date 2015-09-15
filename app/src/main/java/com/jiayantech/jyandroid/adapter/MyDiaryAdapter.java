@@ -1,12 +1,8 @@
 package com.jiayantech.jyandroid.adapter;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,7 +73,7 @@ public class MyDiaryAdapter extends BaseSimpleModelAdapter<DiaryHeader> {
             viewHolder.txt_operate.setText(R.string.update_diary);
             setTextDrawable(viewHolder.txt_operate, R.mipmap.icon_update_diary);
         }
-        viewHolder.txt_content.setText(diaryHeader.getCategoryNames());
+        viewHolder.txt_content.setText(diaryHeader.getCategoryNamesString());
         //viewHolder.img_diary.setImageResource(R.mipmap.icon_create_diary);
     }
 
