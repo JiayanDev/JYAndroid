@@ -78,24 +78,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <!--自定义主题，用在个人主页中，渐变toolbar-->
-    <style name="Theme.TranslucentToolbar" parent="android:Theme.Holo.Light.NoActionBar">
-        <item name="android:actionBarStyle">@style/Widget.AppCompat.Toolbar</item>
-    </style>
 
-    <style name="Theme.TranslucentToolbar.Toolbar"/>
-
-    <style name="Theme.TranslucentToolbar.Toolbar.Overlay">
-        <item name="android:actionBarStyle">@style/Widget.Toolbar.Transparent</item>
+    <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Light">
         <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support library compatibility -->
+        <item name="windowActionBarOverlay">true</item>
     </style>
-
-    <style name="Widget.Toolbar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/bg_gray</item>
-    </style>
-
-    <style name="Widget.Toolbar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
 </resources>

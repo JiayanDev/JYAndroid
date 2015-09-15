@@ -144,6 +144,8 @@
         <activity
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.WebViewActivityOverlay"
+                  android:screenOrientation="portrait"/>
 
         <!--友盟推送服务相关-->
         <receiver

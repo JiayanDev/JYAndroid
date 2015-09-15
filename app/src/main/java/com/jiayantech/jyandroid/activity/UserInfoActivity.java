@@ -253,8 +253,14 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                     }
                 });
             }
-        }else if(requestCode == 1){
-            mPhoneText.setText(data.getStringExtra("phone"));
+        } else if (requestCode == 1) {
+            String phone = null;
+            if (data != null && data.getStringArrayExtra("phone") != null) {
+                phone = data.getStringExtra("phone");
+                if (phone != null) {
+                    mPhoneText.setText(phone);
+                }
+            }
         }
     }
 

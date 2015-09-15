@@ -100,10 +100,14 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_webview, container, false);
+        initView(inflater);
+        return mView;
+    }
 
+    protected void initView(LayoutInflater inflater){
         mContentLayout = (LinearLayout) mView.findViewById(R.id.layout_content);
         mLoadingLayout = (RelativeLayout) mView.findViewById(R.id.layout_loading);
-        mScrollView = (NotifyingScrollView)mView.findViewById(R.id.layout_scroll);
+        //mScrollView = (NotifyingScrollView)mView.findViewById(R.id.layout_scroll);
         mBottomLayout = (FrameLayout) mView.findViewById(R.id.layout_bottom);
         mHeaderLayout = (FrameLayout) mView.findViewById(R.id.layout_header);
         mWebView = (WebView) mView.findViewById(R.id.web);
@@ -125,15 +129,13 @@ public abstract class WebViewFragment extends BaseFragment {
         settings.setJavaScriptEnabled(true);
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
-
-        return mView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
-        finishLoading();
+        //finishLoading();
 
     }
 

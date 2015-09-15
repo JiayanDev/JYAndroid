@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.jiayantech.jyandroid.widget.NotifyingScrollView-->
-    <!--android:id="@+id/layout_scroll"-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
+<com.jiayantech.jyandroid.widget.NotifyingScrollView
+    android:id="@+id/layout_scroll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <!--<include layout="@layout/fragment_webview"/>-->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -27,7 +28,7 @@
             <WebView
                 android:id="@+id/web"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
 
             </WebView>
@@ -44,6 +45,7 @@
             android:id="@+id/layout_loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:gravity="center">
 
             <TextView
@@ -53,4 +55,4 @@
         </RelativeLayout>
 
     </LinearLayout>
-<!--</com.jiayantech.jyandroid.widget.NotifyingScrollView>-->
+</com.jiayantech.jyandroid.widget.NotifyingScrollView>

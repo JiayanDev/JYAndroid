@@ -22,6 +22,7 @@ public class JsNativeBiz {
     public static final String ACTION_HIDE_LOADING = "hideLoading";
     public static final String ACTION_APPLY_EVENT = "applymentEvent";
     public static final String ACTION_GET_USERINFO = "getUserInfo";
+    public static final String ACTION_SHOW_USER_PROFILE_HEADER = "showUserProfileHeader";
 
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
 
