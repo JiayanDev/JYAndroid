@@ -61,6 +61,7 @@ public class UserBiz {
     private static final String ACTION_UPDATE = MODEL + "/update";
     private static final String ACTION_HAS_PSW = MODEL + "/has/psw";
     private static final String ACTION_FEEDBACK = MODEL + "/feedback";
+    private static final String ACTION_RESET_PASS = MODEL + "/reset/psw";
 
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
@@ -230,9 +231,9 @@ public class UserBiz {
 
     public static void update(String receipt, String phoneNum, String psw, ResponseListener<?> l) {
         Map<String, String> params = HttpReq.getInitParams(KEY_RESPONSE, receipt);
-        HttpReq.putParams(params, KEY_PHONE, phoneNum);
-        HttpReq.putParams(params, "psw", MD5.encode(psw));
-        HttpReq.post(ACTION_UPDATE_PASS, params, l);
+        HttpReq.putParams(params, "phone", phoneNum);
+        HttpReq.putParams(params, "newPsw", MD5.encode(psw));
+        HttpReq.post(ACTION_RESET_PASS, params, l);
     }
 
     public static void update(String currPsw, String newPsw, ResponseListener<?> l) {
@@ -249,7 +250,6 @@ public class UserBiz {
         Map<String, String> params = new ArrayMap<>();
         params.put("phoneNum", phoneNum);
         params.put("receipt", receipt);
-
         HttpReq.post(ACTION_UPDATE_PHONE, params, l);
     }
 

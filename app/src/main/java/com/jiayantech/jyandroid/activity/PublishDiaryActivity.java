@@ -58,6 +58,7 @@ public class PublishDiaryActivity extends PublishPostActivity {
     protected void setViewsContent() {
         super.setViewsContent();
         setTitle(R.string.title_publish_diary);
+        edit_content.setHint(R.string.hint_publish_diary);
         Intent intent = getIntent();
         doctorId = intent.getStringExtra(NewDiaryInfoActivity.KEY_doctorId);
         doctorName = intent.getStringExtra(NewDiaryInfoActivity.KEY_doctorName);

@@ -30,7 +30,7 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
     private EditText input_code;
     private Button btn_send_verify_code;
     private Button btn_reset;
-
+    private String phoneCodeResponse;
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
@@ -76,23 +76,34 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit:
-                String pass = checkPass();
-                String phoneCodeConfirmResponse = input_code.getText().toString();
-                String phoneNum = input_phone.getText().toString();
+                if (TextUtils.isEmpty(phoneCodeResponse)) {
+                    ToastUtil.showMessage(R.string.hint_waring_send_phone_code);
+                    return;
+                }
+                final String pass = checkPass();
+                String code = input_code.getText().toString();
+                final String phone = input_phone.getText().toString();
                 if (TextUtils.isEmpty(pass)) {
                     return;
                 }
-
-                UserBiz.update(phoneCodeConfirmResponse, phoneNum, pass,
-                        new ResponseListener<BaseAppResponse>() {
-                            @Override
-                            public void onResponse(BaseAppResponse baseAppResponse) {
-                                ActivityResult.onFinishResult(ResetPassActivity.this);
-                            }
-                        });
+                UserBiz.confirmPhoneCode(phoneCodeResponse, code, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
+                    @Override
+                    public void onResponse(AppResponse<HashMap<String, String>> response) {
+                        //super.onResponse(response);
+                        String phoneCodeConfirmResponse = response.data.get(UserBiz.KEY_RESPONSE);
+                        UserBiz.update(phoneCodeConfirmResponse, phone, pass,
+                                new SimpleResponseListener<BaseAppResponse>(_this, false) {
+                                    @Override
+                                    public void onResponse(BaseAppResponse baseAppResponse) {
+                                        super.onResponse(baseAppResponse);
+                                        ActivityResult.onFinishResult(ResetPassActivity.this);
+                                    }
+                                });
+                    }
+                });
                 break;
             case R.id.btn_send_verify_code:
-                phoneNum = input_phone.getText().toString();
+                String phoneNum = input_phone.getText().toString();
                 if (TextUtils.isEmpty(phoneNum)) {
                     ToastUtil.showMessage(R.string.hint_input_phone);
                     return;
@@ -103,11 +114,10 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
                             public void onResponse(AppResponse<HashMap<String, String>> response) {
                                 super.onResponse(response);
                                 ToastUtil.showMessage(R.string.msg_sent_phone_code);
-                                //phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
+                                phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
                             }
                         });
                 break;
-
         }
     }
 
@@ -133,4 +143,3 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
         return pass_0;
     }
 }
-

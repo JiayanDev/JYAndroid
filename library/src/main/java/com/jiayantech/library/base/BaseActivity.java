@@ -337,6 +337,11 @@ public class BaseActivity extends AppCompatActivity implements SwipeBackActivity
             mActivity.showProgressDialog();
         }
 
+        public SimpleResponseListener(BaseActivity activity, boolean showProgressDialog) {
+            mActivity = activity;
+            if (showProgressDialog) mActivity.showProgressDialog();
+        }
+
         public void onResponse(T t) {
             mActivity.dismissProgressDialog();
         }
