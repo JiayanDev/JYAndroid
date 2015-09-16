@@ -8,14 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.fragment.CommentFragment;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
-import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.ToastUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -65,18 +61,18 @@ public class TopicAdapter extends BaseSimpleModelAdapter<Post>{
                     (R.string.thumbs_up_count, new Object[]{String.valueOf(item.likeCount)}));
             mCommentCount.setText(mContext.getResources().getString
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
-            mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE, new ResponseListener<AppResponse>(){
-
-                        @Override
-                        public void onResponse(AppResponse baseModelAppResponse) {
-                            ToastUtil.showMessage(baseModelAppResponse.toString());
-                        }
-                    });
-                }
-            });
+//            mThumbsUpCount.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    PostBiz.like(String.valueOf(item.id), PostBiz.MODE_LIKE, new ResponseListener<AppResponse>(){
+//
+//                        @Override
+//                        public void onResponse(AppResponse baseModelAppResponse) {
+//                            ToastUtil.showMessage(baseModelAppResponse.toString());
+//                        }
+//                    });
+//                }
+//            });
 
             mCommentCount.setOnClickListener(new View.OnClickListener() {
                 @Override

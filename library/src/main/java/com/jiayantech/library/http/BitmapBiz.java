@@ -51,6 +51,10 @@ public class BitmapBiz {
                 size, size);
     }
 
+    public static Bitmap getBitmap(String key){
+        return sBitmapLruCache.get(getCacheKey(key, DEFAULT_SIZE, DEFAULT_SIZE));
+    }
+
     public static void clear(String imageUrl) {
         clear(imageUrl, DEFAULT_SIZE);
     }
@@ -67,6 +71,7 @@ public class BitmapBiz {
     private static String getCacheKey(String url, int maxWidth, int maxHeight) {
         return (new StringBuilder(url.length() + 12)).append("#W").append(maxWidth).append("#H").append(maxHeight).append(url).toString();
     }
+
 
     ///////////////////////////////////////private static class and method
     private static final int max_cache_size = 1000000;

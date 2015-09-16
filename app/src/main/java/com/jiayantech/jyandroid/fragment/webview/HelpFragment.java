@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -45,6 +44,11 @@ public class HelpFragment extends WebViewFragment {
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
+        return null;
+    }
+
+    @Override
+    protected View onBindHeaderLayout(LayoutInflater inflater) {
         return null;
     }
 

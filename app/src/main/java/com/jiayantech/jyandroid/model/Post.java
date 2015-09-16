@@ -23,5 +23,6 @@ public class Post extends CategoriesModel {
     public String type;
     public boolean isLike;
     public String headerId;
+    public int gender;
 
 }

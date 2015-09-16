@@ -28,10 +28,10 @@ public class WebConstans {
         String ACTION_HELP = PREFIX + "/help.html";
     }
 
-    public interface Path {
-        String PREFIX = "/html";
-        String PATH_TOPIC = PREFIX + "/topic.html";
-        String PATH_DIARY = PREFIX + "/diary.html";
-        String TYPE_HELP = "help";
-    }
+//    public interface Path {
+//        String PREFIX = "/html";
+//        String PATH_TOPIC = PREFIX + "/topic.html";
+//        String PATH_DIARY = PREFIX + "/diary.html";
+//        String TYPE_HELP = "help";
+//    }
 }

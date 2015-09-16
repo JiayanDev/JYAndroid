@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,12 @@ public class EventIntroFragment extends WebViewFragment{
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        enableShare(false);
+    }
+
+    @Override
     protected String onGetUrl() {
         return WebConstans.BASE_URL + WebConstans.Action.ACTION_EVENT_INTRO;
     }
@@ -41,6 +48,11 @@ public class EventIntroFragment extends WebViewFragment{
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
+        return null;
+    }
+
+    @Override
+    protected View onBindHeaderLayout(LayoutInflater inflater) {
         return null;
     }
 }

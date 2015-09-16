@@ -15,17 +15,19 @@
         android:layout_weight="1"/>
     <ImageButton
         android:id="@+id/button_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:padding="10dp"
         android:visibility="gone"
         android:src="@drawable/icon_send"
         />
     <ImageButton
         android:id="@+id/button_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
+        android:background="@null"
         android:visibility="visible"
-        android:src="@drawable/icon_send"/>
+        android:scaleType="center"
+        android:src="@mipmap/icon_has_like"/>
 </LinearLayout>

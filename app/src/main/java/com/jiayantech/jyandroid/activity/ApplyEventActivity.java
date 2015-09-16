@@ -23,5 +23,4 @@ public class ApplyEventActivity extends SingleFragmentActivity {
         return ApplyEventFragment.
                 newInstance(eventId, angelAvatar, angelName, project, hospitalAndDoctor, time);
     }
-
 }

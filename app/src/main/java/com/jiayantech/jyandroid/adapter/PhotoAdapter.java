@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.utils.UIUtil;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,7 @@ public class PhotoAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        BitmapBiz.display(holder.photo, mPhotoList.get(position));
+        BitmapBiz.display(holder.photo, mPhotoList.get(position), UIUtil.dip2px(100));
         holder.photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

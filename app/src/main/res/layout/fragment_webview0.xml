@@ -21,7 +21,7 @@
         </WebView>
 
         <FrameLayout
-            android:id="@+id/layout_native"
+            android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </FrameLayout>

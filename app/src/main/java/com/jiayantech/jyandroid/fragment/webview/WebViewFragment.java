@@ -23,6 +23,7 @@ import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
+import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.jyandroid.widget.SharePanel;
 import com.jiayantech.library.base.BaseFragment;
 import com.jiayantech.library.utils.LogUtil;
@@ -50,13 +51,17 @@ public abstract class WebViewFragment extends BaseFragment {
     private SharePanel mSharePanel;
 
     protected View mView;
-    protected FrameLayout mNativeLayout;
+    protected NotifyingScrollView mScrollView;
+    protected FrameLayout mBottomLayout;
+    protected FrameLayout mHeaderLayout;
     protected WebView mWebView;
 
     protected String mType;
     protected long mId;
 
     protected String mUrl;
+
+    private boolean bEnableShare = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,15 +100,26 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_webview, container, false);
+        initView(inflater);
+        return mView;
+    }
 
+    protected void initView(LayoutInflater inflater){
         mContentLayout = (LinearLayout) mView.findViewById(R.id.layout_content);
         mLoadingLayout = (RelativeLayout) mView.findViewById(R.id.layout_loading);
-        mNativeLayout = (FrameLayout) mView.findViewById(R.id.layout_native);
+        //mScrollView = (NotifyingScrollView)mView.findViewById(R.id.layout_scroll);
+        mBottomLayout = (FrameLayout) mView.findViewById(R.id.layout_bottom);
+        mHeaderLayout = (FrameLayout) mView.findViewById(R.id.layout_header);
         mWebView = (WebView) mView.findViewById(R.id.web);
 
         View bottomView = onBindBottomLayout(inflater);
         if (bottomView != null) {
-            mNativeLayout.addView(bottomView);
+            mBottomLayout.addView(bottomView);
+        }
+
+        View headerView = onBindHeaderLayout(inflater);
+        if(headerView != null){
+            mHeaderLayout.addView(headerView);
         }
 
         mWebView.setWebViewClient(onSetWebViewClient());
@@ -113,8 +129,6 @@ public abstract class WebViewFragment extends BaseFragment {
         settings.setJavaScriptEnabled(true);
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
-
-        return mView;
     }
 
     @Override
@@ -159,6 +173,14 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected abstract View onBindBottomLayout(LayoutInflater inflater);
 
+    protected abstract View onBindHeaderLayout(LayoutInflater inflater);
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_share);
+        item.setVisible(bEnableShare);
+        super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -268,5 +290,10 @@ public abstract class WebViewFragment extends BaseFragment {
 //       if(mSharePanel != null && mSharePanel.isShowing()){
 //           mSharePanel.dismiss();
 //       }
+    }
+
+    public void enableShare(boolean flag){
+        bEnableShare = flag;
+        getActivity().invalidateOptionsMenu();
     }
 }
