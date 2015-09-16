@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -9,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -24,6 +24,8 @@ import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpReq;
+import com.jiayantech.library.utils.BitmapUtil;
+import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.Map;
@@ -32,7 +34,6 @@ import java.util.Map;
  * Created by liangzili on 15/8/10.
  */
 public class PersonalPageFragment extends WebViewOverlayFragment {
-    private Button mPostButton;
     private Drawable mToolbarBackgroundDrawable;
 
     private ImageView mImgAvatar;
@@ -152,10 +153,27 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                 JsNativeBiz.ACTION_SHOW_USER_PROFILE_HEADER, JsCallShowHeader.class) {
             @Override
             public void execute(JsCallShowHeader data) {
-                BitmapBiz.display(mImgAvatar, data.data.avatar);
+                if(data.data.avatar != null) {
+                    BitmapBiz.display(mImgAvatar, data.data.avatar);
+                    mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
+                            BitmapUtil.doBlur(BitmapBiz.getBitmap(data.data.avatar), 50, false)));
+                }
                 mTxtUsername.setText(data.data.name);
                 mTxtInfo.setText(data.data.province + data.data.city + " " + data.data.age + "岁");
+
+                if (data.data.id == AppInitManger.getUserId()) {
+                    LogUtil.i(TAG, "show add post button, id is " + data.data.id);
+                    callJsMethod(JsNativeBiz.JS_METHOD_G_SHOW_ADD_POST_BUTTON, null);
+                }
             }
         });
+
+//        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_HIDE_LOADING,
+//                BaseJsCall.class) {
+//            @Override
+//            public void execute(BaseJsCall data) {
+//                if()
+//            }
+//        });
     }
 }

@@ -91,15 +91,19 @@ public class EventBiz {
     }
 
     /**
+     * 评价伴美
      * satisfyLevel：满意度
      * _userId: 测试用，用户ID
      * content: 内容
      **/
-    public static void comment(String satisfyLevel, String content, ResponseListener<?> l) {
-        Map<String, String> params = new HashMap<>();
-        HttpReq.putParams(params, "satisfyLevel", satisfyLevel);
+    public static void comment(long eventId, String content, int satisfyLevelToAngel,
+                               int satisfyLevelToDoctor,ResponseListener<?> l) {
+        Map<String, String> params = new ArrayMap<>();
+        HttpReq.putParams(params, "eventId", String.valueOf(eventId));
         HttpReq.putParams(params, "content", content);
-        HttpReq.post(ACTION_COMMENT, null, l);
+        HttpReq.putParams(params, "satisfyLevelToAngel", String.valueOf(satisfyLevelToAngel));
+        HttpReq.putParams(params, "satisfyLevelToDoctor", String.valueOf(satisfyLevelToDoctor));
+        HttpReq.post(ACTION_COMMENT, params, l);
     }
 
     public static void detail(Long id, ResponseListener<?> l){

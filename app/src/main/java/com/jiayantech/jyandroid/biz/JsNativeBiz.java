@@ -23,8 +23,11 @@ public class JsNativeBiz {
     public static final String ACTION_APPLY_EVENT = "applymentEvent";
     public static final String ACTION_GET_USERINFO = "getUserInfo";
     public static final String ACTION_SHOW_USER_PROFILE_HEADER = "showUserProfileHeader";
+    public static final String ACTION_POST_DETAIL_DATA = "postDetailData";
 
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
+    public static final String JS_METHOD_G_SHOW_ADD_POST_BUTTON = "G_showAddPostButton";
+    public static final String JS_METHOD_G_SWITCH_LIKE = "G_switchLike";
 
     private static Gson sGson = new Gson();
 

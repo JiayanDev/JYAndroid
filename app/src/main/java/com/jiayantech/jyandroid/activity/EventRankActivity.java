@@ -13,8 +13,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.EventBiz;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
@@ -116,6 +119,20 @@ public class EventRankActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //EventBiz.comment();
+                int angelSatisfaction = mRatingAngelSatisfaction.getNumStars();
+                int doctorSatisfaction = mRatingDoctorSatisfaction.getNumStars();
+                if (mEditComment.getText().toString().length() > 10) {
+                    EventBiz.comment(mEventId, mEditComment.getText().toString(), angelSatisfaction, doctorSatisfaction, new ResponseListener<AppResponse>() {
+                        @Override
+                        public void onResponse(AppResponse response) {
+                            finish();
+                            SuccessActivity.launchActivity(EventRankActivity.this, "评价伴美",
+                                    R.mipmap.icon_rank_success);
+                        }
+                    });
+                } else {
+                    ToastUtil.showMessage("字数不足");
+                }
             }
         });
 
@@ -127,9 +144,9 @@ public class EventRankActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count > 10){
+                if (count > 10) {
                     //TODO
-                }else{
+                } else {
 
                 }
             }

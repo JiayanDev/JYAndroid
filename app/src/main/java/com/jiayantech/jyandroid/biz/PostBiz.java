@@ -29,21 +29,22 @@ public class PostBiz {
     private static final String ACTION_TOPIC_ONE = "recommend/topic/one";
     private static final String ACTION_TOPIC_LIST = "recommend/topic/list";
 
-    public static void getOneTopic(ResponseListener<?> l){
-        HttpReq.get(ACTION_TOPIC_ONE, null ,l);
+    public static void getOneTopic(ResponseListener<?> l) {
+        HttpReq.get(ACTION_TOPIC_ONE, null, l);
     }
 
-    public static void getTopicList(ResponseListener<?> l){
+    public static void getTopicList(ResponseListener<?> l) {
         HttpReq.get(ACTION_TOPIC_LIST, null, l);
     }
 
-    public static void like(String id, int mode, ResponseListener<?> l) {
+    public static void like(String id, boolean hasLike, ResponseListener<?> l) {
         Map<String, String> params = new ArrayMap<>();
-        params.put("id", id);
-        if(MODE_LIKE == mode) {
-            HttpReq.post(ACTION_LIKE, params, l);
-        }else if(MODE_CANCEL_LIKE == mode){
+        if (hasLike) {
+            params.put("postId", id);
             HttpReq.post(ACTION_CANCEL_LIKE, params, l);
+        } else {
+            params.put("id", id);
+            HttpReq.post(ACTION_LIKE, params, l);
         }
     }
 
@@ -60,5 +61,6 @@ public class PostBiz {
     public static void verify(String id, String status, ResponseListener<?> l) {
         HttpReq.post(ACTION_MY_TOPIC, null, l);
     }
+
 
 }

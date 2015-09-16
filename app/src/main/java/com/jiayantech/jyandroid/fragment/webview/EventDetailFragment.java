@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.jiayantech.jyandroid.activity.ApplyEventActivity;
+import com.jiayantech.jyandroid.activity.LoginActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
 import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
+import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.utils.ToastUtil;
 
@@ -88,36 +90,43 @@ public class EventDetailFragment extends WebViewFragment{
         client.addActionListener(new WebActionListener<JsCallApplyEvent>(
                 JsNativeBiz.ACTION_APPLY_EVENT, JsCallApplyEvent.class) {
             @Override
-            public void execute(JsCallApplyEvent data) {
+            public void execute(final JsCallApplyEvent data) {
                 if(data == null){
                     return;
                 }
-                StringBuilder sb = new StringBuilder();
-                if(data.data.eventInfo.categoryIds != null) {
-                    for (JsCallApplyEvent.CategoryId category : data.data.eventInfo.categoryIds) {
-                        sb.append(category.name);
-                        sb.append(" ");
-                    }
-                }else{
-                    return;
-                }
-                long id = data.data.id;
-                String project = sb.toString().trim();
-                String hospitalAndDoctor = data.data.eventInfo.hospitalName + " " +
-                        data.data.eventInfo.doctorName;
-                String angelAvatar = data.data.eventInfo.angelUserInfo.avatar;
-                String angelName = data.data.eventInfo.angelUserInfo.name;
-                DateFormat df = new SimpleDateFormat("MM.dd E a HH:mm");
-                String time = df.format(new Date(data.data.eventInfo.beginTime * 1000));
+                LoginActivity.checkLoginToRunnable((BaseActivity)getActivity(), new Runnable() {
+                    @Override
+                    public void run() {
+                        StringBuilder sb = new StringBuilder();
+                        if(data.data.eventInfo.categoryIds != null) {
+                            for (JsCallApplyEvent.CategoryId category : data.data.eventInfo.categoryIds) {
+                                sb.append(category.name);
+                                sb.append(" ");
+                            }
+                        }else{
+                            return;
+                        }
+                        long id = data.data.id;
+                        String project = sb.toString().trim();
+                        String hospitalAndDoctor = data.data.eventInfo.hospitalName + " " +
+                                data.data.eventInfo.doctorName;
+                        String angelAvatar = data.data.eventInfo.angelUserInfo.avatar;
+                        String angelName = data.data.eventInfo.angelUserInfo.name;
+                        DateFormat df = new SimpleDateFormat("MM.dd E a HH:mm");
+                        String time = df.format(new Date(data.data.eventInfo.beginTime * 1000));
 
-                Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
-                intent.putExtra(ApplyEventFragment.EVENT_ID, id);
-                intent.putExtra(ApplyEventFragment.ANGEL_AVATAR, angelAvatar);
-                intent.putExtra(ApplyEventFragment.ANGEL_NAME, angelName);
-                intent.putExtra(ApplyEventFragment.PROJECT_NAME, project);
-                intent.putExtra(ApplyEventFragment.HOSPITAL_AND_DOCTOR,hospitalAndDoctor);
-                intent.putExtra(ApplyEventFragment.EVENT_TIME, time);
-                getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ApplyEventActivity.class);
+                        intent.putExtra(ApplyEventFragment.EVENT_ID, id);
+                        intent.putExtra(ApplyEventFragment.ANGEL_AVATAR, angelAvatar);
+                        intent.putExtra(ApplyEventFragment.ANGEL_NAME, angelName);
+                        intent.putExtra(ApplyEventFragment.PROJECT_NAME, project);
+                        intent.putExtra(ApplyEventFragment.HOSPITAL_AND_DOCTOR,hospitalAndDoctor);
+                        intent.putExtra(ApplyEventFragment.EVENT_TIME, time);
+                        getActivity().startActivity(intent);
+
+                    }
+                });
+
 
                 //onJsCallApplyEvent(id, angelAvatar, angelName, project, hospitalAndDoctor, time);
             }

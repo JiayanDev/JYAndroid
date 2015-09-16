@@ -135,7 +135,7 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
-        //finishLoading();
+        finishLoading();
 
     }
 

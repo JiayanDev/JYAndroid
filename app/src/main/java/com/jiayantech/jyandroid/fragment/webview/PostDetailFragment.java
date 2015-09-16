@@ -1,19 +1,23 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.gson.reflect.TypeToken;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
+import com.jiayantech.jyandroid.model.web.JsCallPostDetail;
 import com.jiayantech.jyandroid.model.web.JsCallReply;
 import com.jiayantech.jyandroid.model.web.PostComment;
+import com.jiayantech.jyandroid.model.web.SwitchLike;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
@@ -40,6 +44,7 @@ public class PostDetailFragment extends WebViewFragment {
     private String mReplyTo;
     private String mReplyType;
     private PostComment mPostComment;
+    private boolean hasLike;
 
     public static PostDetailFragment newInstance(long id, String type) {
         PostDetailFragment fragment = new PostDetailFragment();
@@ -101,7 +106,33 @@ public class PostDetailFragment extends WebViewFragment {
 //                fragment.show(getActivity().getSupportFragmentManager(), "comment");
 //            }
 //        });
+        mLikeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostBiz.like(String.valueOf(mId), hasLike, new ResponseListener<AppResponse>() {
+                    @Override
+                    public void onResponse(AppResponse response) {
+                        if(hasLike) {
+                            ToastUtil.showMessage("取消点赞成功");
+                            mLikeBtn.setImageResource(R.mipmap.icon_has_not_like);
+                        }else{
+                            ToastUtil.showMessage("点赞成功");
+                            mLikeBtn.setImageResource(R.mipmap.icon_has_like);
+                        }
+                        hasLike = !hasLike;
+                        Map<String, String> params = new ArrayMap<String, String>();
+                        params.put("hasLike", String.valueOf(hasLike));
+                        BaseNativeResponse<SwitchLike> result = new BaseNativeResponse<>();
+                        result.code = 0;
+                        result.msg = "ok";
+                        result.data = new SwitchLike();
+                        result.data.hasLike = hasLike;
 
+                        callJsMethod(JsNativeBiz.JS_METHOD_G_SWITCH_LIKE, result.toString());
+                    }
+                });
+            }
+        });
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +178,11 @@ public class PostDetailFragment extends WebViewFragment {
 
 
         return mBottomView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -199,6 +235,21 @@ public class PostDetailFragment extends WebViewFragment {
 //                        data.data.subject, data.data.toUserId, data.data.toUserName);
                 //fragment.setTargetFragment(PostDetailFragment.this, WebViewFragment.REQUEST_CODE_COMMENT);
                 //fragment.show(PostDetailFragment.this.getActivity().getSupportFragmentManager(), "comment");
+            }
+        });
+
+        //Js传递PostDetail
+        client.addActionListener(new WebActionListener<JsCallPostDetail>(
+                JsNativeBiz.ACTION_POST_DETAIL_DATA,
+                new TypeToken<JsCallPostDetail>(){}.getType()) {
+            @Override
+            public void execute(JsCallPostDetail data) {
+                hasLike = data.data.isLike;
+                if(data.data.isLike){
+                    mLikeBtn.setImageResource(R.mipmap.icon_has_like);
+                }else{
+                    mLikeBtn.setImageResource(R.mipmap.icon_has_not_like);
+                }
             }
         });
     }

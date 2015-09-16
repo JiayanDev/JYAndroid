@@ -90,7 +90,7 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, EventRankActivity.class);
-            intent.putExtra(EventRankActivity.EXTRA_ID, event.id);
+            intent.putExtra(EventRankActivity.EXTRA_ID, event.eventId);
             intent.putExtra(EventRankActivity.EXTRA_TITLE, event.title);
             intent.putExtra(EventRankActivity.EXTRA_PROJECT, event.categoryName);
             intent.putExtra(EventRankActivity.EXTRA_DATE, event.beginTime);

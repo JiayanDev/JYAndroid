@@ -28,7 +28,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
         setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
-        setEnablePaging(false);
+        setEnablePaging(true);
     }
 
     @Override

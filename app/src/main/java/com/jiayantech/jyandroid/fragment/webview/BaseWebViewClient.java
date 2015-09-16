@@ -5,6 +5,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jiayantech.jyandroid.activity.WebViewActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivityOverlay;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.library.utils.GsonUtils;
@@ -78,7 +79,11 @@ public class BaseWebViewClient extends WebViewClient {
     }
 
     private void navigate(long id, String type) {
-        WebViewActivity.launchActivity(mWebViewFragment.getActivity(), id, type);
+        if(type == WebConstans.Type.TYPE_PERSONAL_PAGE){
+            WebViewActivityOverlay.launchActivity(mWebViewFragment.getActivity(), id, type);
+        }else {
+            WebViewActivity.launchActivity(mWebViewFragment.getActivity(), id, type);
+        }
     }
 
 
