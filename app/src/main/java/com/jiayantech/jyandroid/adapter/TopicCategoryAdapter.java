@@ -51,7 +51,7 @@ public class TopicCategoryAdapter extends RecyclerView.Adapter<TopicCategoryAdap
         public void onClick(View v) {
 //            Intent intent = new Intent(mContext, PostDetailActivity.class);
 //            intent.putExtra(WebViewFragment.EXTRA_ID, mList.get(mPosition).id);
-//            intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.TYPE_TOPIC);
+//            intent.putExtra(WebViewFragment.EXTRA_TYPE, WebViewFragment.PAGE_TOPIC);
 //            mContext.startActivity(intent);
             Intent intent = new Intent(mContext, PostActivity.class);
             intent.putExtra(PostListFragment.EXTRA_CATEGORY, mCategoryList.get(mPosition));

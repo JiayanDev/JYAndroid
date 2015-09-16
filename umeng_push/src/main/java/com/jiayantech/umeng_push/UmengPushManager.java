@@ -23,7 +23,9 @@ public class UmengPushManager {
     private static final String TAG = "UmengPushManager";
 
     public static final int CODE_DIARY_COMMENTED = 1; //用户日记被评论
-    public static final int CODE_COMMENT_COMMENTED = 2; // 用户评论被评论
+    public static final int CODE_TOPIC_COMMENTED = 2; // 用户话题被评论
+    public static final int CODE_EVENT_COMMENTED = 3; //用户事件被评论
+    public static final int CODE_COMMENT_COMMENTED = 4; //用户评论被评论
 
     public static final int CODE_ANGEL_APPLY_ACCEPT = 10; // 美丽天使申请通过
     public static final int CODE_ANGEL_APPLY_DENY  = 11; // 美丽天使申请不通过
@@ -58,6 +60,8 @@ public class UmengPushManager {
 
     private List<PushMessageClickAction> mClickActionList =
             new ArrayList<PushMessageClickAction>();
+
+
 
     private UmengPushManager() {
     }

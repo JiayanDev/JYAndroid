@@ -18,19 +18,19 @@ import com.jiayantech.umeng_push.model.PushMessageClickAction;
  * Created by liangzili on 15/9/6.
  */
 public abstract class ClickToActivityAction extends PushMessageClickAction{
-    public static final String TYPE_DIARY = "diary_detail";
-    public static final String TYPE_TOPIC = "topic_detail";
-    public static final String TYPE_MY_ANGEL = "my_angel";
-    public static final String TYPE_MY_COMPANY = "my_company";
+    public static final String PAGE_DIARY = "diary_detail";
+    public static final String PAGE_TOPIC = "topic_detail";
+    public static final String PAGE_MY_ANGEL = "my_angel";
+    public static final String PAGE_MY_COMPANY = "my_company";
 
     public ClickToActivityAction(String action) {
         super(action);
     }
 
     @Override
-    public void executeAction(String action, long id, String url) {
+    public void executeAction(String page, long id, String url) {
         Context context = JYApplication.getContext();
-        Intent activityIntent = createIntent(convertType(action), id);
+        Intent activityIntent = createIntent(convertType(page), id);
         if (SystemUtils.isAppAlive(context, context.getPackageName())) {
             Intent mainIntent = new Intent(context, MainActivity.class);
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -43,7 +43,7 @@ public abstract class ClickToActivityAction extends PushMessageClickAction{
                     getLaunchIntentForPackage("com.jiayantech.jyandroid");
             Bundle args = new Bundle();
             args.putLong(WebViewFragment.EXTRA_ID, id);
-            args.putString(WebViewFragment.EXTRA_TYPE, convertType(action));
+            args.putString(WebViewFragment.EXTRA_TYPE, convertType(page));
             intent.putExtra(SplashActivity.EXTRA_BUNDLE, args);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -53,9 +53,9 @@ public abstract class ClickToActivityAction extends PushMessageClickAction{
 
     protected abstract Intent createIntent(String type, long id);
 
-    public static String convertType(String action){
+    public static String convertType(String page){
         String type = null;
-        switch (action){
+        switch (page){
             case UmengPushManager.JUMP_TO_PAGE_DIARY:
                 type = WebConstans.Type.TYPE_DIARY;
                 break;
@@ -63,10 +63,10 @@ public abstract class ClickToActivityAction extends PushMessageClickAction{
                 type = WebConstans.Type.TYPE_TOPIC;
                 break;
             case UmengPushManager.JUMP_TO_PAGE_MY_ANGEL:
-                type = TYPE_MY_ANGEL;
+                type = PAGE_MY_ANGEL;
                 break;
             case UmengPushManager.JUMP_TO_PAGE_MY_COMPANY:
-                type = TYPE_MY_COMPANY;
+                type = PAGE_MY_COMPANY;
                 break;
         }
         return type;

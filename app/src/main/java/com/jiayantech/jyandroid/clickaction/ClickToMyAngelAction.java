@@ -10,7 +10,7 @@ import com.jiayantech.jyandroid.app.JYApplication;
  */
 public class ClickToMyAngelAction extends ClickToActivityAction{
     public ClickToMyAngelAction() {
-        super(ClickToActivityAction.TYPE_MY_ANGEL);
+        super(ClickToActivityAction.PAGE_MY_ANGEL);
     }
 
     @Override

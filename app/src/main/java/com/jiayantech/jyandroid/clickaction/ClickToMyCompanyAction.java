@@ -10,7 +10,7 @@ import com.jiayantech.jyandroid.app.JYApplication;
  */
 public class ClickToMyCompanyAction extends ClickToActivityAction{
     public ClickToMyCompanyAction() {
-        super(ClickToActivityAction.TYPE_MY_COMPANY);
+        super(ClickToActivityAction.PAGE_MY_COMPANY);
     }
 
     @Override

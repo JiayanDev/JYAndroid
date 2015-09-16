@@ -4,17 +4,18 @@ import android.os.Bundle;
 
 import com.jiayantech.jyandroid.adapter.MessageAdapter;
 import com.jiayantech.jyandroid.biz.UserBiz;
-import com.jiayantech.umeng_push.UmengPushManager;
-import com.jiayantech.jyandroid.model.Message;
 import com.jiayantech.library.base.RefreshListFragment;
 import com.jiayantech.library.http.AppResponse;
+import com.jiayantech.umeng_push.UmengPushManager;
+import com.jiayantech.umeng_push.model.BasePushMessage;
 
 import java.util.List;
 
 /**
  * Created by liangzili on 15/7/30.
  */
-public class MessagesFragment extends RefreshListFragment<Message, AppResponse<List<Message>>>{
+public class MessagesFragment extends RefreshListFragment<BasePushMessage,
+        AppResponse<List<BasePushMessage>>>{
     @Override
     public void onInitView() {
         super.onInitView();
