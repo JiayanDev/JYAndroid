@@ -147,11 +147,13 @@ public class UmengPushManager {
     }
 
     public void decUnread(String action, long id, String url){
+        LogUtil.i(TAG, String.format("decUnread action: %s, id %d, url %s", action, id, url));
         UnreadMessage msg = new UnreadMessage(action, id, url);
         for(UnreadMessage m: mUnreadMessageList){
             if(msg.equals(m)){
                 mUnreadMessageList.remove(m);
                 decUnreadNotificationCount();
+                break;
             }
         }
     }
@@ -163,6 +165,7 @@ public class UmengPushManager {
      * @param url
      */
     public void handleClickActionFromNotification(String action, long id, String url){
+        LogUtil.i(TAG, String.format("handleClickActionFromNotification action: %s, id %d, url %s", action, id, url));
         for(PushMessageClickAction a: mClickActionList){
             if(a.action.equals(action)){
                 a.executeAction(action, id, url);

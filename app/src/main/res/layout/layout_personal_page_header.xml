@@ -9,7 +9,7 @@
         android:id="@+id/layout_bg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@android:color/holo_blue_bright">
+        android:background="@android:color/white">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_avatar"
@@ -17,14 +17,12 @@
             android:layout_height="80dp"
             app:riv_corner_radius="40dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
         <TextView
             android:id="@+id/txt_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大王Vivian"
             android:layout_below="@id/img_avatar"
             android:layout_centerHorizontal="true"/>
         <TextView
@@ -32,8 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_username"
-            android:layout_centerHorizontal="true"
-            android:text="广东深圳 24岁"/>
+            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 </LinearLayout>

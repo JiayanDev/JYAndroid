@@ -97,7 +97,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mCommentCount.setText(mContext.getResources().getString
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
 
-            mTagGroupCategory.setTags(new String[]{"双眼皮", "单眼皮", "隆胸"});
+            mTagGroupCategory.setTags(item.getCategoryNamesArray());
             //mTagGroupCategory.setTags(item.getCategoryNamesArray());
             //mTagGroupCategory.setText(item.getCategoryNamesString());
 

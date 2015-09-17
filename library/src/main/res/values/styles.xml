@@ -16,4 +16,6 @@
     <declare-styleable name="ColorFilterImageView">
         <attr name="coverColor" format="color"/>
     </declare-styleable>
+
+
 </resources>
