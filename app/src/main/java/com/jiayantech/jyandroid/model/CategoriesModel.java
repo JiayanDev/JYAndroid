@@ -24,7 +24,7 @@ public class CategoriesModel extends BaseModel {
 
     public String getCategoryNamesString() {
         if (TextUtils.isEmpty(categoryNames)) {
-            if (categoryIds != null) {
+            if (categoryIds != null && categoryIds.length > 0) {
                 StringBuilder builder = new StringBuilder();
                 SparseArray<AppInit.Category> data = AppInitManger.getProjectCategoryData();
                 for (int categoryId : categoryIds) {
@@ -41,7 +41,11 @@ public class CategoriesModel extends BaseModel {
     }
 
     public String[] getCategoryNamesArray() {
-        if (categoryIds != null) {
+        return getCategoryNamesArray(categoryIds);
+    }
+
+    public static String[] getCategoryNamesArray(int[] categoryIds) {
+        if (categoryIds != null && categoryIds.length > 0) {
             SparseArray<AppInit.Category> data = AppInitManger.getProjectCategoryData();
             ArrayList<String> array = new ArrayList<>();
             for (int categoryId : categoryIds) {
@@ -54,4 +58,6 @@ public class CategoriesModel extends BaseModel {
         }
         return new String[0];
     }
+
+
 }
