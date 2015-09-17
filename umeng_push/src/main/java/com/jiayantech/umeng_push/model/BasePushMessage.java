@@ -24,6 +24,4 @@ public class BasePushMessage<T> extends BaseModel{
     public long subjectId;
     public String subjectContent;
 
-    public long createTime;
-
 }

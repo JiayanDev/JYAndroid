@@ -16,11 +16,12 @@ public class ClickToWebActivityAction extends ClickToActivityAction{
     }
 
     @Override
-    protected Intent createIntent(String type, long id) {
-        if(type == WebConstans.Type.TYPE_PERSONAL_PAGE){
-            return WebViewActivityOverlay.createLaunchIntent(JYApplication.getContext(), id, type);
+    public Intent createIntent(String type, long id, String url) {
+        String newType = ClickToActivityAction.convertType(type);
+        if(newType == WebConstans.Type.TYPE_PERSONAL_PAGE){
+            return WebViewActivityOverlay.createLaunchIntent(JYApplication.getContext(), id, newType);
         }else {
-            return WebViewActivity.createLaunchIntent(JYApplication.getContext(), id, type);
+            return WebViewActivity.createLaunchIntent(JYApplication.getContext(), id, newType);
         }
     }
 }

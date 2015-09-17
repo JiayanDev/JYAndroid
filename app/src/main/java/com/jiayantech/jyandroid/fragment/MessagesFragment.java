@@ -19,7 +19,7 @@ public class MessagesFragment extends RefreshListFragment<BasePushMessage,
     @Override
     public void onInitView() {
         super.onInitView();
-        setParams(new MessageAdapter(null), UserBiz.ACTION_MSG_LIST);
+        setParams(new MessageAdapter(getActivity(), null), UserBiz.ACTION_MSG_LIST);
     }
 
     @Override

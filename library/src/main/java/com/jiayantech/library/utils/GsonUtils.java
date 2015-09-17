@@ -23,10 +23,11 @@ public class GsonUtils {
             synchronized (GsonUtils.class) {
                 if (sGson == null) {
                     GsonBuilder gb = new GsonBuilder();
-                    gb.registerTypeAdapter(String.class, new StringConverter());
-                    gb.registerTypeAdapter(Double.class, new DoubleConverter());
-                    gb.registerTypeAdapter(Integer.class, new IntegerConverter());
-                    gb.registerTypeAdapter(Boolean.class, new BooleanConverter());
+                    gb.registerTypeAdapter(String.class, new StringConverter()).
+                            registerTypeAdapter(double.class, new DoubleConverter()).
+                            registerTypeAdapter(int.class, new IntegerConverter()).
+                            registerTypeAdapter(boolean.class, new BooleanConverter()).
+                            registerTypeAdapter(long.class, new LongConverter());
                     sGson = gb.create();
                 }
             }
@@ -94,5 +95,25 @@ class BooleanConverter implements JsonSerializer<Boolean>, JsonDeserializer<Bool
     @Override
     public Boolean deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return json.getAsJsonPrimitive().getAsBoolean();
+    }
+
+}
+
+class LongConverter implements JsonDeserializer<Long>, JsonSerializer<Long> {
+
+    @Override
+    public Long deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        String jsonStr = json.getAsString();
+        if (jsonStr.endsWith("L") || jsonStr.endsWith("l")) {
+            jsonStr = jsonStr.substring(0, jsonStr.length() - 2);
+            return Long.valueOf(jsonStr);
+        }else{
+            return json.getAsJsonPrimitive().getAsLong();
+        }
+    }
+
+    @Override
+    public JsonElement serialize(Long src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src == null ? -1 : src);
     }
 }

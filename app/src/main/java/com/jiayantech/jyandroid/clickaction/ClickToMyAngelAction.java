@@ -14,7 +14,7 @@ public class ClickToMyAngelAction extends ClickToActivityAction{
     }
 
     @Override
-    protected Intent createIntent(String type, long id) {
+    public Intent createIntent(String type, long id, String url) {
         return new Intent(JYApplication.getContext(), MyEventsActivity.class);
     }
 }

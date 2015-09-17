@@ -14,6 +14,6 @@ public class ClickActionReceiver extends BroadcastReceiver{
         long id = intent.getLongExtra("id", -1);
         String url = intent.getStringExtra("url");
 
-        UmengPushManager.getInstance().handleClickAction(action, id, url);
+        UmengPushManager.getInstance().handleClickActionFromNotification(action, id, url);
     }
 }

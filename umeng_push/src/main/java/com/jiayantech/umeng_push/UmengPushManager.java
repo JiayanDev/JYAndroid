@@ -2,6 +2,7 @@ package com.jiayantech.umeng_push;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.jiayantech.library.comm.DataShared;
@@ -142,17 +143,27 @@ public class UmengPushManager {
     }
 
     /**
-     * 处理点击事件
+     * 处理通知栏点击事件
      * @param action
      * @param id
      * @param url
      */
-    public void handleClickAction(String action, long id, String url){
+    public void handleClickActionFromNotification(String action, long id, String url){
         for(PushMessageClickAction a: mClickActionList){
             if(a.action.equals(action)){
                 a.executeAction(action, id, url);
             }
         }
+    }
+
+    public Intent createActionIntent(String action, long id, String url){
+        for(PushMessageClickAction a: mClickActionList){
+            if(a.action.equals(action)){
+                Intent intent = a.createIntent(action, id, url);
+                return intent;
+            }
+        }
+        return null;
     }
 
     /**
@@ -226,4 +237,6 @@ public class UmengPushManager {
         IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
         applicationContext.registerReceiver(receiver, filter);
     }
+
+
 }

@@ -51,7 +51,7 @@ class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
                         }.getType());
 
         }
-        UmengPushManager.getInstance().handleClickAction(type, id, url);
+        UmengPushManager.getInstance().handleClickActionFromNotification(type, id, url);
     }
 
 //    private void launchApplication(Context context, Intent intent){
