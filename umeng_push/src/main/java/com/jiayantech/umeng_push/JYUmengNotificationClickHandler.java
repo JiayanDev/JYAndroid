@@ -2,6 +2,7 @@ package com.jiayantech.umeng_push;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.jiayantech.library.utils.GsonUtils;
@@ -51,7 +52,17 @@ class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
                         }.getType());
 
         }
-        UmengPushManager.getInstance().handleClickActionFromNotification(type, id, url);
+        sendBroadcast(context, type, id, url);
+        //UmengPushManager.getInstance().handleClickActionFromNotification(type, id, url);
+    }
+
+    private void sendBroadcast(Context context, String type, long id, String url){
+        Intent intent = new Intent();
+        intent.setAction(ClickActionReceiver.ACTION);
+        intent.putExtra("action", type);
+        intent.putExtra("id", id);
+        intent.putExtra("url", url);
+        context.sendBroadcast(intent);
     }
 
 //    private void launchApplication(Context context, Intent intent){

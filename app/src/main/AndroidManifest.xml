@@ -147,6 +147,12 @@
         <activity android:name=".activity.WebViewActivityOverlay"
                   android:screenOrientation="portrait"/>
 
+        <receiver android:name="com.jiayantech.umeng_push.ClickActionReceiver">
+            <intent-filter>
+                <action android:name="com.jiayantech.jyandroid.ClickActionReceiver"/>
+            </intent-filter>
+        </receiver>
+
         <!--友盟推送服务相关-->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"

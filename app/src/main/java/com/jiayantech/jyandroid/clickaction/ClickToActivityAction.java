@@ -30,7 +30,7 @@ public abstract class ClickToActivityAction extends PushMessageClickAction{
     @Override
     public void executeAction(String page, long id, String url) {
         Context context = JYApplication.getContext();
-        Intent activityIntent = createIntent(convertType(page), id, url);
+        Intent activityIntent = createIntent(page, id, url);
         if (SystemUtils.isAppAlive(context, context.getPackageName())) {
             Intent mainIntent = new Intent(context, MainActivity.class);
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

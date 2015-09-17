@@ -8,6 +8,16 @@ public class UnreadMessage {
     public long id;
     public String url;
 
+    public UnreadMessage(String action, long id, String url){
+        page = action;
+        this.id = id;
+        this.url = url;
+    }
+
+    public UnreadMessage(){
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof UnreadMessage){

@@ -9,6 +9,7 @@ import com.jiayantech.library.comm.DataShared;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.umeng_push.model.BasePushMessage;
 import com.jiayantech.umeng_push.model.PushMessageClickAction;
+import com.jiayantech.umeng_push.model.UnreadMessage;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -61,6 +62,7 @@ public class UmengPushManager {
 
     private List<PushMessageClickAction> mClickActionList =
             new ArrayList<PushMessageClickAction>();
+    private List<UnreadMessage> mUnreadMessageList = new ArrayList<>();  //未读的消息列表
 
 
 
@@ -130,6 +132,8 @@ public class UmengPushManager {
             case CODE_PUSH_AD:
                 int notification = sDataShared.getInt(KEY_UNREAD_NOTIFICATION);
                 setUnreadNotificationCount(notification + 1);
+                UnreadMessage msg = UnreadMessage.createUnreadMessage(message);
+                mUnreadMessageList.add(msg);
                 break;
             case CODE_ANGEL_APPLY_ACCEPT:
             case CODE_ANGEL_APPLY_DENY:
@@ -139,6 +143,16 @@ public class UmengPushManager {
             case CODE_COMPANY_APPLY_DENY:
                 setUnreadCompanyCount(true);
                 break;
+        }
+    }
+
+    public void decUnread(String action, long id, String url){
+        UnreadMessage msg = new UnreadMessage(action, id, url);
+        for(UnreadMessage m: mUnreadMessageList){
+            if(msg.equals(m)){
+                mUnreadMessageList.remove(m);
+                decUnreadNotificationCount();
+            }
         }
     }
 
@@ -152,6 +166,7 @@ public class UmengPushManager {
         for(PushMessageClickAction a: mClickActionList){
             if(a.action.equals(action)){
                 a.executeAction(action, id, url);
+                decUnread(action, id, url);
             }
         }
     }

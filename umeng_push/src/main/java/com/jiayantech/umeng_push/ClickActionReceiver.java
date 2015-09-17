@@ -8,6 +8,7 @@ import android.content.Intent;
  * Created by liangzili on 15/9/6.
  */
 public class ClickActionReceiver extends BroadcastReceiver{
+    public static final String ACTION = "com.jiayantech.jyandroid.ClickActionReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getStringExtra("action");
