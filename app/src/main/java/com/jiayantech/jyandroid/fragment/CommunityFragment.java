@@ -61,7 +61,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
 //                    @Override
 //                    public void onClick(View v) {
 //                        WebViewActivity.launchActivity(getActivity(), postAppResponse.data.topicId,
-//                                WebConstans.Type.TYPE_TOPIC);
+//                                WebConstans.Type.PAGE_TOPIC);
 //                    }
 //                });
 //            }

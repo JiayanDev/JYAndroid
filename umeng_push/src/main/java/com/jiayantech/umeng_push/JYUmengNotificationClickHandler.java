@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.google.gson.reflect.TypeToken;
 import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
-import com.jiayantech.library.utils.SystemUtils;
 import com.jiayantech.umeng_push.model.BasePushMessage;
 import com.jiayantech.umeng_push.model.JumpToPageData;
 import com.umeng.message.UmengNotificationClickHandler;
@@ -53,54 +52,30 @@ class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
                         }.getType());
 
         }
-        UmengPushManager.getInstance().handleClickAction(type, id, url);
+        sendBroadcast(context, type, id, url);
+        //UmengPushManager.getInstance().handleClickActionFromNotification(type, id, url);
+    }
 
-//        switch ((String) result.get("action")) {
-//            case UmengPushManager.ACTION_JUMP_TO_PAGE:
-//                BasePushMessage<JumpToPageData> jumpToPage = GsonUtils.build().fromJson(
-//                        uMessage.custom,
-//                        new TypeToken<BasePushMessage<JumpToPageData>>() {
-//                        }.getType());
-//                //UmengPushManager.getInstance().dispatch(jumpToPage);
-//                String type = null;
-//                switch (jumpToPage.data.page) {
-//                    case UmengPushBiz.JUMP_TO_PAGE_DIARY:
-//                        type = WebConstans.Type.TYPE_DIARY;
-//                        break;
-//                    case UmengPushBiz.JUMP_TO_PAGE_TOPIC:
-//                        type = WebConstans.Type.TYPE_TOPIC;
-//                        break;
-//                    case UmengPushBiz.JUMP_TO_PAGE_MY_ANGEL:
-//                        type = "my_angel";
-//                        break;
-//                    case UmengPushBiz.JUMP_TO_PAGE_MY_COMPANY:
-//                        type = "my_company";
-//                        break;
-//                }
-//                launchApplication(context, jumpToPage.data.id, type);
-//                break;
-//            case UmengPushBiz.ACTION_JUMP_TO_WEB:
-//                BasePushMessage<String> jumpToWeb = GsonUtils.build().fromJson(uMessage.custom,
-//                        new TypeToken<BasePushMessage<String>>() {
-//                        }.getType());
-//                //UmengPushManager.getInstance().dispatch(jumpToWeb);
-//                break;
+    private void sendBroadcast(Context context, String type, long id, String url){
+        Intent intent = new Intent();
+        intent.setAction(ClickActionReceiver.ACTION);
+        intent.putExtra("action", type);
+        intent.putExtra("id", id);
+        intent.putExtra("url", url);
+        context.sendBroadcast(intent);
+    }
+
+//    private void launchApplication(Context context, Intent intent){
+//        if(SystemUtils.isAppAlive(context, context.getPackageName())){
+//            Intent mainIntent = new Intent(context, mMainActivityClass);
+//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED );
+//            Intent[] intents = new Intent[2];
+//            intents[0] = mainIntent;
+//            intents[1] = intent;
+//            context.startActivities(intents);
 //        }
-//
-//        launchApplication(context, 60L, "diary");
-    }
-
-    private void launchApplication(Context context, Intent intent){
-        if(SystemUtils.isAppAlive(context, context.getPackageName())){
-            Intent mainIntent = new Intent(context, mMainActivityClass);
-            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED );
-            Intent[] intents = new Intent[2];
-            intents[0] = mainIntent;
-            intents[1] = intent;
-            context.startActivities(intents);
-        }
-    }
+//    }
 
     private void launchApplication(Context context, long id, String type) {
 //        if (SystemUtils.isAppAlive(context, context.getPackageName())) {

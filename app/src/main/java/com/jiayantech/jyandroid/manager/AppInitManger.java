@@ -196,4 +196,12 @@ public class AppInitManger {
         return sAppInit.role;
     }
 
+    public static String getToken(){
+        initLoad();
+        if(sAppInit == null){
+            return null;
+        }
+
+        return sAppInit.token;
+    }
 }

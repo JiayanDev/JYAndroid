@@ -19,10 +19,12 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.eventbus.ShareFinishEvent;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
+import com.jiayantech.jyandroid.model.web.UserInfo;
 import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.jyandroid.widget.SharePanel;
 import com.jiayantech.library.base.BaseFragment;
@@ -246,7 +248,14 @@ public abstract class WebViewFragment extends BaseFragment {
                 JsNativeBiz.ACTION_GET_USERINFO, JsCallUserInfo.class) {
             @Override
             public void execute(JsCallUserInfo data) {
+                UserInfo info = new UserInfo();
+                info.data = new UserInfo.Info();
+                info.data.id = AppInitManger.getUserId();
+                info.data.nickname = AppInitManger.getUserName();
+                info.data.phone = AppInitManger.getPhoneNum();
+                info.data.token = AppInitManger.getToken();
 
+                callJsMethod(data.success, info.toString());
             }
         });
     }

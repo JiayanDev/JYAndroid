@@ -21,4 +21,11 @@ public class ClickToWebAction extends PushMessageClickAction{
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         JYApplication.getContext().startActivity(intent);
     }
+
+    @Override
+    public Intent createIntent(String type, long id, String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        return intent;
+    }
 }

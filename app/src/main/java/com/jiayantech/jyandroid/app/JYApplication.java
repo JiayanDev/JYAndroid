@@ -42,9 +42,9 @@ public class JYApplication extends BaseApplication {
         UmengPushManager.getInstance().init(this, config);
 
         UmengPushManager.getInstance().addClickAction(
-                new ClickToWebActivityAction(ClickToActivityAction.TYPE_DIARY));
+                new ClickToWebActivityAction(ClickToActivityAction.PAGE_DIARY));
         UmengPushManager.getInstance().addClickAction(
-                new ClickToWebActivityAction(ClickToActivityAction.TYPE_TOPIC));
+                new ClickToWebActivityAction(ClickToActivityAction.PAGE_TOPIC));
         UmengPushManager.getInstance().addClickAction(
                 new ClickToMyAngelAction());
         UmengPushManager.getInstance().addClickAction(new ClickToMyCompanyAction());

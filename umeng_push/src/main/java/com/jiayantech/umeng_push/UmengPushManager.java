@@ -2,12 +2,14 @@ package com.jiayantech.umeng_push;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.jiayantech.library.comm.DataShared;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.umeng_push.model.BasePushMessage;
 import com.jiayantech.umeng_push.model.PushMessageClickAction;
+import com.jiayantech.umeng_push.model.UnreadMessage;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -23,7 +25,9 @@ public class UmengPushManager {
     private static final String TAG = "UmengPushManager";
 
     public static final int CODE_DIARY_COMMENTED = 1; //用户日记被评论
-    public static final int CODE_COMMENT_COMMENTED = 2; // 用户评论被评论
+    public static final int CODE_TOPIC_COMMENTED = 2; // 用户话题被评论
+    public static final int CODE_EVENT_COMMENTED = 3; //用户事件被评论
+    public static final int CODE_COMMENT_COMMENTED = 4; //用户评论被评论
 
     public static final int CODE_ANGEL_APPLY_ACCEPT = 10; // 美丽天使申请通过
     public static final int CODE_ANGEL_APPLY_DENY  = 11; // 美丽天使申请不通过
@@ -58,6 +62,9 @@ public class UmengPushManager {
 
     private List<PushMessageClickAction> mClickActionList =
             new ArrayList<PushMessageClickAction>();
+    private List<UnreadMessage> mUnreadMessageList = new ArrayList<>();  //未读的消息列表
+
+
 
     private UmengPushManager() {
     }
@@ -125,6 +132,8 @@ public class UmengPushManager {
             case CODE_PUSH_AD:
                 int notification = sDataShared.getInt(KEY_UNREAD_NOTIFICATION);
                 setUnreadNotificationCount(notification + 1);
+                UnreadMessage msg = UnreadMessage.createUnreadMessage(message);
+                mUnreadMessageList.add(msg);
                 break;
             case CODE_ANGEL_APPLY_ACCEPT:
             case CODE_ANGEL_APPLY_DENY:
@@ -137,18 +146,39 @@ public class UmengPushManager {
         }
     }
 
+    public void decUnread(String action, long id, String url){
+        UnreadMessage msg = new UnreadMessage(action, id, url);
+        for(UnreadMessage m: mUnreadMessageList){
+            if(msg.equals(m)){
+                mUnreadMessageList.remove(m);
+                decUnreadNotificationCount();
+            }
+        }
+    }
+
     /**
-     * 处理点击事件
+     * 处理通知栏点击事件
      * @param action
      * @param id
      * @param url
      */
-    public void handleClickAction(String action, long id, String url){
+    public void handleClickActionFromNotification(String action, long id, String url){
         for(PushMessageClickAction a: mClickActionList){
             if(a.action.equals(action)){
                 a.executeAction(action, id, url);
+                decUnread(action, id, url);
             }
         }
+    }
+
+    public Intent createActionIntent(String action, long id, String url){
+        for(PushMessageClickAction a: mClickActionList){
+            if(a.action.equals(action)){
+                Intent intent = a.createIntent(action, id, url);
+                return intent;
+            }
+        }
+        return null;
     }
 
     /**
@@ -222,4 +252,6 @@ public class UmengPushManager {
         IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
         applicationContext.registerReceiver(receiver, filter);
     }
+
+
 }
