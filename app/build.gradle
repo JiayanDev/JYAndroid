@@ -35,7 +35,9 @@ android {
         }
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "SERVER_CONFIG", "\"app.properties\""
         }
