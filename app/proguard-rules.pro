@@ -25,8 +25,6 @@
 -dontwarn com.tencent.weibo.sdk.**
 -dontwarn com.facebook.**
 
--libraryjars libs/SocialSDK_QQZone_2.jar
-
 -keep enum com.facebook.**
 -keepattributes Exceptions,InnerClasses,Signature
 -keepattributes *Annotation*
@@ -57,3 +55,29 @@
 -keep public class [your_pkg].R$*{
     public static final int *;
     }
+
+#libray中swipeback、http、GsonUtils都不能混淆，里面包含Gson解析相关的类
+-keep class me.imid.swipebacklayout.lib.app.** {*;}
+-keep class com.jiayantech.library.http.** {*;}
+-keep class com.jiayantech.library.utils.GsonUtils.**
+
+#项目中用到的不能混淆的库
+-dontwarn com.squareup.picasso.**
+-keep class com.squareup.okhttp.** {*;}
+-keep class com.jiayantech.jyandroid.model.** {*;}
+-keep class com.jiayantech.jyandroid.base.BaseModel
+
+#Gson解析不能混淆的类
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
+
+#不能混淆EventBus接收事件的方法onEvent
+-keepclassmembers class ** {
+    public void onEvent(**);
+}
+
