@@ -26,7 +26,7 @@ public class SuccessActivity extends BaseActivity {
         setContentView(R.layout.activity_success);
         mImage = (ImageView) findViewById(R.id.img_success);
         mImage.setImageResource(getIntent().getIntExtra(EXTRA_IMAGE, -1));
-        setTitle(getIntent().getStringExtra(EXTRA_IMAGE));
+        setTitle(getIntent().getStringExtra(EXTRA_TITLE));
     }
 
     @Override
