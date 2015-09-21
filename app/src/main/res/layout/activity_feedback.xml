@@ -1,49 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/bg_gray_color"--><!--android:fillViewport="true">-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gray_color">
 
-    <LinearLayout
-        android:id="@+id/layout_container"
+    <EditText
+        android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@android:color/white"
+        android:gravity="left|top"
+        android:hint="@string/hint_feedback"
+        android:lineSpacingExtra="5dip"
+        android:minHeight="150dip"
+        android:padding="@dimen/normal_padding"
+        android:textColor="@color/text_normal_color"
+        android:textColorHint="@color/text_hint_color"
+        android:textSize="@dimen/normal_text_size" />
 
-        <EditText
-            android:id="@+id/edit_content"
+    <EditText
+        android:id="@+id/edit_contact"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edit_content"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:hint="@string/hint_feedback_contact"
+        android:padding="@dimen/normal_padding"
+        android:textColor="@color/text_normal_color"
+        android:textColorHint="@color/text_hint_color"
+        android:textSize="@dimen/normal_text_size" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/btn_theme"
+        android:layout_below="@id/edit_contact"
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="@string/submit" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dip"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_hint_style"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:text="紧急反馈欢迎拨打客户电话: " />
+
+        <TextView
+            style="@style/text_drawable_left_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:gravity="left|top"
-            android:hint="@string/hint_feedback"
-            android:lineSpacingExtra="5dip"
-            android:minHeight="150dip"
-            android:padding="@dimen/normal_padding"
-            android:textColor="@color/text_normal_color"
-            android:textColorHint="@color/text_hint_color"
-            android:textSize="@dimen/normal_text_size" />
-
-        <EditText
-            android:id="@+id/edit_contact"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/normal_margin"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:hint="@string/hint_feedback_contact"
-            android:padding="@dimen/normal_padding"
-            android:textColor="@color/text_normal_color"
-            android:textColorHint="@color/text_hint_color"
-            android:textSize="@dimen/normal_text_size" />
-
-        <Button
-            android:id="@+id/btn_submit"
-            style="@style/btn_theme"
-            android:layout_marginTop="30dp"
-            android:onClick="onClick"
-            android:text="@string/submit" />
+            android:background="@drawable/bg_round_frame_theme"
+            android:drawableLeft="@mipmap/icon_event_location_gray"
+            android:gravity="center_horizontal"
+            android:padding="8dip"
+            android:text="0755-2345678"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/small_text_size" />
     </LinearLayout>
+</RelativeLayout>
 
-</ScrollView>
+    <!--</ScrollView>-->
