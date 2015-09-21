@@ -145,7 +145,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
-        setHomePageVisible(AppInitManger.getRole());
     }
 
     public void onEvent(EditFinishEvent event) {
@@ -193,12 +192,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         }
         txt_info.setText(info);
-        setHomePageVisible(appInit.role);
-
+        setHomePageVisible();
     }
 
-    public void setHomePageVisible(String role) {
-        role = AppInit.ROLE_ANGEL;
+    public void setHomePageVisible() {
+        String role = AppInitManger.getRole();
         divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
         txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
     }

@@ -181,4 +181,10 @@
     <string name="submit">提交</string>
     <string name="feedback">意见反馈</string>
     <string name="hint_publish_diary">记录一下你的美丽故事</string>
+
+    <string name="message_type_comment">评论</string>
+    <string name="message_type_diary">日记</string>
+    <string name="message_type_topic">话题</string>
+    <string name="message_type_event">活动</string>
+    <string name="message_type_default">内容</string>
 </resources>

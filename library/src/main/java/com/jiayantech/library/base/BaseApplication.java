@@ -2,7 +2,6 @@ package com.jiayantech.library.base;
 
 import android.app.Application;
 
-import com.jiayantech.library.comm.CrashHandler;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.HttpReq;
 
@@ -25,7 +24,7 @@ public abstract class BaseApplication extends Application {
         sContext = this;
         super.onCreate();
         mBroadcastHelper = new BroadcastHelper();
-        CrashHandler.getInstance().init(getApplicationContext());// 注册crashHandler
+        //CrashHandler.getInstance().init(getApplicationContext());// 注册crashHandler
     }
 
     /**

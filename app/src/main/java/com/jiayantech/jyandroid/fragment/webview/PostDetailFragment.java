@@ -200,6 +200,7 @@ public class PostDetailFragment extends WebViewFragment {
         LogUtil.i(TAG, "EditText get focus");
         mSendBtn.setVisibility(View.VISIBLE);
         mLikeBtn.setVisibility(View.GONE);
+        UIUtil.showSoftKeyBoard(getActivity(), mContentEdit);
     }
 
     private void onGetFocus(long id, String toUser){
@@ -208,7 +209,7 @@ public class PostDetailFragment extends WebViewFragment {
         mReplyTo = toUser;
         mReplyType = "comment";
         mContentEdit.setHint("回复:" + toUser);
-        UIUtil.showSoftKeyBoard(getActivity(), mContentEdit);
+
     }
 
     @Override
@@ -225,12 +226,14 @@ public class PostDetailFragment extends WebViewFragment {
             @Override
             public void execute(JsCallReply d) {
                 JsCallReply data = d;
-                mReplyId = d.data.subjectId;
-                mReplyType = d.data.subject;
-                mReplyTo = d.data.toUserName;
-                onGetFocus(d.data.subjectId, d.data.toUserName);
-
-
+                if(data.data.toUserId == 0){
+                    onGetFocus();
+                }else {
+                    mReplyId = d.data.subjectId;
+                    mReplyType = d.data.subject;
+                    mReplyTo = d.data.toUserName;
+                    onGetFocus(d.data.subjectId, d.data.toUserName);
+                }
 //                CommentFragment fragment = CommentFragment.newInstance(data.data.subjectId,
 //                        data.data.subject, data.data.toUserId, data.data.toUserName);
                 //fragment.setTargetFragment(PostDetailFragment.this, WebViewFragment.REQUEST_CODE_COMMENT);

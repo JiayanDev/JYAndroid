@@ -3,7 +3,6 @@ package com.jiayantech.umeng_push;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 
 import com.jiayantech.library.comm.DataShared;
 import com.jiayantech.library.utils.LogUtil;
@@ -14,6 +13,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -99,11 +99,17 @@ public class UmengPushManager {
     }
 
     public synchronized void decUnreadNotificationCount(){
-        if(mUnreadNotification > 0){
-            mUnreadNotification--;
-            sDataShared.putInt(KEY_UNREAD_NOTIFICATION, mUnreadNotification);
-            dispatchChange();
+        decUnreadNotificationCount(1);
+    }
+
+    public synchronized void decUnreadNotificationCount(int n){
+        if(mUnreadNotification >= n ){
+            mUnreadNotification -= n;
+        }else{
+            mUnreadNotification = 0;
         }
+        sDataShared.putInt(KEY_UNREAD_NOTIFICATION, mUnreadNotification);
+        dispatchChange();
     }
 
     public synchronized void setUnreadCompanyCount(boolean flag) {
@@ -147,13 +153,18 @@ public class UmengPushManager {
     }
 
     public void decUnread(String action, long id, String url){
+        LogUtil.i(TAG, String.format("decUnread action: %s, id %d, url %s", action, id, url));
         UnreadMessage msg = new UnreadMessage(action, id, url);
+        Collection<UnreadMessage> messages = new ArrayList<>();
         for(UnreadMessage m: mUnreadMessageList){
             if(msg.equals(m)){
-                mUnreadMessageList.remove(m);
-                decUnreadNotificationCount();
+                messages.add(m);
+                //decUnreadNotificationCount();
+                //break;
             }
         }
+        decUnreadNotificationCount(messages.size());
+        mUnreadMessageList.remove(messages);
     }
 
     /**
@@ -163,6 +174,7 @@ public class UmengPushManager {
      * @param url
      */
     public void handleClickActionFromNotification(String action, long id, String url){
+        LogUtil.i(TAG, String.format("handleClickActionFromNotification action: %s, id %d, url %s", action, id, url));
         for(PushMessageClickAction a: mClickActionList){
             if(a.action.equals(action)){
                 a.executeAction(action, id, url);
@@ -248,9 +260,9 @@ public class UmengPushManager {
                 new JYUmengMessageHandler(applicationContext));
 
         //注册广播, 处理友盟push过来的消息(custom message)
-        PushBroadcastReceiver receiver = new PushBroadcastReceiver();
-        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
-        applicationContext.registerReceiver(receiver, filter);
+//        PushBroadcastReceiver receiver = new PushBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
+//        applicationContext.registerReceiver(receiver, filter);
     }
 
 

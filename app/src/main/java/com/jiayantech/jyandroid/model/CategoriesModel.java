@@ -8,7 +8,6 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by janseon on 2015/7/16.
@@ -54,7 +53,10 @@ public class CategoriesModel extends BaseModel {
                     array.add(category.name);
                 }
             }
-            return (String[]) array.toArray();
+            String[] result = new String[array.size()];
+            array.toArray(result);
+
+            return result;
         }
         return new String[0];
     }

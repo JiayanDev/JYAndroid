@@ -72,7 +72,7 @@
                     android:layout_alignBottom="@id/img_cover"
                     android:layout_alignLeft="@+id/txt_project"
                     android:layout_alignStart="@+id/txt_project"
-                    android:drawableLeft="@mipmap/icon_clear"
+                    android:drawableLeft="@mipmap/icon_time"
                     android:drawablePadding="10dp"
                     android:text="2015.10.28"
                     android:textColor="@color/text_light_color"

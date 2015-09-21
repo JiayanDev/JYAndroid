@@ -13,6 +13,7 @@ import java.util.Date;
 @SuppressLint("SimpleDateFormat")
 public class TimeUtil {
     public static long SERVER_TIME_OFFSET = 0;
+    private SimpleDateFormat format = new SimpleDateFormat();
 
     /**
      * 时间戳转化为Sting或Date
@@ -40,6 +41,12 @@ public class TimeUtil {
     }
 
     public static String stamp2YearMonthDay(long time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String result = format.format(time);
+        return result;
+    }
+
+    public static String stamp2MonthDay(long time){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String result = format.format(time);
         return result;

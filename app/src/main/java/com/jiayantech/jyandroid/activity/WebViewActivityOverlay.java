@@ -33,6 +33,7 @@ public class WebViewActivityOverlay extends BaseActivity{
                     .add(com.jiayantech.library.R.id.fragment_container, mFragment)
                     .commit();
         }
+        setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent createLaunchIntent(Context context, long id, String type) {
@@ -53,4 +54,6 @@ public class WebViewActivityOverlay extends BaseActivity{
         mFragment = WebViewFragmentFactory.createFragment(type, id);
         return mFragment;
     }
+
+
 }
