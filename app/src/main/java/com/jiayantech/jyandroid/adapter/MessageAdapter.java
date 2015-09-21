@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         @Override
         public void onBind(BasePushMessage item, int position) {
             super.onBind(item, position);
-            mTxtType.setText("回复了我的" + item.subject);
+            mTxtType.setText("回复了我的" + convertType(item.subject));
             mTxtReplyContent.setText(item.subjectContent);
         }
     }
@@ -136,5 +137,29 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         }
     }
 
+    public  String convertType(String type){
+        @StringRes int stringId;
+        if(type == null){
+            return mContext.getResources().getString(R.string.message_type_default);
+        }
+        switch (type){
+            case "comment":
+                stringId = R.string.message_type_comment;
+                break;
+            case "diary":
+                stringId = R.string.message_type_diary;
+                break;
+            case "topic":
+                stringId = R.string.message_type_topic;
+                break;
+            case "event":
+                stringId = R.string.message_type_event;
+                break;
+            default:
+                stringId = R.string.message_type_default;
+        }
+
+        return mContext.getResources().getString(stringId);
+    }
 
 }

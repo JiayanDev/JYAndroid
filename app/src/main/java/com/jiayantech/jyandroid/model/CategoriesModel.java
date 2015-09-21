@@ -8,7 +8,6 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.base.BaseModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by janseon on 2015/7/16.
@@ -24,7 +23,7 @@ public class CategoriesModel extends BaseModel {
 
     public String getCategoryNamesString() {
         if (TextUtils.isEmpty(categoryNames)) {
-            if (categoryIds != null) {
+            if (categoryIds != null && categoryIds.length > 0) {
                 StringBuilder builder = new StringBuilder();
                 SparseArray<AppInit.Category> data = AppInitManger.getProjectCategoryData();
                 for (int categoryId : categoryIds) {
@@ -41,7 +40,11 @@ public class CategoriesModel extends BaseModel {
     }
 
     public String[] getCategoryNamesArray() {
-        if (categoryIds != null) {
+        return getCategoryNamesArray(categoryIds);
+    }
+
+    public static String[] getCategoryNamesArray(int[] categoryIds) {
+        if (categoryIds != null && categoryIds.length > 0) {
             SparseArray<AppInit.Category> data = AppInitManger.getProjectCategoryData();
             ArrayList<String> array = new ArrayList<>();
             for (int categoryId : categoryIds) {
@@ -50,8 +53,13 @@ public class CategoriesModel extends BaseModel {
                     array.add(category.name);
                 }
             }
-            return (String[]) array.toArray();
+            String[] result = new String[array.size()];
+            array.toArray(result);
+
+            return result;
         }
         return new String[0];
     }
+
+
 }

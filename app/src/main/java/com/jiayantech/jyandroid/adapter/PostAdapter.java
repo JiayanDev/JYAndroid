@@ -98,8 +98,6 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
                     (R.string.comment_count, new Object[]{String.valueOf(item.commentCount)}));
 
             mTagGroupCategory.setTags(item.getCategoryNamesArray());
-            //mTagGroupCategory.setTags(item.getCategoryNamesArray());
-            //mTagGroupCategory.setText(item.getCategoryNamesString());
 
             mPhotoLayout.setAdapter(new PhotoAdapter(mContext));
             ((PhotoAdapter) mPhotoLayout.getAdapter()).setPhotoList(

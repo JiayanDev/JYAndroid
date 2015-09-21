@@ -3,7 +3,6 @@ package com.jiayantech.umeng_push;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 
 import com.jiayantech.library.comm.DataShared;
 import com.jiayantech.library.utils.LogUtil;
@@ -251,9 +250,9 @@ public class UmengPushManager {
                 new JYUmengMessageHandler(applicationContext));
 
         //注册广播, 处理友盟push过来的消息(custom message)
-        PushBroadcastReceiver receiver = new PushBroadcastReceiver();
-        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
-        applicationContext.registerReceiver(receiver, filter);
+//        PushBroadcastReceiver receiver = new PushBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
+//        applicationContext.registerReceiver(receiver, filter);
     }
 
 

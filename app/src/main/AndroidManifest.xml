@@ -152,6 +152,11 @@
                 <action android:name="com.jiayantech.jyandroid.ClickActionReceiver"/>
             </intent-filter>
         </receiver>
+        <receiver android:name="com.jiayantech.umeng_push.PushBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.jiayantech.jyandroid.PushBroadcastReceiver"/>
+            </intent-filter>
+        </receiver>
 
         <!--友盟推送服务相关-->
         <receiver

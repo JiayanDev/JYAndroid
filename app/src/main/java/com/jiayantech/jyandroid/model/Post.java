@@ -25,4 +25,10 @@ public class Post extends CategoriesModel {
     public String headerId;
     public int gender;
 
+    public int[] prevCategoryIds;
+
+    @Override
+    public String[] getCategoryNamesArray() {
+        return getCategoryNamesArray(prevCategoryIds);
+    }
 }

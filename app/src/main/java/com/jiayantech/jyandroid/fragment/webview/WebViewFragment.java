@@ -129,6 +129,7 @@ public abstract class WebViewFragment extends BaseFragment {
         WebSettings settings = mWebView.getSettings();
         settings.setBuiltInZoomControls(false);
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
 
         settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
     }
@@ -137,7 +138,7 @@ public abstract class WebViewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mWebView.loadUrl(mUrl);
-        finishLoading();
+        //finishLoading();
 
     }
 

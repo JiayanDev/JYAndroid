@@ -104,7 +104,7 @@ public class EventDetailFragment extends WebViewFragment{
                                 sb.append(" ");
                             }
                         }else{
-                            return;
+                            sb.append("项目未知");
                         }
                         long id = data.data.id;
                         String project = sb.toString().trim();
