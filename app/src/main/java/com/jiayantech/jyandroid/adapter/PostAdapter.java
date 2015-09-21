@@ -17,6 +17,7 @@ import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
 import com.jiayantech.library.utils.TimeUtil;
+import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         });
 
         mFemaleIcon = mContext.getResources().getDrawable(R.mipmap.icon_female);
-        mFemaleIcon.setBounds(0, 0, 48, 48);
+        mFemaleIcon.setBounds(0, 0, UIUtil.dip2px(16), UIUtil.dip2px(16));
         mMaleIcon = mContext.getResources().getDrawable(R.mipmap.icon_male);
-        mMaleIcon.setBounds(0, 0, 48, 48);
+        mMaleIcon.setBounds(0, 0, UIUtil.dip2px(16), UIUtil.dip2px(16));
     }
 
     @Override
