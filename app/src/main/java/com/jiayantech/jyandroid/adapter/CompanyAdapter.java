@@ -83,7 +83,7 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
                 txt_status_comment.setVisibility(View.GONE);
                 txt_status.setVisibility(View.VISIBLE);
                 txt_status.setText(event.applyStatus);
-                txt_status.setOnClickListener(this);
+                //txt_status.setOnClickListener(this);
             }
         }
 
