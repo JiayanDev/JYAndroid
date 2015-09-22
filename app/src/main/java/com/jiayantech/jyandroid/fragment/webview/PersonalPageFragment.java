@@ -16,9 +16,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
+import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallShowHeader;
 import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.library.base.BaseActivity;
@@ -149,6 +151,7 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
     @Override
     protected void onAddWebActionListener(BaseWebViewClient client) {
         super.onAddWebActionListener(client);
+        //显示header
         client.addActionListener(new WebActionListener<JsCallShowHeader>(
                 JsNativeBiz.ACTION_SHOW_USER_PROFILE_HEADER, JsCallShowHeader.class) {
             @Override
@@ -165,6 +168,13 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                     LogUtil.i(TAG, "show add post button, id is " + data.data.id);
                     callJsMethod(JsNativeBiz.JS_METHOD_G_SHOW_ADD_POST_BUTTON, null);
                 }
+            }
+        });
+
+        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_ADD_POST, BaseJsCall.class) {
+            @Override
+            public void execute(BaseJsCall data) {
+                startActivity(PublishDiaryActivity.class);
             }
         });
 
