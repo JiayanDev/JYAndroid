@@ -131,7 +131,7 @@ public abstract class WebViewFragment extends BaseFragment {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
 
-        settings.setUserAgentString(settings.getUserAgentString() + " jiayantech");
+        settings.setUserAgentString(System.getProperty("http.agent") + " jiayantech");
     }
 
     @Override

@@ -1,10 +1,5 @@
 package com.jiayantech.library.comm;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -26,6 +21,11 @@ import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.FileUtil;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * @author 健兴
@@ -55,7 +55,7 @@ public class PicGetter {
     /**
      * 裁剪
      */
-    private static final int REQUEST_CODE_CROP_IMG = 4;
+    private static final int REQUEST_CODE_CROP_IMG = 11;
 
     private final Activity mContext;
     private final ActivityResultHelper mHelper;

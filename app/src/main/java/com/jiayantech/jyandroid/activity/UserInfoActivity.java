@@ -22,6 +22,7 @@ import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.PicGetter;
 import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.http.AppResponse;
@@ -163,7 +164,25 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.layout_location:
                 Intent intent = new Intent(this, LocationSelectActivity.class);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, new ActivityResult() {
+                    @Override
+                    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                        if (resultCode == Activity.RESULT_OK) {
+                            final String province = data.getStringExtra("province");
+                            final String city = data.getStringExtra("city");
+                            Map<String, String> params = new ArrayMap<>();
+                            params.put("province", province);
+                            params.put("city", city);
+                            UserBiz.update(params, new ResponseListener<AppResponse>() {
+                                @Override
+                                public void onResponse(AppResponse appResponse) {
+                                    ToastUtil.showMessage("更新成功" + province + "" + city);
+                                    mLocationText.setText(province + " " + city);
+                                }
+                            });
+                        }
+                    }
+                });
                 break;
             case R.id.layout_birthday:
                 new DateTimeHelper(this).showDateDialog(new DateTimeHelper.OnSetDateTimeListener() {
@@ -184,7 +203,18 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_phone:
                 Intent intent1 = new Intent(this, VerifyPhoneActivity.class);
                 intent1.putExtra(VerifyPhoneActivity.KEY_TYPE, VerifyPhoneActivity.TYPE_UPDATE_PHONE);
-                startActivityForResult(intent1, 1);
+                startActivityForResult(intent1, new ActivityResult() {
+                    @Override
+                    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                        String phone = null;
+                        if (data != null && data.getStringArrayExtra("phone") != null) {
+                            phone = data.getStringExtra("phone");
+                            if (phone != null) {
+                                mPhoneText.setText(phone);
+                            }
+                        }
+                    }
+                });
                 break;
 //            case R.id.layout_wechat:
 //
@@ -236,33 +266,33 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK) {
-                final String province = data.getStringExtra("province");
-                final String city = data.getStringExtra("city");
-                Map<String, String> params = new ArrayMap<>();
-                params.put("province", province);
-                params.put("city", city);
-                UserBiz.update(params, new ResponseListener<AppResponse>() {
-                    @Override
-                    public void onResponse(AppResponse appResponse) {
-                        ToastUtil.showMessage("更新成功" + province + "" + city);
-                        mLocationText.setText(province + " " + city);
-                    }
-                });
-            }
-        } else if (requestCode == 1) {
-            String phone = null;
-            if (data != null && data.getStringArrayExtra("phone") != null) {
-                phone = data.getStringExtra("phone");
-                if (phone != null) {
-                    mPhoneText.setText(phone);
-                }
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == 0) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                final String province = data.getStringExtra("province");
+//                final String city = data.getStringExtra("city");
+//                Map<String, String> params = new ArrayMap<>();
+//                params.put("province", province);
+//                params.put("city", city);
+//                UserBiz.update(params, new ResponseListener<AppResponse>() {
+//                    @Override
+//                    public void onResponse(AppResponse appResponse) {
+//                        ToastUtil.showMessage("更新成功" + province + "" + city);
+//                        mLocationText.setText(province + " " + city);
+//                    }
+//                });
+//            }
+//        } else if (requestCode == 1) {
+//            String phone = null;
+//            if (data != null && data.getStringArrayExtra("phone") != null) {
+//                phone = data.getStringExtra("phone");
+//                if (phone != null) {
+//                    mPhoneText.setText(phone);
+//                }
+//            }
+//        }
+//    }
 
     public void onEvent(EditFinishEvent event) {
         switch (event.action) {
