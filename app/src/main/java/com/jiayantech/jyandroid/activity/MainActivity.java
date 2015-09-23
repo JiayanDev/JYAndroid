@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +47,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     private ImageView mImageUnreadDot;
     private TextView mTextUnreadCount;
+
+    private long lastBackPressTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,5 +284,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     public void resetCheck() {
         ((RadioButton) mRadioGroup.findViewById(ids[0])).setChecked(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if (System.currentTimeMillis() - lastBackPressTime > 2000) {
+                ToastUtil.showMessage("再按一次返回键退出");
+                lastBackPressTime = System.currentTimeMillis();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
