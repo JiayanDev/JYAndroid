@@ -132,6 +132,10 @@ public class HttpReq<T> extends Request<T> {
         new HttpReq<>(method, builderAction.toString(), params, page, toLoad, toSave, classType, l);
     }
 
+    public static void _request(int method, String url, Map<String, String> params, Map<String, String> page, boolean toLoad, boolean toSave, Type classType, ResponseListener<?> l) {
+        new HttpReq<>(method, url, params, page, toLoad, toSave, classType, l);
+    }
+
     public static void request(HttpReq httpReq) {
         new HttpReq<>(httpReq);
     }

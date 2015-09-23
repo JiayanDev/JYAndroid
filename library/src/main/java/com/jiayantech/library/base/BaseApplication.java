@@ -1,6 +1,8 @@
 package com.jiayantech.library.base;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.HttpReq;
@@ -14,9 +16,27 @@ import com.jiayantech.library.http.HttpReq;
  */
 public abstract class BaseApplication extends Application {
     private static BaseApplication sContext;
+    public String version = "1.0.0";
+
 
     public static BaseApplication getContext() {
         return sContext;
+    }
+
+    /**
+     * 获取app的版本信息
+     */
+    public String getVersionName() {
+        PackageManager packageManager = getPackageManager();// 获取packagemanager的实例
+        PackageInfo packInfo;
+        try {
+            packInfo = packageManager.getPackageInfo(getPackageName(), 0);// getPackageName()是你当前类的包名，0代表是获取版本信息
+            String version = packInfo.versionName;
+            return version;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 
     @Override

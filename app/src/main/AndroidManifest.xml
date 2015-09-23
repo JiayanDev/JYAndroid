@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jiayantech.jyandroid">
 
     <application
@@ -83,16 +82,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WebViewActivity"
-            android:screenOrientation="portrait"/>
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW"/>-->
-                <!--<category android:name="android.intent.category.BROWSABLE"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-                <!--<data-->
-                    <!--android:host="apptest.jiayantech.com"-->
-                    <!--android:scheme="http"-->
-                    <!--android:pathPattern="/html/.*"/>-->
-            <!--</intent-filter>-->
+            android:screenOrientation="portrait" />
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
+        <!--<data-->
+        <!--android:host="apptest.jiayantech.com"-->
+        <!--android:scheme="http"-->
+        <!--android:pathPattern="/html/.*"/>-->
+        <!--</intent-filter>-->
 
 
         <!--<activity-->
@@ -109,7 +108,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.EventRankActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.EditUserInfoActivity"
             android:screenOrientation="portrait" />
@@ -144,17 +143,18 @@
         <activity
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.WebViewActivityOverlay"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.WebViewActivityOverlay"
+            android:screenOrientation="portrait" />
 
         <receiver android:name="com.jiayantech.umeng_push.ClickActionReceiver">
             <intent-filter>
-                <action android:name="com.jiayantech.jyandroid.ClickActionReceiver"/>
+                <action android:name="com.jiayantech.jyandroid.ClickActionReceiver" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.jiayantech.umeng_push.PushBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.jiayantech.jyandroid.PushBroadcastReceiver"/>
+                <action android:name="com.jiayantech.jyandroid.PushBroadcastReceiver" />
             </intent-filter>
         </receiver>
 
@@ -312,4 +312,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 </manifest>
