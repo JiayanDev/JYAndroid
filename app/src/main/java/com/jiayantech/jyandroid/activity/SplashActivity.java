@@ -31,8 +31,6 @@ public class SplashActivity extends BaseActivity {
     private final long delayMillis = 1000;
     final long currentTimeMillis = System.currentTimeMillis();
 
-    private final String DATA_URL = "http://admintest.jiayantech.com/data.html";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,39 +67,8 @@ public class SplashActivity extends BaseActivity {
                 }
             });
         }
-
-        HttpReq._request(Request.Method.GET, DATA_URL, null, null, false, false, null, new ResponseListener<AppResponse<Data>>() {
-            @Override
-            public void onResponse(AppResponse<Data> dataAppResponse) {
-                final Data data = dataAppResponse.data;
-                if (getVersionValue(data.version) > getVersionValue(BaseApplication.getContext().getVersionName())) {
-                    AlertDialog dialog = new AlertDialog.Builder(BaseApplication.getContext(), AlertDialog.THEME_HOLO_LIGHT).
-                            setTitle("版本更新: v" + dataAppResponse.data.version).
-                            setNegativeButton("取消", null).
-                            setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.url));
-                                    startActivity(intent);
-                                }
-                            }).
-                            create();
-                    dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//指定会全局,可以在后台弹出
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
-                }
-            }
-        });
     }
 
-    public long getVersionValue(String version) {
-        String[] splits = version.split("\\.");
-        long value = 0;
-        for (int i = 0; i < splits.length; i++) {
-            value = value * 1024 + Integer.parseInt(splits[i]);
-        }
-        return value;
-    }
 
     private void quickLogin() {
         UserBiz.quickLogin(new ResponseListener<AppResponse<AppInit>>() {

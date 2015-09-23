@@ -39,6 +39,15 @@ public abstract class BaseApplication extends Application {
         return version;
     }
 
+    public static long getVersionValue(String version) {
+        String[] splits = version.split("\\.");
+        long value = 0;
+        for (int i = 0; i < splits.length; i++) {
+            value = value * 1024 + Integer.parseInt(splits[i]);
+        }
+        return value;
+    }
+
     @Override
     public void onCreate() {
         sContext = this;
