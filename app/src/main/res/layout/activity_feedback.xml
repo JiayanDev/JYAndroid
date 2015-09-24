@@ -60,7 +60,7 @@
             style="@style/text_drawable_left_style"
             android:layout_width="match_parent"
             android:background="@drawable/bg_round_frame_theme"
-            android:drawableLeft="@mipmap/icon_event_location_gray"
+            android:drawableLeft="@mipmap/icon_about_phone"
             android:gravity="center_horizontal"
             android:padding="8dip"
             android:text="0755-2345678"
