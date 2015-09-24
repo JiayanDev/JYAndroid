@@ -118,6 +118,7 @@ public class BitmapBiz {
             //or setLimit(Runtime.getRuntime().maxMemory()/4);
         }
 
+
         /*@Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getRowBytes() * value.getHeight();

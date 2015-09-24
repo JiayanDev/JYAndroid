@@ -82,7 +82,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:lineSpacingExtra="10dp"
-        android:text="大家好，我是周杰伦, 谢谢大家的捧场,今天给大家带来一首我最爱的歌曲，叫双节棍"
+        android:maxLines="3"
+        android:minLines="1"
+        android:ellipsize="end"
+        android:text="大家好，我是周杰伦, 谢谢大家的捧场,今天给大家带来一首我最爱的歌曲，叫双节棍，大家好，我是周杰伦, 谢谢大家的捧场,今天给大家带来一首我最爱的歌曲，叫双节棍大家好，我是周杰伦, 谢谢大家的捧场,今天给大家带来一首我最爱的歌曲，叫双节棍大家好，我是周杰伦, 谢谢大家的捧场,今天给大家带来一首我最爱的歌曲，叫双节棍"
         android:textSize="@dimen/small_text_size" />
 
     <com.jiayantech.jyandroid.widget.AdaptiveGridView

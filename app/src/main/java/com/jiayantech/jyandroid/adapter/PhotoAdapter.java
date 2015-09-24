@@ -4,15 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.library.http.BitmapBiz;
-import com.jiayantech.library.utils.LogUtil;
 
 import java.util.ArrayList;
 
@@ -68,20 +65,22 @@ public class PhotoAdapter extends BaseAdapter {
             }
         });
 
-        ViewTreeObserver vto = holder.photo.getViewTreeObserver();
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                LogUtil.i("PhotoAdapter", "onPreDraw");
-                int x;
-                int y;
-                holder.photo.getViewTreeObserver().removeOnPreDrawListener(this);
-                x = holder.photo.getMeasuredWidth();
-                y = x;
-                holder.photo.setLayoutParams(new LinearLayout.LayoutParams(x, y));
-                return true;
-            }
-        });
+
+
+//        ViewTreeObserver vto = holder.photo.getViewTreeObserver();
+//        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                LogUtil.i("PhotoAdapter", "onPreDraw");
+//                int x;
+//                int y;
+//                holder.photo.getViewTreeObserver().removeOnPreDrawListener(this);
+//                x = holder.photo.getMeasuredWidth();
+//                y = x;
+//                holder.photo.setLayoutParams(new LinearLayout.LayoutParams(x, y));
+//                return true;
+//            }
+//        });
 
         return convertView;
     }
