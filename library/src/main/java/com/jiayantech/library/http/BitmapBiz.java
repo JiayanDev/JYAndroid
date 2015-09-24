@@ -3,9 +3,11 @@ package com.jiayantech.library.http;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.jiayantech.library.base.BaseApplication;
@@ -51,7 +53,35 @@ public class BitmapBiz {
                 size, size);
     }
 
-    public static Bitmap getBitmap(String key){
+    public static void display(ImageView imageView, String imageUrl, SimpleImageListener l) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
+            return;
+        }
+        l.view = imageView;
+        sImageLoader.get(imageUrl, l, DEFAULT_SIZE, DEFAULT_SIZE);
+    }
+
+    public static void displayWithScaleSize(final ImageView imageView, String imageUrl, final int imageWidth) {
+        display(imageView, imageUrl, new BitmapBiz.SimpleImageListener() {
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                if (response.getBitmap() != null) {
+                    view.setImageBitmap(response.getBitmap());
+                    int width = response.getBitmap().getWidth();
+                    int height = response.getBitmap().getHeight();
+                    int imageHeight = imageWidth * height / width;
+                    ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+                    lp.height = imageHeight;
+                    imageView.setLayoutParams(lp);
+                } else if (HttpConfig.DEFAULT_IMAGE_ID != 0) {
+                    view.setImageResource(HttpConfig.DEFAULT_IMAGE_ID);
+                }
+            }
+        });
+    }
+
+    public static Bitmap getBitmap(String key) {
         return sBitmapLruCache.get(getCacheKey(key, DEFAULT_SIZE, DEFAULT_SIZE));
     }
 
@@ -103,6 +133,27 @@ public class BitmapBiz {
         public void putBitmap(String url, Bitmap bitmap) {
             System.out.println("######## BitmapLruCache PUT ######## " + url);
             put(url, bitmap);
+        }
+    }
+
+    ////////////////
+    public static abstract class SimpleImageListener implements ImageLoader.ImageListener {
+        protected ImageView view;
+
+        public void onErrorResponse(VolleyError error) {
+            if (HttpConfig.ERROR_IMAGE_ID != 0) {
+                view.setImageResource(HttpConfig.ERROR_IMAGE_ID);
+            }
+
+        }
+
+        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+            if (response.getBitmap() != null) {
+                view.setImageBitmap(response.getBitmap());
+            } else if (HttpConfig.DEFAULT_IMAGE_ID != 0) {
+                view.setImageResource(HttpConfig.DEFAULT_IMAGE_ID);
+            }
+
         }
     }
 }

@@ -6,11 +6,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.model.HomePagePost;
+import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.http.HttpConfig;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -63,17 +66,19 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
         return new TopicHolder(viewGroup, R.layout.item_home_page_topic, this);
     }
 
+
     public static class TopicHolder extends BaseSimpleModelAdapter.ViewHolder<HomePagePost> {
         public ImageView img_cover;
+        private final int imageWidth = BaseApplication.getContext().getResources().getDisplayMetrics().widthPixels;
 
-        public TopicHolder(ViewGroup parent, int layoutId, BaseSimpleModelAdapter<HomePagePost> adapter) {
+        public TopicHolder(ViewGroup parent, int layoutId, HomePagePostAdapter adapter) {
             super(parent, layoutId, adapter);
             img_cover = (ImageView) itemView.findViewById(R.id.img_cover);
         }
 
         @Override
         public void onBind(HomePagePost item, int position) {
-            BitmapBiz.display(img_cover, item.coverImg);
+            BitmapBiz.displayWithScaleSize(img_cover, item.coverImg, imageWidth);
         }
     }
 
@@ -83,7 +88,7 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
         public TextView txt_doctor;
         public TextView txt_doctorDesc;
 
-        public EventHolder(ViewGroup parent, BaseSimpleModelAdapter<HomePagePost> adapter) {
+        public EventHolder(ViewGroup parent, HomePagePostAdapter adapter) {
             super(parent, R.layout.item_home_page_event, adapter);
             txt_status = (TextView) itemView.findViewById(R.id.txt_status);
             img_doctor = (ImageView) itemView.findViewById(R.id.img_doctor);
