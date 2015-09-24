@@ -3,13 +3,11 @@ package com.jiayantech.jyandroid.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.AdaptiveGridView;
@@ -66,6 +64,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         public ImageView mType;
         public TagGroup mTagGroupCategory;
 
+        public PhotoAdapter mPhotoAdapter;
+
         public ViewHolder(Context context, ViewGroup parent, int layoutId) {
             this(context, parent, layoutId, null);
         }
@@ -82,6 +82,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mType = (ImageView) itemView.findViewById(R.id.ic_type);
             mTagGroupCategory = (TagGroup) itemView.findViewById(R.id.tag_group_category);
             mDate = (TextView) itemView.findViewById(R.id.txt_date);
+
+            mPhotoAdapter = new PhotoAdapter(mContext);
         }
 
         @Override
@@ -91,6 +93,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             } else {
                 BitmapBiz.display(mAvatar, item.avatar, 150);
             }
+
             mUsername.setText(String.valueOf(item.userName));
             mContent.setText(item.content);
             mThumbsUpCount.setText(mContext.getResources().getString
@@ -100,28 +103,28 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
             mTagGroupCategory.setTags(item.getCategoryNamesArray());
 
-            mPhotoLayout.setAdapter(new PhotoAdapter(mContext));
+            mPhotoLayout.setAdapter(mPhotoAdapter);
             ((PhotoAdapter) mPhotoLayout.getAdapter()).setPhotoList(
                     item.photoes == null ? new ArrayList<String>() : item.photoes);
 
             mDate.setText(TimeUtil.stamp2Date((long
                     ) item.createTime * 1000));
-            if(item.gender == 0){
+            if (item.gender == 0) {
                 mUsername.setCompoundDrawables(null, null, mFemaleIcon, null);
-            }else{
-                mUsername.setCompoundDrawables(null, null, mMaleIcon ,null);
+            } else {
+                mUsername.setCompoundDrawables(null, null, mMaleIcon, null);
             }
         }
 
-        private View.OnClickListener mImageClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mItem == null && mItem.photoes.size() <= 0) {
-                    return;
-                }
-                Integer position = (Integer) v.getTag();
-                PhotosActivity.start(mContext, mItem.content, mItem.photoes, position);
-            }
-        };
+//        private View.OnClickListener mImageClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mItem == null && mItem.photoes.size() <= 0) {
+//                    return;
+//                }
+//                Integer position = (Integer) v.getTag();
+//                PhotosActivity.start(mContext, mItem.content, mItem.photoes, position);
+//            }
+//        };
     }
 }
