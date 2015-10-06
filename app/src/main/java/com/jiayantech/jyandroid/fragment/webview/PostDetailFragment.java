@@ -98,14 +98,6 @@ public class PostDetailFragment extends WebViewFragment {
         mContentEdit = (EditText) mBottomView.findViewById(R.id.edit_comment);
         mLikeBtn = (ImageButton) mBottomView.findViewById(R.id.button_like);
 
-//        mContentEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                CommentFragment fragment = CommentFragment.newInstance(mId, mType);
-//                fragment.setTargetFragment(PostDetailFragment.this, REQUEST_CODE_COMMENT);
-//                fragment.show(getActivity().getSupportFragmentManager(), "comment");
-//            }
-//        });
         mLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,6 +278,6 @@ public class PostDetailFragment extends WebViewFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.showMessage(String.format("PostDetail Id is %d", mId));
+        //ToastUtil.showMessage(String.format("PostDetail Id is %d", mId));
     }
 }

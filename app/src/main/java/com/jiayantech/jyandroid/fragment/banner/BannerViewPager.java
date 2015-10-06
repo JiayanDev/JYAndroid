@@ -17,5 +17,6 @@ public class BannerViewPager extends AutoScrollViewPager {
     public BannerViewPager(Context paramContext, AttributeSet paramAttributeSet) {
         super(paramContext, paramAttributeSet);
         setCycle(true);
+        setStopScrollWhenTouch(true);
     }
 }

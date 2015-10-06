@@ -124,7 +124,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
 
             BitmapBiz.display(mImageAvatar, item.fromUserAvatar);
             mTxtUsername.setText(item.fromUserName);
-            mTxtDate.setText(TimeUtil.stamp2Date((long) item.createTime * 1000));
+            mTxtDate.setText(TimeUtil.stamp2MonthDay((long) item.createTime * 1000));
             mTxtContent.setText(item.commentContent);
         }
 

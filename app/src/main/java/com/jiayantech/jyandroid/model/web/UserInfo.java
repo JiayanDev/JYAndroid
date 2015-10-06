@@ -8,6 +8,7 @@ public class UserInfo extends BaseNativeResponse<UserInfo.Info>{
         public long id;
         public String nickname;
         public String phone;
+        public String avatar;
         public String token;
     }
 }

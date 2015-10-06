@@ -255,6 +255,7 @@ public abstract class WebViewFragment extends BaseFragment {
                 info.data.nickname = AppInitManger.getUserName();
                 info.data.phone = AppInitManger.getPhoneNum();
                 info.data.token = AppInitManger.getToken();
+                info.data.avatar = AppInitManger.getAvatar();
 
                 callJsMethod(data.success, info.toString());
             }

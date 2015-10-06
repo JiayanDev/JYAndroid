@@ -105,7 +105,7 @@ class LongConverter implements JsonDeserializer<Long>, JsonSerializer<Long> {
     public Long deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String jsonStr = json.getAsString();
         if (jsonStr.endsWith("L") || jsonStr.endsWith("l")) {
-            jsonStr = jsonStr.substring(0, jsonStr.length() - 2);
+            jsonStr = jsonStr.substring(0, jsonStr.length() - 1);
             return Long.valueOf(jsonStr);
         }else{
             return json.getAsJsonPrimitive().getAsLong();
