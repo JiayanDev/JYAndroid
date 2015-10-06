@@ -1,6 +1,5 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,8 +13,10 @@ import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.ConfigManager;
+import com.jiayantech.library.comm.Property;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.Utils;
 
 /**
  * Created by 健兴 on 2015/8/3.
@@ -36,6 +37,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     protected void setViewsContent() {
+        txt_service_phone.setText(Property.getProperty("phone"));
     }
 
     public void onClick(View v) {
@@ -53,7 +55,7 @@ public class SettingActivity extends BaseActivity {
                 startActivity(FeedbackActivity.class);
                 break;
             case R.id.layout_service:
-
+                Utils.takePhoneCall(this, txt_service_phone.getText().toString());
                 break;
             case R.id.btn_exit:
                 AppDialogUtils.showBottomDialog(this, "确定退出", new View.OnClickListener() {
@@ -82,5 +84,10 @@ public class SettingActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(R.string.title_mine_setting);
     }
 }

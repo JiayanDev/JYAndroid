@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -138,12 +137,11 @@ public class ImageUploadRequest<T> extends Request<T> {
                 encodedParams.append("\"\r\n\r\n");
                 //        + URLEncoder.encode(entry.getKey(), paramsEncoding) + "\"\r\n\r\n");
                 encodedParams.append(entry.getValue());
-                encodedParams.append("\n");
-
+                encodedParams.append("\r\n");
             }
             String encoded;
             if (encodedParams.length() > 0) {
-                encoded = encodedParams.substring(0, encodedParams.length() - 1);
+                encoded = encodedParams.substring(0, encodedParams.length() - 2);
             } else {
                 encoded = encodedParams.toString();
             }
@@ -158,5 +156,4 @@ public class ImageUploadRequest<T> extends Request<T> {
         String MULTIPART_FORM_DATA = "multipart/form-data";
         return MULTIPART_FORM_DATA + "; boundary=" + BOUNDARY;
     }
-
 }

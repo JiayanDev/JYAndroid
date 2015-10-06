@@ -4,7 +4,7 @@
     android:id="@+id/layout_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray_color">
+    android:background="@color/bg_gray">
 
     <EditText
         android:id="@+id/edit_content"
@@ -57,6 +57,7 @@
             android:text="紧急反馈欢迎拨打客户电话: " />
 
         <TextView
+            android:id="@+id/txt_phone"
             style="@style/text_drawable_left_style"
             android:layout_width="match_parent"
             android:background="@drawable/bg_round_frame_theme"

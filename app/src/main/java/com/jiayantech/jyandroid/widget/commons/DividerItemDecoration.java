@@ -46,7 +46,7 @@ public class DividerItemDecoration extends HorizontalDividerItemDecoration {
         public Builder(Context context, boolean showFirstEnable) {
             super(context);
             mShowFirstEnable = showFirstEnable;
-            color(context.getResources().getColor(R.color.bg_gray_color));
+            color(context.getResources().getColor(R.color.bg_gray));
             size((int) UIUtil.getDimension(R.dimen.normal_margin));
         }
 

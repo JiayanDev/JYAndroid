@@ -6,6 +6,7 @@ import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.ApplyEventActivity;
 import com.jiayantech.jyandroid.activity.LoginActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
@@ -13,7 +14,6 @@ import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
 import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.HttpReq;
-import com.jiayantech.library.utils.ToastUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,7 +52,7 @@ public class EventDetailFragment extends WebViewFragment{
 
     @Override
     protected String onSetTitle() {
-        return "活动详情";
+        return getString(R.string.title_event_detail);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EventDetailFragment extends WebViewFragment{
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.showMessage(String.format("eventId is %d", mId));
+        //ToastUtil.showMessage(String.format("eventId is %d", mId));
     }
 
     @Override

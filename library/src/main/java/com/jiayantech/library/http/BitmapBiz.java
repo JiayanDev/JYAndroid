@@ -39,6 +39,15 @@ public class BitmapBiz {
     }
 
     /**
+     * 加载图片
+     * @param imageUrl 图片url
+     * @param listener 加载完成后的回调
+     */
+    public static void loadImage(String imageUrl, ImageLoader.ImageListener listener){
+        sImageLoader.get(imageUrl, listener);
+    }
+
+    /**
      * @param imageView
      * @param imageUrl
      * @param size
@@ -123,6 +132,7 @@ public class BitmapBiz {
         protected int sizeOf(String key, Bitmap value) {
             return value.getRowBytes() * value.getHeight();
         }*/
+
 
         @Override
         public Bitmap getBitmap(String url) {

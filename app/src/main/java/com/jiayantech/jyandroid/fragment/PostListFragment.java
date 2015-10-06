@@ -76,7 +76,7 @@ public class PostListFragment extends RefreshListFragment<Post, AppResponse<List
 
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
                 .showFirstEnable(true)
-                .color(getResources().getColor(R.color.bg_gray_color))
+                .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
 

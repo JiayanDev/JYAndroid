@@ -107,7 +107,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             ((PhotoAdapter) mPhotoLayout.getAdapter()).setPhotoList(
                     item.photoes == null ? new ArrayList<String>() : item.photoes);
 
-            mDate.setText(TimeUtil.stamp2Date((long
+            mDate.setText(TimeUtil.stamp2MonthDay((long
                     ) item.createTime * 1000));
             if (item.gender == 0) {
                 mUsername.setCompoundDrawables(null, null, mFemaleIcon, null);

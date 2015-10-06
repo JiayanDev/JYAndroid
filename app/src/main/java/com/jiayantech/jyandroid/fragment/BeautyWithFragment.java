@@ -28,7 +28,7 @@ public class BeautyWithFragment extends RefreshListFragment<Post, AppResponse<Li
     public void onInitView() {
         super.onInitView();
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
-                .color(getResources().getColor(R.color.bg_gray_color))
+                .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
         setParams(new PostAdapter(null, getActivity()), TopicBiz.ACTION_TOPIC_LIST);

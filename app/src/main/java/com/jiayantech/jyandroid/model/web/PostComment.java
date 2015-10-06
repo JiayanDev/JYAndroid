@@ -13,4 +13,5 @@ public class PostComment {
     public long id;
     public String subject;
     public long subjectId;
+    public String avatar;
 }

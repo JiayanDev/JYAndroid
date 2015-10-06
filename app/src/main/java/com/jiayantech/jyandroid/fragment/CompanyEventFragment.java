@@ -24,7 +24,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
         getActivity().setTitle(R.string.title_my_company);
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
                 .showFirstEnable(true)
-                .color(getResources().getColor(R.color.bg_gray_color))
+                .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
         setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);

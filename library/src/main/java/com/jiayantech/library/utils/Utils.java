@@ -1,11 +1,10 @@
 package com.jiayantech.library.utils;
 
-import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.jiayantech.library.base.BaseApplication;
-
-import java.util.List;
 
 /**
  * Created by janseon on 2015/7/7.
@@ -19,4 +18,10 @@ public class Utils {
         return dp * BaseApplication.getContext().getResources().getDisplayMetrics().density;
     }
 
+    public static void takePhoneCall(Context context, String phone){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + phone));
+        context.startActivity(intent);
+    }
 }

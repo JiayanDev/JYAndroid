@@ -153,6 +153,32 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 BitmapBiz.display(img_avatar, event.avatar);
                 break;
         }
+//        switch (event.action) {
+//            case EditFinishEvent.ACTION_EDIT_NAME:
+//                mNameText.setText(event.name);
+//                AppInitManger.sAppInit.name = event.name;
+//                break;
+//            case EditFinishEvent.ACTION_EDIT_GENDER:
+//                mGenderText.setText(event.gender == 1 ? "男" : "女");
+//                AppInitManger.sAppInit.gender = event.gender;
+//                ToastUtil.showMessage("更新性别成功");
+//                break;
+//            case EditFinishEvent.ACTION_EDIT_BIRTHDAY:
+//                mBirthdayText.setText(String.valueOf(event.birthday));
+//                AppInitManger.sAppInit.birthday = event.birthday;
+//                break;
+//            case EditFinishEvent.ACTION_EDIT_PHONE:
+//                mPhoneText.setText(event.phone);
+//                AppInitManger.sAppInit.phone = event.phone;
+//                AppInitManger.sAppInit.phoneNum = event.phone;
+//                break;
+//            case EditFinishEvent.ACTION_EDIT_AVATAR:
+//                AppInitManger.sAppInit.avatar = event.avatar;
+//                AppInitManger.save(AppInitManger.sAppInit);
+//                BitmapBiz.display(mAvatarImg, event.avatar);
+//                //ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
+//                break;
+//        }
     }
 
     public void onEvent(UnreadMessageEvent event) {

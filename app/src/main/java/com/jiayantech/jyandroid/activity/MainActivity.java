@@ -14,7 +14,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -321,7 +320,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         LogUtil.i(TAG, "MainActivity onNewIntent");
-        ToastUtil.showMessage("MainActivity onNewIntent");
+        //ToastUtil.showMessage("MainActivity onNewIntent");
     }
 
     public void resetCheck() {

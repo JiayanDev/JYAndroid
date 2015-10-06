@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
@@ -58,8 +61,8 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
         mToolbarBackgroundDrawable = new ColorDrawable(Color.WHITE);
         mToolbarBackgroundDrawable.setAlpha(0);
 
-        ((BaseActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(mToolbarBackgroundDrawable);
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1){
+        ((BaseActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(mToolbarBackgroundDrawable);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             mToolbarBackgroundDrawable.setCallback(mDrawableCallback);
         }
     }
@@ -101,17 +104,17 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
     @Override
     protected View onBindHeaderLayout(LayoutInflater inflater) {
         final View headerView = inflater.inflate(R.layout.layout_personal_page_header, null);
-        mBgLayout = (RelativeLayout)headerView.findViewById(R.id.layout_bg);
-        mImgAvatar = (ImageView)headerView.findViewById(R.id.img_avatar);
-        mTxtUsername = (TextView)headerView.findViewById(R.id.txt_username);
-        mTxtInfo = (TextView)headerView.findViewById(R.id.txt_info);
+        mBgLayout = (RelativeLayout) headerView.findViewById(R.id.layout_bg);
+        mImgAvatar = (ImageView) headerView.findViewById(R.id.img_avatar);
+        mTxtUsername = (TextView) headerView.findViewById(R.id.txt_username);
+        mTxtInfo = (TextView) headerView.findViewById(R.id.txt_info);
         mScrollView.setOnScrollChangeListener(new NotifyingScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
                 final int headerHeight = headerView.getHeight() -
-                        ((BaseActivity)getActivity()).getSupportActionBar().getHeight();
-                final float ratio = (float)Math.min(Math.max(t, 0), headerHeight) / headerHeight;
-                final int newAlpha = (int)(ratio * 255);
+                        ((BaseActivity) getActivity()).getSupportActionBar().getHeight();
+                final float ratio = (float) Math.min(Math.max(t, 0), headerHeight) / headerHeight;
+                final int newAlpha = (int) (ratio * 255);
 //                LogUtil.i("PersonalPageFragment", "headerHeight is: " +
 //                        headerHeight + " ratio is " + ratio + " newAlpha is " + newAlpha);
                 mToolbarBackgroundDrawable.setAlpha(newAlpha);
@@ -134,7 +137,7 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
     private Drawable.Callback mDrawableCallback = new Drawable.Callback() {
         @Override
         public void invalidateDrawable(Drawable who) {
-            ((BaseActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(who);
+            ((BaseActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(who);
         }
 
         @Override
@@ -155,11 +158,28 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
         client.addActionListener(new WebActionListener<JsCallShowHeader>(
                 JsNativeBiz.ACTION_SHOW_USER_PROFILE_HEADER, JsCallShowHeader.class) {
             @Override
-            public void execute(JsCallShowHeader data) {
-                if(data.data.avatar != null) {
-                    BitmapBiz.display(mImgAvatar, data.data.avatar);
-                    mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                            BitmapUtil.doBlur(BitmapBiz.getBitmap(data.data.avatar), 50, false)));
+            public void execute(final JsCallShowHeader data) {
+                if (data.data.avatar != null) {
+                    //BitmapBiz.display(mImgAvatar, data.data.avatar);
+//                    mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
+//                            BitmapUtil.doBlur(BitmapBiz.getBitmap(data.data.avatar), 50, false)));
+                    BitmapBiz.loadImage(data.data.avatar, new ImageLoader.ImageListener() {
+                        @Override
+                        public void onResponse(ImageLoader.ImageContainer response,
+                                               boolean isImmediate) {
+                            Bitmap bitmap = response.getBitmap();
+                            if(bitmap != null) {
+                                mImgAvatar.setImageBitmap(bitmap);
+                                mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
+                                        BitmapUtil.doBlur(bitmap, 50, false)));
+                            }
+                        }
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
                 }
                 mTxtUsername.setText(data.data.name);
                 mTxtInfo.setText(data.data.province + data.data.city + " " + data.data.age + "岁");
