@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImagePagerAdapter;
@@ -42,6 +43,9 @@ public class PhotosActivity extends BaseActivity {
         setTitle(title == null ? getString(R.string.title_photo_browse) : title);
         mViewPager.setAdapter(new ImagePagerAdapter<>(this, photoList));
         mViewPager.setCurrentItem(position);
+        setBackgroundResource(android.R.color.black);
+        findViewById(R.id.toolbar).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.toolbar_divider).setBackgroundResource(android.R.color.transparent);
     }
 
     public static void start(Context context, String title, ArrayList<String> list, int position) {

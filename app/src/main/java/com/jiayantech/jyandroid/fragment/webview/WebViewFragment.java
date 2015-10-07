@@ -130,6 +130,7 @@ public abstract class WebViewFragment extends BaseFragment {
         settings.setBuiltInZoomControls(false);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         settings.setUserAgentString(System.getProperty("http.agent") + " jiayantech");
     }

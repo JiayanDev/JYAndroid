@@ -30,7 +30,7 @@ public class AppInit {
     public String province;
     public String city;
     public int gender;
-    public long birthday;
+    public Long birthday;
 
     public String phoneNum;
     public String phone;

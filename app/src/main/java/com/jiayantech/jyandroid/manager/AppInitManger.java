@@ -170,10 +170,10 @@ public class AppInitManger {
         return sAppInit.city;
     }
 
-    public static long getBirthday(){
+    public static Long getBirthday(){
         initLoad();
         if(sAppInit == null){
-            return 0;
+            return 0l;
         }
 
         return sAppInit.birthday;
