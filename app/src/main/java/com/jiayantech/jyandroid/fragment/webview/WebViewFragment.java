@@ -124,14 +124,24 @@ public abstract class WebViewFragment extends BaseFragment {
             mHeaderLayout.addView(headerView);
         }
 
+        initWebView();
+    }
+
+    private void initWebView(){
         mWebView.setWebViewClient(onSetWebViewClient());
         mWebView.setWebChromeClient(onSetWebChromeClient());
         WebSettings settings = mWebView.getSettings();
         settings.setBuiltInZoomControls(false);
+        //允许执行javascript
         settings.setJavaScriptEnabled(true);
+        //开启Dom Storage API功能
         settings.setDomStorageEnabled(true);
-
+        //设置WebView请求的UserAgent
         settings.setUserAgentString(System.getProperty("http.agent") + " jiayantech");
+        //开启Database Storage API功能
+        settings.setDatabaseEnabled(true);
+
+
     }
 
     @Override
@@ -307,4 +317,6 @@ public abstract class WebViewFragment extends BaseFragment {
         bEnableShare = flag;
         getActivity().invalidateOptionsMenu();
     }
+
+
 }

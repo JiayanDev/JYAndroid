@@ -119,4 +119,6 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         super.onDestroy();
         mBroadcastHelper.onDestroy();
     }
+
+
 }

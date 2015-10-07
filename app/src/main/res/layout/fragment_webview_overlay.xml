@@ -2,11 +2,12 @@
 <com.jiayantech.jyandroid.widget.NotifyingScrollView
     android:id="@+id/layout_scroll"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--<include layout="@layout/fragment_webview"/>-->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:orientation="vertical">
@@ -22,16 +23,26 @@
                 android:id="@+id/layout_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
             </FrameLayout>
 
-            <WebView
-                android:id="@+id/web"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
+                <WebView
+                    android:id="@+id/web"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </WebView>
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_centerHorizontal="true"
+                    />
+            </RelativeLayout>
 
-            </WebView>
 
             <FrameLayout
                 android:id="@+id/layout_bottom"
@@ -46,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:gravity="center">
 
             <TextView
@@ -54,5 +66,5 @@
                 android:text="正在加载..."/>
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 </com.jiayantech.jyandroid.widget.NotifyingScrollView>
