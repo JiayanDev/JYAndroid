@@ -107,12 +107,17 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage("input content");
                     return true;
                 }
-                onPost(content);
+                uploadImage(0);
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void post() {
+        String content = edit_content.getText().toString();
+        onPost(content);
+    }
 
     @Override
     public void onClick(View v) {
@@ -140,19 +145,12 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         TopicBiz.create(categoryIds, content, photoUrls, new ResponseListener<AppResponse<BaseModel>>() {
             @Override
             public void onResponse(AppResponse<BaseModel> response) {
-                dismissProgressDialog();
+                //dismissProgressDialog();
                 BroadcastHelper.send(Broadcasts.ACTION_PUBLISH_TOPIC);
-                finish();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissProgressDialog();
-                super.onErrorResponse(error);
+                //finish();
             }
         });
     }
-
 
     protected String toString(List<String> urlList) {
         if (urlList.isEmpty()) {
@@ -284,15 +282,16 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             mImageAdapter.addImage(bitmap);
         }
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-        showProgressDialog();
+        //showProgressDialog();
         //finish();
-        uploadImage(0);
+        //uploadImage(0);
     }
 
     public void uploadImage(final int index) {
         if (mSelectPath.size() <= 0) {
-            dismissProgressDialog();
+            //dismissProgressDialog();
             //ToastUtil.showMessage(mImageAdapter.urlList.toString());
+            post();
             return;
         }
         Bitmap bitmap = mImageAdapter.getItem(index);
@@ -308,7 +307,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dismissProgressDialog();
+                        //dismissProgressDialog();
                         super.onErrorResponse(error);
                     }
                 });

@@ -26,15 +26,19 @@ public class AdaptWebView extends WebView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        getScrollView(this);
-        int height = mScrollView.getBottom() - getTop();
         int measuredHeight = getMeasuredHeight();
+        if (measuredHeight > 0) {
+            getScrollView(this);
+            int top = getTop();
+            int scrollBottom = mScrollView.getBottom();
+            int height = scrollBottom - top;
 
-        if (measuredHeight < height) {
-            measuredHeight = height;
+            if (measuredHeight < height) {
+                measuredHeight = height;
+            }
+            // 重设高度
+            setMeasuredDimension(getMeasuredWidth(), measuredHeight);
         }
-        // 重设高度
-        setMeasuredDimension(getMeasuredWidth(), measuredHeight);
     }
 
     private ScrollView mScrollView;

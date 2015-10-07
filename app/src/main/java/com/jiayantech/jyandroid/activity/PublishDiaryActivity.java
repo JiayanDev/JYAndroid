@@ -17,6 +17,7 @@ import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.TimeUtil;
+import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -121,12 +122,12 @@ public class PublishDiaryActivity extends PublishPostActivity {
     @Override
     protected void onPost(String content) {
         String photoUrls = toString(mImageAdapter.urlList);
-        DiaryBiz.post(content, photoUrls, new SimpleResponseListener<BaseAppResponse>(this) {
+        DiaryBiz.post(content, photoUrls, new ResponseListener<BaseAppResponse>() {
             @Override
             public void onResponse(BaseAppResponse response) {
-                super.onResponse(response);
+                ToastUtil.showMessage("success");
                 BroadcastHelper.send(Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
-                finish();
+                //finish();
             }
         });
 //        String categoryIds = categoryList.toString();

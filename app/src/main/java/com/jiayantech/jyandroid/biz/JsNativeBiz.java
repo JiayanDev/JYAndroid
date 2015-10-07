@@ -29,6 +29,7 @@ public class JsNativeBiz {
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
     public static final String JS_METHOD_G_SHOW_ADD_POST_BUTTON = "G_showAddPostButton";
     public static final String JS_METHOD_G_SWITCH_LIKE = "G_switchLike";
+    public static final String JS_METHOD_G_REFRESH_TIMELINE = "G_refreshTimeline";
 
     private static Gson sGson = new Gson();
 
