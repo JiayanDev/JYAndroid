@@ -285,6 +285,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         }
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
         showProgressDialog();
+        //finish();
         uploadImage(0);
     }
 

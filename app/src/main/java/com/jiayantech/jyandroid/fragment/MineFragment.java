@@ -209,7 +209,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         txt_nickname.setText(appInit.name);
         String info = appInit.gender == 0 ? getString(R.string.gender_female) : getString(R.string.gender_male)
                 + "  " + AppInitManger.getProvince() + AppInitManger.getCity();
-        if (AppInitManger.getBirthday() != 0) {
+        if (AppInitManger.getBirthday() != null) {
             try {
                 int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));
                 info += "  " + age + "岁";

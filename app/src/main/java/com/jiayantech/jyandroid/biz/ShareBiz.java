@@ -1,10 +1,12 @@
 package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.app.JYApplication;
+import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -30,7 +32,7 @@ public class ShareBiz {
         sIWXAPI.registerApp(WECHAT_APP_ID);
     }
 
-    public static void shareToWechat(String url, String title, int type){
+    public static void shareToWechat(String url, String title, Bitmap thumbnail, int type){
         if(!sIWXAPI.isWXAppInstalled() || !sIWXAPI.isWXAppSupportAPI()){
             LogUtil.e("Wechat", "Wechat is not installed!");
             ToastUtil.showMessage(R.string.toast_error_wechat_not_install);
@@ -43,8 +45,7 @@ public class ShareBiz {
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = webpageObject;
         msg.title = title;
-        msg.setThumbImage(BitmapFactory.decodeResource(JYApplication.getContext().getResources(),
-                R.mipmap.icon_wechat));
+        msg.setThumbImage(thumbnail);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
@@ -62,5 +63,23 @@ public class ShareBiz {
                 break;
         }
         sIWXAPI.sendReq(req);
+    }
+
+    public static void shareToWechat(final String url, final String title, String thumbnail,
+                                     final int type){
+        if(thumbnail != null){
+            BitmapBiz.loadImage(thumbnail, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    Bitmap bitmap = response.getBitmap();
+                    shareToWechat(url, title, bitmap, type);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    ToastUtil.showMessage("读取分享缩略图失败");
+                }
+            });
+        }
     }
 }

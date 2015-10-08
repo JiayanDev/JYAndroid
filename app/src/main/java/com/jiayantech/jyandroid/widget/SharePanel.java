@@ -23,6 +23,7 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
     private Context mContext;
     private String mShareUrl;
     private String mTitle;
+    private String mThumbnail;
 
     private ImageView mShareToWechatImage;
     private ImageView mShareToCircleImage;
@@ -35,10 +36,11 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
 
     private Button mButtonCancel;
 
-    public SharePanel(Context context, String url, String title){
+    public SharePanel(Context context, String url, String title, String thumbnail){
         mContext = context;
         mShareUrl = url;
         mTitle = title;
+        mThumbnail = thumbnail;
         initView();
     }
 
@@ -124,10 +126,10 @@ public class SharePanel extends PopupWindow implements View.OnClickListener{
                 ToastUtil.showMessage("暂不支持，稍后开放!");
                 break;
             case R.id.image_wechat:
-                ShareBiz.shareToWechat(mShareUrl, mTitle, ShareBiz.WECHAT_SESSION);
+                ShareBiz.shareToWechat(mShareUrl, mTitle, mThumbnail,ShareBiz.WECHAT_SESSION);
                 break;
             case R.id.image_wechat_circle:
-                ShareBiz.shareToWechat(mShareUrl, mTitle, ShareBiz.WECHAT_TIMELINE);
+                ShareBiz.shareToWechat(mShareUrl, mTitle, mThumbnail,ShareBiz.WECHAT_TIMELINE);
                 break;
         }
     }

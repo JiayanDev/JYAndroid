@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jiayantech.jyandroid.widget.NotifyingScrollView
-    android:id="@+id/layout_scroll"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include layout="@layout/fragment_webview"/>-->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+    <com.jiayantech.jyandroid.widget.NotifyingScrollView
+        android:id="@+id/layout_scroll"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/layout_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:focusable="true"
+                      android:focusableInTouchMode="true"
+                      android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/layout_header"
+            <LinearLayout
+                android:id="@+id/layout_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </FrameLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <WebView
+                <FrameLayout
+                    android:id="@+id/layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </FrameLayout>
+
+                <com.jiayantech.jyandroid.widget.AdaptWebView
                     android:id="@+id/web"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                </WebView>
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:descendantFocusability="beforeDescendants"
                     />
-            </RelativeLayout>
 
-
-            <FrameLayout
-                android:id="@+id/layout_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/layout_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></FrameLayout>
+            </LinearLayout>
         </LinearLayout>
+    </com.jiayantech.jyandroid.widget.NotifyingScrollView>
 
-
-        <RelativeLayout
-            android:id="@+id/layout_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="正在加载..."/>
-        </RelativeLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/button_publish"
+        android:visibility="gone"
+        app:backgroundTint="@color/theme_color"
+        android:src="@android:drawable/ic_menu_edit"
+        android:hapticFeedbackEnabled="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+    <RelativeLayout
+        android:id="@+id/layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在加载..."/>
     </RelativeLayout>
-</com.jiayantech.jyandroid.widget.NotifyingScrollView>
+
+</RelativeLayout>

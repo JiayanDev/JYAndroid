@@ -105,7 +105,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
         mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
         mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
-        mBirthdayText.setText(TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
+        mBirthdayText.setText(AppInitManger.getBirthday() == null ? "" : TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         mPhoneText.setText(AppInitManger.getPhoneNum());
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
         mPhoneText.setText(AppInitManger.getPhoneNum());
