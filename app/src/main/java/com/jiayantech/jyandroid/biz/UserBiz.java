@@ -62,6 +62,7 @@ public class UserBiz {
     private static final String ACTION_HAS_PSW = MODEL + "/has/psw";
     private static final String ACTION_FEEDBACK = MODEL + "/feedback";
     private static final String ACTION_RESET_PASS = MODEL + "/reset/psw";
+    private static final String ACTION_PHONE_EXIST = MODEL + "/phone/exist";
 
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
@@ -265,6 +266,10 @@ public class UserBiz {
         Map<String, String> params = HttpReq.getInitParams("content", content);
         HttpReq.putParams(params, "contact", contact, "");
         HttpReq.post(ACTION_FEEDBACK, params, l);
+    }
+
+    public static void phoneExist(String phoneNum, ResponseListener<?> l) {
+        HttpReq.post(ACTION_PHONE_EXIST, HttpReq.getInitParams("phoneNum", phoneNum), l);
     }
 
     /**

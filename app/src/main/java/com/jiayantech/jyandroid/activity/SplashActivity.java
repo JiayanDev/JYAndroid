@@ -21,6 +21,7 @@ import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.ToastUtil;
 
 /**
  * Created by liangzili on 15/6/24.
@@ -45,28 +46,32 @@ public class SplashActivity extends BaseActivity {
         if (AppInitManger.isRegister()) {
             quickLogin();
         } else {
-            CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
-                @Override
-                public void onResponse(AppResponse<AppInit> appInitAppResponse) {
-                    AppInit appInit = appInitAppResponse.data;
-                    AppInitManger.save(appInit);
-                    if (appInit.register) {
-                        quickLogin();
-                    } else {
+            appInit();
+        }
+    }
+
+    private void appInit(){
+        CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
+            @Override
+            public void onResponse(AppResponse<AppInit> appInitAppResponse) {
+                AppInit appInit = appInitAppResponse.data;
+                AppInitManger.save(appInit);
+                if (appInit.register) {
+                    quickLogin();
+                } else {
+                    gotoMainActivity();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (!(error instanceof HttpReq.MsgError)) {
+                    if (AppInitManger.getProjectCategoryData() != null) {
                         gotoMainActivity();
                     }
                 }
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (!(error instanceof HttpReq.MsgError)) {
-                        if (AppInitManger.getProjectCategoryData() != null) {
-                            gotoMainActivity();
-                        }
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 
 
@@ -80,6 +85,13 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (error instanceof HttpReq.OverdueError) {
+                    ToastUtil.showMessage(R.string.msg_overdue_to_login);
+                    ((HttpReq.OverdueError) error).clear();
+                    AppInitManger.claer();
+                    appInit();
+                    return;
+                }
                 if (!(error instanceof HttpReq.MsgError)) {
                     if (AppInitManger.getProjectCategoryData() != null) {
                         gotoMainActivity();

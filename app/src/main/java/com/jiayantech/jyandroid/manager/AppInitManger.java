@@ -51,6 +51,9 @@ public class AppInitManger {
         save();
     }
 
+    public static void claer() {
+        ConfigManager.putToken("");
+    }
 
     public static boolean isRegister() {
         initLoad();
