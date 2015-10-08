@@ -1,5 +1,7 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -23,6 +25,7 @@ import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
 import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
+import com.jiayantech.jyandroid.model.web.JsCallShareDetail;
 import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
 import com.jiayantech.jyandroid.model.web.UserInfo;
 import com.jiayantech.jyandroid.widget.NotifyingScrollView;
@@ -63,6 +66,11 @@ public abstract class WebViewFragment extends BaseFragment {
 
     protected String mUrl;
 
+    //share content
+    protected String mShareTitle;
+    protected String mShareContent;
+    protected String mShareThumbnail;
+
     private boolean bEnableShare = true;
 
     @Override
@@ -82,18 +90,21 @@ public abstract class WebViewFragment extends BaseFragment {
 
     /**
      * 抽象方法，返回Url
+     *
      * @return
      */
     abstract protected String onGetUrl();
 
     /**
      * 抽象方法，返回url的query参数
+     *
      * @return
      */
     abstract protected String onGetUrlParams();
 
     /**
      * 抽象方法，返回标题
+     *
      * @return
      */
     abstract protected String onSetTitle();
@@ -106,7 +117,7 @@ public abstract class WebViewFragment extends BaseFragment {
         return mView;
     }
 
-    protected void initView(LayoutInflater inflater){
+    protected void initView(LayoutInflater inflater) {
         mContentLayout = (LinearLayout) mView.findViewById(R.id.layout_content);
         mLoadingLayout = (RelativeLayout) mView.findViewById(R.id.layout_loading);
         //mScrollView = (NotifyingScrollView)mView.findViewById(R.id.layout_scroll);
@@ -120,19 +131,30 @@ public abstract class WebViewFragment extends BaseFragment {
         }
 
         View headerView = onBindHeaderLayout(inflater);
-        if(headerView != null){
+        if (headerView != null) {
             mHeaderLayout.addView(headerView);
         }
 
+        initWebView();
+    }
+
+    private void initWebView() {
         mWebView.setWebViewClient(onSetWebViewClient());
         mWebView.setWebChromeClient(onSetWebChromeClient());
         WebSettings settings = mWebView.getSettings();
         settings.setBuiltInZoomControls(false);
+        //允许执行javascript
         settings.setJavaScriptEnabled(true);
+        //开启Dom Storage API功能
         settings.setDomStorageEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
+        //设置WebView请求的UserAgent
         settings.setUserAgentString(System.getProperty("http.agent") + " jiayantech");
+        //开启Database Storage API功能
+        settings.setDatabaseEnabled(true);
+
+
     }
 
     @Override
@@ -195,16 +217,8 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_share) {
-//            ToastUtil.showMessage("点击分享: " + mUrl);
             if (mSharePanel == null) {
-                CharSequence titleChar = getActivity().getTitle();
-                String title;
-                if (titleChar != null) {
-                    title = titleChar.toString();
-                } else {
-                    title = getString(R.string.app_name);
-                }
-                mSharePanel = new SharePanel(getActivity(), mUrl, title);
+                mSharePanel = new SharePanel(getActivity(), mUrl, onGetShareTitle(), onGetShareThumbnail());
             }
             if (!mSharePanel.isShowing()) {
                 mSharePanel.showAtLocation(mWebView, Gravity.CENTER, 0, 0);
@@ -261,6 +275,17 @@ public abstract class WebViewFragment extends BaseFragment {
                 callJsMethod(data.success, info.toString());
             }
         });
+
+        //获取web详情页分享信息
+        client.addActionListener(new WebActionListener<JsCallShareDetail>(
+                JsNativeBiz.ACTION_GET_SHARE_INFO, JsCallShareDetail.class) {
+            @Override
+            public void execute(JsCallShareDetail data) {
+                mShareContent = data.data.content;
+                mShareTitle = data.data.title;
+                mShareThumbnail = data.data.thumbnail;
+            }
+        });
     }
 
     protected void onAddWebRedirectListener(BaseWebViewClient client) {
@@ -304,8 +329,30 @@ public abstract class WebViewFragment extends BaseFragment {
 //       }
     }
 
-    public void enableShare(boolean flag){
+    public void enableShare(boolean flag) {
         bEnableShare = flag;
         getActivity().invalidateOptionsMenu();
+    }
+
+    public String onGetShareTitle() {
+        if (mShareTitle != null) {
+            return mShareTitle;
+        }
+        if (getActivity().getTitle() != null) {
+            return getActivity().getTitle().toString();
+        } else {
+            return getString(R.string.app_name);
+        }
+    }
+
+    public String onGetShareContent(){
+        if(mShareContent != null){
+            return mShareContent;
+        }
+        return onGetShareTitle();
+    }
+
+    public String onGetShareThumbnail() {
+        return mShareThumbnail;
     }
 }

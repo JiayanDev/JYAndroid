@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.widget;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
@@ -33,9 +34,16 @@ public class NotifyingScrollView extends ScrollView{
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-        if(mOnScrollChangeListener != null){
+        if(mOnScrollChangeListener != null && Math.abs(t - oldt) < 20){
+            super.onScrollChanged(l, t, oldl, oldt);
             mOnScrollChangeListener.onScrollChanged(this, l, t, oldl, oldt);
         }
+    }
+
+
+    @Override
+    protected int computeScrollDeltaToGetChildRectOnScreen(Rect rect) {
+//        return super.computeScrollDeltaToGetChildRectOnScreen(rect);
+        return 0;
     }
 }

@@ -3,7 +3,9 @@ package com.jiayantech.jyandroid.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 /**
@@ -27,17 +29,29 @@ public class AdaptWebView extends WebView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         getScrollView(this);
-        int height = mScrollView.getBottom() - getTop();
         int measuredHeight = getMeasuredHeight();
+        if(measuredHeight > 0) {
+            int top = getTop();
+            int height = mScrollView.getBottom() - getTop();
 
-        if (measuredHeight < height) {
-            measuredHeight = height;
+            if (measuredHeight < height) {
+                measuredHeight = height;
+            }
+            // 重设高度
+            setMeasuredDimension(getMeasuredWidth(), measuredHeight);
         }
-        // 重设高度
-        setMeasuredDimension(getMeasuredWidth(), measuredHeight);
     }
 
     private ScrollView mScrollView;
+    private FrameLayout mFrameLayout;
+
+    private void getFrameLayout(ViewGroup view){
+        if(!(view.getChildAt(0) instanceof FrameLayout)){
+            getFrameLayout((ViewGroup)view.getChildAt(0));
+        }else{
+
+        }
+    }
 
     private void getScrollView(View view) {
         if (mScrollView == null) {
