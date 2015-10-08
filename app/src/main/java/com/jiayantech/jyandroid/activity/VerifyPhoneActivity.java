@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
@@ -16,6 +17,8 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 健兴 on 2015/7/22.
@@ -56,6 +59,8 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
         btn_verify = (Button) findViewById(R.id.btn_submit);
 
         btn_verify.setText(R.string.verify);
+
+        mSendCodeTimer = new VerifyPhoneActivity.SendCodeTimer(txt_send_verify_code);
     }
 
     protected void setViewsContent() {
@@ -73,6 +78,14 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSendCodeTimer != null) mSendCodeTimer.cancel();
+    }
+
+    private VerifyPhoneActivity.SendCodeTimer mSendCodeTimer;
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send_verify_code:
@@ -81,12 +94,21 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     ToastUtil.showMessage(R.string.hint_input_phone);
                     return;
                 }
-                UserBiz.sendPhoneCode(phoneNum, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
+                txt_send_verify_code.setEnabled(false);
+                boolean requireNotExist = type == TYPE_UPDATE_PHONE || type == TYPE_REGISTER;
+                UserBiz.sendPhoneCode(phoneNum, requireNotExist, new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
                     @Override
                     public void onResponse(AppResponse<HashMap<String, String>> response) {
                         super.onResponse(response);
                         ToastUtil.showMessage(R.string.msg_sent_phone_code);
                         phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
+                        mSendCodeTimer.schedule();
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        txt_send_verify_code.setEnabled(true);
                     }
                 });
                 break;
@@ -159,6 +181,52 @@ public class VerifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     });
                 }
                 break;
+        }
+    }
+
+    public static class SendCodeTimer {
+        private int second;
+        private TextView mTextView;
+        private Timer mTimer;
+        private TimerTask task;
+
+        public SendCodeTimer(TextView textView) {
+            mTextView = textView;
+        }
+
+        public void schedule() {
+            cancel();
+            mTimer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    mTextView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            second--;
+                            if (second > 0) {
+                                mTextView.setText(mTextView.getContext().getString(R.string.send_verify_code) + "(" + second + ")");
+                            } else {
+                                mTextView.setText(R.string.send_verify_code);
+                                mTextView.setEnabled(true);
+                                cancel();
+                            }
+                        }
+                    });
+                }
+            };
+            second = 60;
+            mTextView.setEnabled(false);
+            mTextView.setText(mTextView.getContext().getString(R.string.send_verify_code) + "(" + second + ")");
+            mTimer.schedule(task, 1000, 1000);
+        }
+
+        public void cancel() {
+            if (mTimer != null) {
+                mTimer.cancel();
+                mTimer = null;
+                task = null;
+            }
         }
     }
 }
