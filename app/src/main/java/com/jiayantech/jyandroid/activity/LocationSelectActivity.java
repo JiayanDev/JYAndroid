@@ -58,6 +58,7 @@ public class LocationSelectActivity extends BaseActivity{
         intent.putExtra("province", mProvince);
         intent.putExtra("city", mCity);
         setResult(Activity.RESULT_OK, intent);
+
         finish();
     }
 }

@@ -48,6 +48,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         if (!enablePaging) setNoMore();
     }
 
+
     protected void setParams(BaseSimpleModelAdapter<T> adapter, String action) {
         setParams(adapter, action, null);
     }
@@ -267,6 +268,14 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     public void setRefreshing(boolean refreshing) {
         ultimateRecyclerView.setRefreshing(refreshing);
+    }
+
+    public List<T> getList(){
+        return mAdapter.getList();
+    }
+
+    public void refreshItem(){
+        mAdapter.notifyDataSetChanged();
     }
 
 }

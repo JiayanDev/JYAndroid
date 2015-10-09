@@ -21,6 +21,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
@@ -65,6 +66,11 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             mToolbarBackgroundDrawable.setCallback(mDrawableCallback);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -153,9 +159,6 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
             @Override
             public void execute(final JsCallShowHeader data) {
                 if (data.data.avatar != null) {
-                    //BitmapBiz.display(mImgAvatar, data.data.avatar);
-//                    mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
-//                            BitmapUtil.doBlur(BitmapBiz.getBitmap(data.data.avatar), 50, false)));
                     BitmapBiz.loadImage(data.data.avatar, new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response,
@@ -191,12 +194,10 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
             }
         });
 
-//        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_HIDE_LOADING,
-//                BaseJsCall.class) {
-//            @Override
-//            public void execute(BaseJsCall data) {
-//                if()
-//            }
-//        });
+    }
+
+    public void onEvent(AddPostFinishEvent event) {
+        callJsMethod(JsNativeBiz.JS_METHOD_G_REFRESH_TIMELINE, null);
+        mScrollView.smoothScrollTo(0, 0);
     }
 }

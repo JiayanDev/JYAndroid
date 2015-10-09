@@ -14,6 +14,7 @@ import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
+import com.jiayantech.jyandroid.eventbus.PostStatusChangedEvent;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.commons.DividerItemDecoration;
@@ -24,6 +25,8 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/6/25.
@@ -71,6 +74,8 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
         //initHeaderView(headerView);
         setHeader(R.layout.layout_topic);
         registerReceivers();
+
+        EventBus.getDefault().register(this);
     }
 
     private void initHeaderView(View headerView) {
@@ -91,16 +96,6 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
             }
         });
 
-//        final CategoryGridView2 gridView2 = (CategoryGridView2) headerView.findViewById(R.id.grid_category);
-//        gridView2.setAdapter(new CategoryAdapter2());
-//        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), PostActivity.class);
-//                intent.putExtra(PostListFragment.EXTRA_CATEGORY, gridView2.getAdapter().getItemId(position));
-//                getActivity().startActivity(intent);
-//            }
-//        });
     }
 
     private void registerReceivers() {
@@ -118,7 +113,19 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     public void onDestroy() {
         super.onDestroy();
         mBroadcastHelper.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
+    public void onEvent(PostStatusChangedEvent event) {
+        List<Post> list = getList();
+        for (Post post : list) {
+            if(post.id == event.postId){
+                post.commentCount += event.addComment;
+                post.likeCount += event.like;
+            }
+        }
+
+        refreshItem();
+    }
 
 }

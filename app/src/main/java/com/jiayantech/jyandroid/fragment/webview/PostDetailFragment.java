@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.biz.PostBiz;
+import com.jiayantech.jyandroid.eventbus.PostStatusChangedEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseNativeResponse;
 import com.jiayantech.jyandroid.model.web.JsCallPostDetail;
@@ -27,6 +28,8 @@ import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -82,19 +85,23 @@ public class PostDetailFragment extends WebViewFragment {
 
     @Override
     protected String onSetTitle() {
-        return null;
+        if (mType.equals(WebConstans.Type.TYPE_DIARY)) {
+            return "日记详情";
+        } else {
+            return "话题详情";
+        }
     }
 
     @Override
     protected View onBindBottomLayout(LayoutInflater inflater) {
-        if(mType == WebConstans.Type.TYPE_DIARY) {
-            getActivity().setTitle("日记详情");
-        }else{
-            getActivity().setTitle("话题详情");
-        }
+//        if (mType == WebConstans.Type.TYPE_DIARY) {
+//            getActivity().setTitle("日记详情");
+//        } else {
+//            getActivity().setTitle("话题详情");
+//        }
 
         mBottomView = inflater.inflate(R.layout.layout_post_detail_bottom0, null);
-        mSendBtn= (ImageButton) mBottomView.findViewById(R.id.button_send);
+        mSendBtn = (ImageButton) mBottomView.findViewById(R.id.button_send);
         mContentEdit = (EditText) mBottomView.findViewById(R.id.edit_comment);
         mLikeBtn = (ImageButton) mBottomView.findViewById(R.id.button_like);
 
@@ -104,10 +111,10 @@ public class PostDetailFragment extends WebViewFragment {
                 PostBiz.like(String.valueOf(mId), hasLike, new ResponseListener<AppResponse>() {
                     @Override
                     public void onResponse(AppResponse response) {
-                        if(hasLike) {
+                        if (hasLike) {
                             ToastUtil.showMessage("取消点赞成功");
                             mLikeBtn.setImageResource(R.mipmap.icon_has_not_like);
-                        }else{
+                        } else {
                             ToastUtil.showMessage("点赞成功");
                             mLikeBtn.setImageResource(R.mipmap.icon_has_like);
                         }
@@ -121,6 +128,13 @@ public class PostDetailFragment extends WebViewFragment {
                         result.data.hasLike = hasLike;
 
                         callJsMethod(JsNativeBiz.JS_METHOD_G_SWITCH_LIKE, result.toString());
+
+                        PostStatusChangedEvent event = new PostStatusChangedEvent();
+                        event.postId = mId;
+                        event.like = hasLike ? 1 : -1;
+                        event.addComment = 0;
+                        EventBus.getDefault().post(event);
+
                     }
                 });
             }
@@ -129,44 +143,48 @@ public class PostDetailFragment extends WebViewFragment {
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mContentEdit.getText().toString().length() < 5){
+                if (mContentEdit.getText().toString().length() < 5) {
                     ToastUtil.showMessage("字数不足5字");
                     return;
                 }
                 PostBiz.comment(mReplyId, mReplyType, mContentEdit.getText().toString(),
                         new ResponseListener<AppResponse<BaseModel>>() {
-                    @Override
-                    public void onResponse(AppResponse<BaseModel> response) {
-                        ToastUtil.showMessage("回复成功");
+                            @Override
+                            public void onResponse(AppResponse<BaseModel> response) {
+                                ToastUtil.showMessage("回复成功");
 
-                        PostComment postComment = new PostComment();
-                        postComment.content = mContentEdit.getText().toString();
-                        postComment.createTime = System.currentTimeMillis() / 1000;
-                        postComment.subject = mReplyType;
-                        postComment.subjectId = mReplyId;
-                        postComment.id = response.data.id;
-                        postComment.toUserName = mReplyTo;
-                        onCommentFinish(postComment);
+                                PostComment postComment = new PostComment();
+                                postComment.content = mContentEdit.getText().toString();
+                                postComment.createTime = System.currentTimeMillis() / 1000;
+                                postComment.subject = mReplyType;
+                                postComment.subjectId = mReplyId;
+                                postComment.id = response.data.id;
+                                postComment.toUserName = mReplyTo;
+                                onCommentFinish(postComment);
 
-                        mContentEdit.setText("");
-                        mContentEdit.clearFocus();
-                        UIUtil.hideSoftKeyboard(getActivity());
-                    }
-                });
+                                mContentEdit.setText("");
+                                mContentEdit.clearFocus();
+                                UIUtil.hideSoftKeyboard(getActivity());
+
+                                PostStatusChangedEvent event = new PostStatusChangedEvent();
+                                event.addComment = 1;
+                                event.postId = mId;
+                                EventBus.getDefault().post(event);
+                            }
+                        });
             }
         });
 
         mContentEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     onGetFocus();
-                }else{
+                } else {
                     onLoseFocus();
                 }
             }
         });
-
 
 
         return mBottomView;
@@ -182,20 +200,20 @@ public class PostDetailFragment extends WebViewFragment {
         return null;
     }
 
-    private void onLoseFocus(){
+    private void onLoseFocus() {
         LogUtil.i(TAG, "EditText lost focus");
         mSendBtn.setVisibility(View.GONE);
         mLikeBtn.setVisibility(View.VISIBLE);
     }
 
-    private void onGetFocus(){
+    private void onGetFocus() {
         LogUtil.i(TAG, "EditText get focus");
         mSendBtn.setVisibility(View.VISIBLE);
         mLikeBtn.setVisibility(View.GONE);
         UIUtil.showSoftKeyBoard(getActivity(), mContentEdit);
     }
 
-    private void onGetFocus(long id, String toUser){
+    private void onGetFocus(long id, String toUser) {
         onGetFocus();
         mReplyId = id;
         mReplyTo = toUser;
@@ -218,9 +236,9 @@ public class PostDetailFragment extends WebViewFragment {
             @Override
             public void execute(JsCallReply d) {
                 JsCallReply data = d;
-                if(data.data.toUserId == 0){
+                if (data.data.toUserId == 0) {
                     onGetFocus();
-                }else {
+                } else {
                     mReplyId = d.data.subjectId;
                     mReplyType = d.data.subject;
                     mReplyTo = d.data.toUserName;
@@ -236,13 +254,14 @@ public class PostDetailFragment extends WebViewFragment {
         //Js传递PostDetail
         client.addActionListener(new WebActionListener<JsCallPostDetail>(
                 JsNativeBiz.ACTION_POST_DETAIL_DATA,
-                new TypeToken<JsCallPostDetail>(){}.getType()) {
+                new TypeToken<JsCallPostDetail>() {
+                }.getType()) {
             @Override
             public void execute(JsCallPostDetail data) {
                 hasLike = data.data.isLike;
-                if(data.data.isLike){
+                if (data.data.isLike) {
                     mLikeBtn.setImageResource(R.mipmap.icon_has_like);
-                }else{
+                } else {
                     mLikeBtn.setImageResource(R.mipmap.icon_has_not_like);
                 }
             }

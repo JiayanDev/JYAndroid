@@ -149,6 +149,8 @@ public class UmengPushManager {
             case CODE_COMPANY_APPLY_DENY:
                 setUnreadCompanyCount(true);
                 break;
+            default:
+                break;
         }
     }
 
@@ -264,6 +266,5 @@ public class UmengPushManager {
 //        IntentFilter filter = new IntentFilter(PushBroadcastReceiver.ACTION);
 //        applicationContext.registerReceiver(receiver, filter);
     }
-
 
 }

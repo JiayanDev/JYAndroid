@@ -241,6 +241,7 @@
             android:background="@android:color/white"
             android:drawableLeft="@mipmap/icon_mine_setting"
             android:onClick="onClick"
+            android:textSize="15dp"
             android:text="@string/title_mine_setting"/>
 
         <View

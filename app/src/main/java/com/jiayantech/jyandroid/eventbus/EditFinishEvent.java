@@ -12,6 +12,7 @@ public class EditFinishEvent {
     public static final int ACTION_EDIT_PHONE = 5;
     public static final int ACTION_EDIT_PASSWORD = 6;
     public static final int ACTION_EDIT_AVATAR = 7;
+    public static final int ACTION_EDIT_LOCATION = 8;
 
     public int action;
     public String name;
