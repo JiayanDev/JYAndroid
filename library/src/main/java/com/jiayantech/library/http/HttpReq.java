@@ -353,7 +353,7 @@ public class HttpReq<T> extends Request<T> {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             LogUtil.i(TAG, jsonString);
             BaseAppResponse baseAppResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
-            if (mUrl.contains("quick_login")) baseAppResponse.code = CODE_OVERDUE;
+            //if (mUrl.contains("quick_login")) baseAppResponse.code = CODE_OVERDUE;
             if (baseAppResponse.code == CODE_SUCCESS) {
                 T parsedGSON = mGson.fromJson(jsonString, mClassType);
                 if (mToSave) saveCache(jsonString, parsedGSON);
