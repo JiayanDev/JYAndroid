@@ -197,4 +197,6 @@
     <string name="update_success_cellphone">更新手机成功</string>
     <string name="msg_phone_exist">该手机已经被注册！</string>
     <string name="msg_phone_not_exist">该手机还没被注册！</string>
+
+    <string name="msg_publish_diary_success">发表日志成功！</string>
 </resources>

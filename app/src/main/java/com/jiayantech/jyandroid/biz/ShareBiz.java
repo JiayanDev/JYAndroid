@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.biz;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -95,5 +96,11 @@ public class ShareBiz {
                     R.mipmap.ic_app);
             shareToWechat(url, title, bitmap, content, type);
         }
+    }
+
+    public static void shareToQZone(final String url, final String title, String thumbnail,
+                                    final String content, final int type){
+        Bundle bundle = new Bundle();
+
     }
 }

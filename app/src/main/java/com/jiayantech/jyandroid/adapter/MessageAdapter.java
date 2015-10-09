@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
     public static final int TYPE_REPLY = 0;
-    public static final int TYPE_NORMAL = 1;
+    public static final int TYPE_NORMAL = 4; //1、2、3 已经被UltimateRecyclerView占用
     private final Context mContext;
 
     public MessageAdapter(Context context, List<BasePushMessage> list) {
