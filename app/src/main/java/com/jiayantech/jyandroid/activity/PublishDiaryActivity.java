@@ -10,6 +10,12 @@ import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.BaseAppResponse;
+<<<<<<< HEAD
+=======
+import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.TimeUtil;
+import com.jiayantech.library.utils.ToastUtil;
+>>>>>>> a532f94306a960f011981206e62e05b056f4a7d2
 
 import java.util.ArrayList;
 
@@ -115,13 +121,14 @@ public class PublishDiaryActivity extends PublishPostActivity {
     @Override
     protected void onPost(String content) {
         String photoUrls = toString(mImageAdapter.urlList);
-        DiaryBiz.post(content, photoUrls, new SimpleResponseListener<BaseAppResponse>(this) {
+        DiaryBiz.post(content, photoUrls, new ResponseListener<BaseAppResponse>() {
             @Override
             public void onResponse(BaseAppResponse response) {
-                super.onResponse(response);
+                ToastUtil.showMessage("success");
                 BroadcastHelper.send(Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
                 EventBus.getDefault().post(new AddPostFinishEvent());
-                finish();
+                //finish();
+                //finish();
             }
         });
 //        String categoryIds = categoryList.toString();

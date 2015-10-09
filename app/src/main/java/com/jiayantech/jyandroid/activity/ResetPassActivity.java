@@ -8,6 +8,7 @@ import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.library.base.BaseActivity;
@@ -18,6 +19,8 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 健兴 on 2015/7/22.
@@ -59,6 +62,7 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
 
         btn_reset.setText(R.string.confirm_reset);
 
+        mSendCodeTimer = new VerifyPhoneActivity.SendCodeTimer(btn_send_verify_code);
     }
 
     protected void setViewsContent() {
@@ -71,6 +75,15 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
     protected void setViewsListener() {
         btn_reset.setOnClickListener(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSendCodeTimer != null) mSendCodeTimer.cancel();
+    }
+
+    private VerifyPhoneActivity.SendCodeTimer mSendCodeTimer;
+
 
     @Override
     public void onClick(View v) {
@@ -108,13 +121,21 @@ public class ResetPassActivity extends BaseActivity implements View.OnClickListe
                     ToastUtil.showMessage(R.string.hint_input_phone);
                     return;
                 }
-                UserBiz.sendPhoneCode(phoneNum,
+                btn_send_verify_code.setEnabled(false);
+                UserBiz.sendPhoneCode(phoneNum, false,
                         new SimpleResponseListener<AppResponse<HashMap<String, String>>>(_this) {
                             @Override
                             public void onResponse(AppResponse<HashMap<String, String>> response) {
                                 super.onResponse(response);
                                 ToastUtil.showMessage(R.string.msg_sent_phone_code);
                                 phoneCodeResponse = response.data.get(UserBiz.KEY_PHONE_CODE_RESPONSE);
+                                mSendCodeTimer.schedule();
+                            }
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                super.onErrorResponse(error);
+                                btn_send_verify_code.setEnabled(true);
                             }
                         });
                 break;

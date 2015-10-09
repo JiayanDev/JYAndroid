@@ -195,4 +195,6 @@
     <string name="update_success_location">更新地区成功</string>
     <string name="update_success_birthday">更新生日成功</string>
     <string name="update_success_cellphone">更新手机成功</string>
+    <string name="msg_phone_exist">该手机已经被注册！</string>
+    <string name="msg_phone_not_exist">该手机还没被注册！</string>
 </resources>

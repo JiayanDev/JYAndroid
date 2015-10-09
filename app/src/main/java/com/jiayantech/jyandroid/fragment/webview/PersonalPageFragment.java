@@ -1,5 +1,8 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,12 +25,14 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
 import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
+import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallShowHeader;
 import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.utils.BitmapUtil;
@@ -66,11 +71,21 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             mToolbarBackgroundDrawable.setCallback(mDrawableCallback);
         }
+
+        mBroadcastHelper.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                callJsMethod(JsNativeBiz.JS_METHOD_G_REFRESH_TIMELINE, null);
+            }
+        }, Broadcasts.ACTION_PUBLISH_TOPIC, Broadcasts.ACTION_PUBLISH_DIARY, Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
     }
+
+    private BroadcastHelper mBroadcastHelper = new BroadcastHelper();
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mBroadcastHelper.onDestroy();
     }
 
     @Override
@@ -164,7 +179,7 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                         public void onResponse(ImageLoader.ImageContainer response,
                                                boolean isImmediate) {
                             Bitmap bitmap = response.getBitmap();
-                            if(bitmap != null) {
+                            if (bitmap != null) {
                                 mImgAvatar.setImageBitmap(bitmap);
                                 mBgLayout.setBackgroundDrawable(new BitmapDrawable(getResources(),
                                         BitmapUtil.doBlur(bitmap, 50, false)));

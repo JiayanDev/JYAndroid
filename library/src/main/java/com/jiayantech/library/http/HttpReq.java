@@ -160,9 +160,12 @@ public class HttpReq<T> extends Request<T> {
 
         @Override
         public void onErrorResponse(VolleyError error) {
+            mResponseListener.onErrorResponse(error);
             if (error instanceof OverdueError) {
                 OverdueError overdueError = (OverdueError) error;
-                BaseApplication.getContext().onOverdue(overdueError.mHttpReq);
+                if (overdueError.mHttpReq != null) {
+                    BaseApplication.getContext().onOverdue(overdueError.mHttpReq);
+                }
                 return;
 //            } else if (error instanceof MsgError) {
 //            } else if (error instanceof NetworkError) {
@@ -172,7 +175,6 @@ public class HttpReq<T> extends Request<T> {
 //            } else if (error instanceof NoConnectionError) {
 //            } else if (error instanceof TimeoutError) {
             }
-            mResponseListener.onErrorResponse(error);
             Toast.makeText(BaseApplication.getContext(), toErrorString(error), Toast.LENGTH_SHORT).show();
         }
     }
@@ -203,6 +205,10 @@ public class HttpReq<T> extends Request<T> {
         public OverdueError(int code, String msg, HttpReq httpReq) {
             super(code, msg);
             mHttpReq = httpReq;
+        }
+
+        public void clear() {
+            mHttpReq = null;
         }
     }
 
@@ -347,6 +353,7 @@ public class HttpReq<T> extends Request<T> {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             LogUtil.i(TAG, jsonString);
             BaseAppResponse baseAppResponse = mGson.fromJson(jsonString, BaseAppResponse.class);
+            //if (mUrl.contains("quick_login")) baseAppResponse.code = CODE_OVERDUE;
             if (baseAppResponse.code == CODE_SUCCESS) {
                 T parsedGSON = mGson.fromJson(jsonString, mClassType);
                 if (mToSave) saveCache(jsonString, parsedGSON);

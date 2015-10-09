@@ -11,6 +11,7 @@ import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
+import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.comm.ConfigManager;
 import com.jiayantech.library.comm.MD5;
@@ -21,6 +22,8 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.umeng_push.UmengPushManager;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +65,7 @@ public class UserBiz {
     private static final String ACTION_HAS_PSW = MODEL + "/has/psw";
     private static final String ACTION_FEEDBACK = MODEL + "/feedback";
     private static final String ACTION_RESET_PASS = MODEL + "/reset/psw";
+    private static final String ACTION_PHONE_EXIST = MODEL + "/phone/exist";
 
     private static final String ACTION_UPDATE_PASS = ACTION_UPDATE + "/psw";
 
@@ -116,8 +120,32 @@ public class UserBiz {
         HttpReq.post(ACTION_REGISTER, params, l);
     }
 
-    public static void sendPhoneCode(String phoneNum, ResponseListener<?> l) {
-        HttpReq.get(ACTION_PHONE_SEND_CODE, HttpReq.getInitParams(KEY_PHONE, phoneNum), l);
+    public static void sendPhoneCode(final String phoneNum, final boolean requireNotExist, final ResponseListener<?> l) {
+        phoneExist(phoneNum, new ResponseListener<AppResponse>() {
+            @Override
+            public void onResponse(AppResponse response) {
+                if (response.data instanceof Map) {
+                    Boolean exist = (Boolean) ((Map) response.data).get("exist");
+                    if (exist != null && exist) {
+                        if (requireNotExist) {
+                            String msg = BaseApplication.getContext().getString(R.string.msg_phone_exist);
+                            ToastUtil.showMessage(msg);
+                            l.onErrorResponse(new VolleyError(msg));
+                            return;
+                        }
+                        HttpReq.get(ACTION_PHONE_SEND_CODE, HttpReq.getInitParams(KEY_PHONE, phoneNum), l);
+                    } else {
+                        if (!requireNotExist) {
+                            String msg = BaseApplication.getContext().getString(R.string.msg_phone_not_exist);
+                            ToastUtil.showMessage(msg);
+                            l.onErrorResponse(new VolleyError(msg));
+                            return;
+                        }
+                        HttpReq.get(ACTION_PHONE_SEND_CODE, HttpReq.getInitParams(KEY_PHONE, phoneNum), l);
+                    }
+                }
+            }
+        });
     }
 
     public static void confirmPhoneCode(String phoneCodeResponse, String code, ResponseListener<?> l) {
@@ -265,6 +293,10 @@ public class UserBiz {
         Map<String, String> params = HttpReq.getInitParams("content", content);
         HttpReq.putParams(params, "contact", contact, "");
         HttpReq.post(ACTION_FEEDBACK, params, l);
+    }
+
+    public static void phoneExist(String phoneNum, ResponseListener<?> l) {
+        HttpReq.get(ACTION_PHONE_EXIST, HttpReq.getInitParams("phoneNum", phoneNum), l);
     }
 
     /**
