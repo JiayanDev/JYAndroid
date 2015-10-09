@@ -280,4 +280,5 @@ public class PostDetailFragment extends WebViewFragment {
         super.onResume();
         //ToastUtil.showMessage(String.format("PostDetail Id is %d", mId));
     }
+
 }

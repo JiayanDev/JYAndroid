@@ -135,14 +135,7 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                         ((BaseActivity) getActivity()).getSupportActionBar().getHeight();
                 final float ratio = (float) Math.min(Math.max(t, 0), headerHeight) / headerHeight;
                 final int newAlpha = (int) (ratio * 255);
-//                LogUtil.i("PersonalPageFragment", "headerHeight is: " +
-//                        headerHeight + " ratio is " + ratio + " newAlpha is " + newAlpha);
                 mToolbarBackgroundDrawable.setAlpha(newAlpha);
-//                if(newAlpha == 255){
-//                    getView().findViewById(R.id.toolbar_divider).setVisibility(View.VISIBLE);
-//                }else{
-//                    mView.findViewById(R.id.toolbar_divider).setVisibility(View.GONE);
-//                }
             }
         });
         return headerView;

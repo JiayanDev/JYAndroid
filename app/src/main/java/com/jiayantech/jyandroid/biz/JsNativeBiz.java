@@ -25,6 +25,7 @@ public class JsNativeBiz {
     public static final String ACTION_SHOW_USER_PROFILE_HEADER = "showUserProfileHeader";
     public static final String ACTION_POST_DETAIL_DATA = "postDetailData";
     public static final String ACTION_ADD_POST = "addPost";
+    public static final String ACTION_GET_SHARE_INFO = "getShareInfo";
 
     public static final String JS_METHOD_G_renderPostComment = "G_renderPostComment";
     public static final String JS_METHOD_G_SHOW_ADD_POST_BUTTON = "G_showAddPostButton";

@@ -3,7 +3,6 @@ package com.jiayantech.jyandroid.fragment.banner;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 /**
  * Created by liangzili on 15/6/29.

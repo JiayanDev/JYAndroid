@@ -3,12 +3,15 @@ package com.jiayantech.jyandroid.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
+import com.jiayantech.jyandroid.activity.WebViewActivityOverlay;
+import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.AdaptiveGridView;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -53,6 +56,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
     }
 
     public class ViewHolder extends BaseSimpleModelAdapter.ViewHolder<Post> {
+        public long id;
+
         public Context mContext;
         public ImageView mAvatar;
         public TextView mUsername;
@@ -84,6 +89,14 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mDate = (TextView) itemView.findViewById(R.id.txt_date);
 
             mPhotoAdapter = new PhotoAdapter(mContext);
+
+            mAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebViewActivityOverlay.launchActivity(mContext, id,
+                            WebConstans.Type.TYPE_PERSONAL_PAGE);
+                }
+            });
         }
 
         @Override
@@ -93,6 +106,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             } else {
                 BitmapBiz.display(mAvatar, item.avatar, 150);
             }
+
+            id = item.userId;
 
             mUsername.setText(String.valueOf(item.userName));
             mContent.setText(item.content);
