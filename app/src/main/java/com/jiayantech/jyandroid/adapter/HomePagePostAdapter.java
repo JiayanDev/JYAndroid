@@ -104,7 +104,8 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
                 txt_status.setText(R.string.event_recruit);
             } else {
                 txt_status.setBackgroundResource(R.drawable.bg_event_status_finish);
-                txt_status.setText(R.string.event_finish);
+                //txt_status.setText(R.string.event_finish);
+                txt_status.setText(item.status);
             }
             BitmapBiz.display(img_doctor, item.doctorAvatar);
             txt_doctor.setText(item.doctorName + " " + item.doctorTitle);

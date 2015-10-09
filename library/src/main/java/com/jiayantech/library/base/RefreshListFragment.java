@@ -87,11 +87,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         mIsLoading = true;
         Map<String, String> page = null;
         final int size = mAdapter.getList().size();
-        if (0 != size && enablePaging) {
-            String sinceId = String.valueOf(mAdapter.getList().get(0).id);
-            page = new ArrayMap<>();
-            page.put(REFRESH_ID, sinceId);
-        }
+//        if (0 != size && enablePaging) {
+//            String sinceId = String.valueOf(mAdapter.getList().get(0).id);
+//            page = new ArrayMap<>();
+//            page.put(REFRESH_ID, sinceId);
+//        }
         HttpReq.get(mAction, mParams, page, size == 0, true, mType, new ResponseListener<ResponseT>() {
             private List<T> mCacheList;
 
@@ -104,9 +104,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onResponse(ResponseT response) {
-                if (!enablePaging) {
-                    mAdapter.clear();
-                }
+                //if (!enablePaging) {
+                mAdapter.clear();
+                //}
                 mAdapter.addNew(response.data);
                 onFinal();
                 onRefreshResponse(mAdapter);
@@ -114,7 +114,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (mCacheList != null && enablePaging) mAdapter.addNew(mCacheList);
+                //if (mCacheList != null && enablePaging) mAdapter.addNew(mCacheList);
+                if (mCacheList != null) {
+                    mAdapter.addNew(mCacheList);
+                    mCacheList = null;
+                }
                 onFinal();
             }
 
