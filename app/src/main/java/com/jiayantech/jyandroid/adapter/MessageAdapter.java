@@ -15,6 +15,7 @@ import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.TimeUtil;
+import com.jiayantech.library.utils.Utils;
 import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.umeng_push.model.BasePushMessage;
 import com.jiayantech.umeng_push.model.JumpToPageData;
@@ -37,7 +38,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
 
     @Override
     public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        return new ReplyViewHolder(viewGroup, R.layout.item_message_normal, this);
+        return new NormalViewHolder(viewGroup, R.layout.item_message_normal, this);
     }
 
     @Override
@@ -81,8 +82,10 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         @Override
         public void onBind(BasePushMessage item, int position) {
             super.onBind(item, position);
-            mTxtType.setText("回复了我的" + convertType(item.subject));
+            mTxtType.setText(mContext.getResources().getString(R.string.msg_reply,
+                    convertType(item.subject)));
             mTxtReplyContent.setText(item.subjectContent);
+            mTxtContent.setText(item.commentContent);
         }
     }
 
@@ -91,7 +94,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         private ImageView mImageAvatar;
         private TextView mTxtUsername;
         private TextView mTxtDate;
-        private TextView mTxtContent;
+        protected TextView mTxtContent;
 
         private String action;
         private long id;
@@ -108,41 +111,52 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         @Override
         public void onBind(BasePushMessage item, int position) {
             super.onBind(item, position);
-            JumpToPageData data = null;
-            try {
-                data = GsonUtils.build().fromJson((String)item.data, JumpToPageData.class);
-            } catch (JsonSyntaxException e) {
-                e.printStackTrace();
-            }
-            if (data != null) {
-                action = data.page;
-                id = data.id;
+            if (item.action == null || item.action.equals(UmengPushManager.ACTION_JUMP_TO_PAGE)) {
+                //跳转到activity web页面
+                JumpToPageData data = null;
+                try {
+                    data = GsonUtils.build().fromJson((String) item.data, JumpToPageData.class);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+                if (data != null) {
+                    action = data.page;
+                    id = data.id;
+                } else {
+                    action = item.action;
+                }
             } else {
+                //跳转到web页面
+                String data = (String) item.data;
                 action = item.action;
+                url = data;
             }
             itemView.setOnClickListener(this);
-
             BitmapBiz.display(mImageAvatar, item.fromUserAvatar);
             mTxtUsername.setText(item.fromUserName);
             mTxtDate.setText(TimeUtil.stamp2MonthDay((long) item.createTime * 1000));
-            mTxtContent.setText(item.commentContent);
+            mTxtContent.setText(item.msg);
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = UmengPushManager.getInstance().createActionIntent(action, id, url);
-            if (intent != null) {
-                mContext.startActivity(intent);
+            if (url != null) {
+                Utils.openBrowser(mContext, url);
+            } else {
+                Intent intent = UmengPushManager.getInstance().createActionIntent(action, id, url);
+                if (intent != null) {
+                    mContext.startActivity(intent);
+                }
             }
         }
     }
 
-    public  String convertType(String type){
+    public String convertType(String type) {
         @StringRes int stringId;
-        if(type == null){
+        if (type == null) {
             return mContext.getResources().getString(R.string.message_type_default);
         }
-        switch (type){
+        switch (type) {
             case "comment":
                 stringId = R.string.message_type_comment;
                 break;

@@ -95,6 +95,7 @@ public class UmengPushManager {
     public synchronized void setUnreadNotificationCount(int count) {
         sDataShared.putInt(KEY_UNREAD_NOTIFICATION, count);
         mUnreadNotification = count;
+        mUnreadMessageList.clear();
         dispatchChange();
     }
 
@@ -132,26 +133,30 @@ public class UmengPushManager {
 
     public void dispatch(BasePushMessage message) {
         LogUtil.i(TAG, "dispatch pushMessage : " + message.action);
-        switch (message.code) {
-            case CODE_DIARY_COMMENTED:
-            case CODE_COMMENT_COMMENTED:
-            case CODE_PUSH_AD:
-                int notification = sDataShared.getInt(KEY_UNREAD_NOTIFICATION);
-                setUnreadNotificationCount(notification + 1);
-                UnreadMessage msg = UnreadMessage.createUnreadMessage(message);
-                mUnreadMessageList.add(msg);
-                break;
-            case CODE_ANGEL_APPLY_ACCEPT:
-            case CODE_ANGEL_APPLY_DENY:
-                setUnreadAngelCount(true);
-                break;
-            case CODE_COMPANY_APPLY_ACCEPT:
-            case CODE_COMPANY_APPLY_DENY:
-                setUnreadCompanyCount(true);
-                break;
-            default:
-                break;
-        }
+        int notification = sDataShared.getInt(KEY_UNREAD_NOTIFICATION);
+        setUnreadNotificationCount(notification + 1);
+        UnreadMessage msg = UnreadMessage.createUnreadMessage(message);
+        mUnreadMessageList.add(msg);
+//        switch (message.code) {
+//            case CODE_DIARY_COMMENTED:
+//            case CODE_COMMENT_COMMENTED:
+//            case CODE_PUSH_AD:
+//                int notification = sDataShared.getInt(KEY_UNREAD_NOTIFICATION);
+//                setUnreadNotificationCount(notification + 1);
+//                UnreadMessage msg = UnreadMessage.createUnreadMessage(message);
+//                mUnreadMessageList.add(msg);
+//                break;
+//            case CODE_ANGEL_APPLY_ACCEPT:
+//            case CODE_ANGEL_APPLY_DENY:
+//                setUnreadAngelCount(true);
+//                break;
+//            case CODE_COMPANY_APPLY_ACCEPT:
+//            case CODE_COMPANY_APPLY_DENY:
+//                setUnreadCompanyCount(true);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     public void decUnread(String action, long id, String url){
@@ -252,6 +257,8 @@ public class UmengPushManager {
         mUnreadCompany = sDataShared.getBoolean(KEY_UNREAD_MY_COMPANY);
         mUnreadAngel = sDataShared.getBoolean(KEY_UNREAD_MY_ANGEL);
         mUmengPushConfig = config;
+
+        dispatchChange();
 
         //重写友盟自定义行为处理
         PushAgent.getInstance(applicationContext).setNotificationClickHandler(

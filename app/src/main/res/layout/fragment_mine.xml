@@ -101,10 +101,21 @@
                     android:textColor="@color/text_normal_color"
                     android:textSize="15dp"/>
 
-                <TextView
-                    android:id="@+id/txt_unread_notification"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_unread_notification"-->
+                    <!--android:layout_width="17dp"-->
+                    <!--android:layout_height="17dp"-->
+                    <!--android:layout_marginRight="13dp"-->
+                    <!--android:background="@drawable/shape_unread"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="20"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="10sp"/>-->
+                <ImageView
+                    android:id="@+id/unread_notification"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
                     android:layout_marginRight="13dp"
                     android:background="@drawable/shape_unread"
                     android:gravity="center"
@@ -166,6 +177,7 @@
                 android:background="@drawable/shape_unread"
                 android:gravity="center"
                 android:text="20"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"/>
 
@@ -218,6 +230,7 @@
                 android:gravity="center"
                 android:text="20"
                 android:textColor="@android:color/white"
+                android:visibility="gone"
                 android:textSize="10sp"/>
 
             <ImageView

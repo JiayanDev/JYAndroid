@@ -181,23 +181,30 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void onPicGet(String path, Bitmap bitmap) {
+//        mImageAdapter.addImage(bitmap);
+//        mImageAdapter.resetViewHeight(recycler_view, spanCount);
+//        mSelectPath
+        if(mSelectPath == null){
+            mSelectPath = new ArrayList<>();
+        }
+        mSelectPath.add(path);
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-        showProgressDialog();
-        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
-                new ResponseListener<ImageUploadResp>() {
-                    @Override
-                    public void onResponse(ImageUploadResp o) {
-                        dismissProgressDialog();
-                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dismissProgressDialog();
-                        super.onErrorResponse(error);
-                    }
-                });
+//        showProgressDialog();
+//        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
+//                new ResponseListener<ImageUploadResp>() {
+//                    @Override
+//                    public void onResponse(ImageUploadResp o) {
+//                        dismissProgressDialog();
+//                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
+//                    }
+//
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        dismissProgressDialog();
+//                        super.onErrorResponse(error);
+//                    }
+//                });
     }
 
 
@@ -206,7 +213,9 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         if (position == mImageAdapter.getItemCount() - 1) {
             showUploadDialog();
         } else {
-            mImageAdapter.urlList.remove(position);
+            if(mImageAdapter.urlList.size() > position) {
+                mImageAdapter.urlList.remove(position); //urlList有可能未上传完成
+            }
             mImageAdapter.remove(position);
             mImageAdapter.resetViewHeight(recycler_view, spanCount);
         }
@@ -258,7 +267,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             public void onClick(View v) {
                 dialog.dismiss();
                 new PicGetter(PublishPostActivity.this, getActivityResultHelper(),
-                        PublishPostActivity.this).startCamera();
+                        PublishPostActivity.this).startCropCamera();
             }
         });
         itemsLayout.addMenuItem(getString(R.string.take_photo)).setOnClickListener(new View.OnClickListener() {
@@ -311,15 +320,13 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     public void onPicGets() {
         ArrayList<Bitmap> mSelectBitmap = new ArrayList<>();
+        mImageAdapter.removeAll();
         for (String p : mSelectPath) {
             Bitmap bitmap = PicGetter.decodeBitmapFromPath(p);
             mSelectBitmap.add(bitmap);
             mImageAdapter.addImage(bitmap);
         }
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-        //showProgressDialog();
-        //finish();
-        //uploadImage(0);
     }
 
     public void uploadImage(final int index) {

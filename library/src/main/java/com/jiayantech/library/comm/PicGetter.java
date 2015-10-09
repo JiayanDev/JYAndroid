@@ -83,6 +83,7 @@ public class PicGetter {
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
     public void startCamera() {
+
         final Uri uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
         if (uri != null) {
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

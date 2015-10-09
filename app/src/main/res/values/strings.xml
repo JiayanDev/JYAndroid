@@ -199,4 +199,6 @@
     <string name="msg_phone_not_exist">该手机还没被注册！</string>
 
     <string name="msg_publish_diary_success">发表日志成功！</string>
+
+    <string name="msg_reply">回复了我的%s</string>
 </resources>
