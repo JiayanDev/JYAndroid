@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.model.Topic;
@@ -22,7 +23,7 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 /**
  * Created by liangzili on 15/6/29.
  */
-public class BannerFragment extends Fragment{
+public class BannerFragment extends Fragment {
     private static int BANNER_SCROLL_INTERVAL = 2000;
 
     private Context mContext;
@@ -37,8 +38,8 @@ public class BannerFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_banner, container, false);
-        mAutoScrollViewPager = (BannerViewPager)view.findViewById(R.id.view_pager);
-        mIndicator = (CirclePageIndicator)view.findViewById(R.id.indicator);
+        mAutoScrollViewPager = (BannerViewPager) view.findViewById(R.id.view_pager);
+        mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
 
         return view;
     }
@@ -52,11 +53,11 @@ public class BannerFragment extends Fragment{
 
     }
 
-    public void setBannerList(List<Banner> list){
+    public void setBannerList(List<Banner> list) {
         mBannerList = list;
     }
 
-    private void initBannerList(){
+    private void initBannerList() {
 //        mBannerList = new ArrayList<>();
 //        for(int i = 0; i < BannerUrl.BannerUrls.length; i++){
 //            Banner banner = new Banner();
@@ -66,7 +67,26 @@ public class BannerFragment extends Fragment{
         PostBiz.getTopicList(new ResponseListener<AppResponse<List<Topic>>>() {
             @Override
             public void onResponse(AppResponse<List<Topic>> response) {
-                mBannerList = Banner.createBannerList(response.data);
+                show(response.data);
+            }
+
+            private List<Topic> mCacheList;
+
+            @Override
+            public void onLoadResponse(AppResponse<List<Topic>> response) {
+                mCacheList = response.data;
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mCacheList != null) {
+                    show(mCacheList);
+                    mCacheList = null;
+                }
+            }
+
+            private void show(List<Topic> list) {
+                mBannerList = Banner.createBannerList(list);
                 mAutoScrollViewPager.setAdapter(new BannerPagerAdapter(mContext, mBannerList));
                 mIndicator.setViewPager(mAutoScrollViewPager);
 

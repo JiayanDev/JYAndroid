@@ -34,7 +34,7 @@ public class PostBiz {
     }
 
     public static void getTopicList(ResponseListener<?> l) {
-        HttpReq.get(ACTION_TOPIC_LIST, null, l);
+        HttpReq.get(ACTION_TOPIC_LIST, null, true, true, l);
     }
 
     public static void like(String id, boolean hasLike, ResponseListener<?> l) {
