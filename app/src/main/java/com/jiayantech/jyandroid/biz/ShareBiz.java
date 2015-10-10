@@ -2,11 +2,15 @@ package com.jiayantech.jyandroid.biz;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.app.JYApplication;
 import com.jiayantech.library.http.BitmapBiz;
+import com.jiayantech.library.utils.BitmapUtil;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -27,13 +31,14 @@ public class ShareBiz {
     private static IWXAPI sIWXAPI;
 
 
-    public static void registerToWx(Context context){
+    public static void registerToWx(Context context) {
         sIWXAPI = WXAPIFactory.createWXAPI(context, WECHAT_APP_ID, true);
         sIWXAPI.registerApp(WECHAT_APP_ID);
     }
 
-    public static void shareToWechat(String url, String title, Bitmap thumbnail, int type){
-        if(!sIWXAPI.isWXAppInstalled() || !sIWXAPI.isWXAppSupportAPI()){
+    public static void shareToWechat(String url, String title, Bitmap thumbnail, String content,
+                                     int type) {
+        if (!sIWXAPI.isWXAppInstalled() || !sIWXAPI.isWXAppSupportAPI()) {
             LogUtil.e("Wechat", "Wechat is not installed!");
             ToastUtil.showMessage(R.string.toast_error_wechat_not_install);
             return;
@@ -45,13 +50,16 @@ public class ShareBiz {
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = webpageObject;
         msg.title = title;
-        msg.setThumbImage(thumbnail);
+        msg.description = content;
+        if (thumbnail != null) {
+            msg.setThumbImage(thumbnail);
+        }
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = msg;
 
-        switch (type){
+        switch (type) {
             case WECHAT_SESSION:
                 req.scene = SendMessageToWX.Req.WXSceneSession;
                 break;
@@ -66,13 +74,16 @@ public class ShareBiz {
     }
 
     public static void shareToWechat(final String url, final String title, String thumbnail,
-                                     final int type){
-        if(thumbnail != null){
+                                     final String content, final int type) {
+        if (thumbnail != null) {
             BitmapBiz.loadImage(thumbnail, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     Bitmap bitmap = response.getBitmap();
-                    shareToWechat(url, title, bitmap, type);
+                    if (bitmap != null) {
+                        bitmap = BitmapUtil.resize(bitmap, 240, 240);
+                    }
+                    shareToWechat(url, title, bitmap, content, type);
                 }
 
                 @Override
@@ -80,6 +91,16 @@ public class ShareBiz {
                     ToastUtil.showMessage("读取分享缩略图失败");
                 }
             });
+        }else{
+            Bitmap bitmap = BitmapFactory.decodeResource(JYApplication.getContext().getResources(),
+                    R.mipmap.ic_app);
+            shareToWechat(url, title, bitmap, content, type);
         }
+    }
+
+    public static void shareToQZone(final String url, final String title, String thumbnail,
+                                    final String content, final int type){
+        Bundle bundle = new Bundle();
+
     }
 }

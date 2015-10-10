@@ -16,8 +16,6 @@ import com.jiayantech.library.http.imageupload.FormImage;
 import com.jiayantech.library.http.imageupload.ImageUploadRequest;
 import com.jiayantech.library.utils.LogUtil;
 
-import org.json.JSONObject;
-
 import java.util.Map;
 
 /**
@@ -133,5 +131,12 @@ public class UploadImageBiz {
 
     interface OnGetUploadProofListener {
         void onGetUploadProof(ImageUploadProof proof);
+    }
+
+    public static void clearProof(){
+        PROOF_AVATAR = null;
+        PROOF_DIARY = null;
+        PROOF_TOPIC = null;
+        PROOF_EVENT = null;
     }
 }

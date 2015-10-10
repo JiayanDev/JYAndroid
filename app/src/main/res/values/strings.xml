@@ -188,6 +188,17 @@
     <string name="message_type_topic">话题</string>
     <string name="message_type_event">活动</string>
     <string name="message_type_default">内容</string>
+
+    <string name="update_success_avatar">更新头像成功</string>
+    <string name="update_success_username">更新昵称成功</string>
+    <string name="update_success_gender">更新性别成功</string>
+    <string name="update_success_location">更新地区成功</string>
+    <string name="update_success_birthday">更新生日成功</string>
+    <string name="update_success_cellphone">更新手机成功</string>
     <string name="msg_phone_exist">该手机已经被注册！</string>
     <string name="msg_phone_not_exist">该手机还没被注册！</string>
+
+    <string name="msg_publish_diary_success">发表日志成功！</string>
+
+    <string name="msg_reply">回复了我的%s</string>
 </resources>

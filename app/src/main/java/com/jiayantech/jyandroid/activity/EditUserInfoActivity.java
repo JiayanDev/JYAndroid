@@ -4,6 +4,7 @@ import android.support.v4.util.ArrayMap;
 
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.ToastUtil;
@@ -32,6 +33,9 @@ public class EditUserInfoActivity extends EditActivity {
                     EditFinishEvent event = new EditFinishEvent();
                     event.action = EditFinishEvent.ACTION_EDIT_NAME;
                     event.name = text;
+
+                    AppInitManger.sAppInit.name = text;
+
                     EventBus.getDefault().post(event);
                     finish();
                 }

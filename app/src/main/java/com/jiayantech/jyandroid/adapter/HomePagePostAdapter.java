@@ -6,14 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.model.HomePagePost;
 import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
-import com.jiayantech.library.http.HttpConfig;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.List;
@@ -108,7 +106,11 @@ public class HomePagePostAdapter extends BaseSimpleModelAdapter<HomePagePost> {
                 txt_status.setText(item.status);
             }
             BitmapBiz.display(img_doctor, item.doctorAvatar);
-            txt_doctor.setText(item.doctorName + " " + item.doctorTitle);
+            if (item.doctorTitle == null) {
+                txt_doctor.setText(item.doctorName);
+            }else{
+                txt_doctor.setText(item.doctorName + " " + item.doctorTitle);
+            }
             txt_doctorDesc.setText(item.doctorDesc);
         }
     }

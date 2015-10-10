@@ -2,25 +2,20 @@ package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.DiaryBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
+import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
 import com.jiayantech.jyandroid.model.AppInit;
-import com.jiayantech.library.base.BaseModel;
-import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.helper.BroadcastHelper;
-import com.jiayantech.library.helper.DateTimeHelper;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by janseon on 2015/7/2.
@@ -125,8 +120,10 @@ public class PublishDiaryActivity extends PublishPostActivity {
         DiaryBiz.post(content, photoUrls, new ResponseListener<BaseAppResponse>() {
             @Override
             public void onResponse(BaseAppResponse response) {
-                ToastUtil.showMessage("success");
+                ToastUtil.showMessage(R.string.msg_publish_diary_success);
                 BroadcastHelper.send(Broadcasts.ACTION_PUBLISH_DIARY_BOOK);
+                EventBus.getDefault().post(new AddPostFinishEvent());
+                //finish();
                 //finish();
             }
         });

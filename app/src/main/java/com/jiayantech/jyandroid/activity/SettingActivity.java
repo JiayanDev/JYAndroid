@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
+import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.commons.AppDialogUtils;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.manager.AppInitManger;
@@ -78,6 +79,8 @@ public class SettingActivity extends BaseActivity {
                                 dismissProgressDialog();
                                 //((MainActivity) getActivity()).onCheckedChanged(null, R.id.radio_activity);
                                 ActivityResult.onFinishResult(SettingActivity.this);
+                                //用户退出后清空图片上传的policy和signature
+                                UploadImageBiz.clearProof();
                             }
                         });
                     }

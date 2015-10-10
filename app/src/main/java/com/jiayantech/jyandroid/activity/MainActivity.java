@@ -154,19 +154,24 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     public void onEvent(UnreadMessageEvent event) {
-        LogUtil.i(TAG, "handling UnreadMessageEvent");
-        if (event.unreadNotificaition > 0) {
-            mTextUnreadCount.setVisibility(View.VISIBLE);
-            mImageUnreadDot.setVisibility(View.INVISIBLE);
-            mTextUnreadCount.setText(String.valueOf(event.unreadNotificaition));
-        } else {
-            if (event.unreadCompany || event.unreadAngel) {
-                mTextUnreadCount.setVisibility(View.INVISIBLE);
-                mImageUnreadDot.setVisibility(View.VISIBLE);
-            } else {
-                mTextUnreadCount.setVisibility(View.INVISIBLE);
-                mImageUnreadDot.setVisibility(View.INVISIBLE);
-            }
+//        LogUtil.i(TAG, "handling UnreadMessageEvent");
+//        if (event.unreadNotificaition > 0) {
+//            mTextUnreadCount.setVisibility(View.VISIBLE);
+//            mImageUnreadDot.setVisibility(View.INVISIBLE);
+//            mTextUnreadCount.setText(String.valueOf(event.unreadNotificaition));
+//        } else {
+//            if (event.unreadCompany || event.unreadAngel) {
+//                mTextUnreadCount.setVisibility(View.INVISIBLE);
+//                mImageUnreadDot.setVisibility(View.VISIBLE);
+//            } else {
+//                mTextUnreadCount.setVisibility(View.INVISIBLE);
+//                mImageUnreadDot.setVisibility(View.INVISIBLE);
+//            }
+//        }
+        if(event.unreadNotificaition > 0 || event.unreadCompany || event.unreadAngel){
+            mImageUnreadDot.setVisibility(View.VISIBLE);
+        }else{
+            mImageUnreadDot.setVisibility(View.GONE);
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
@@ -12,6 +13,7 @@ import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.model.Event;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
+import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.utils.TimeUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
@@ -50,6 +52,7 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         public TextView txt_time;
         public TextView txt_status;
         public TextView txt_status_comment;
+        public ImageView img_avatar;
 
         private Event event;
 
@@ -64,6 +67,7 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
             txt_time = (TextView) itemView.findViewById(R.id.txt_time);
             txt_status = (TextView) itemView.findViewById(R.id.txt_status);
             txt_status_comment = (TextView) itemView.findViewById(R.id.txt_status_comment);
+            img_avatar = (ImageView) itemView.findViewById(R.id.img_avatar);
         }
 
         @Override
@@ -71,6 +75,9 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
             txt_title.setText(event.userName);
             txt_project.setText(event.categoryName);
             txt_time.setText(TimeUtil.getStrTime(event.beginTime * 1000));
+            if(event.coverImg != null){
+                BitmapBiz.display(img_avatar, event.coverImg);
+            }
             this.event = event;
 
             if (event.applyStatus.equals(Event.STATUS_NOT_COMMENTED)) {

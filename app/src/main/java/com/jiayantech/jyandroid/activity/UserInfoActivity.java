@@ -177,7 +177,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                                 @Override
                                 public void onResponse(AppResponse appResponse) {
                                     ToastUtil.showMessage("更新成功" + province + "" + city);
-                                    mLocationText.setText(province + " " + city);
+                                    AppInitManger.sAppInit.province = province;
+                                    AppInitManger.sAppInit.city = city;
+                                    EditFinishEvent event = new EditFinishEvent();
+                                    event.action = EditFinishEvent.ACTION_EDIT_LOCATION;
+                                    event.province = province;
+                                    event.city = city;
+                                    EventBus.getDefault().post(event);
                                 }
                             });
                         }
@@ -193,8 +199,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         UserBiz.update(params, new ResponseListener<AppResponse>() {
                             @Override
                             public void onResponse(AppResponse appResponse) {
-                                mBirthdayText.setText(TimeUtil.
-                                        stamp2YearMonthDay(calendar.getTimeInMillis()));
+                                AppInitManger.sAppInit.birthday = calendar.getTimeInMillis() / 1000;
+                                EditFinishEvent event = new EditFinishEvent();
+                                event.action = EditFinishEvent.ACTION_EDIT_BIRTHDAY;
+                                event.birthday = calendar.getTimeInMillis() / 1000;
+                                EventBus.getDefault().post(event);
                             }
                         });
                     }
@@ -266,60 +275,33 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 0) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                final String province = data.getStringExtra("province");
-//                final String city = data.getStringExtra("city");
-//                Map<String, String> params = new ArrayMap<>();
-//                params.put("province", province);
-//                params.put("city", city);
-//                UserBiz.update(params, new ResponseListener<AppResponse>() {
-//                    @Override
-//                    public void onResponse(AppResponse appResponse) {
-//                        ToastUtil.showMessage("更新成功" + province + "" + city);
-//                        mLocationText.setText(province + " " + city);
-//                    }
-//                });
-//            }
-//        } else if (requestCode == 1) {
-//            String phone = null;
-//            if (data != null && data.getStringArrayExtra("phone") != null) {
-//                phone = data.getStringExtra("phone");
-//                if (phone != null) {
-//                    mPhoneText.setText(phone);
-//                }
-//            }
-//        }
-//    }
-
     public void onEvent(EditFinishEvent event) {
         switch (event.action) {
             case EditFinishEvent.ACTION_EDIT_NAME:
                 mNameText.setText(event.name);
-                AppInitManger.sAppInit.name = event.name;
+                ToastUtil.showMessage(R.string.update_success_username);
                 break;
             case EditFinishEvent.ACTION_EDIT_GENDER:
                 mGenderText.setText(event.gender == 1 ? "男" : "女");
-                AppInitManger.sAppInit.gender = event.gender;
-                ToastUtil.showMessage("更新性别成功");
+                ToastUtil.showMessage(R.string.update_success_gender);
                 break;
             case EditFinishEvent.ACTION_EDIT_BIRTHDAY:
-                mBirthdayText.setText(String.valueOf(event.birthday));
-                AppInitManger.sAppInit.birthday = event.birthday;
+                mBirthdayText.setText(TimeUtil.
+                        stamp2YearMonthDay(event.birthday * 1000));
+                ToastUtil.showMessage(R.string.update_success_birthday);
                 break;
             case EditFinishEvent.ACTION_EDIT_PHONE:
                 mPhoneText.setText(event.phone);
-                AppInitManger.sAppInit.phone = event.phone;
-                AppInitManger.sAppInit.phoneNum = event.phone;
+                ToastUtil.showMessage(R.string.update_success_cellphone);
                 break;
             case EditFinishEvent.ACTION_EDIT_AVATAR:
-                AppInitManger.sAppInit.avatar = event.avatar;
-                AppInitManger.save(AppInitManger.sAppInit);
                 BitmapBiz.display(mAvatarImg, event.avatar);
-                //ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
+                ToastUtil.showMessage(R.string.update_success_avatar);
                 break;
+            case EditFinishEvent.ACTION_EDIT_LOCATION:
+                mLocationText.setText(event.province + " " + event.city);
+                ToastUtil.showMessage(R.string.update_success_location);
+
         }
     }
 
@@ -338,8 +320,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
                                 BitmapBiz.clear(AppInitManger.sAppInit.avatar);
-//                                AppInitManger.sAppInit.avatar =
-//                                        HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
+                                AppInitManger.sAppInit.avatar =
+                                        HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
                                 EditFinishEvent event = new EditFinishEvent();
                                 event.action = EditFinishEvent.ACTION_EDIT_AVATAR;
                                 event.avatar = HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;

@@ -48,8 +48,17 @@ public class ImageAdapter extends BaseGridAdapter<Bitmap> {
 
     @Override
     public void remove(int position) {
-        urlList.remove(position);
+
+        //urlList.remove(position);
         super.remove(position);
+    }
+
+    public void removeAll(){
+        int size = mList.size();
+        for(int i = 0; i < size - 1; i++){
+            mList.remove(0);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
