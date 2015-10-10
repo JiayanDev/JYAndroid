@@ -1,16 +1,28 @@
 package com.jiayantech.library.http;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.http.AndroidHttpClient;
+import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HttpClientStack;
+import com.android.volley.toolbox.HttpStack;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 import com.jiayantech.library.base.BaseApplication;
+
+import java.io.File;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -40,10 +52,11 @@ public class BitmapBiz {
 
     /**
      * 加载图片
+     *
      * @param imageUrl 图片url
      * @param listener 加载完成后的回调
      */
-    public static void loadImage(String imageUrl, ImageLoader.ImageListener listener){
+    public static void loadImage(String imageUrl, ImageLoader.ImageListener listener) {
         sImageLoader.get(imageUrl, listener);
     }
 
@@ -113,11 +126,13 @@ public class BitmapBiz {
 
 
     ///////////////////////////////////////private static class and method
-    private static final int max_cache_size = 1000000;
+    //获取系统分配给每个应用程序的最大内存，每个应用系统分配32M
+    private static final int max_cache_size = (int) (Runtime.getRuntime().maxMemory() / 8);
+    //private static final int max_cache_size = 10 * 1024 * 1024;
     /**
      * Initialise Volley Request Queue. *
      */
-    private static final RequestQueue sVolleyQueue = Volley.newRequestQueue(BaseApplication.getContext());
+    private static final RequestQueue sVolleyQueue = newRequestQueue(BaseApplication.getContext());
     private static final BitmapLruCache sBitmapLruCache = new BitmapLruCache(max_cache_size);
     private static final ImageLoader sImageLoader = new ImageLoader(sVolleyQueue, sBitmapLruCache);
 
@@ -128,10 +143,10 @@ public class BitmapBiz {
         }
 
 
-        /*@Override
+        @Override
         protected int sizeOf(String key, Bitmap value) {
             return value.getRowBytes() * value.getHeight();
-        }*/
+        }
 
 
         @Override
@@ -166,5 +181,39 @@ public class BitmapBiz {
             }
 
         }
+    }
+
+    private static final String DEFAULT_CACHE_DIR = "image";
+    /**
+     * Default maximum disk usage in bytes.
+     */
+    private static final int DEFAULT_DISK_USAGE_BYTES = 50 * 1024 * 1024;
+
+    public static RequestQueue newRequestQueue(Context context) {
+        File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
+
+        String userAgent = "volley/0";
+        try {
+            String packageName = context.getPackageName();
+            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
+            userAgent = packageName + "/" + info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+
+        HttpStack stack;
+        if (Build.VERSION.SDK_INT >= 9) {
+            stack = new HurlStack();
+        } else {
+            // Prior to Gingerbread, HttpUrlConnection was unreliable.
+            // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
+            stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+        }
+
+        Network network = new BasicNetwork(stack);
+
+        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir, DEFAULT_DISK_USAGE_BYTES), network);
+        queue.start();
+
+        return queue;
     }
 }
