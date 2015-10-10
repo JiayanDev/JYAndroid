@@ -26,7 +26,6 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BaseAppResponse;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.ResponseListener;
-import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.umeng_push.UmengPushManager;
@@ -58,9 +57,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_home_page;
     private View divider_home_page;
 
-    private TextView mTxtUnreadNotification;
-    private ImageView mImageUnreadCompany;
-    private ImageView mImageUnreadAngel;
+//    private TextView mTxtUnreadNotification;
+//    private ImageView mImageUnreadCompany;
+//    private ImageView mImageUnreadAngel;
+    private ImageView mImageUnreadNotification;
 
     @Override
     protected int getInflaterResId() {
@@ -96,9 +96,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //        txt_mine = (TextView) findViewById(R.id.txt_my_company);
 //        txt_mine.setOnClickListener(this);
 
-        mTxtUnreadNotification = (TextView) findViewById(R.id.txt_unread_notification);
-        mImageUnreadCompany = (ImageView) findViewById(R.id.image_unread_company);
-        mImageUnreadAngel = (ImageView) findViewById(R.id.image_unread_angel);
+//        mTxtUnreadNotification = (TextView) findViewById(R.id.txt_unread_notification);
+//        mImageUnreadCompany = (ImageView) findViewById(R.id.image_unread_company);
+//        mImageUnreadAngel = (ImageView) findViewById(R.id.image_unread_angel);
+        mImageUnreadNotification = (ImageView) findViewById(R.id.unread_notification);
         divider_home_page = findViewById(R.id.divider_home_page);
 
         findViewById(R.id.layout_info).setOnClickListener(this);
@@ -147,60 +148,35 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    public void onEvent(EditFinishEvent event) {
-        switch (event.action) {
-            case EditFinishEvent.ACTION_EDIT_AVATAR:
-                BitmapBiz.display(img_avatar, event.avatar);
-                break;
-        }
-//        switch (event.action) {
-//            case EditFinishEvent.ACTION_EDIT_NAME:
-//                mNameText.setText(event.name);
-//                AppInitManger.sAppInit.name = event.name;
-//                break;
-//            case EditFinishEvent.ACTION_EDIT_GENDER:
-//                mGenderText.setText(event.gender == 1 ? "男" : "女");
-//                AppInitManger.sAppInit.gender = event.gender;
-//                ToastUtil.showMessage("更新性别成功");
-//                break;
-//            case EditFinishEvent.ACTION_EDIT_BIRTHDAY:
-//                mBirthdayText.setText(String.valueOf(event.birthday));
-//                AppInitManger.sAppInit.birthday = event.birthday;
-//                break;
-//            case EditFinishEvent.ACTION_EDIT_PHONE:
-//                mPhoneText.setText(event.phone);
-//                AppInitManger.sAppInit.phone = event.phone;
-//                AppInitManger.sAppInit.phoneNum = event.phone;
-//                break;
-//            case EditFinishEvent.ACTION_EDIT_AVATAR:
-//                AppInitManger.sAppInit.avatar = event.avatar;
-//                AppInitManger.save(AppInitManger.sAppInit);
-//                BitmapBiz.display(mAvatarImg, event.avatar);
-//                //ToastUtil.showMessage("头像上传成功成功:" + event.avatar);
-//                break;
+    public void onEvent(UnreadMessageEvent event) {
+//        LogUtil.i(TAG, "handling UnreadMessageEvent");
+//        if (event.unreadNotificaition > 0) {
+//            mTxtUnreadNotification.setVisibility(View.VISIBLE);
+//            mTxtUnreadNotification.setText(String.valueOf(event.unreadNotificaition));
+//        } else {
+//            mTxtUnreadNotification.setVisibility(View.INVISIBLE);
 //        }
+//        //setHomePageVisible(true);
+//        if (event.unreadCompany) {
+//            mImageUnreadCompany.setVisibility(View.VISIBLE);
+//        } else {
+//            mImageUnreadCompany.setVisibility(View.INVISIBLE);
+//        }
+//
+//        if (event.unreadAngel) {
+//            mImageUnreadAngel.setVisibility(View.VISIBLE);
+//        } else {
+//            mImageUnreadAngel.setVisibility(View.INVISIBLE);
+//        }
+        if(event.unreadNotificaition > 0){
+            mImageUnreadNotification.setVisibility(View.VISIBLE);
+        }else{
+            mImageUnreadNotification.setVisibility(View.GONE);
+        }
     }
 
-    public void onEvent(UnreadMessageEvent event) {
-        LogUtil.i(TAG, "handling UnreadMessageEvent");
-        if (event.unreadNotificaition > 0) {
-            mTxtUnreadNotification.setVisibility(View.VISIBLE);
-            mTxtUnreadNotification.setText(String.valueOf(event.unreadNotificaition));
-        } else {
-            mTxtUnreadNotification.setVisibility(View.INVISIBLE);
-        }
-        //setHomePageVisible(true);
-        if (event.unreadCompany) {
-            mImageUnreadCompany.setVisibility(View.VISIBLE);
-        } else {
-            mImageUnreadCompany.setVisibility(View.INVISIBLE);
-        }
-
-        if (event.unreadAngel) {
-            mImageUnreadAngel.setVisibility(View.VISIBLE);
-        } else {
-            mImageUnreadAngel.setVisibility(View.INVISIBLE);
-        }
+    public void onEvent(EditFinishEvent event) {
+        setUserInfo();
     }
 
     private void setUserInfo() {

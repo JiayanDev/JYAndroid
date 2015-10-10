@@ -17,6 +17,7 @@ import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.commons.Constants;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.ResponseListener;
 
@@ -68,6 +69,8 @@ public class EditGenderFragment extends DialogFragment {
                                 EditFinishEvent event = new EditFinishEvent();
                                 event.action = EditFinishEvent.ACTION_EDIT_GENDER;
                                 event.gender = mGender;
+
+                                AppInitManger.sAppInit.gender = mGender;
                                 EventBus.getDefault().post(event);
                             }
                         });

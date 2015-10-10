@@ -1,7 +1,5 @@
 package com.jiayantech.jyandroid.fragment.webview;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -24,7 +22,6 @@ import com.jiayantech.jyandroid.eventbus.ShareFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallPlayImage;
-import com.jiayantech.jyandroid.model.web.JsCallSetTitle;
 import com.jiayantech.jyandroid.model.web.JsCallShareDetail;
 import com.jiayantech.jyandroid.model.web.JsCallUserInfo;
 import com.jiayantech.jyandroid.model.web.UserInfo;
@@ -217,13 +214,15 @@ public abstract class WebViewFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_share) {
-            if (mSharePanel == null) {
-                mSharePanel = new SharePanel(getActivity(), mUrl, onGetShareTitle(), onGetShareThumbnail());
-            }
+//            if (mSharePanel == null) {
+//                mSharePanel = new SharePanel(getActivity(), mUrl, onGetShareTitle(),
+//                        onGetShareThumbnail(), onGetShareContent());
+//            }
+            mSharePanel = new SharePanel(getActivity(), mUrl, onGetShareTitle(),
+                        onGetShareThumbnail(), onGetShareContent());
             if (!mSharePanel.isShowing()) {
                 mSharePanel.showAtLocation(mWebView, Gravity.CENTER, 0, 0);
             }
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -241,14 +240,14 @@ public abstract class WebViewFragment extends BaseFragment {
             }
         });
 
-        //监听web页面设置title的回调
-        client.addActionListener(new WebActionListener<JsCallSetTitle>
-                (JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE, JsCallSetTitle.class) {
-            @Override
-            public void execute(JsCallSetTitle data) {
-                getActivity().setTitle(data.data.title);
-            }
-        });
+//        //监听web页面设置title的回调
+//        client.addActionListener(new WebActionListener<JsCallSetTitle>
+//                (JsNativeBiz.ACTION_SET_NAVIGATION_BAR_TITLE, JsCallSetTitle.class) {
+//            @Override
+//            public void execute(JsCallSetTitle data) {
+//                getActivity().setTitle(data.data.title);
+//            }
+//        });
 
         //监听web页面查看图片的回调
         client.addActionListener(new WebActionListener<JsCallPlayImage>(

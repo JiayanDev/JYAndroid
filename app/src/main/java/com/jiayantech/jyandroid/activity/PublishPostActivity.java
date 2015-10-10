@@ -23,6 +23,7 @@ import com.jiayantech.jyandroid.biz.UploadImageBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.model.ImageUploadResp;
 import com.jiayantech.jyandroid.model.AppInit;
+import com.jiayantech.jyandroid.widget.ItemsLayout;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseModel;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -180,23 +181,30 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void onPicGet(String path, Bitmap bitmap) {
+//        mImageAdapter.addImage(bitmap);
+//        mImageAdapter.resetViewHeight(recycler_view, spanCount);
+//        mSelectPath
+        if(mSelectPath == null){
+            mSelectPath = new ArrayList<>();
+        }
+        mSelectPath.add(path);
         mImageAdapter.addImage(bitmap);
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-        showProgressDialog();
-        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
-                new ResponseListener<ImageUploadResp>() {
-                    @Override
-                    public void onResponse(ImageUploadResp o) {
-                        dismissProgressDialog();
-                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dismissProgressDialog();
-                        super.onErrorResponse(error);
-                    }
-                });
+//        showProgressDialog();
+//        UploadImageBiz.uploadImage(UPLOAD_TYPE, bitmap, new File(path).getName(),
+//                new ResponseListener<ImageUploadResp>() {
+//                    @Override
+//                    public void onResponse(ImageUploadResp o) {
+//                        dismissProgressDialog();
+//                        mImageAdapter.urlList.add(HttpConfig.IMAGE_SHOW_URL + o.url);
+//                    }
+//
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        dismissProgressDialog();
+//                        super.onErrorResponse(error);
+//                    }
+//                });
     }
 
 
@@ -205,40 +213,76 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
         if (position == mImageAdapter.getItemCount() - 1) {
             showUploadDialog();
         } else {
-            mImageAdapter.urlList.remove(position);
+            if(mImageAdapter.urlList.size() > position) {
+                mImageAdapter.urlList.remove(position); //urlList有可能未上传完成
+            }
             mImageAdapter.remove(position);
             mImageAdapter.resetViewHeight(recycler_view, spanCount);
         }
     }
 
-    private void showUploadDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
-        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+//    private void showUploadDialog() {
+//        View view = LayoutInflater.from(this).inflate(R.layout.view_upload_menu, null);
+//        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+//
+//        View.OnClickListener onClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                int maxNum = mImageAdapter.getCurMaxCount();
+//                if (maxNum <= 0) {
+//                    ToastUtil.showMessage(R.string.msg_amount_limit);
+//                    return;
+//                }
+//                switch (v.getId()) {
+//                    case R.id.camera_button:
+//                        new PicGetter(_this(), getActivityResultHelper(), _this()).startCamera();
+//                        break;
+//                    case R.id.local_button:
+//                        //new PicGetter(_this(), getActivityResultHelper(), _this()).startImage();
+//                        selectMultiImage(maxNum);
+//                        break;
+//                }
+//            }
+//        };
+//        view.findViewById(R.id.title_text).setVisibility(View.GONE);
+//        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
+//        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
+//        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
+//    }
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+    private void showUploadDialog() {
+        final int maxNum = mImageAdapter.getCurMaxCount();
+        if (maxNum <= 0) {
+            ToastUtil.showMessage(R.string.msg_amount_limit);
+            return;
+        }
+        View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_menus, null);
+        ItemsLayout itemsLayout = (ItemsLayout) view.findViewById(R.id.layout_items);
+        itemsLayout.setDriver();
+        itemsLayout.setDriverLeftMargin(0);
+        final Dialog dialog = DialogUtils.showViewDialog(view, true);
+        itemsLayout.addMenuItem(getString(R.string.take_camera)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                int maxNum = mImageAdapter.getCurMaxCount();
-                if (maxNum <= 0) {
-                    ToastUtil.showMessage(R.string.msg_amount_limit);
-                    return;
-                }
-                switch (v.getId()) {
-                    case R.id.camera_button:
-                        new PicGetter(_this(), getActivityResultHelper(), _this()).startCamera();
-                        break;
-                    case R.id.local_button:
-                        //new PicGetter(_this(), getActivityResultHelper(), _this()).startImage();
-                        selectMultiImage(maxNum);
-                        break;
-                }
+                new PicGetter(PublishPostActivity.this, getActivityResultHelper(),
+                        PublishPostActivity.this).startCropCamera();
             }
-        };
-        view.findViewById(R.id.title_text).setVisibility(View.GONE);
-        view.findViewById(R.id.camera_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.local_button).setOnClickListener(onClickListener);
-        view.findViewById(R.id.cancel_button).setOnClickListener(onClickListener);
+        });
+        itemsLayout.addMenuItem(getString(R.string.take_photo)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                selectMultiImage(maxNum);
+            }
+        });
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private PublishPostActivity _this() {
@@ -276,15 +320,13 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
      */
     public void onPicGets() {
         ArrayList<Bitmap> mSelectBitmap = new ArrayList<>();
+        mImageAdapter.removeAll();
         for (String p : mSelectPath) {
             Bitmap bitmap = PicGetter.decodeBitmapFromPath(p);
             mSelectBitmap.add(bitmap);
             mImageAdapter.addImage(bitmap);
         }
         mImageAdapter.resetViewHeight(recycler_view, spanCount);
-        //showProgressDialog();
-        //finish();
-        //uploadImage(0);
     }
 
     public void uploadImage(final int index) {
