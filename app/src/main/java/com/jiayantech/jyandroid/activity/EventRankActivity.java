@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.EventBiz;
+import com.jiayantech.jyandroid.eventbus.EventRankFinishEvent;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.BitmapBiz;
@@ -21,6 +22,8 @@ import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.TimeUtil;
 import com.jiayantech.library.utils.ToastUtil;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by liangzili on 15/7/30.
@@ -119,6 +122,7 @@ public class EventRankActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //EventBiz.comment();
+                showProgressDialog();
                 int angelSatisfaction = mRatingAngelSatisfaction.getNumStars();
                 int doctorSatisfaction = mRatingDoctorSatisfaction.getNumStars();
                 if (mEditComment.getText().toString().length() > 10) {
@@ -128,9 +132,14 @@ public class EventRankActivity extends BaseActivity {
                             finish();
                             SuccessActivity.launchActivity(EventRankActivity.this, "评价伴美",
                                     R.mipmap.icon_rank_success);
+                            EventRankFinishEvent event = new EventRankFinishEvent();
+                            event.eventId = mEventId;
+                            EventBus.getDefault().post(event);
+
                         }
                     });
                 } else {
+                    dismissProgressDialog();
                     ToastUtil.showMessage("字数不足");
                 }
             }
@@ -145,9 +154,10 @@ public class EventRankActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count > 10) {
-                    //TODO
+                    mTxtWordCount.setVisibility(View.INVISIBLE);
                 } else {
-
+                    mTxtWordCount.setVisibility(View.VISIBLE);
+                    mTxtWordCount.setText(getString(R.string.txt_word_count, 10 - count));
                 }
             }
 

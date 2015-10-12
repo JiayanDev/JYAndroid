@@ -29,6 +29,8 @@ public class MessagesFragment extends RefreshListFragment<BasePushMessage,
                 .size(UIUtil.dip2px(1))
                 .margin(UIUtil.dip2px(20), UIUtil.dip2px(20))
                 .build());
+
+        getActivity().setTitle(R.string.title_mine_notification);
     }
 
     @Override

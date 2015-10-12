@@ -13,4 +13,6 @@ public class CompanyEventActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new CompanyEventFragment();
     }
+
+
 }
