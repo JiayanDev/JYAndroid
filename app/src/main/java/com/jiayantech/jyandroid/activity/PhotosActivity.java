@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.adapter.ImagePagerAdapter;
-import com.jiayantech.jyandroid.model.Photo;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.widget.HackyViewPager;
 
@@ -29,10 +27,13 @@ public class PhotosActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         mViewPager = new HackyViewPager(this);
         setContentView(mViewPager);
         setViewsContent();
+
+        getSupportActionBar().hide();
     }
 
     protected void setViewsContent() {

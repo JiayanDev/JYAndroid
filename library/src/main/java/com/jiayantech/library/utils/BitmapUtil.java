@@ -82,10 +82,10 @@ public class BitmapUtil {
     }
 
     /**
-     * 描述：计算压缩的inSampleSize值
+     * 描述：计算压缩的inSampleSize值, 最小边长为600， 小于600不resize
      *
      * @param options
-     * @param reqWidth
+     * @param reqSize
      * @return
      * @version 1.0
      * @createTime 2014-4-29 上午11:41:19
@@ -94,13 +94,24 @@ public class BitmapUtil {
      * @updateAuthor 健兴
      * @updateInfo (此处输入修改内容, 若无修改可不写.)
      */
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqSize) {
         final int width = options.outWidth;
+        final int height = options.outHeight;
         int inSampleSize = 1;
-        if (width > reqWidth) {
-            inSampleSize = Math.round((float) width / (float) reqWidth);
+        if(Math.min(options.outHeight, options.outWidth) > 600){
+            if(options.outHeight > options.outWidth){
+                inSampleSize = Math.round((float) width / (float) reqSize);
+            }else{
+                inSampleSize = Math.round((float) height / (float) reqSize);
+            }
         }
         return inSampleSize;
+
+//
+//        if (width > reqSize) {
+//            inSampleSize = Math.round((float) width / (float) reqSize);
+//        }
+//        return inSampleSize;
     }
 
     /**

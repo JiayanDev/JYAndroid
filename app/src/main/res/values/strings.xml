@@ -201,4 +201,5 @@
     <string name="msg_publish_diary_success">发表日志成功！</string>
 
     <string name="msg_reply">回复了我的%s</string>
+    <string name="txt_word_count">还需要输入%d字</string>
 </resources>

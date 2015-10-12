@@ -1,6 +1,7 @@
 package com.jiayantech.jyandroid.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -46,9 +47,25 @@ public class MyEventAdapter extends EventAdapter {
 
         @Override
         public void onBind(Event event, int position) {
-            txt_title.setText(event.title);
-            txt_info.setText(event.hospitalName + " " + event.doctorName);
-            txt_time.setText(TimeUtil.getStrDateBySecond(event.beginTime));
+            if(event.title == null || event.title.equals("")){
+                txt_title.setText(event.getCategoryNamesString());
+            }else {
+                txt_title.setText(event.title);
+            }
+
+            if(event.hospitalName == null && event.doctorName == null){
+                txt_info.setVisibility(View.GONE);
+            }else {
+                txt_info.setVisibility(View.VISIBLE);
+                txt_info.setText(event.hospitalName + " " + event.doctorName);
+            }
+
+            if(event.beginTime == 0) {
+                txt_time.setText(TimeUtil.getStrDateBySecond((long)event.createTime));
+            }else{
+                txt_time.setText(TimeUtil.getStrDateBySecond(event.beginTime));
+            }
+
             txt_status.setText(event.status);
         }
     }

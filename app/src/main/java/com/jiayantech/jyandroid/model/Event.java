@@ -1,8 +1,5 @@
 package com.jiayantech.jyandroid.model;
 
-import com.google.gson.annotations.Expose;
-import com.jiayantech.library.base.BaseModel;
-
 /**
  * Created by janseon on 2015/6/30.
  *
@@ -10,7 +7,7 @@ import com.jiayantech.library.base.BaseModel;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class Event extends BaseModel {
+public class Event extends CategoriesModel {
     //伴美apply status
     public static final String STATUS_PENDING = "待审核";
     public static final String STATUS_PASS = "审核通过";
@@ -27,7 +24,7 @@ public class Event extends BaseModel {
     public String title;
     public String desc;
     public long beginTime;
-    public long[] categoryIds;
+    //public long[] categoryIds;
     public String categoryName;
     public String province;
     public String city;
