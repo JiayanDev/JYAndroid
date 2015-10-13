@@ -103,8 +103,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         setTitle(R.string.user_info);
         mNameText.setText(AppInitManger.getUserName());
         mGenderText.setText(AppInitManger.getUserGender() == 1 ? "男" : "女");
-        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
-        mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
+        if(AppInitManger.getProvince() != null) {
+            mLocationText.setText(AppInitManger.getProvince() + AppInitManger.getCity());
+        }
+
         mBirthdayText.setText(AppInitManger.getBirthday() == null ? "" : TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         mPhoneText.setText(AppInitManger.getPhoneNum());
         BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());

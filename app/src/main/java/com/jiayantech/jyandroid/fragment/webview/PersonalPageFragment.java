@@ -22,13 +22,11 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.PublishDiaryActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
-import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
 import com.jiayantech.jyandroid.commons.Broadcasts;
+import com.jiayantech.jyandroid.eventbus.AddPostFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
-import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallShowHeader;
 import com.jiayantech.jyandroid.widget.NotifyingScrollView;
 import com.jiayantech.library.base.BaseActivity;
@@ -36,7 +34,6 @@ import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.utils.BitmapUtil;
-import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.Map;
@@ -193,21 +190,34 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                     });
                 }
                 mTxtUsername.setText(data.data.name);
-                mTxtInfo.setText(data.data.province + data.data.city + " " + data.data.age + "岁");
-
-                if (data.data.id == AppInitManger.getUserId()) {
-                    LogUtil.i(TAG, "show add post button, id is " + data.data.id);
-                    callJsMethod(JsNativeBiz.JS_METHOD_G_SHOW_ADD_POST_BUTTON, null);
+                StringBuilder builder = new StringBuilder();
+                if(data.data.province != null){
+                    builder.append(data.data.province);
+                    builder.append(" ");
+                    builder.append(data.data.city);
                 }
+
+                if(data.data.age != 0){
+                    builder.append(" ");
+                    builder.append(data.data.age);
+                    builder.append("岁");
+                }
+//                mTxtInfo.setText(data.data.province + data.data.city + " " + data.data.age + "岁");
+                mTxtInfo.setText(builder.toString());
+
+//                if (data.data.id == AppInitManger.getUserId()) {
+//                    LogUtil.i(TAG, "show add post button, id is " + data.data.id);
+//                    callJsMethod(JsNativeBiz.JS_METHOD_G_SHOW_ADD_POST_BUTTON, null);
+//                }
             }
         });
 
-        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_ADD_POST, BaseJsCall.class) {
-            @Override
-            public void execute(BaseJsCall data) {
-                startActivity(PublishDiaryActivity.class);
-            }
-        });
+//        client.addActionListener(new WebActionListener(JsNativeBiz.ACTION_ADD_POST, BaseJsCall.class) {
+//            @Override
+//            public void execute(BaseJsCall data) {
+//                startActivity(PublishDiaryActivity.class);
+//            }
+//        });
 
     }
 
