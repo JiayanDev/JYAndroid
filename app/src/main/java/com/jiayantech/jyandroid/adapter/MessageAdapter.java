@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonSyntaxException;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.misc.UIMisc;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.utils.GsonUtils;
@@ -95,6 +96,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
         private TextView mTxtUsername;
         private TextView mTxtDate;
         protected TextView mTxtContent;
+        private ImageView mRoleTag;
 
         private String action;
         private long id;
@@ -106,6 +108,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
             mTxtUsername = (TextView) itemView.findViewById(R.id.txt_username);
             mTxtDate = (TextView) itemView.findViewById(R.id.txt_date);
             mTxtContent = (TextView) itemView.findViewById(R.id.txt_content);
+            mRoleTag = (ImageView) itemView.findViewById(R.id.img_tag);
         }
 
         @Override
@@ -136,6 +139,8 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
             mTxtUsername.setText(item.fromUserName);
             mTxtDate.setText(TimeUtil.stamp2MonthDay((long) item.createTime * 1000));
             mTxtContent.setText(item.msg);
+
+            UIMisc.setRoleTag(item.fromUserRole, mRoleTag);
         }
 
         @Override

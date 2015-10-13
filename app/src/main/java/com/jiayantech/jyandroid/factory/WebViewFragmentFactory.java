@@ -1,5 +1,6 @@
 package com.jiayantech.jyandroid.factory;
 
+import com.jiayantech.jyandroid.fragment.webview.ApplymentListFragment;
 import com.jiayantech.jyandroid.fragment.webview.EventDetailFragment;
 import com.jiayantech.jyandroid.fragment.webview.EventIntroFragment;
 import com.jiayantech.jyandroid.fragment.webview.HelpFragment;
@@ -26,6 +27,8 @@ public class WebViewFragmentFactory {
             case WebConstans.Type.TYPE_PERSONAL_PAGE:
                 //return PersonalPageFragment.newInstance(userId, userName);
                 return PersonalPageFragment.newInstance(id, type);
+            case WebConstans.Type.TYPE_APPLYMENT_LIST:
+                return ApplymentListFragment.newInstance(id);
             default:
                 throw new IllegalArgumentException("WebViewFragmentFactory createFragment invalid" +
                         type);

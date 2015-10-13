@@ -16,15 +16,34 @@
         android:scaleType="centerCrop"
         app:riv_corner_radius="20dp"/>
 
-    <TextView
-        android:id="@+id/txt_username"
+    <RelativeLayout
+        android:id="@+id/layout_identity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/img_avatar"
-        android:text="大王Vivian"
-        android:textColor="@color/theme_color"
-        />
+        android:layout_toLeftOf="@id/txt_date"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/txt_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大王Vivian"
+            android:maxEms="6"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:textColor="@color/theme_color"
+            />
+        <ImageView
+            android:id="@+id/img_tag"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/txt_username"
+            android:src="@mipmap/tag_angel"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/txt_date"
@@ -37,8 +56,8 @@
         android:id="@+id/txt_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/txt_username"
-        android:layout_below="@id/txt_username"
+        android:layout_alignLeft="@id/layout_identity"
+        android:layout_below="@id/layout_identity"
         android:layout_marginTop="10dp"
         android:text="怎么做？"/>
 

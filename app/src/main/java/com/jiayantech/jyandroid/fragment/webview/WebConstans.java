@@ -16,6 +16,7 @@ public class WebConstans {
         String TYPE_PERSONAL_PAGE = "timeline";
         String TYPE_EVENT_INTRO = "eventintro";
         String TYPE_HELP = "help";
+        String TYPE_APPLYMENT_LIST = "applymentList";
     }
 
     public interface Action {
@@ -26,6 +27,7 @@ public class WebConstans {
         String ACTION_PERSONAL_PAGE = PREFIX + "/timeline.html";
         String ACTION_EVENT_INTRO = PREFIX + "/eventintro.html";
         String ACTION_HELP = PREFIX + "/help.html";
+        String ACTION_APPLYMENT_LIST = PREFIX + "/applymentList.html";
     }
 
 //    public interface Path {
