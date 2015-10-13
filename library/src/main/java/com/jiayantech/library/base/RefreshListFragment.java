@@ -109,6 +109,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 mAdapter.clear();
                 //}
                 mAdapter.addNew(response.data);
+                mCacheList = null;
                 onFinal();
                 onRefreshResponse(mAdapter);
             }
@@ -117,6 +118,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
             public void onErrorResponse(VolleyError error) {
                 //if (mCacheList != null && enablePaging) mAdapter.addNew(mCacheList);
                 if (mCacheList != null) {
+                    mAdapter.clear();
                     mAdapter.addNew(mCacheList);
                     mCacheList = null;
                 }

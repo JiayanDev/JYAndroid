@@ -310,7 +310,7 @@ public class HttpReq<T> extends Request<T> {
     }
 
     /**
-     * 保存缓存
+     * 保存缓存，保存最大数目为 MAX_CACHE_NUM 的缓存数据
      *
      * @param jsonString
      * @param parsedGSON
@@ -322,7 +322,7 @@ public class HttpReq<T> extends Request<T> {
                 mCache = loadCache();
             }
             if (mCache != null) {
-                ArrayList list = (ArrayList) appResponse.data;
+                ArrayList list = new ArrayList<>((ArrayList) appResponse.data);
                 int newSize = list.size();
                 if (newSize > 0 && newSize < PAGE_NUM) {
                     AppResponse cache = (AppResponse) mCache;
