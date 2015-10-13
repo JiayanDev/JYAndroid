@@ -48,7 +48,12 @@ public class MyEventAdapter extends EventAdapter {
         @Override
         public void onBind(Event event, int position) {
             if(event.title == null || event.title.equals("")){
-                txt_title.setText(event.getCategoryNamesString());
+                if(event.categoryName != null){
+                    txt_title.setText(event.categoryName);
+                }else{
+                    txt_title.setText(event.getCategoryNamesString());
+                }
+
             }else {
                 txt_title.setText(event.title);
             }

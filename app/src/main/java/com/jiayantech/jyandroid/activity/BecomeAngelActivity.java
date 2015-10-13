@@ -2,13 +2,13 @@ package com.jiayantech.jyandroid.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.EventBiz;
+import com.jiayantech.jyandroid.eventbus.ApplyAngelFinishEvent;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.library.base.BaseActivity;
@@ -20,6 +20,8 @@ import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by janseon on 2015/7/7.
@@ -161,6 +163,11 @@ public class BecomeAngelActivity extends BaseActivity {
                                 super.onResponse(appResponse);
                                 ToastUtil.showMessage(R.string.msg_sign_up_success);
                                 ActivityResult.onFinishResult(_this);
+
+                                ApplyAngelFinishEvent event = new ApplyAngelFinishEvent();
+                                event.category = AppInit.Category.toNamesString(categoryList);
+
+                                EventBus.getDefault().post(event);
                             }
                         });
                 break;

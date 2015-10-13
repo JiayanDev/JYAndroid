@@ -116,6 +116,9 @@ public class BaseWebViewClient extends WebViewClient {
             case WebConstans.Action.ACTION_EVENT_INTRO:
                 type = WebConstans.Type.TYPE_EVENT_INTRO;
                 break;
+            case WebConstans.Action.ACTION_APPLYMENT_LIST:
+                type = WebConstans.Type.TYPE_APPLYMENT_LIST;
+                break;
         }
         if(type != null){
             navigate(id, type);

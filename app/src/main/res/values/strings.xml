@@ -81,6 +81,7 @@
     <string name="title_mine_angel">美丽天使</string>
     <string name="title_event_detail">活动详情</string>
     <string name="title_mine_setting">设置</string>
+    <string name="title_applyment_list">报名列表</string>
 
     <!-- hint -->
     <string name="hint_search_input">请输入%s</string>

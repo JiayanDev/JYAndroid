@@ -12,6 +12,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivityOverlay;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
+import com.jiayantech.jyandroid.misc.UIMisc;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.AdaptiveGridView;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -68,6 +69,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         public TextView mCommentCount;
         public ImageView mType;
         public TagGroup mTagGroupCategory;
+        public ImageView mRoleTag;
 
         public PhotoAdapter mPhotoAdapter;
 
@@ -87,6 +89,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             mType = (ImageView) itemView.findViewById(R.id.ic_type);
             mTagGroupCategory = (TagGroup) itemView.findViewById(R.id.tag_group_category);
             mDate = (TextView) itemView.findViewById(R.id.txt_date);
+            mRoleTag = (ImageView) itemView.findViewById(R.id.img_tag);
 
             mPhotoAdapter = new PhotoAdapter(mContext);
 
@@ -129,6 +132,8 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             } else {
                 mUsername.setCompoundDrawables(null, null, mMaleIcon, null);
             }
+
+            UIMisc.setRoleTag(item.role, mRoleTag);
         }
 
 //        private View.OnClickListener mImageClickListener = new View.OnClickListener() {

@@ -188,7 +188,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (AppInitManger.getBirthday() != null) {
             try {
                 int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));
-                info += "  " + age + "岁";
+                if(age != 0) {
+                    info += "  " + age + "岁";
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
