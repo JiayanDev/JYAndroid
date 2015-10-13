@@ -310,36 +310,37 @@ public class HttpReq<T> extends Request<T> {
     }
 
     /**
-     * 保存缓存，保存最大数目为 MAX_CACHE_NUM 的缓存数据
+     * 保存缓存，
+     * ///////////////保存最大数目为 MAX_CACHE_NUM 的缓存数据
      *
      * @param jsonString
      * @param parsedGSON
      */
     private void saveCache(String jsonString, T parsedGSON) {
         AppResponse appResponse = (AppResponse) parsedGSON;
-        if (!mToLoad && appResponse.data instanceof ArrayList) {
-            if (mCache == null) {
-                mCache = loadCache();
-            }
-            if (mCache != null) {
-                ArrayList list = new ArrayList<>((ArrayList) appResponse.data);
-                int newSize = list.size();
-                if (newSize > 0 && newSize < PAGE_NUM) {
-                    AppResponse cache = (AppResponse) mCache;
-                    ArrayList cacheList = (ArrayList) cache.data;
-                    int cacheSize = cacheList.size();
-                    int size = newSize + cacheSize;
-                    if (size > MAX_CACHE_NUM) {
-                        list.addAll(cacheList.subList(0, MAX_CACHE_NUM / 2 - newSize));
-                        cache.data = list;
-                    } else {
-                        cacheList.addAll(0, list);
-                    }
-                    DataManager.put(mUrlKey, mGson.toJson(cache));
-                    return;
-                }
-            }
-        }
+//        if (!mToLoad && appResponse.data instanceof ArrayList) {
+//            if (mCache == null) {
+//                mCache = loadCache();
+//            }
+//            if (mCache != null) {
+//                ArrayList list = new ArrayList<>((ArrayList) appResponse.data);
+//                int newSize = list.size();
+//                if (newSize > 0 && newSize < PAGE_NUM) {
+//                    AppResponse cache = (AppResponse) mCache;
+//                    ArrayList cacheList = (ArrayList) cache.data;
+//                    int cacheSize = cacheList.size();
+//                    int size = newSize + cacheSize;
+//                    if (size > MAX_CACHE_NUM) {
+//                        list.addAll(cacheList.subList(0, MAX_CACHE_NUM / 2 - newSize));
+//                        cache.data = list;
+//                    } else {
+//                        cacheList.addAll(0, list);
+//                    }
+//                    DataManager.put(mUrlKey, mGson.toJson(cache));
+//                    return;
+//                }
+//            }
+//        }
         DataManager.put(mUrlKey, jsonString);
     }
 
