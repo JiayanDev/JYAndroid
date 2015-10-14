@@ -27,9 +27,11 @@ public class JYUmengMessageHandler extends UmengMessageHandler{
     @Override
     public void dealWithNotificationMessage(Context context, UMessage uMessage) {
         super.dealWithNotificationMessage(context, uMessage);
-        LogUtil.i("UmengPushMessage", String.format("Notification Message custom: %s",
-                uMessage.custom));
-        sendBroadcast(mContext, uMessage);
+        if(uMessage.custom != null && !uMessage.custom.equals("")) {
+            LogUtil.i("UmengPushMessage", String.format("Notification Message custom: %s",
+                    uMessage.custom));
+            sendBroadcast(mContext, uMessage);
+        }
     }
 
     public static void sendBroadcast(Context context, UMessage msg){

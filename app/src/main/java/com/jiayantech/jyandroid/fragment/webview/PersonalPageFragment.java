@@ -34,7 +34,6 @@ import com.jiayantech.library.helper.BroadcastHelper;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.utils.BitmapUtil;
-import com.jiayantech.library.utils.ToastUtil;
 
 import java.util.Map;
 
@@ -134,6 +133,17 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
                 final float ratio = (float) Math.min(Math.max(t, 0), headerHeight) / headerHeight;
                 final int newAlpha = (int) (ratio * 255);
                 mToolbarBackgroundDrawable.setAlpha(newAlpha);
+
+//                if (t > oldt) {
+//                    mPublishButton.hide();
+//                }else{
+//                    mPublishButton.show();
+//                }
+            }
+
+            @Override
+            public void onStopScroll() {
+                //mPublishButton.show();
             }
         });
         return headerView;
@@ -142,7 +152,7 @@ public class PersonalPageFragment extends WebViewOverlayFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.showMessage(String.format("PersonalPage Id is %d", mId));
+        //ToastUtil.showMessage(String.format("PersonalPage Id is %d", mId));
     }
 
     private Drawable.Callback mDrawableCallback = new Drawable.Callback() {

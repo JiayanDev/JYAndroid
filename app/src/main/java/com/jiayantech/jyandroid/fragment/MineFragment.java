@@ -16,6 +16,7 @@ import com.jiayantech.jyandroid.activity.UserInfoActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivityOverlay;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.EditFinishEvent;
+import com.jiayantech.jyandroid.eventbus.RoleChangedEvent;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
@@ -196,11 +197,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         }
         txt_info.setText(info);
-        setHomePageVisible();
+        setHomePageVisible(AppInitManger.getRole());
     }
 
-    public void setHomePageVisible() {
-        String role = AppInitManger.getRole();
+    public void setHomePageVisible(String role) {
         divider_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
         txt_home_page.setVisibility(AppInit.ROLE_ANGEL.equals(role) ? View.VISIBLE : View.GONE);
     }
@@ -263,5 +263,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 //startActivity(PublishDiaryActivity.class);
                 break;
         }
+    }
+
+    public void onEvent(RoleChangedEvent event){
+        setHomePageVisible(event.role);
     }
 }
