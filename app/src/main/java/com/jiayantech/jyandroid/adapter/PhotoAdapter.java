@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.library.http.BitmapBiz;
 
 import java.util.ArrayList;
@@ -58,12 +57,12 @@ public class PhotoAdapter extends BaseAdapter {
         }
 
         BitmapBiz.display(holder.photo, mPhotoList.get(position));
-        holder.photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhotosActivity.start(mContext, "", mPhotoList, position);
-            }
-        });
+//        holder.photo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PhotosActivity.start(mContext, "", mPhotoList, position);
+//            }
+//        });
 
 
 
