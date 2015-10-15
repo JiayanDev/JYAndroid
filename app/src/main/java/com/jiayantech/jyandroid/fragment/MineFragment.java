@@ -58,7 +58,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView txt_home_page;
     private View divider_home_page;
 
-//    private TextView mTxtUnreadNotification;
+    //    private TextView mTxtUnreadNotification;
 //    private ImageView mImageUnreadCompany;
 //    private ImageView mImageUnreadAngel;
     private ImageView mImageUnreadNotification;
@@ -137,7 +137,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void resume() {
         if (img_avatar != null && AppInitManger.isRegister()) {
-            setUserInfo();
             UserBiz.detail(new ResponseListener<AppResponse<AppInit>>() {
                 @Override
                 public void onResponse(AppResponse<AppInit> appInitAppResponse) {
@@ -147,6 +146,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
+        setUserInfo();
     }
 
     public void onEvent(UnreadMessageEvent event) {
@@ -169,9 +169,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 //        } else {
 //            mImageUnreadAngel.setVisibility(View.INVISIBLE);
 //        }
-        if(event.unreadNotificaition > 0){
+        if (event.unreadNotificaition > 0) {
             mImageUnreadNotification.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImageUnreadNotification.setVisibility(View.GONE);
         }
     }
@@ -189,7 +189,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (AppInitManger.getBirthday() != null) {
             try {
                 int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));
-                if(age != 0) {
+                if (age != 0) {
                     info += "  " + age + "岁";
                 }
             } catch (Exception e) {
@@ -265,7 +265,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    public void onEvent(RoleChangedEvent event){
+    public void onEvent(RoleChangedEvent event) {
         setHomePageVisible(event.role);
     }
 }
