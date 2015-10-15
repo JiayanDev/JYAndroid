@@ -100,6 +100,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         EventBus.getDefault().register(this);
 
         checkVersion();
+
+        getSupportActionBar().setCustomView(R.layout.toolbar_custom_view);
     }
 
     private final String DATA_URL = "http://admintest.jiayantech.com/data.html";

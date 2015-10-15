@@ -1,5 +1,6 @@
 package com.jiayantech.library.base;
 
+import android.support.annotation.LayoutRes;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -277,6 +278,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     public void setRefreshing(boolean refreshing) {
         ultimateRecyclerView.setRefreshing(refreshing);
     }
+
+    public void setEmptyView(@LayoutRes int layoutId){
+        ultimateRecyclerView.setEmptyView(layoutId);
+    }
+
 
     public List<T> getList(){
         return mAdapter.getList();

@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_publish"
-        android:icon="@mipmap/icon_publish"
+        android:icon="@mipmap/icon_add"
         android:title="@string/publish"
         app:showAsAction="withText|always"/>
 

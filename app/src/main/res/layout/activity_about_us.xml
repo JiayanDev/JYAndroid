@@ -40,6 +40,7 @@
             android:textSize="@dimen/small_text_size" />
 
         <TextView
+            android:id="@+id/txt_phone"
             style="@style/text_drawable_left_style"
             android:layout_width="match_parent"
             android:background="@drawable/bg_round_frame_theme"

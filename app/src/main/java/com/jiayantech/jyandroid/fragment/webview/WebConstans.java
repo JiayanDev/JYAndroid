@@ -28,6 +28,7 @@ public class WebConstans {
         String ACTION_EVENT_INTRO = PREFIX + "/eventintro.html";
         String ACTION_HELP = PREFIX + "/help.html";
         String ACTION_APPLYMENT_LIST = PREFIX + "/applymentList.html";
+        String ACTION_ABOUT_ANGEL = PREFIX + "/aboutmlts.html";
     }
 
 //    public interface Path {
