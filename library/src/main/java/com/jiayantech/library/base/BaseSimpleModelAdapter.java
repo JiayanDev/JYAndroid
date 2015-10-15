@@ -79,7 +79,7 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 int positionOffset = mAdapter.customHeaderView == null ? 0 : 1;
 
                 //TODO
-                mAdapter.notifyItemChanged(oldSelectedPos + positionOffset);
+                //mAdapter.notifyItemChanged(oldSelectedPos + positionOffset);
                 //mAdapter.notifyItemChanged(mPosition + positionOffset);
             }
         };

@@ -21,11 +21,14 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.eventbus.RoleChangedEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomePagePostFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Data;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
@@ -270,6 +273,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 setTitle(mRadioButtons[position].getText().toString());
                 mRadioButtons[position].setChecked(true);
 
+//                if(position == 2){
+//                    UserBiz.detail();
+//                }
             }
 
             @Override
@@ -305,6 +311,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                         ((MineFragment) mFragments[2]).resume();
                     }
                 });
+
+                UserBiz.detail(new ResponseListener<AppResponse<AppInit>>() {
+                    @Override
+                    public void onResponse(AppResponse<AppInit> response) {
+                        EventBus.getDefault().post(new RoleChangedEvent(response.data.role));
+                    }
+                });
+
                 break;
         }
     }

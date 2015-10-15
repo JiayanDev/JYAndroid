@@ -20,7 +20,7 @@ import java.util.Map;
 class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
     private Class<? extends Activity> mMainActivityClass;
 
-    JYUmengNotificationClickHandler(Class<? extends Activity> clazz){
+    JYUmengNotificationClickHandler(Class<? extends Activity> clazz) {
         mMainActivityClass = clazz;
     }
 
@@ -30,14 +30,13 @@ class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
         LogUtil.i("UmengPushAction", String.format("Message title: %s , ticker: %s , custom: %s ",
                 uMessage.title, uMessage.ticker, uMessage.custom));
 
-
         Map<String, Object> result = GsonUtils.build().fromJson(uMessage.custom,
                 new TypeToken<Map<String, Object>>() {
                 }.getType());
         String type = null;
         String url = null;
         long id = 0;
-        switch ((String)result.get("action")){
+        switch ((String) result.get("action")) {
             case UmengPushManager.ACTION_JUMP_TO_PAGE:
                 BasePushMessage<JumpToPageData> jumpToPage = GsonUtils.build().fromJson(
                         uMessage.custom,
@@ -50,13 +49,12 @@ class JYUmengNotificationClickHandler extends UmengNotificationClickHandler {
                 BasePushMessage<String> jumpToWeb = GsonUtils.build().fromJson(uMessage.custom,
                         new TypeToken<BasePushMessage<String>>() {
                         }.getType());
-
+                url = jumpToWeb.data;
         }
         sendBroadcast(context, type, id, url);
-        //UmengPushManager.getInstance().handleClickActionFromNotification(type, id, url);
     }
 
-    private void sendBroadcast(Context context, String type, long id, String url){
+    private void sendBroadcast(Context context, String type, long id, String url) {
         Intent intent = new Intent();
         intent.setAction(ClickActionReceiver.ACTION);
         intent.putExtra("action", type);

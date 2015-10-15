@@ -23,8 +23,6 @@ import com.jiayantech.library.utils.LogUtil;
 import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.umeng_push.UmengPushManager;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -323,6 +321,8 @@ public class UserBiz {
             if (mActivity != null) mActivity.dismissProgressDialog();
             AppInit appInit = response.data;
             AppInitManger.save(appInit);
+
+
             String social_response = getSocialReceipt(appInit, social_type);
             if (appInit.register && TextUtils.isEmpty(social_response) && !TextUtils.isEmpty(AppInitManger.getPhoneNum())) {
                 BroadcastHelper.send(Broadcasts.ACTION_LOGINED);

@@ -12,6 +12,7 @@ import com.jiayantech.library.R;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
+import com.jiayantech.library.utils.LogUtil;
 import com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
@@ -33,6 +34,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  * rights reserved.
  */
 public class RefreshListFragment<T extends BaseModel, ResponseT extends AppResponse<List<T>>> extends BaseFragment {
+    private static final String TAG = "RefreshListFragment";
 
     private static final String REFRESH_ID = "sinceId";
     private static final String MORE_ID = "maxId";
@@ -105,6 +107,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onResponse(ResponseT response) {
+                LogUtil.v(TAG, "onRefresh onResponse list size:" + response.data.size());
                 //if (!enablePaging) {
                 mAdapter.clear();
                 //}
@@ -155,6 +158,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         HttpReq.get(mAction, mParams, page, false, false, mType, new ResponseListener<ResponseT>() {
             @Override
             public void onResponse(ResponseT response) {
+                LogUtil.v(TAG, "onLoadMore onResponse");
                 List<T> list = response.data;
                 if (list.size() > 0) {
                     mAdapter.addMore(list);

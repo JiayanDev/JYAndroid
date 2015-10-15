@@ -16,7 +16,7 @@ import com.jiayantech.jyandroid.widget.NotifyingScrollView;
  * Created by liangzili on 15/9/14.
  */
 public class WebViewOverlayFragment extends WebViewFragment{
-    private FloatingActionButton mPublishButton;
+    protected FloatingActionButton mPublishButton;
 
     @Nullable
     @Override

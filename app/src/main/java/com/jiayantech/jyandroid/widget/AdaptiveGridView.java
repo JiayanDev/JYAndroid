@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.GridView;
 
 /**
@@ -26,5 +27,12 @@ public class AdaptiveGridView extends GridView{
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+//        return super.onTouchEvent(ev);
+
+        return false;
     }
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.jiayantech.jyandroid.widget.NotifyingScrollView
         android:id="@+id/layout_scroll"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -47,17 +47,17 @@
     </com.jiayantech.jyandroid.widget.NotifyingScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:id="@+id/button_publish"
-        android:visibility="gone"
-        app:backgroundTint="@color/theme_color"
-        android:src="@android:drawable/ic_menu_edit"
-        android:hapticFeedbackEnabled="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:hapticFeedbackEnabled="true"
+        android:src="@android:drawable/ic_menu_edit"
+        android:visibility="gone"
+        app:backgroundTint="@color/theme_color"
+        app:layout_anchor="@id/layout_scroll"
+        app:layout_anchorGravity="bottom|center"/>
+
     <RelativeLayout
         android:id="@+id/layout_loading"
         android:layout_width="match_parent"
@@ -65,10 +65,11 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:gravity="center">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="正在加载..."/>
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
