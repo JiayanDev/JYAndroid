@@ -23,6 +23,10 @@
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
     </style>
 
+    <style name="DisableTranslucentTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
     <!--将DatePicker的交互从CalendarView改成spinner-->
     <style name="DatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>

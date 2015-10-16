@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.activity.PhotosActivity;
 import com.jiayantech.library.http.BitmapBiz;
 
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 public class PhotoAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mPhotoList;
+    private int mItemSize;
 
     public PhotoAdapter(Context context) {
         mContext = context;
@@ -58,26 +58,42 @@ public class PhotoAdapter extends BaseAdapter {
         }
 
         BitmapBiz.display(holder.photo, mPhotoList.get(position));
-        holder.photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhotosActivity.start(mContext, "", mPhotoList, position);
-            }
-        });
+//        holder.photo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PhotosActivity.start(mContext, "", mPhotoList, position);
+//            }
+//        });
 
-
+//        Observable.create(new Observable.OnSubscribe<Integer>() {
+//            @Override
+//            public void call(final Subscriber<? super Integer> subscriber) {
+//                holder.photo.getViewTreeObserver().addOnPreDrawListener(
+//                        new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        int x;
+//                        holder.photo.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        x = holder.photo.getMeasuredWidth();
+//                        subscriber.onNext(x);
+//                        return true;
+//                    }
+//                });
+//            }
+//        }).subscribe(new Action1<Integer>() {
+//            @Override
+//            public void call(Integer integer) {
+//                BitmapBiz.display(holder.photo, mPhotoList.get(position), integer);
+//            }
+//        });
 
 //        ViewTreeObserver vto = holder.photo.getViewTreeObserver();
 //        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 //            @Override
 //            public boolean onPreDraw() {
-//                LogUtil.i("PhotoAdapter", "onPreDraw");
 //                int x;
-//                int y;
-//                holder.photo.getViewTreeObserver().removeOnPreDrawListener(this);
-//                x = holder.photo.getMeasuredWidth();
-//                y = x;
-//                holder.photo.setLayoutParams(new LinearLayout.LayoutParams(x, y));
+//
+//
 //                return true;
 //            }
 //        });

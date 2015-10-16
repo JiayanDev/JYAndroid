@@ -26,22 +26,27 @@ public class PushBroadcastReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String custom = intent.getStringExtra(EXTRA_UMESSAGE);
-        LogUtil.i("UmengPushMessage", String.format("Message custom: %s",
-                custom));
-        Map<String, Object> result = GsonUtils.build().fromJson(custom,
-                new TypeToken<Map<String, Object>>(){}.getType());
-        switch ((String)result.get("action")){
-            case UmengPushManager.ACTION_JUMP_TO_PAGE:
-                BasePushMessage<JumpToPageData> jumpToPage = GsonUtils.build().fromJson(custom,
-                        new TypeToken<BasePushMessage<JumpToPageData>>(){}.getType());
-                UmengPushManager.getInstance().dispatch(jumpToPage);
-                break;
-            case UmengPushManager.ACTION_JUMP_TO_WEB:
-                BasePushMessage<String> jumpToWeb = GsonUtils.build().fromJson(custom,
-                        new TypeToken<BasePushMessage<String>>(){}.getType());
-                UmengPushManager.getInstance().dispatch(jumpToWeb);
-                break;
+        try {
+            String custom = intent.getStringExtra(EXTRA_UMESSAGE);
+            LogUtil.i("UmengPushMessage", String.format("Message custom: %s",
+                    custom));
+            Map<String, Object> result = GsonUtils.build().fromJson(custom,
+                    new TypeToken<Map<String, Object>>(){}.getType());
+            switch ((String)result.get("action")){
+                case UmengPushManager.ACTION_JUMP_TO_PAGE:
+                    BasePushMessage<JumpToPageData> jumpToPage = GsonUtils.build().fromJson(custom,
+                            new TypeToken<BasePushMessage<JumpToPageData>>(){}.getType());
+                    UmengPushManager.getInstance().dispatch(jumpToPage);
+                    break;
+                case UmengPushManager.ACTION_JUMP_TO_WEB:
+                    BasePushMessage<String> jumpToWeb = GsonUtils.build().fromJson(custom,
+                            new TypeToken<BasePushMessage<String>>(){}.getType());
+                    UmengPushManager.getInstance().dispatch(jumpToWeb);
+                    break;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 }

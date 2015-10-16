@@ -263,14 +263,7 @@ public abstract class WebViewFragment extends BaseFragment {
                 JsNativeBiz.ACTION_GET_USERINFO, JsCallUserInfo.class) {
             @Override
             public void execute(JsCallUserInfo data) {
-                UserInfo info = new UserInfo();
-                info.data = new UserInfo.Info();
-                info.data.id = AppInitManger.getUserId();
-                info.data.nickname = AppInitManger.getUserName();
-                info.data.phone = AppInitManger.getPhoneNum();
-                info.data.token = AppInitManger.getToken();
-                info.data.avatar = AppInitManger.getAvatar();
-
+                UserInfo info = new UserInfo(AppInitManger.sAppInit);
                 callJsMethod(data.success, info.toString());
             }
         });

@@ -209,7 +209,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             }
                         });
                     }
-                }, false);
+                }, true);
                 break;
             case R.id.layout_phone:
                 Intent intent1 = new Intent(this, VerifyPhoneActivity.class);

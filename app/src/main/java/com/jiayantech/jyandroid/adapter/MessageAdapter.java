@@ -55,7 +55,8 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
     public int getItemViewType(int position) {
         BasePushMessage msg = getItem(position);
         if (msg != null) {
-            if (mList.get(position).code <= UmengPushManager.CODE_COMMENT_COMMENTED) {
+            if (mList.get(position).code != 0 &&
+                    mList.get(position).code <= UmengPushManager.CODE_COMMENT_COMMENTED) {
                 return TYPE_REPLY;
             } else {
                 return TYPE_NORMAL;

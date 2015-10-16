@@ -10,7 +10,9 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.ApplyEventActivity;
 import com.jiayantech.jyandroid.activity.LoginActivity;
 import com.jiayantech.jyandroid.biz.JsNativeBiz;
+import com.jiayantech.jyandroid.biz.ShareBiz;
 import com.jiayantech.jyandroid.fragment.ApplyEventFragment;
+import com.jiayantech.jyandroid.model.web.BaseJsCall;
 import com.jiayantech.jyandroid.model.web.JsCallApplyEvent;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.http.HttpReq;
@@ -129,6 +131,24 @@ public class EventDetailFragment extends WebViewFragment{
 
 
                 //onJsCallApplyEvent(id, angelAvatar, angelName, project, hospitalAndDoctor, time);
+            }
+        });
+
+        client.addActionListener(new WebActionListener(
+                JsNativeBiz.ACTION_SHARE_EVENT_TO_WECHAT_FRIENDS, BaseJsCall.class) {
+            @Override
+            public void execute(BaseJsCall data) {
+                ShareBiz.shareToWechat(mUrl, mShareTitle, mShareThumbnail, mShareContent,
+                        ShareBiz.WECHAT_SESSION);
+            }
+        });
+
+        client.addActionListener(new WebActionListener(
+                JsNativeBiz.ACTION_SHARE_EVENT_TO_WECHAT_TIMELINE, BaseJsCall.class) {
+            @Override
+            public void execute(BaseJsCall data) {
+                ShareBiz.shareToWechat(mUrl, mShareTitle, mShareThumbnail, mShareContent,
+                        ShareBiz.WECHAT_TIMELINE);
             }
         });
     }

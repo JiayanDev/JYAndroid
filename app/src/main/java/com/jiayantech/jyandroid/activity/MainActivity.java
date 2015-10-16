@@ -21,11 +21,14 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.jiayantech.jyandroid.R;
+import com.jiayantech.jyandroid.biz.UserBiz;
+import com.jiayantech.jyandroid.eventbus.RoleChangedEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomePagePostFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
+import com.jiayantech.jyandroid.model.AppInit;
 import com.jiayantech.jyandroid.model.Data;
 import com.jiayantech.library.base.BaseActivity;
 import com.jiayantech.library.base.BaseApplication;
@@ -64,7 +67,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main0);
-        setBackgroundResource(android.R.color.white);
+        //setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
         //PushAgent.getInstance(this).enable();
         UmengPushManager.getInstance().enablePush(true);
@@ -97,6 +100,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         EventBus.getDefault().register(this);
 
         checkVersion();
+
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.toolbar_custom_view);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
     }
 
     private final String DATA_URL = "http://admintest.jiayantech.com/data.html";
@@ -176,7 +186,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(mTitles[0]);
+        //getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
         //getSupportActionBar().setTitle(mTitles[0]);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_activity);
@@ -187,7 +197,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(this);
 
-        setTitle(mRadioButtons[0].getText().toString());
+        //setTitle(mRadioButtons[0].getText().toString());
 
     }
 
@@ -267,9 +277,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             @Override
             public void onPageSelected(int position) {
                 //getSupportActionBar().setTitle(mTitles[position]);
-                setTitle(mRadioButtons[position].getText().toString());
+                // setTitle(mRadioButtons[position].getText().toString());
                 mRadioButtons[position].setChecked(true);
 
+//                if(position == 2){
+//                    UserBiz.detail();
+//                }
             }
 
             @Override
@@ -305,6 +318,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                         ((MineFragment) mFragments[2]).resume();
                     }
                 });
+
+                UserBiz.detail(new ResponseListener<AppResponse<AppInit>>() {
+                    @Override
+                    public void onResponse(AppResponse<AppInit> response) {
+                        EventBus.getDefault().post(new RoleChangedEvent(response.data.role));
+                    }
+                });
+
                 break;
         }
     }

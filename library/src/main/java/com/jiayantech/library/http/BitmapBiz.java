@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.android.volley.Network;
@@ -21,8 +22,14 @@ import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.jiayantech.library.base.BaseApplication;
+import com.jiayantech.library.utils.LogUtil;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * Created by 健兴 on 2015/6/26.
@@ -40,14 +47,76 @@ public class BitmapBiz {
      * @param imageView
      * @param imageUrl
      */
-    public static void display(ImageView imageView, String imageUrl) {
+    public static void display(final ImageView imageView, final String imageUrl) {
         if (TextUtils.isEmpty(imageUrl)) {
             imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
             return;
         }
-        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
-                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
-                DEFAULT_SIZE, DEFAULT_SIZE);
+
+        final WeakReference<ImageView> imageRef = new WeakReference<>(imageView);
+        Observable.create(new Observable.OnSubscribe<ImageSize>() {
+            @Override
+            public void call(final Subscriber<? super ImageSize> subscriber) {
+                imageView.getViewTreeObserver().addOnPreDrawListener(
+                        new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        int width;
+                        int height;
+                        if (imageRef != null) ;
+                        ImageView image = imageRef.get();
+                        image.getViewTreeObserver().removeOnPreDrawListener(this);
+                        width = image.getMeasuredWidth();
+                        height = image.getMeasuredHeight();
+                        ImageSize size = new ImageSize(width, height);
+                        subscriber.onNext(size);
+                        subscriber.onCompleted();
+                        return true;
+                    }
+                });
+            }
+        }).subscribe(new Action1<ImageSize>() {
+            @Override
+            public void call(ImageSize imageSize) {
+                if(imageRef != null){
+                    ImageView image = imageRef.get();
+                    sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView,
+                                    HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
+                            //Specify width & height of the bitmap to be scaled down when the image is downloaded.
+                            imageSize.width, imageSize.height);
+                }
+            }
+        });
+
+////
+//        imageView.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        int width;
+//                        int height;
+//                        if (imageRef != null) ;
+//                        ImageView image = imageRef.get();
+//                        image.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        width = image.getMeasuredWidth();
+//                        height = image.getMeasuredHeight();
+//                        return true;
+//                    }
+//                });
+//
+//        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
+//                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
+//                DEFAULT_SIZE, DEFAULT_SIZE);
+    }
+
+    static class ImageSize {
+        int width;
+        int height;
+
+        public ImageSize(int width, int height){
+            this.width = width;
+            this.height = height;
+        }
     }
 
     /**
@@ -145,6 +214,8 @@ public class BitmapBiz {
 
         @Override
         protected int sizeOf(String key, Bitmap value) {
+            int size = value.getRowBytes() * value.getHeight();
+            LogUtil.i("BitmapBiz", key + " size is " + size);
             return value.getRowBytes() * value.getHeight();
         }
 
@@ -158,6 +229,7 @@ public class BitmapBiz {
         @Override
         public void putBitmap(String url, Bitmap bitmap) {
             System.out.println("######## BitmapLruCache PUT ######## " + url);
+
             put(url, bitmap);
         }
     }

@@ -1,18 +1,11 @@
 package com.jiayantech.library.base;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.jiayantech.library.utils.LogUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +18,7 @@ import java.util.List;
  * rights reserved.
  */
 public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
+    private static final String TAG = "RefreshListFragment";
     protected final List<T> mList;
 
     public BaseModelAdapter(List<T> list) {
@@ -38,7 +32,9 @@ public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
     }
 
     public void addNew(List<T> list) {
+        LogUtil.v(TAG, "before addNew list size: " + mList.size());
         mList.addAll(0, list);
+        LogUtil.v(TAG, "after addNew list size: " + mList.size());
         notifyDataSetChanged();
     }
 
@@ -60,7 +56,9 @@ public abstract class BaseModelAdapter<T> extends UltimateViewAdapter {
     }
 
     public void clear() {
+        LogUtil.v(TAG, "before clear list size: " + mList.size());
         clear(mList);
+        LogUtil.v(TAG, "after clear list size: " + mList.size());
     }
 
     @Override

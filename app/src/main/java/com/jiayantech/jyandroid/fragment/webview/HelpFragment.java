@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.jiayantech.library.utils.ToastUtil;
-
 /**
  * Created by liangzili on 15/7/9.
  */
@@ -55,6 +53,6 @@ public class HelpFragment extends WebViewFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ToastUtil.showMessage(String.format("eventId is %d", mId));
+        //ToastUtil.showMessage(String.format("eventId is %d", mId));
     }
 }

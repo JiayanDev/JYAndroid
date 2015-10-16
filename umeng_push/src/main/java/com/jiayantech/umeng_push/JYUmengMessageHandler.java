@@ -11,9 +11,10 @@ import com.umeng.message.entity.UMessage;
  * Created by liangzili on 15/7/24.
  * 处理友盟推送，包括通知栏通知，和自定义消息
  */
-public class JYUmengMessageHandler extends UmengMessageHandler{
+public class JYUmengMessageHandler extends UmengMessageHandler {
     private Context mContext;
-    public JYUmengMessageHandler(Context context){
+
+    public JYUmengMessageHandler(Context context) {
         mContext = context;
     }
 
@@ -27,12 +28,14 @@ public class JYUmengMessageHandler extends UmengMessageHandler{
     @Override
     public void dealWithNotificationMessage(Context context, UMessage uMessage) {
         super.dealWithNotificationMessage(context, uMessage);
-        LogUtil.i("UmengPushMessage", String.format("Notification Message custom: %s",
-                uMessage.custom));
-        sendBroadcast(mContext, uMessage);
+        if (uMessage.custom != null && !uMessage.custom.equals("")) {
+            LogUtil.i("UmengPushMessage", String.format("Notification Message custom: %s",
+                    uMessage.custom));
+            sendBroadcast(mContext, uMessage);
+        }
     }
 
-    public static void sendBroadcast(Context context, UMessage msg){
+    public static void sendBroadcast(Context context, UMessage msg) {
         Intent intent = new Intent(PushBroadcastReceiver.ACTION);
         intent.putExtra(PushBroadcastReceiver.EXTRA_UMESSAGE, msg.custom);
         context.sendBroadcast(intent);

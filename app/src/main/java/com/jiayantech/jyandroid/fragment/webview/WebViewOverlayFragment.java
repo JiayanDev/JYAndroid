@@ -16,7 +16,7 @@ import com.jiayantech.jyandroid.widget.NotifyingScrollView;
  * Created by liangzili on 15/9/14.
  */
 public class WebViewOverlayFragment extends WebViewFragment{
-    private FloatingActionButton mPublishButton;
+    protected FloatingActionButton mPublishButton;
 
     @Nullable
     @Override
@@ -37,6 +37,15 @@ public class WebViewOverlayFragment extends WebViewFragment{
                 startActivity(PublishDiaryActivity.class);
             }
         });
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+////            CoordinatorLayout.LayoutParams params = new
+////                    CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
+//            CoordinatorLayout.LayoutParams params =
+//                    new CoordinatorLayout.LayoutParams(mPublishButton.getLayoutParams());
+//            params.setMargins(0, 0, UIUtil.dip2px(10), 0);
+//            mPublishButton.setLayoutParams(params);
+//        }
     }
 
     @Override

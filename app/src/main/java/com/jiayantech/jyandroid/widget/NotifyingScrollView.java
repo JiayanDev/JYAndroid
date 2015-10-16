@@ -3,6 +3,7 @@ package com.jiayantech.jyandroid.widget;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ScrollView;
 
 /**
@@ -12,6 +13,7 @@ import android.widget.ScrollView;
 public class NotifyingScrollView extends ScrollView{
     public interface OnScrollChangeListener{
         void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt);
+        void onStopScroll();
     }
 
     public void setOnScrollChangeListener(OnScrollChangeListener mOnScrollChangeListener) {
@@ -34,11 +36,18 @@ public class NotifyingScrollView extends ScrollView{
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        if(mOnScrollChangeListener != null && Math.abs(t - oldt) < 20){
+//        if(mOnScrollChangeListener != null && Math.abs(t - oldt) < 20){
             super.onScrollChanged(l, t, oldl, oldt);
             mOnScrollChangeListener.onScrollChanged(this, l, t, oldl, oldt);
-        }
+//        }
     }
+
+    @Override
+    public void onStopNestedScroll(View target) {
+        super.onStopNestedScroll(target);
+        mOnScrollChangeListener.onStopScroll();
+    }
+
 
 
     @Override

@@ -84,7 +84,7 @@ public class EventRankActivity extends BaseActivity {
             }
         });
         mEditComment.clearFocus();
-        ToastUtil.showMessage("eventId is " + mEventId);
+        //ToastUtil.showMessage("eventId is " + mEventId);
         setTitle(R.string.title_comment_company);
     }
 

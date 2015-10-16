@@ -13,4 +13,8 @@
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="LoadUrlFromXmlWebView">
+        <attr name="url" format="string"/>
+    </declare-styleable>
 </resources>
