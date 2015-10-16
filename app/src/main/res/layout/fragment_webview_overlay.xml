@@ -46,18 +46,17 @@
         </LinearLayout>
     </com.jiayantech.jyandroid.widget.NotifyingScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.jiayantech.jyandroid.widget.CustomFAB
         android:id="@+id/button_publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/icon_add"
         android:tint="@android:color/white"
         android:visibility="gone"
-        android:layout_marginBottom="10dp"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="@dimen/fab_margin_bottom"
         app:backgroundTint="@color/theme_color"
         app:layout_anchor="@id/layout_scroll"
-        app:layout_anchorGravity="bottom|center"/>
+        app:layout_anchorGravity="bottom|center|"/>
 
     <RelativeLayout
         android:id="@+id/layout_loading"

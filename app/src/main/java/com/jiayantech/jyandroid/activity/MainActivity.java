@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main0);
-        setBackgroundResource(android.R.color.white);
+        //setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
         //PushAgent.getInstance(this).enable();
         UmengPushManager.getInstance().enablePush(true);
@@ -101,7 +101,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         checkVersion();
 
-        getSupportActionBar().setCustomView(R.layout.toolbar_custom_view);
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setCustomView(R.layout.toolbar_custom_view);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
     }
 
     private final String DATA_URL = "http://admintest.jiayantech.com/data.html";
@@ -181,7 +186,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void initView() {
-        getSupportActionBar().setTitle(mTitles[0]);
+        //getSupportActionBar().setTitle(mTitles[0]);
         mViewPager = (UnslidableViewPager) findViewById(R.id.id_viewpager);
         //getSupportActionBar().setTitle(mTitles[0]);
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_activity);
@@ -192,7 +197,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(this);
 
-        setTitle(mRadioButtons[0].getText().toString());
+        //setTitle(mRadioButtons[0].getText().toString());
 
     }
 
@@ -272,7 +277,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             @Override
             public void onPageSelected(int position) {
                 //getSupportActionBar().setTitle(mTitles[position]);
-                setTitle(mRadioButtons[position].getText().toString());
+                // setTitle(mRadioButtons[position].getText().toString());
                 mRadioButtons[position].setChecked(true);
 
 //                if(position == 2){
