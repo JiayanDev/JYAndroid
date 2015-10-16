@@ -35,6 +35,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/DisableTranslucentTheme"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

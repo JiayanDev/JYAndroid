@@ -13,7 +13,11 @@ public class UIMisc {
     public static final String ROLE_COMPANY = "company";
     public static final String ROLE_OFFICIAL = "official";
     public static final String ROLE_NORMAL = "normal";
+
     public static void setRoleTag(String role, ImageView imageView){
+        if(role == null){
+            return;
+        }
         switch (role){
             case ROLE_ANGEL:
                 imageView.setVisibility(View.VISIBLE);
