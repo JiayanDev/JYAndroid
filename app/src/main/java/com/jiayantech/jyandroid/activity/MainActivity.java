@@ -1,11 +1,7 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,7 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.eventbus.RoleChangedEvent;
@@ -29,11 +24,8 @@ import com.jiayantech.jyandroid.fragment.MineFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.AppInit;
-import com.jiayantech.jyandroid.model.Data;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.http.AppResponse;
-import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
 import com.jiayantech.library.utils.DialogUtils;
 import com.jiayantech.library.utils.LogUtil;
@@ -41,6 +33,7 @@ import com.jiayantech.library.utils.ToastUtil;
 import com.jiayantech.library.widget.UnslidableViewPager;
 import com.jiayantech.umeng_push.UmengPushManager;
 import com.jiayantech.umeng_push.UnreadMessageEvent;
+import com.umeng.update.UmengUpdateAgent;
 
 import de.greenrobot.event.EventBus;
 
@@ -72,6 +65,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         //PushAgent.getInstance(this).enable();
         UmengPushManager.getInstance().enablePush(true);
 
+        //检查更新
+        UmengUpdateAgent.update(this);
+
         mTitles = getResources().getStringArray(R.array.tab_title);
 
         setSwipeBackEnable(false);
@@ -99,7 +95,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
         EventBus.getDefault().register(this);
 
-        checkVersion();
+        //checkVersion();
 
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setCustomView(R.layout.toolbar_custom_view);
@@ -109,34 +105,34 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         actionBar.setDisplayShowHomeEnabled(false);
     }
 
-    private final String DATA_URL = "http://admintest.jiayantech.com/data.html";
-
-    private void checkVersion() {
-        HttpReq._request(Request.Method.GET, DATA_URL, null, null, false, false, null, new ResponseListener<AppResponse<Data>>() {
-            @Override
-            public void onResponse(AppResponse<Data> dataAppResponse) {
-                final Data data = dataAppResponse.data;
-                if (BaseApplication.getVersionValue(data.version) > BaseApplication.getVersionValue(BaseApplication.getContext().getVersionName())) {
-                    //Context context = BaseApplication.getContext();
-                    Context context = _this;
-                    AlertDialog dialog = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT).
-                            setTitle("版本更新: v" + dataAppResponse.data.version).
-                            setNegativeButton("取消", null).
-                            setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.url));
-                                    startActivity(intent);
-                                }
-                            }).
-                            create();
-                    //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//指定会全局,可以在后台弹出
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
-                }
-            }
-        });
-    }
+//    private final String DATA_URL = Property.getProperty("base.url.update");
+//
+//    private void checkVersion() {
+//        HttpReq._request(Request.Method.GET, DATA_URL, null, null, false, false, null, new ResponseListener<AppResponse<Data>>() {
+//            @Override
+//            public void onResponse(AppResponse<Data> dataAppResponse) {
+//                final Data data = dataAppResponse.data;
+//                if (BaseApplication.getVersionValue(data.version) > BaseApplication.getVersionValue(BaseApplication.getContext().getVersionName())) {
+//                    //Context context = BaseApplication.getContext();
+//                    Context context = _this;
+//                    AlertDialog dialog = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT).
+//                            setTitle("版本更新: v" + dataAppResponse.data.version).
+//                            setNegativeButton("取消", null).
+//                            setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.url));
+//                                    startActivity(intent);
+//                                }
+//                            }).
+//                            create();
+//                    //dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//指定会全局,可以在后台弹出
+//                    dialog.setCanceledOnTouchOutside(false);
+//                    dialog.show();
+//                }
+//            }
+//        });
+//    }
 
     @Override
     protected void onDestroy() {

@@ -43,7 +43,7 @@ public class MyEventsActivity extends SingleFragmentActivity implements MyEvents
     }
 
     private void addBottomButton() {
-        LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_parent);
+        LinearLayout layout_parent = (LinearLayout) findViewById(R.id.layout_fragment_parent);
         btn = new Button(this);
         btn.setBackgroundResource(R.drawable.bg_round_theme);
         btn.setText(R.string.become_angel);

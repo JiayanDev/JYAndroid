@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.jiayantech.jyandroid.widget.CustomImageView;
 import com.jiayantech.library.http.BitmapBiz;
 import com.jiayantech.library.http.HttpConfig;
 
@@ -28,7 +29,7 @@ class BannerPagerAdapter extends PagerAdapter {
         mImageViewList = new ArrayList<>();
         for (int i = 0; i < mImageList.size(); i++) {
             final int count = i;
-            final ImageView imageView = new ImageView(context);
+            final CustomImageView imageView = new CustomImageView(context);
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +38,18 @@ class BannerPagerAdapter extends PagerAdapter {
                     mImageList.get(count).listener.onClick(mContext);
                 }
             });
+//            imageView.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    mImageList.get(count).listener.onClick(mContext);
+//                    return false;
+//                }
+//            });
             mImageViewList.add(imageView);
         }
         containerWidth = context.getResources().getDisplayMetrics().widthPixels;
     }
+
 
     @Override
     public int getCount() {

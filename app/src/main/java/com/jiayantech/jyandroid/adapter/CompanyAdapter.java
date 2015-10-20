@@ -31,13 +31,12 @@ public class CompanyAdapter extends BaseSimpleModelAdapter<Event> {
         setOnItemClickListener(new OnItemClickListener<Event>() {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Event> adapter, int position, Event item) {
-//                Intent intent = new Intent(context, EventRankActivity.class);
-//                context.startActivity(intent);
                 Intent intent = WebViewActivity.createLaunchIntent(context, item.eventId,
                         WebConstans.Type.TYPE_EVENT);
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override

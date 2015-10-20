@@ -185,7 +185,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         BitmapBiz.display(img_avatar, appInit.avatar);
         txt_nickname.setText(appInit.name);
         String info = appInit.gender == 0 ? getString(R.string.gender_female) : getString(R.string.gender_male)
-                + "  " + AppInitManger.getProvince() + AppInitManger.getCity();
+                + "  ";
+        if(AppInitManger.getProvince() != null && !AppInitManger.getProvince().equals("")) {
+           info += AppInitManger.getProvince() + AppInitManger.getCity();
+        }
         if (AppInitManger.getBirthday() != null) {
             try {
                 int age = TimeUtil.getAge(new Date(AppInitManger.getBirthday() * 1000));

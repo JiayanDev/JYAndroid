@@ -52,9 +52,13 @@
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 
--keep public class [your_pkg].R$*{
+-keep public class **.R$*{
     public static final int *;
     }
+
+-keepclassmembers class **.R$* {
+       public static <fields>;
+}
 
 #libray中swipeback、http、GsonUtils都不能混淆，里面包含Gson解析相关的类
 -keep class me.imid.swipebacklayout.lib.app.** {*;}
@@ -81,3 +85,5 @@
     public void onEvent(**);
 }
 
+####### RxAndroid #######
+-dontwarn rx.internal.util.unsafe.**

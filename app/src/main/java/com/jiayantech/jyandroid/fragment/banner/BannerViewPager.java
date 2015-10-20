@@ -2,6 +2,7 @@ package com.jiayantech.jyandroid.fragment.banner;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 
 /**
@@ -18,4 +19,20 @@ public class BannerViewPager extends AutoScrollViewPager {
         setCycle(true);
         setStopScrollWhenTouch(true);
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        boolean flag = super.dispatchTouchEvent(ev);
+        if(ev.getAction() == MotionEvent.ACTION_DOWN){
+            onTouchEvent(ev);
+        }
+        return flag;
+    }
+//
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+////        boolean flag = super.onInterceptTouchEvent(ev);
+////        return true;
+//        return super.onInterceptTouchEvent(ev);
+//    }
 }

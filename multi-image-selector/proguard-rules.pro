@@ -16,3 +16,10 @@
 #   public *;
 #}
 #-keep class me.imid.swipebacklayout.lib.app.** {*;}
+-keep public class **.R$*{
+    public static final int *;
+    }
+
+-keepclassmembers class **.R$* {
+       public static <fields>;
+}

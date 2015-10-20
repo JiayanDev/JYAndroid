@@ -34,3 +34,10 @@
 ##-keep class com.google.gson.stream.** { *; }
 ## Application classes that will be serialized/deserialized over Gson
 #-keep class com.google.gson.examples.android.model.** { *; }
+-keep public class **.R$*{
+    public static final int *;
+    }
+
+-keepclassmembers class **.R$* {
+       public static <fields>;
+}

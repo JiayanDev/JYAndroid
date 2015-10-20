@@ -144,10 +144,8 @@
     <!--出错信息toast-->
     <string name="toast_error_wechat_not_install">未安装微信应用</string>
 
-    <string name="description_company">伴美活动完全免费，报名信息提交后，工作人员会在1个工作日内与您电话确认
-    ，报名状态请在「我的」 - 「我的伴美」中查看.</string>
-    <string name="description_angel">伴美活动完全免费，报名信息提交后，工作人员会在1个工作日内与您电话确认
-    ，报名状态请在「我的」 - 「美丽天使」中查看.</string>
+    <string name="description_company">信息确认无误并提交后，亲们将会在1~3个工作日内收到系统信息通知的审核结果，用户凭报名信息参加伴美活动。可在“我的”-“我的通知”当中查看通知信息喔。</string>
+    <string name="description_angel">信息确认无误并提交后，亲们将会在1~3个工作日内收到系统信息通知。可在“我的”-“我的通知”当中查看通知信息喔。</string>
     <string name="btn_confirm_applyment">确认报名</string>
     <string name="take_camera">拍照</string>
     <string name="take_photo">手机相册</string>
