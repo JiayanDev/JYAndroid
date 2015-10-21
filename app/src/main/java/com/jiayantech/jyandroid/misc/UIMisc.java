@@ -32,7 +32,7 @@ public class UIMisc {
                 imageView.setImageResource(R.mipmap.tag_offical);
                 break;
             case ROLE_NORMAL:
-                imageView.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.GONE);
                 break;
             default:
                 return;

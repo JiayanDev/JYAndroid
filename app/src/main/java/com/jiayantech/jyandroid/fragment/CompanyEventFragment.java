@@ -30,7 +30,7 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
                 .showFirstEnable(true)
                 .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
-                .showLastDivider()
+//                .showLastDivider()
                 .build());
 
         //setEnablePaging(true);
