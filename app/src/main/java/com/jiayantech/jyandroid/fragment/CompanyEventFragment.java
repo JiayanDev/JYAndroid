@@ -25,15 +25,15 @@ public class CompanyEventFragment extends RefreshListFragment<Event, AppResponse
     public void onInitView() {
         super.onInitView();
         getActivity().setTitle(R.string.title_my_company);
+        setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
         ultimateRecyclerView.addItemDecoration(new DividerItemDecoration.Builder(getActivity())
                 .showFirstEnable(true)
                 .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
-                .showLastDivider()
+//                .showLastDivider()
                 .build());
 
-        setParams(new CompanyAdapter(getActivity(), null), CompanyBiz.ACTION_EVENT_COMPANY_LIST);
-        setEnablePaging(true);
+        //setEnablePaging(true);
 
     }
 

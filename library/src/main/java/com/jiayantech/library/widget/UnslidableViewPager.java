@@ -44,4 +44,9 @@ public class UnslidableViewPager extends ViewPager{
             return false;
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 }

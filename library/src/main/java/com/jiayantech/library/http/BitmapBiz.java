@@ -87,26 +87,6 @@ public class BitmapBiz {
                 }
             }
         });
-
-////
-//        imageView.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//                    @Override
-//                    public boolean onPreDraw() {
-//                        int width;
-//                        int height;
-//                        if (imageRef != null) ;
-//                        ImageView image = imageRef.get();
-//                        image.getViewTreeObserver().removeOnPreDrawListener(this);
-//                        width = image.getMeasuredWidth();
-//                        height = image.getMeasuredHeight();
-//                        return true;
-//                    }
-//                });
-//
-//        sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView, HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
-//                //Specify width & height of the bitmap to be scaled down when the image is downloaded.
-//                DEFAULT_SIZE, DEFAULT_SIZE);
     }
 
     static class ImageSize {

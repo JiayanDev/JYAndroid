@@ -30,6 +30,11 @@
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
 -keep public interface com.facebook.**
 -keep public interface com.tencent.**
 -keep public interface com.umeng.socialize.**
@@ -52,9 +57,13 @@
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 
--keep public class [your_pkg].R$*{
+-keep public class com.jiayantech.jyandroid.R$*{
     public static final int *;
     }
+
+-keepclassmembers class **.R$* {
+       public static <fields>;
+}
 
 #libray中swipeback、http、GsonUtils都不能混淆，里面包含Gson解析相关的类
 -keep class me.imid.swipebacklayout.lib.app.** {*;}
@@ -62,10 +71,13 @@
 -keep class com.jiayantech.library.utils.GsonUtils.**
 
 #项目中用到的不能混淆的库
+#-keep com.squareup.** { *;}
+#-dontwarn com.squareup.** {*;}
 -dontwarn com.squareup.picasso.**
 -keep class com.squareup.okhttp.** {*;}
+-dontwarn com.squareup.wire.**
+-keep class com.squareup.wire.** {*;}
 -keep class com.jiayantech.jyandroid.model.** {*;}
--keep class com.jiayantech.jyandroid.base.BaseModel
 
 #Gson解析不能混淆的类
 # removes such information by default, so configure it to keep all of it.
@@ -80,4 +92,32 @@
 -keepclassmembers class ** {
     public void onEvent(**);
 }
+
+####### RxAndroid #######
+-dontwarn rx.internal.util.unsafe.**
+
+-keep class com.jiayantech.jyandroid.clickaction.** {*;}
+
+-keep class com.jiayantech.umeng_push.model.** {*;}
+
+-keep,allowshrinking class org.android.agoo.** {*;}
+
+-keep,allowshrinking class org.android.agoo.service.* {
+    public <fields>;
+    public <methods>;
+}
+
+-keep,allowshrinking class com.umeng.message.* {
+    public <fields>;
+    public <methods>;
+}
+
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+
+#webview相关的
+-keep class com.jiayantech.jyandroid.fragment.webview.** {*;}
+
+-keep class com.umeng.** {*;}
 

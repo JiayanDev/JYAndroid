@@ -10,19 +10,29 @@ import android.util.Log;
  * rights reserved.
  */
 public class LogUtil {
+    public static final boolean DEBUG = false;
+
     public static void i(String tag, String msg) {
-        Log.i(tag, msg);
+        if(DEBUG) {
+            Log.i(tag, msg);
+        }
     }
 
     public static void v(String tag, String msg) {
-        Log.v(tag, msg);
+        if(DEBUG) {
+            Log.v(tag, msg);
+        }
     }
 
     public static void d(String tag, String msg) {
-        Log.d(tag, msg);
+        if(DEBUG) {
+            Log.d(tag, msg);
+        }
     }
 
     public static void e(String tag, String msg) {
-        Log.e(tag, msg);
+        if(DEBUG) {
+            Log.e(tag, msg);
+        }
     }
 }
