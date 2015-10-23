@@ -22,6 +22,9 @@ import com.jiayantech.library.utils.ToastUtil;
 public class SplashActivity extends BaseActivity {
     public static final String EXTRA_BUNDLE = "launchParams";
 
+
+    private static final int CODE_USER_NOT_EXIST = -12;
+
     private final long delayMillis = 1000;
     final long currentTimeMillis = System.currentTimeMillis();
 
@@ -43,7 +46,7 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private void appInit(){
+    private void appInit() {
         CommBiz.appInit(new ResponseListener<AppResponse<AppInit>>() {
             @Override
             public void onResponse(AppResponse<AppInit> appInitAppResponse) {
@@ -85,14 +88,20 @@ public class SplashActivity extends BaseActivity {
                     appInit();
                     return;
                 }
-                if (!(error instanceof HttpReq.MsgError)) {
-                    if (AppInitManger.getProjectCategoryData() != null) {
-                        gotoMainActivity();
-                    }else{
+                if (AppInitManger.getProjectCategoryData() == null) {
+                    AppInitManger.claer();
+                    appInit();
+                    return;
+                }
+                if (error instanceof HttpReq.MsgError) {
+                    HttpReq.MsgError msgError = (HttpReq.MsgError) error;
+                    if (msgError.code == CODE_USER_NOT_EXIST) {
                         AppInitManger.claer();
                         appInit();
+                        return;
                     }
                 }
+                gotoMainActivity();
             }
         });
     }
