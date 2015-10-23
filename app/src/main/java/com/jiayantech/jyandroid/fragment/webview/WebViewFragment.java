@@ -138,6 +138,9 @@ public abstract class WebViewFragment extends BaseFragment {
     private void initWebView() {
         mWebView.setWebViewClient(onSetWebViewClient());
         mWebView.setWebChromeClient(onSetWebChromeClient());
+
+        mWebView.setVerticalScrollBarEnabled(false);
+
         WebSettings settings = mWebView.getSettings();
         settings.setBuiltInZoomControls(false);
         //允许执行javascript
