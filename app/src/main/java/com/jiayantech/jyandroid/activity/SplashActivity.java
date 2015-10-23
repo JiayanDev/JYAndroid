@@ -1,23 +1,16 @@
 package com.jiayantech.jyandroid.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.WindowManager;
 
-import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.biz.CommBiz;
 import com.jiayantech.jyandroid.biz.UserBiz;
 import com.jiayantech.jyandroid.manager.AppInitManger;
 import com.jiayantech.jyandroid.model.AppInit;
-import com.jiayantech.jyandroid.model.Data;
 import com.jiayantech.library.base.BaseActivity;
-import com.jiayantech.library.base.BaseApplication;
 import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.http.HttpReq;
 import com.jiayantech.library.http.ResponseListener;
@@ -95,6 +88,9 @@ public class SplashActivity extends BaseActivity {
                 if (!(error instanceof HttpReq.MsgError)) {
                     if (AppInitManger.getProjectCategoryData() != null) {
                         gotoMainActivity();
+                    }else{
+                        AppInitManger.claer();
+                        appInit();
                     }
                 }
             }
