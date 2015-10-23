@@ -8,8 +8,6 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import com.jiayantech.library.utils.ToastUtil;
-
 /**
  * Created by 健兴 on 2015/10/7.
  */
@@ -42,12 +40,6 @@ public class AdaptWebView extends WebView {
             // 重设高度
             setMeasuredDimension(getMeasuredWidth(), measuredHeight);
         }
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int ow, int oh) {
-        super.onSizeChanged(w, h, ow, oh);
-        ToastUtil.showMessage("h="+h);
     }
 
     private ScrollView mScrollView;
