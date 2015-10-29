@@ -85,7 +85,7 @@ public class SplashActivity extends BaseActivity {
                     appInit();
                     return;
                 }
-                if (!(error instanceof HttpReq.MsgError)) {
+                if ((error instanceof HttpReq.MsgError)) {
                     if (AppInitManger.getProjectCategoryData() != null) {
                         gotoMainActivity();
                     }else{
