@@ -23,7 +23,7 @@ public class Banner {
             final Banner banner = new Banner();
             banner.imageUrl = topic.coverImg;
             banner.type = "topic";
-            banner.id = topic.id;
+            banner.id = topic.topicId;
             banner.listener = new BannerOnClickListener() {
                 @Override
                 public void onClick(Context context) {

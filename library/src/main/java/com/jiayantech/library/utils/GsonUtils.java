@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.Type;
 
@@ -58,7 +59,12 @@ class StringConverter implements JsonSerializer<String>, JsonDeserializer<String
 //            e.printStackTrace();
 //        }
 //        return result;
-        return json.isJsonPrimitive() ? json.getAsJsonPrimitive().getAsString() : json.toString();
+        try {
+            String result = json.isJsonPrimitive() ? json.getAsJsonPrimitive().getAsString() : json.toString();
+            return result;
+        }catch (JsonSyntaxException e){
+            return "";
+        }
     }
 }
 
@@ -107,7 +113,7 @@ class LongConverter implements JsonDeserializer<Long>, JsonSerializer<Long> {
         if (jsonStr.endsWith("L") || jsonStr.endsWith("l")) {
             jsonStr = jsonStr.substring(0, jsonStr.length() - 1);
             return Long.valueOf(jsonStr);
-        }else{
+        } else {
             return json.getAsJsonPrimitive().getAsLong();
         }
     }

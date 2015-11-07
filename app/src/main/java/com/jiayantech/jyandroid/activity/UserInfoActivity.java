@@ -109,7 +109,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
         mBirthdayText.setText(AppInitManger.getBirthday() == null ? "" : TimeUtil.stamp2YearMonthDay(AppInitManger.getBirthday() * 1000));
         mPhoneText.setText(AppInitManger.getPhoneNum());
-        BitmapBiz.display(mAvatarImg, AppInitManger.getAvatar());
+        BitmapBiz.displayDefaultSize(mAvatarImg, AppInitManger.getAvatar());
         mPhoneText.setText(AppInitManger.getPhoneNum());
 
         if (AppInitManger.sAppInit.bindWX) {
@@ -297,7 +297,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 ToastUtil.showMessage(R.string.update_success_cellphone);
                 break;
             case EditFinishEvent.ACTION_EDIT_AVATAR:
-                BitmapBiz.display(mAvatarImg, event.avatar);
+                BitmapBiz.displayDefaultSize(mAvatarImg, event.avatar);
                 ToastUtil.showMessage(R.string.update_success_avatar);
                 break;
             case EditFinishEvent.ACTION_EDIT_LOCATION:
@@ -321,6 +321,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
+
                                 BitmapBiz.clear(AppInitManger.sAppInit.avatar);
                                 AppInitManger.sAppInit.avatar =
                                         HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
