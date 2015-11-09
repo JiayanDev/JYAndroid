@@ -321,7 +321,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             public void onResponse(AppResponse appResponse) {
                                 dismissProgressDialog();
-
                                 BitmapBiz.clear(AppInitManger.sAppInit.avatar);
                                 AppInitManger.sAppInit.avatar =
                                         HttpConfig.IMAGE_SHOW_URL + imageUploadResp.url;
