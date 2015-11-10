@@ -51,7 +51,7 @@ public class AppInitManger {
         save();
     }
 
-    public static void claer() {
+    public static void clear() {
         ConfigManager.putToken("");
     }
 
