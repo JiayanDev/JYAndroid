@@ -118,11 +118,14 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 onRefreshResponse(mAdapter);
                 if (size == 0 && mAdapter.getAdapterItemCount() == 0) {
                     setNoMore();
-                } else if (enablePaging){
+                } else if (enablePaging) {
                     mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.enableLoadmore();
                     mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
                             .inflate(R.layout.bottom_progressbar, null));
+                    mAdapter.isLoadMoreChanged = false;
+//                    mAdapter.swipeCustomLoadMoreView(LayoutInflater.from(getActivity())
+//                            .inflate(R.layout.bottom_progressbar, null));
                 }
             }
 
@@ -209,26 +212,39 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //            });
 //            animator.start();
 
-            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            mAdapter.setCustomLoadMoreView(null);
-            ultimateRecyclerView.disableLoadmore();
-            mAdapter.notifyDataSetChanged();
-
 //            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-//            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-//            ultimateRecyclerView.postDelayed(new Runnable() {
+//            final int distance = -mAdapter.getCustomLoadMoreView().getHeight();
+            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+
+
+//            ultimateRecyclerView.disableLoadmore();
+//            mAdapter.swipeCustomLoadMoreView(null);
+////            mAdapter.notifyDataSetChanged();
+
+//            new Handler().postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-//                    mAdapter.setCustomLoadMoreView(null);
-//                    ultimateRecyclerView.disableLoadmore();
-//                    mAdapter.notifyDataSetChanged();
+////                    mAdapter.setCustomLoadMoreView(null);
+////                    ultimateRecyclerView.disableLoadmore();
+////                ultimateRecyclerView.mRecyclerView.scrollBy(0, distance);
+//
 //                }
-//            }, 100);
+//            }, 2000);
+
+//            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+            ultimateRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setCustomLoadMoreView(null);
+                    ultimateRecyclerView.disableLoadmore();
+//                    mAdapter.notifyDataSetChanged();
+                }
+            }, 100);
         }
     }
 
 
-    private void setViewHeight(View v,int height){
+    private void setViewHeight(View v, int height) {
         v.getLayoutParams();
     }
 
@@ -300,16 +316,16 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         ultimateRecyclerView.setRefreshing(refreshing);
     }
 
-    public void setEmptyView(@LayoutRes int layoutId){
+    public void setEmptyView(@LayoutRes int layoutId) {
         ultimateRecyclerView.setEmptyView(layoutId);
     }
 
 
-    public List<T> getList(){
+    public List<T> getList() {
         return mAdapter.getList();
     }
 
-    public void refreshItem(){
+    public void refreshItem() {
         mAdapter.notifyDataSetChanged();
     }
 
