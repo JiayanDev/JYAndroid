@@ -82,7 +82,7 @@ public class UploadImageBiz {
         sVolleyQueue.add(request);
     }
 
-    private static void requestImageUploadProof(final String type,
+    public static void requestImageUploadProof(final String type,
                                                 final OnGetUploadProofListener listener) {
         ImageUploadProof proof = null;
         switch (type) {

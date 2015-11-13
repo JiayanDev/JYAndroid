@@ -5,6 +5,7 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.jiayantech.jyandroid.model.web.BaseJsCall;
+import com.jiayantech.library.utils.GsonUtils;
 import com.jiayantech.library.utils.LogUtil;
 
 import org.json.JSONException;
@@ -64,16 +65,13 @@ public class JsNativeBiz {
      * @return
      */
     public static String getJsAction(String url) {
-        String urlDecode = Uri.decode(url);
+        //String urlDecode = Uri.decode(url);
+        String urlDecode = url;
         String jsonString = urlDecode.substring(urlDecode.indexOf("{"), urlDecode.lastIndexOf("}") + 1);
-        jsonString = jsonString.replace("\"", "\'");
-        try {
-            JSONObject jsonObject = new JSONObject(jsonString);
-            return jsonObject.getString("action");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
+        //jsonString = jsonString.replace("\"", "\'");
+        //JSONObject jsonObject = new JSONObject(jsonString);
+        BaseJsCall jsonObject = GsonUtils.build().fromJson(jsonString, BaseJsCall.class);
+        return jsonObject.action;
     }
 
 

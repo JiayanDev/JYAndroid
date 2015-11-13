@@ -26,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -180,12 +179,18 @@ public class HttpReq<T> extends Request<T> {
     }
 
     private static String toErrorString(VolleyError error) {
-        String msg = error.getLocalizedMessage();
-        String name = error.getClass().getSimpleName();
-        if (msg == null) {
-            return name;
+        String msg = "";
+//        String name = error.getClass().getSimpleName();
+//        if (msg == null) {
+//            return name;
+//        }
+//        return name + ": " + msg;
+        if(error instanceof MsgError){
+            msg = ((MsgError) error).getSimpleMsg();
+        }else{
+            msg = error.getLocalizedMessage();
         }
-        return name + ": " + msg;
+        return msg;
     }
 
     public static class MsgError extends VolleyError {
@@ -196,6 +201,10 @@ public class HttpReq<T> extends Request<T> {
             super(code + ": " + msg);
             this.code = code;
             this.msg = msg;
+        }
+
+        public String getSimpleMsg(){
+            return msg;
         }
     }
 

@@ -21,9 +21,7 @@ import com.jiayantech.library.utils.ToastUtil;
  */
 public class SplashActivity extends BaseActivity {
     public static final String EXTRA_BUNDLE = "launchParams";
-
-
-    private static final int CODE_USER_NOT_EXIST = -12;
+    private static final int ERROR_CODE_USER_ID_NOT_EXIST = -12;
 
     private final long delayMillis = 1000;
     final long currentTimeMillis = System.currentTimeMillis();
@@ -84,24 +82,19 @@ public class SplashActivity extends BaseActivity {
                 if (error instanceof HttpReq.OverdueError) {
                     ToastUtil.showMessage(R.string.msg_overdue_to_login);
                     ((HttpReq.OverdueError) error).clear();
-                    AppInitManger.claer();
+                    AppInitManger.clear();
                     appInit();
                     return;
                 }
-                if (AppInitManger.getProjectCategoryData() == null) {
-                    AppInitManger.claer();
-                    appInit();
-                    return;
-                }
-                if (error instanceof HttpReq.MsgError) {
-                    HttpReq.MsgError msgError = (HttpReq.MsgError) error;
-                    if (msgError.code == CODE_USER_NOT_EXIST) {
-                        AppInitManger.claer();
+                if ((error instanceof HttpReq.MsgError)) {
+                    if (((HttpReq.MsgError) error).code == ERROR_CODE_USER_ID_NOT_EXIST ||
+                            AppInitManger.getProjectCategoryData() == null) {
+                        AppInitManger.clear();
                         appInit();
                         return;
                     }
+                    gotoMainActivity();
                 }
-                gotoMainActivity();
             }
         });
     }

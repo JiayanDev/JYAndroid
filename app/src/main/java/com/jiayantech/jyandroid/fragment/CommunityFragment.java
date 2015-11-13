@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.jiayantech.library.http.AppResponse;
 import com.jiayantech.library.utils.UIUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -52,8 +54,9 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
                 .color(getResources().getColor(R.color.bg_gray))
                 .size((int) UIUtil.getDimension(R.dimen.normal_margin))
                 .build());
-
-        setParams(new PostAdapter(null, getActivity()), PostBiz.ACTION_LIST);
+        Map<String, String> params = new ArrayMap<>();
+        params.put("type", "diary");
+        setParams(new PostAdapter(null, getActivity()), PostBiz.ACTION_LIST, params);
 //        final View header = setHeader(R.layout.layout_topic);
 //        final ImageView topicImage = (ImageView)header.findViewById(R.id.recommend_topic);
 //        PostBiz.getOneTopic(new ResponseListener<AppResponse<Topic>>() {

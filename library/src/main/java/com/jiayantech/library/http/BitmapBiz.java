@@ -89,6 +89,10 @@ public class BitmapBiz {
         });
     }
 
+    public static void displayDefaultSize(final ImageView imageView, final String imageUrl){
+        display(imageView, imageUrl, DEFAULT_SIZE);
+    }
+
     static class ImageSize {
         int width;
         int height;
