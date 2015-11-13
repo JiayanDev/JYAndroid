@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@android:color/holo_blue_bright"
               android:orientation="vertical">
 
     <com.jiayantech.jyandroid.widget.LoadUrlFromXmlWebView
-        xmlns:app ="http://schemas.android.com/apk/res-auto"
         android:id="@+id/webView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:url="http://apptest.jiayantech.com/html/aboutmlts.html"

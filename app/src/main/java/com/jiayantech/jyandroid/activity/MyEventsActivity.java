@@ -10,10 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.jiayantech.jyandroid.R;
-import com.jiayantech.jyandroid.fragment.AboutAngelFragment;
 import com.jiayantech.jyandroid.fragment.MyEventsFragment;
-import com.jiayantech.jyandroid.model.Event;
-import com.jiayantech.library.base.BaseSimpleModelAdapter;
 import com.jiayantech.library.base.SingleFragmentActivity;
 import com.jiayantech.library.comm.ActivityResult;
 import com.jiayantech.library.utils.Utils;
@@ -25,7 +22,7 @@ import com.jiayantech.library.utils.Utils;
  * @Copyright: Copyright (c) 2015 Shenzhen Jiayan Tech Co., Ltd. Inc. All
  * rights reserved.
  */
-public class MyEventsActivity extends SingleFragmentActivity implements MyEventsFragment.OnRefreshResponseListener {
+public class MyEventsActivity extends SingleFragmentActivity{
     private Button btn;
 
     @Override
@@ -38,7 +35,7 @@ public class MyEventsActivity extends SingleFragmentActivity implements MyEvents
     @Override
     protected Fragment createFragment() {
         MyEventsFragment fragment = new MyEventsFragment();
-        fragment.setOnRefreshResponseListener(this);
+//        fragment.setOnRefreshResponseListener(this);
         return fragment;
     }
 
@@ -67,12 +64,12 @@ public class MyEventsActivity extends SingleFragmentActivity implements MyEvents
         });
     }
 
-    @Override
-    public void onRefreshResponse(BaseSimpleModelAdapter<Event> adapter) {
-        if (adapter.getList().size() <= 0) {
-            replace(new AboutAngelFragment());
-        } else {
-            btn.setText(R.string.continue_apply_angel);
-        }
-    }
+//    @Override
+//    public void onRefreshResponse(BaseSimpleModelAdapter<Event> adapter) {
+//        if (adapter.getList().size() <= 0) {
+//            replace(new AboutAngelFragment());
+//        } else {
+//            btn.setText(R.string.continue_apply_angel);
+//        }
+//    }
 }
