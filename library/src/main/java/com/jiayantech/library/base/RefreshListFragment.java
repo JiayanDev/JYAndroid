@@ -207,8 +207,8 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //            animator.start();
 
             ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            ultimateRecyclerView.disableLoadmore();
             mAdapter.setCustomLoadMoreView(null);
+            ultimateRecyclerView.disableLoadmore();
             mAdapter.notifyDataSetChanged();
 
 //            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
@@ -216,12 +216,17 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //            ultimateRecyclerView.postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-//                    ultimateRecyclerView.disableLoadmore();
 //                    mAdapter.setCustomLoadMoreView(null);
+//                    ultimateRecyclerView.disableLoadmore();
 //                    mAdapter.notifyDataSetChanged();
 //                }
 //            }, 100);
         }
+    }
+
+
+    private void setViewHeight(View v,int height){
+        v.getLayoutParams();
     }
 
 
