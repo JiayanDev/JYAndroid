@@ -119,7 +119,10 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 if (size == 0 && mAdapter.getAdapterItemCount() == 0) {
                     setNoMore();
                 } else if (enablePaging){
+                    mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.enableLoadmore();
+                    mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
+                            .inflate(R.layout.bottom_progressbar, null));
                 }
             }
 
