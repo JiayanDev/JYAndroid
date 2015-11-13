@@ -116,6 +116,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 mCacheList = null;
                 onFinal();
                 onRefreshResponse(mAdapter);
+                if (size == 0 && mAdapter.getAdapterItemCount() == 0) {
+                    setNoMore();
+                } else {
+                    ultimateRecyclerView.enableLoadmore();
+                }
             }
 
             @Override
