@@ -62,8 +62,8 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         mParams = params;
         mType = HttpReq.getClassType(this, 1);
         ultimateRecyclerView.setAdapter(mAdapter);
-        mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
-                .inflate(R.layout.custom_bottom_progressbar, null));
+        //mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
+        //        .inflate(R.layout.custom_bottom_progressbar, null));
         onRefresh();
         //refreshingString();
     }
@@ -118,7 +118,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 onRefreshResponse(mAdapter);
                 if (size == 0 && mAdapter.getAdapterItemCount() == 0) {
                     setNoMore();
-                } else {
+                } else if (enablePaging){
                     ultimateRecyclerView.enableLoadmore();
                 }
             }
@@ -205,13 +205,18 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //                }
 //            });
 //            animator.start();
+//            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+//            ultimateRecyclerView.disableLoadmore();
+//            mAdapter.setCustomLoadMoreView(null);
+//            mAdapter.notifyDataSetChanged();
+
             ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
             //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
             ultimateRecyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.disableLoadmore();
+                    mAdapter.setCustomLoadMoreView(null);
                     mAdapter.notifyDataSetChanged();
                 }
             }, 100);
