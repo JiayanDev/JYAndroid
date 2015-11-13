@@ -205,21 +205,22 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 //                }
 //            });
 //            animator.start();
-//            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-//            ultimateRecyclerView.disableLoadmore();
-//            mAdapter.setCustomLoadMoreView(null);
-//            mAdapter.notifyDataSetChanged();
 
             ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            ultimateRecyclerView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ultimateRecyclerView.disableLoadmore();
-                    mAdapter.setCustomLoadMoreView(null);
-                    mAdapter.notifyDataSetChanged();
-                }
-            }, 100);
+            ultimateRecyclerView.disableLoadmore();
+            mAdapter.setCustomLoadMoreView(null);
+            mAdapter.notifyDataSetChanged();
+
+//            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+//            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+//            ultimateRecyclerView.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    ultimateRecyclerView.disableLoadmore();
+//                    mAdapter.setCustomLoadMoreView(null);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            }, 100);
         }
     }
 
