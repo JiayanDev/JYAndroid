@@ -237,6 +237,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 public void run() {
                     mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.disableLoadmore();
+                    if(mAdapter.getItemCount() < 10){
+                        mAdapter.notifyDataSetChanged();
+                    }
 //                    mAdapter.notifyDataSetChanged();
                 }
             }, 100);
