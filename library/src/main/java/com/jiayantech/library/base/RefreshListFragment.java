@@ -123,7 +123,7 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                     ultimateRecyclerView.enableLoadmore();
                     mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
                             .inflate(R.layout.bottom_progressbar, null));
-                    mAdapter.isLoadMoreChanged = false;
+//                    mAdapter.isLoadMoreChanged = false;
 //                    mAdapter.swipeCustomLoadMoreView(LayoutInflater.from(getActivity())
 //                            .inflate(R.layout.bottom_progressbar, null));
                 }
