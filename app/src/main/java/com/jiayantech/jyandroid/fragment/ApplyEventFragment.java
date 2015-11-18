@@ -124,7 +124,7 @@ public class ApplyEventFragment extends BaseFragment{
                         String.valueOf(gender), new ResponseListener<AppResponse>() {
                             @Override
                             public void onResponse(AppResponse appResponse) {
-                                ToastUtil.showMessage("报名参加成功 " + appResponse);
+                                ToastUtil.showMessage("报名参加成功 ");
                                 getActivity().finish();
                             }
                         });
