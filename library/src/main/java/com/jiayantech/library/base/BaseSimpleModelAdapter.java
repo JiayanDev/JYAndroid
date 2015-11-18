@@ -61,7 +61,7 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
         }
 
         protected BaseSimpleModelAdapter<T> mAdapter;
-        protected T mItem;
+        public T mItem;
 
         private View.OnClickListener mItemClickListener = new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                 int mPosition = getAdapterPosition();
                 mPosition = mAdapter.customHeaderView != null ? mPosition - 1 : mPosition;
                 if (mAdapter.mOnItemClickListener != null) {
-                    mAdapter.mOnItemClickListener.onItemClick(mAdapter, mPosition, mAdapter.mList.get(mPosition));
+                    mAdapter.mOnItemClickListener.onItemClick(mAdapter, mPosition, mAdapter.getItem(mPosition));
                 }
                 int oldSelectedPos = mAdapter.mSelectedPos;
                 mAdapter.mSelectedPos = mPosition;
