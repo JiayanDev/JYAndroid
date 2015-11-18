@@ -147,6 +147,8 @@
         <activity
             android:name=".activity.WebViewActivityOverlay"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activity.CreateEventSuccessActivity"
+                  android:screenOrientation="portrait"/>
 
         <receiver android:name="com.jiayantech.umeng_push.ClickActionReceiver">
             <intent-filter>

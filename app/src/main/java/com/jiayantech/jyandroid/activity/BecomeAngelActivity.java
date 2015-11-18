@@ -162,12 +162,16 @@ public class BecomeAngelActivity extends BaseActivity {
                             public void onResponse(BaseAppResponse appResponse) {
                                 super.onResponse(appResponse);
                                 ToastUtil.showMessage(R.string.msg_sign_up_success);
-                                ActivityResult.onFinishResult(_this);
+                                //ActivityResult.onFinishResult(_this);
 
                                 ApplyAngelFinishEvent event = new ApplyAngelFinishEvent();
                                 event.category = AppInit.Category.toNamesString(categoryList);
+                                event.time = System.currentTimeMillis() / 1000;
 
                                 EventBus.getDefault().post(event);
+
+                                finish();
+                                startActivity(CreateEventSuccessActivity.class);
                             }
                         });
                 break;

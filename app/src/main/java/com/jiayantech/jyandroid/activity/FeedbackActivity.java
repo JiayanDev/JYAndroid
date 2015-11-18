@@ -66,6 +66,7 @@ public class FeedbackActivity extends BaseActivity {
             @Override
             public void onResponse(BaseAppResponse baseAppResponse) {
                 super.onResponse(baseAppResponse);
+                ToastUtil.showMessage(R.string.msg_feeback_success);
                 finish();
             }
         });

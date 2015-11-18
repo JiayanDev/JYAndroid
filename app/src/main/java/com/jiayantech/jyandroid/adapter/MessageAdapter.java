@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -86,7 +87,7 @@ public class MessageAdapter extends BaseSimpleModelAdapter<BasePushMessage> {
             super.onBind(item, position);
             mTxtType.setText(mContext.getResources().getString(R.string.msg_reply,
                     convertType(item.subject)));
-            mTxtReplyContent.setText(item.subjectContent);
+            mTxtReplyContent.setText(Html.fromHtml(item.subjectContent));
             mTxtContent.setText(item.commentContent);
         }
     }
