@@ -70,6 +70,12 @@ public abstract class BaseSimpleModelAdapter<T> extends BaseModelAdapter<T> {
                     return;
                 }
                 int mPosition = getAdapterPosition();
+
+                //如果这个ViewHolder已经被移除，会返回NO_POSITION, 值为-1
+                if(mPosition == RecyclerView.NO_POSITION){
+                    return;
+                }
+
                 mPosition = mAdapter.customHeaderView != null ? mPosition - 1 : mPosition;
                 if (mAdapter.mOnItemClickListener != null) {
                     mAdapter.mOnItemClickListener.onItemClick(mAdapter, mPosition, mAdapter.getItem(mPosition));

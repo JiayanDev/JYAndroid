@@ -1,7 +1,5 @@
 package com.jiayantech.library.base;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.support.annotation.LayoutRes;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,14 +72,6 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
         ultimateRecyclerView.setParallaxHeader(header);
     }
 
-//    public void setParallaxHeader(View header) {
-//        mHeader = new RelativeLayout(header.getContext());
-//        mHeader.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        mHeader.addView(header, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        if (mAdapter != null)
-//            mAdapter.setCustomHeaderView(mHeader);
-//    }
-
     protected View setHeader(int layoutId) {
         View header = getActivity().getLayoutInflater().inflate(layoutId, ultimateRecyclerView.mRecyclerView, false);
         setHeader(header);
@@ -131,9 +121,11 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 } else if (enablePaging) {
                     mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.enableLoadmore();
-                    //if (mAdapter.getCustomHeaderView() != null) setViewHeight(mAdapter.getCustomHeaderView(), ViewGroup.LayoutParams.WRAP_CONTENT);
-                    mAdapter.isLoadMoreChanged = false;
-                    //mAdapter.notifyDataSetChanged();
+                    mAdapter.setCustomLoadMoreView(LayoutInflater.from(getActivity())
+                            .inflate(R.layout.bottom_progressbar, null));
+//                    mAdapter.isLoadMoreChanged = false;
+//                    mAdapter.swipeCustomLoadMoreView(LayoutInflater.from(getActivity())
+//                            .inflate(R.layout.bottom_progressbar, null));
                 }
             }
 
@@ -206,89 +198,57 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
     protected void setNoMore() {
         if (mAdapter != null && mAdapter.getCustomLoadMoreView() != null) {
+//            ValueAnimator animator = new ValueAnimator().ofFloat(1);
+//            animator.setDuration(1000);
+//            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator animation) {
+//                    float value = (float) animation.getAnimatedValue();
+//                    int offset = mAdapter.getCustomLoadMoreView().getTop() - ultimateRecyclerView.mRecyclerView.getBottom();
+//                    int scrollBy = (int) ((1 - value) * offset);
+//                    ultimateRecyclerView.mRecyclerView.scrollBy(0, -scrollBy);
+//                }
+//            });
+//            animator.start();
 
-
-            //noMoreBack();
-
-            //mAdapter.getCustomLoadMoreView().setVisibility(View.INVISIBLE);
+//            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+//            final int distance = -mAdapter.getCustomLoadMoreView().getHeight();
             ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-            ultimateRecyclerView.disableLoadmore();
-            mAdapter.setCustomLoadMoreView(null);
-            //mAdapter.notifyDataSetChanged();
+
+
+//            ultimateRecyclerView.disableLoadmore();
+//            mAdapter.swipeCustomLoadMoreView(null);
+////            mAdapter.notifyDataSetChanged();
+
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+////                    mAdapter.setCustomLoadMoreView(null);
+////                    ultimateRecyclerView.disableLoadmore();
+////                ultimateRecyclerView.mRecyclerView.scrollBy(0, distance);
+//
+//                }
+//            }, 2000);
+
+//            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
+            ultimateRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setCustomLoadMoreView(null);
+                    ultimateRecyclerView.disableLoadmore();
+                    if(mAdapter.getItemCount() < 10){
+                        mAdapter.notifyDataSetChanged();
+                    }
+//                    mAdapter.notifyDataSetChanged();
+                }
+            }, 100);
         }
     }
 
 
-    private void noMoreBack() {
-        //            ValueAnimator animator = new ValueAnimator().ofFloat(1);
-        //            animator.setDuration(1000);
-        //            animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        //            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-        //                @Override
-        //                public void onAnimationUpdate(ValueAnimator animation) {
-        //                    float value = (float) animation.getAnimatedValue();
-        //                    int offset = mAdapter.getCustomLoadMoreView().getTop() - ultimateRecyclerView.mRecyclerView.getBottom();
-        //                    int scrollBy = (int) ((1 - value) * offset);
-        //                    ultimateRecyclerView.mRecyclerView.scrollBy(0, -scrollBy);
-        //                }
-        //            });
-        //            animator.start();
-
-        //            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-        //            mAdapter.setCustomLoadMoreView(null);
-        //            ultimateRecyclerView.disableLoadmore();
-        //            //mAdapter.notifyDataSetChanged();
-
-        //            ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-        //            //ultimateRecyclerView.mRecyclerView.smoothScrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-        //            ultimateRecyclerView.postDelayed(new Runnable() {
-        //                @Override
-        //                public void run() {
-        //                    mAdapter.setCustomLoadMoreView(null);
-        //                    ultimateRecyclerView.disableLoadmore();
-        //                    mAdapter.notifyDataSetChanged();
-        //                }
-        //            }, 100);
-
-        int height = mAdapter.getCustomLoadMoreView().getHeight();
-        ValueAnimator anim = ValueAnimator.ofInt(height, 0);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setViewHeight(mAdapter.getCustomLoadMoreView(), (Integer) animation.getAnimatedValue());
-            }
-        });
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                //ultimateRecyclerView.mRecyclerView.scrollBy(0, -mAdapter.getCustomLoadMoreView().getHeight());
-                ultimateRecyclerView.disableLoadmore();
-                //mAdapter.setCustomLoadMoreView(null);
-                //mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        anim.setDuration(400);
-        anim.start();
-    }
-
     private void setViewHeight(View v, int height) {
-        ViewGroup.LayoutParams lp = v.getLayoutParams();
-        if (lp == null) return;
-        lp.height = height;
-        v.setLayoutParams(lp);
+        v.getLayoutParams();
     }
 
 
@@ -302,8 +262,6 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
     protected View onInflateView(LayoutInflater inflater, ViewGroup container) {
         ultimateRecyclerView = (CustomUltimateRecyclerview) inflater.inflate(R.layout.ultimate_recycler_view, container, false);
         //ultimateRecyclerView = new CustomUltimateRecyclerview(container.getContext());
-        //ultimateRecyclerView.mPtrFrameLayout.setRatioOfHeaderHeightToRefresh(1);
-        //ultimateRecyclerView.mPtrFrameLayout.setResistance(1);
         return ultimateRecyclerView;
     }
 

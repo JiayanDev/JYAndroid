@@ -105,7 +105,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
             case R.id.action_publish:
                 String content = edit_content.getText().toString();
                 if (TextUtils.isEmpty(content)) {
-                    ToastUtil.showMessage("input content");
+                    ToastUtil.showMessage(R.string.msg_content_empty);
                     return true;
                 }
                 uploadImage(0);
@@ -330,7 +330,7 @@ public class PublishPostActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void uploadImage(final int index) {
-        if (mSelectPath.size() <= 0) {
+        if (mSelectPath == null || mSelectPath.size() <= 0) {
             //dismissProgressDialog();
             //ToastUtil.showMessage(mImageAdapter.urlList.toString());
             post();

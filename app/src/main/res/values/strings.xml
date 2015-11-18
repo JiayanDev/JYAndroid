@@ -26,7 +26,7 @@
     the big cheese.</string>
     <string name="post_daily">分享日志</string>
     <string name="post_topic">发表话题</string>
-    <string name="publish">发布</string>
+    <string name="publish">发表</string>
     <string name="beauty_with">伴美</string>
     <string name="community">发现</string>
     <string name="activity">活动</string>
@@ -201,4 +201,6 @@
 
     <string name="msg_reply">回复了我的%s</string>
     <string name="txt_word_count">还需要输入%d字</string>
+    <string name="msg_content_empty">输入内容不能为空哦</string>
+    <string name="msg_feeback_success">你的反馈我们已经收到，谢谢你的支持！</string>
 </resources>
