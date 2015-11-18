@@ -13,6 +13,7 @@ import com.jiayantech.jyandroid.R;
 import com.jiayantech.jyandroid.activity.PostActivity;
 import com.jiayantech.jyandroid.adapter.CategoryAdapter;
 import com.jiayantech.jyandroid.adapter.PostAdapter;
+import com.jiayantech.jyandroid.adapter.PostHeaderAdapter;
 import com.jiayantech.jyandroid.biz.PostBiz;
 import com.jiayantech.jyandroid.commons.Broadcasts;
 import com.jiayantech.jyandroid.eventbus.PostStatusChangedEvent;
@@ -56,26 +57,30 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
                 .build());
         Map<String, String> params = new ArrayMap<>();
         params.put("type", "diary");
-        setParams(new PostAdapter(null, getActivity()), PostBiz.ACTION_LIST, params);
-//        final View header = setHeader(R.layout.layout_topic);
-//        final ImageView topicImage = (ImageView)header.findViewById(R.id.recommend_topic);
-//        PostBiz.getOneTopic(new ResponseListener<AppResponse<Topic>>() {
-//            @Override
-//            public void onResponse(final AppResponse<Topic> postAppResponse) {
-//                BitmapBiz.display(topicImage, postAppResponse.data.coverImg);
-//                header.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        WebViewActivity.launchActivity(getActivity(), postAppResponse.data.topicId,
-//                                WebConstans.Type.PAGE_TOPIC);
-//                    }
-//                });
-//            }
-//        });
+//        setParams(new PostAdapter(null, getActivity()), PostBiz.ACTION_LIST, params);
+////        final View header = setHeader(R.layout.layout_topic);
+////        final ImageView topicImage = (ImageView)header.findViewById(R.id.recommend_topic);
+////        PostBiz.getOneTopic(new ResponseListener<AppResponse<Topic>>() {
+////            @Override
+////            public void onResponse(final AppResponse<Topic> postAppResponse) {
+////                BitmapBiz.display(topicImage, postAppResponse.data.coverImg);
+////                header.setOnClickListener(new View.OnClickListener() {
+////                    @Override
+////                    public void onClick(View v) {
+////                        WebViewActivity.launchActivity(getActivity(), postAppResponse.data.topicId,
+////                                WebConstans.Type.PAGE_TOPIC);
+////                    }
+////                });
+////            }
+////        });
+//
+//        //View headerView = setHeader(R.layout.layout_topic_category);
+//        //initHeaderView(headerView);
+//        setHeader(R.layout.layout_topic);
 
-        //View headerView = setHeader(R.layout.layout_topic_category);
-        //initHeaderView(headerView);
-        setHeader(R.layout.layout_topic);
+        View header = getActivity().getLayoutInflater().inflate(R.layout.layout_topic, ultimateRecyclerView.mRecyclerView, false);
+        setParams(new PostHeaderAdapter(getActivity(), header), PostBiz.ACTION_LIST, params);
+
         registerReceivers();
 
         EventBus.getDefault().register(this);
@@ -122,7 +127,7 @@ public class CommunityFragment extends RefreshListFragment<Post, AppResponse<Lis
     public void onEvent(PostStatusChangedEvent event) {
         List<Post> list = getList();
         for (Post post : list) {
-            if(post.id == event.postId){
+            if (post.id == event.postId) {
                 post.commentCount += event.addComment;
                 post.likeCount += event.like;
             }
