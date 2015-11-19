@@ -14,7 +14,6 @@ import com.jiayantech.jyandroid.activity.WebViewActivity;
 import com.jiayantech.jyandroid.activity.WebViewActivityOverlay;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.misc.UIMisc;
-import com.jiayantech.jyandroid.model.HomePagePost;
 import com.jiayantech.jyandroid.model.Post;
 import com.jiayantech.jyandroid.widget.AdaptiveGridView;
 import com.jiayantech.library.base.BaseSimpleModelAdapter;
@@ -25,7 +24,6 @@ import com.jiayantech.library.utils.UIUtil;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.gujun.android.taggroup.TagGroup;
 
@@ -150,27 +148,19 @@ public class PostHeaderAdapter extends BaseSimpleModelAdapter<Post> {
             mRoleTag = (ImageView) itemView.findViewById(R.id.img_tag);
 
             mPhotoAdapter = new PhotoAdapter(mContext);
-
-            mAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    WebViewActivityOverlay.launchActivity(mContext, id,
-                            WebConstans.Type.TYPE_PERSONAL_PAGE);
-                }
-            });
         }
 
         @Override
-        public void onBind(Post item, int position) {
+        public void onBind(final Post item, int position) {
             if (TextUtils.isEmpty(item.avatar)) {
                 mAvatar.setImageResource(HttpConfig.DEFAULT_IMAGE_ID);
             } else {
-                BitmapBiz.display(mAvatar, item.avatar, 150);
+                BitmapBiz.display(mAvatar, item.avatar);
             }
 
             id = item.userId;
 
-            mUsername.setText(String.valueOf(item.userName) + "    " + position);
+            mUsername.setText(item.userName);
             mContent.setText(item.content);
             mThumbsUpCount.setText(mContext.getResources().getString
                     (R.string.thumbs_up_count, new Object[]{String.valueOf(item.likeCount)}));
@@ -192,6 +182,16 @@ public class PostHeaderAdapter extends BaseSimpleModelAdapter<Post> {
             }
 
             UIMisc.setRoleTag(item.role, mRoleTag);
+
+            mAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.role != null && item.role.equals(UIMisc.ROLE_ANGEL)) {
+                        WebViewActivityOverlay.launchActivity(mContext, id,
+                                WebConstans.Type.TYPE_PERSONAL_PAGE);
+                    }
+                }
+            });
         }
     }
 }

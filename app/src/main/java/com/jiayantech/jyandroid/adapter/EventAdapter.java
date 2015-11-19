@@ -37,7 +37,8 @@ public class EventAdapter extends BaseSimpleModelAdapter<Event> {
 //                intent.putExtra(WebViewFragment.EXTRA_USER_ID, item.userId);
 //                intent.putExtra(WebViewFragment.EXTRA_USERNAME, item.userName);
 //                mContext.startActivity(intent);
-                if(!item.status.equals("待审核")) {
+                if(!item.status.equals("待审核") && !item.status.equals("审核通过") &&
+                        !item.status.equals("审核不通过")) {
                     WebViewActivity.launchActivity(mContext, item.id, WebConstans.Type.TYPE_EVENT);
                 }
             }

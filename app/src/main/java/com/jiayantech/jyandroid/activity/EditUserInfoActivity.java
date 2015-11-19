@@ -21,7 +21,7 @@ public class EditUserInfoActivity extends EditActivity {
     protected void onSave(final String text) {
         if (mText.equals(text)) {
             ToastUtil.showMessage("未作修改，无需保存");
-        } else if(mText.length() > 10){
+        } else if(text.length() > 10){
             ToastUtil.showMessage("用户昵称不能超过10个字符");
         }
         else{

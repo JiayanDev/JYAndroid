@@ -16,6 +16,7 @@ public class UIMisc {
 
     public static void setRoleTag(String role, ImageView imageView){
         if(role == null){
+            imageView.setVisibility(View.GONE);
             return;
         }
         switch (role){
