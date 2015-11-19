@@ -160,17 +160,18 @@ public class EventRankActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int count = s.length();
                 if (count > 10) {
                     mTxtWordCount.setVisibility(View.INVISIBLE);
                 } else {
                     mTxtWordCount.setVisibility(View.VISIBLE);
                     mTxtWordCount.setText(getString(R.string.txt_word_count, 10 - count));
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 
