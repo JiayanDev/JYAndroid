@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
@@ -109,11 +109,14 @@
                         android:layout_gravity="center"
                         android:text="美丽天使配合度"/>
 
-                    <RatingBar
+                    <android.support.v7.widget.AppCompatRatingBar
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        style="?android:ratingBarStyleIndicator"
+                        android:isIndicator="false"
                         android:id="@+id/rating_angel_satisfaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        app:backgroundTint="@color/theme_color"
                         />
                 </LinearLayout>
 
@@ -129,6 +132,10 @@
                         android:text="主治医生推荐度"/>
 
                     <RatingBar
+
+                        style="?android:ratingBarStyleIndicator"
+                        android:progressTint="@color/theme_color"
+                        android:isIndicator="false"
                         android:id="@+id/rating_doctor_satisfaction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,6 +170,7 @@
             <Button
                 android:id="@+id/btn_publish_comment"
                 style="@style/btn_theme"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/normal_margin"
                 android:text="@string/btn_publish_comment"/>
