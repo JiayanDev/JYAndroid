@@ -76,7 +76,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         txt_info = (TextView) findViewById(R.id.txt_info);
 
         txt_home_page = (TextView) findViewById(R.id.txt_home_page);
-//<<<<<<< HEAD
         //txt_home_page.setOnClickListener(this);
 
 //        txt_events = (TextView) findViewById(R.id.txt_angel);

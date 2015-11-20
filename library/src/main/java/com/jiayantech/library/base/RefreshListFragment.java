@@ -108,7 +108,9 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
 
             @Override
             public void onResponse(ResponseT response) {
-                LogUtil.v(TAG, "onRefresh onResponse list size:" + response.data.size());
+                if(getActivity() == null){
+                    return;
+                }
                 //if (!enablePaging) {
                 mAdapter.clear();
                 //}
@@ -237,9 +239,10 @@ public class RefreshListFragment<T extends BaseModel, ResponseT extends AppRespo
                 public void run() {
                     mAdapter.setCustomLoadMoreView(null);
                     ultimateRecyclerView.disableLoadmore();
-                    if(mAdapter.getItemCount() < 10){
-                        mAdapter.notifyDataSetChanged();
-                    }
+                    mAdapter.notifyDataSetChanged();
+//                    if(mAdapter.getItemCount() < 10){
+//                        mAdapter.notifyDataSetChanged();
+//                    }
 //                    mAdapter.notifyDataSetChanged();
                 }
             }, 100);
