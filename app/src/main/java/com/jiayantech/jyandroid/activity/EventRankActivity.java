@@ -110,6 +110,13 @@ public class EventRankActivity extends BaseActivity {
         mTxtDate = (TextView) findViewById(R.id.txt_date);
         mRatingAngelSatisfaction = (RatingBar) findViewById(R.id.rating_angel_satisfaction);
         mRatingDoctorSatisfaction = (RatingBar) findViewById(R.id.rating_doctor_satisfaction);
+
+//        Drawable angelProgress = mRatingAngelSatisfaction.getProgressDrawable();
+//        DrawableCompat.setTint(angelProgress, this.getResources().getColor(R.color.theme_color));
+//
+//        Drawable doctorProgress = mRatingDoctorSatisfaction.getProgressDrawable();
+//        DrawableCompat.setTint(doctorProgress, this.getResources().getColor(R.color.theme_color));
+
         mTxtWordCount = (TextView) findViewById(R.id.txt_word_count);
         mBtnSend = (Button) findViewById(R.id.btn_publish_comment);
 
@@ -153,17 +160,18 @@ public class EventRankActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int count = s.length();
                 if (count > 10) {
                     mTxtWordCount.setVisibility(View.INVISIBLE);
                 } else {
                     mTxtWordCount.setVisibility(View.VISIBLE);
                     mTxtWordCount.setText(getString(R.string.txt_word_count, 10 - count));
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 

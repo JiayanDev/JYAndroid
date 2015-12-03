@@ -60,7 +60,11 @@ public class EditActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        edit_text.setSelection(mText.length());
+        if(mText != null) {
+            edit_text.setSelection(mText.length());
+        }else{
+            mText = "";
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

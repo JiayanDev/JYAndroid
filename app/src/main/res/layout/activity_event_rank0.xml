@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:id="@+id/layout_scroll"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bg_gray"
+<ScrollView
+    android:id="@+id/layout_scroll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
@@ -109,11 +110,16 @@
                         android:layout_gravity="center"
                         android:text="美丽天使配合度"/>
 
-                    <RatingBar
+                    <android.support.v7.widget.AppCompatRatingBar
                         android:id="@+id/rating_angel_satisfaction"
+                        style="?android:ratingBarStyleIndicator"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:isIndicator="false"
+                        android:numStars="5"
+                        android:progressDrawable="@drawable/rating_bar"
+                        app:backgroundTint="@color/bg_gray"
                         />
                 </LinearLayout>
 
@@ -130,8 +136,12 @@
 
                     <RatingBar
                         android:id="@+id/rating_doctor_satisfaction"
+                        style="?android:ratingBarStyleIndicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:numStars="5"
+                        android:progressDrawable="@drawable/rating_bar"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -165,6 +175,7 @@
                 style="@style/btn_theme"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/normal_margin"
+                android:layout_marginTop="10dp"
                 android:text="@string/btn_publish_comment"/>
         </RelativeLayout>
     </LinearLayout>

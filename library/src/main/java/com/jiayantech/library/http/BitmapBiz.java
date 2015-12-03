@@ -52,44 +52,74 @@ public class BitmapBiz {
             imageView.setImageResource(HttpConfig.ERROR_IMAGE_ID);
             return;
         }
-
         final WeakReference<ImageView> imageRef = new WeakReference<>(imageView);
+        imageView.setTag(imageUrl);
         Observable.create(new Observable.OnSubscribe<ImageSize>() {
             @Override
             public void call(final Subscriber<? super ImageSize> subscriber) {
                 imageView.getViewTreeObserver().addOnPreDrawListener(
                         new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        int width;
-                        int height;
-                        if (imageRef != null) ;
-                        ImageView image = imageRef.get();
-                        image.getViewTreeObserver().removeOnPreDrawListener(this);
-                        width = image.getMeasuredWidth();
-                        height = image.getMeasuredHeight();
-                        ImageSize size = new ImageSize(width, height);
-                        subscriber.onNext(size);
-                        subscriber.onCompleted();
-                        return true;
-                    }
-                });
+                            @Override
+                            public boolean onPreDraw() {
+                                int width;
+                                int height;
+                                ImageView image = imageRef.get();
+                                image.getViewTreeObserver().removeOnPreDrawListener(this);
+                                width = image.getMeasuredWidth();
+                                height = image.getMeasuredHeight();
+                                ImageSize size = new ImageSize(width, height);
+                                subscriber.onNext(size);
+                                subscriber.onCompleted();
+                                return true;
+                            }
+                        });
             }
         }).subscribe(new Action1<ImageSize>() {
             @Override
             public void call(ImageSize imageSize) {
-                if(imageRef != null){
+                if (imageRef != null) {
                     ImageView image = imageRef.get();
-                    sImageLoader.get(imageUrl, ImageLoader.getImageListener(imageView,
+                    sImageLoader.get(imageUrl, getImageListener(image,
                                     HttpConfig.DEFAULT_IMAGE_ID, HttpConfig.ERROR_IMAGE_ID),
-                            //Specify width & height of the bitmap to be scaled down when the image is downloaded.
                             imageSize.width, imageSize.height);
                 }
             }
         });
     }
 
-    public static void displayDefaultSize(final ImageView imageView, final String imageUrl){
+    //RecyclerView的View重用机制，有可能当网络请求完成后，该View已经用来显示别的Item，所以配合display方法，
+    //开始请求时，将ImageView的Tag设成要请求的Url，网络请求完成后，如果url和ImageView的tag一样才显示，
+    // 否则直接返回
+    private static ImageLoader.ImageListener getImageListener(final ImageView view,
+                                                              final int defaultImageResId,
+                                                              final int errorImageResId) {
+        return new ImageLoader.ImageListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (errorImageResId != 0) {
+                    view.setImageResource(errorImageResId);
+                }
+            }
+
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                if (response.getBitmap() != null) {
+                    if (view != null && view.getTag().equals(response.getRequestUrl())) {
+                        view.setImageBitmap(response.getBitmap());
+//                        if(response.getRequestUrl().contains("avatar")) {
+//                            LogUtil.d("display", view.toString());
+//                            LogUtil.d("display", "view tag:" + view.getTag());
+//                            LogUtil.d("display", "url:" + response.getRequestUrl());
+//                        }
+                    }
+                } else if (defaultImageResId != 0) {
+                    view.setImageResource(defaultImageResId);
+                }
+            }
+        };
+    }
+
+    public static void displayDefaultSize(final ImageView imageView, final String imageUrl) {
         display(imageView, imageUrl, DEFAULT_SIZE);
     }
 
@@ -97,7 +127,7 @@ public class BitmapBiz {
         int width;
         int height;
 
-        public ImageSize(int width, int height){
+        public ImageSize(int width, int height) {
             this.width = width;
             this.height = height;
         }

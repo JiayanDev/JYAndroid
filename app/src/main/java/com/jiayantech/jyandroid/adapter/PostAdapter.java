@@ -41,7 +41,7 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
         setOnItemClickListener(new OnItemClickListener<Post>() {
             @Override
             public void onItemClick(BaseSimpleModelAdapter<Post> adapter, int position, Post item) {
-                WebViewActivity.launchActivity(mContext, item.id, item.type);
+                    WebViewActivity.launchActivity(mContext, item.id, item.type);
             }
         });
 
@@ -93,21 +93,14 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
 
             mPhotoAdapter = new PhotoAdapter(mContext);
 
-            mAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    WebViewActivityOverlay.launchActivity(mContext, id,
-                            WebConstans.Type.TYPE_PERSONAL_PAGE);
-                }
-            });
         }
 
         @Override
-        public void onBind(Post item, int position) {
+        public void onBind(final Post item, int position) {
             if (TextUtils.isEmpty(item.avatar)) {
                 mAvatar.setImageResource(HttpConfig.DEFAULT_IMAGE_ID);
             } else {
-                BitmapBiz.display(mAvatar, item.avatar, 150);
+                BitmapBiz.display(mAvatar, item.avatar);
             }
 
             id = item.userId;
@@ -134,6 +127,16 @@ public class PostAdapter extends BaseSimpleModelAdapter<Post> {
             }
 
             UIMisc.setRoleTag(item.role, mRoleTag);
+
+            mAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(item.role != null && item.role.equals(UIMisc.ROLE_ANGEL)) {
+                        WebViewActivityOverlay.launchActivity(mContext, id,
+                                WebConstans.Type.TYPE_PERSONAL_PAGE);
+                    }
+                }
+            });
         }
 
 //        private View.OnClickListener mImageClickListener = new View.OnClickListener() {
