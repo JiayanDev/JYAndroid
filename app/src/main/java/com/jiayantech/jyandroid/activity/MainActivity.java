@@ -21,6 +21,7 @@ import com.jiayantech.jyandroid.eventbus.RoleChangedEvent;
 import com.jiayantech.jyandroid.fragment.CommunityFragment;
 import com.jiayantech.jyandroid.fragment.HomePagePostFragment;
 import com.jiayantech.jyandroid.fragment.MineFragment;
+import com.jiayantech.jyandroid.fragment.webview.PediaFragment;
 import com.jiayantech.jyandroid.fragment.webview.WebConstans;
 import com.jiayantech.jyandroid.fragment.webview.WebViewFragment;
 import com.jiayantech.jyandroid.model.AppInit;
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private Fragment[] mFragments;
     private RadioGroup mRadioGroup;
-    private RadioButton[] mRadioButtons = new RadioButton[3];
+    private RadioButton[] mRadioButtons = new RadioButton[4];
 
     private ImageView mImageUnreadDot;
     private TextView mTextUnreadCount;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         //setBackgroundResource(android.R.color.white);
         //开启友盟推送服务
         //PushAgent.getInstance(this).enable();
-        UmengPushManager.getInstance().enablePush(true);
+        UmengPushManager.enablePush(true);
 
         //检查更新
         UmengUpdateAgent.update(this);
@@ -188,7 +189,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_activity);
         ///mRadioButtons[0] = (RadioButton) findViewById(R.id.radio_beauty_with);
         mRadioButtons[1] = (RadioButton) findViewById(R.id.radio_community);
-        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_userinfo);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.radio_pedia);
+        mRadioButtons[3] = (RadioButton) findViewById(R.id.radio_userinfo);
 
         mRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_tab);
         mRadioGroup.setOnCheckedChangeListener(this);
@@ -292,6 +294,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mFragments = new Fragment[]{
                 new HomePagePostFragment(),
                 CommunityFragment.newInstance(null),
+                PediaFragment.newInstance(WebConstans.PEDIA_BASE_URL + "/index.html"),
                 MineFragment.newInstance(null)};
     }
 
@@ -304,14 +307,17 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             case R.id.radio_community:
                 mViewPager.setCurrentItem(1, false);
                 break;
+            case R.id.radio_pedia:
+                mViewPager.setCurrentItem(2, false);
+                break;
             case R.id.radio_userinfo:
                 toUserInfo = true;
                 LoginActivity.checkLoginToRunnable(_this, new Runnable() {
                     @Override
                     public void run() {
                         toUserInfo = false;
-                        mViewPager.setCurrentItem(2, false);
-                        ((MineFragment) mFragments[2]).resume();
+                        mViewPager.setCurrentItem(3, false);
+                        ((MineFragment) mFragments[3]).resume();
                     }
                 });
 
@@ -321,7 +327,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                         EventBus.getDefault().post(new RoleChangedEvent(response.data.role));
                     }
                 });
-
                 break;
         }
     }
@@ -332,7 +337,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onResume() {
         super.onResume();
-        if (toUserInfo && mViewPager.getCurrentItem() != 2) {
+        if (toUserInfo && mViewPager.getCurrentItem() != 3) {
             toUserInfo = false;
             ((RadioButton) mRadioGroup.findViewById(ids[mViewPager.getCurrentItem()])).setChecked(true);
         }

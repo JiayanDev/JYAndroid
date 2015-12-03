@@ -8,6 +8,7 @@ import com.jiayantech.library.comm.Property;
 public class WebConstans {
     /* webview显示内容的类型 */
     public static final String BASE_URL = Property.getProperty("html.url");
+    public static final String PEDIA_BASE_URL = Property.getProperty("pedia.html.url");
 
     public interface Type {
         String TYPE_EVENT = "event";

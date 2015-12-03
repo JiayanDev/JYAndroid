@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -135,7 +136,7 @@ public abstract class WebViewFragment extends BaseFragment {
         initWebView();
     }
 
-    private void initWebView() {
+    protected void initWebView() {
         mWebView.setWebViewClient(onSetWebViewClient());
         mWebView.setWebChromeClient(onSetWebChromeClient());
 
@@ -153,8 +154,6 @@ public abstract class WebViewFragment extends BaseFragment {
         settings.setUserAgentString(System.getProperty("http.agent") + " jiayantech");
         //开启Database Storage API功能
         settings.setDatabaseEnabled(true);
-
-
     }
 
     @Override
@@ -301,7 +300,7 @@ public abstract class WebViewFragment extends BaseFragment {
         return new JavascriptInterface();
     }
 
-    protected BaseWebViewClient onSetWebViewClient() {
+    protected WebViewClient onSetWebViewClient() {
         BaseWebViewClient client = new BaseWebViewClient(this);
         onAddWebActionListener(client);
         return client;

@@ -50,6 +50,11 @@
                 style="@style/main_tab"
                 android:drawableTop="@drawable/tab_community_selector"
                 android:text="@string/community"/>
+            <RadioButton
+                android:id="@+id/radio_pedia"
+                style="@style/main_tab"
+                android:drawableTop="@drawable/tab_pedia_selector"
+                android:text="@string/pedia"/>
 
             <RadioButton
                 android:id="@+id/radio_userinfo"
@@ -71,13 +76,18 @@
             android:layout_height="@dimen/tab_height"
             android:layout_below="@+id/navigate_top_line"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="4">
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_weight="1.0"
                 android:gravity="center_horizontal|top"
+                android:visibility="invisible"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1.0"
                 android:visibility="invisible"/>
 
             <View

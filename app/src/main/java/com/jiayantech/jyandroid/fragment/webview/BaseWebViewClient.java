@@ -19,7 +19,7 @@ import java.util.List;
  * BaseWebViewClient 处理Js调用Native，页面跳转等事件
  */
 public class BaseWebViewClient extends WebViewClient {
-    private static final String JS_PREFIX = "jiayan://js_call_native?";
+    public static final String JS_PREFIX = "jiayan://js_call_native?";
 
     private WebViewFragment mWebViewFragment;
     private List<WebActionListener> mWebActionList = new ArrayList<>();
@@ -45,8 +45,10 @@ public class BaseWebViewClient extends WebViewClient {
             if(uri.getHost().equals(Uri.parse(WebConstans.BASE_URL).getHost())) {
                 String action = uri.getPath();
                 return redirectUrl(action, uri);
+            }else{
+                return true;
             }
-            return false;
+            //return false;
 
         }
     }

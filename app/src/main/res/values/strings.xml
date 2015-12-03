@@ -31,6 +31,7 @@
     <string name="community">发现</string>
     <string name="activity">活动</string>
     <string name="userinfo">我</string>
+    <string name="pedia">百科</string>
 
     <string name="thumbs_up_count">%s人赞过</string>
     <string name="comment_count">%s条评论</string>
