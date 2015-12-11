@@ -58,9 +58,12 @@ public class PediaFragment extends WebViewFragment{
         BaseWebViewClient webViewClient = new BaseWebViewClient(this) {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Uri uri = Uri.parse(url);
-                LogUtil.d("PediaFragment", "loading url: " + uri);
-                if (uri.getHost().startsWith(Uri.parse(WebConstans.PEDIA_BASE_URL).getHost())) {
+//                Uri uri = Uri.parse(url);
+//                LogUtil.d("PediaFragment", "loading url: " + uri);
+//                if (uri.getHost().startsWith(Uri.parse(WebConstans.PEDIA_BASE_URL).getHost())) {
+                //Uri uri = Uri.parse(url);
+                LogUtil.d("PediaFragment", "loading url: " + url);
+                if (url.startsWith(WebConstans.PEDIA_BASE_URL)) {
                     Intent intent = new Intent(getActivity(), PediaActivity.class);
                     intent.putExtra(PediaFragment.EXTRA_URL, url);
                     getActivity().startActivity(intent);
@@ -76,8 +79,9 @@ public class PediaFragment extends WebViewFragment{
                         }
                         return true;
                     }
-                    return false;
+                    //return false;
                 }
+                return super.shouldOverrideUrlLoading(view, url);
             }
         };
         //onAddWebActionListener(webViewClient);
@@ -89,6 +93,7 @@ public class PediaFragment extends WebViewFragment{
                 getActivity().setTitle(data.data.title);
             }
         });
+        onAddWebActionListener(webViewClient);
         return webViewClient;
     }
 
